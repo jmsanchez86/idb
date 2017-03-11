@@ -1,0 +1,21 @@
+
+// Vennfridge UML
+// https://yuml.me/diagram/plain/class/draw
+
+[Ingredient|name:string;nutritions:TODO;substitutes:TODO|methods()],
+[Recipe|name:string;instructions:string;agregate_nutritions:TODO],
+[Grocery Item|name:string;price:number],
+[Tag|name:string;-description:string],
+
+[Ingredient]0..*-0..*[Recipe],
+[Ingredient]0..*-0..*[Grocery Item],
+
+[Tag]0..*-0..*[Recipe],
+[Tag]0..*-0..*[Ingredient],
+[Tag]0..*-0..*[Grocery Item],
+
+[Ingredient]0..*-0..*[Ingredient]
+[Recipe]0..*-0..*[Recipe]
+[Grocery Item]0..*-0..*[Grocery Item]
+[Tag]0..*-0..*[Tag]
+
