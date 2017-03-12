@@ -1,21 +1,27 @@
 
 // Vennfridge UML
-// https://yuml.me/diagram/plain/class/draw
 
-[Ingredient|name:string;nutritions:TODO;substitutes:TODO|methods()],
-[Recipe|name:string;instructions:string;agregate_nutritions:TODO],
+[Ingredient|name:string;|methods()],
+[Substitution|ingredient:Ingredient;substitute:Ingredient],
+[Related Ingredient|ingredient:Ingredient;related ingredient:Ingredient],
+[Recipe|name:string;instructions:string;⁄Total Nutrition:Nutrition],
 [Grocery Item|name:string;price:number],
-[Tag|name:string;-description:string],
+[Tag|name:string;description:string],
+[Nutrition|calories:number;calories from fat:number;fat:number; saturated fat:number;trans fat:number;cholesterol:number;sodium:number;carbohydrates:number;dietary fiber:number;sugars:number;protein:number;vitamin A:number;vitamin C:number;calcium:number;iron:number],
+
 
 [Ingredient]0..*-0..*[Recipe],
 [Ingredient]0..*-0..*[Grocery Item],
+[Nutrition]++->[Ingredient],
+[Related Ingredient]0..*->[Ingredient],
+[Substitution]0..*->[Ingredient],
+
 
 [Tag]0..*-0..*[Recipe],
 [Tag]0..*-0..*[Ingredient],
 [Tag]0..*-0..*[Grocery Item],
 
-[Ingredient]0..*-0..*[Ingredient]
-[Recipe]0..*-0..*[Recipe]
-[Grocery Item]0..*-0..*[Grocery Item]
-[Tag]0..*-0..*[Tag]
 
+[Recipe]0..*-0..*[Recipe],
+[Grocery Item]0..*-0..*[Grocery Item],
+[Tag]0..*-0..*[Tag],
