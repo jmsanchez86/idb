@@ -1,0 +1,30 @@
+[
+{
+    "title": "gluten_free",
+    "description": "These products are free of gluten which can cause health problems for people with gluten related disorders including Celiac Disease, Non-celiac Gluten Sensitivity, and Gluten Ataxia",
+    "related tags": ["pescatarian", "vegetarian"],
+    "related recipes": [],
+    "related ingredients": ["halibut"],
+    "related grocery items": [222240]
+},
+
+
+{
+    "title": "pescatarian",
+    "description": "These products do not contain meat except they may contain fish",
+    "related tags": ["gluten_free", "italian"],
+    "related recipes": [],
+    "related ingredients": ["bread", "halibut", "linguine", "spaghetti"],
+    "related grocery items": [222240, 200581, 184425, 184816, 97430, 82225]
+},
+
+
+{
+    "title": "mediterranean",
+    "description": "Mediterranean cuisine is the food from teh lands around the Mediterranean Sea, and it distinctly features a diet rich in olive oil, wheat products, and fish",
+    "related tags": ["italian", "pescetarian", "vegetarian"],
+    "related recipes": [],
+    "related ingredients": ["bread", "halibut", "linguine", "spaghetti"],
+    "related grocery items": [222240, 200581, 184425, 184816, 97430, 82225]
+}
+]
