@@ -1,0 +1,775 @@
+[
+    {
+        "spoonacular-id": 333606,
+        "title": "Halibut with Lemon, Capers, and Croutons",
+        "image": "https://spoonacular.com/recipeImages/halibut-with-lemon-capers-and-croutons-333606.jpeg",
+        "ingredients": [
+            {
+                "amount": 1.0,
+                "id": 1001,
+                "name": "butter",
+                "originalString": "1 stick plus 2 tablespoons butter",
+                "unit": "stick",
+                "unitLong": "stick",
+                "unitShort": "stick"
+            },
+            {
+                "amount": 1.0,
+                "id": 2054,
+                "name": "capers",
+                "originalString": "1 to 2 tablespoons capers (depending on taste)",
+                "unit": "tablespoons",
+                "unitLong": "tablespoon",
+                "unitShort": "T"
+            },
+            {
+                "amount": 0.5,
+                "id": 20081,
+                "name": "flour",
+                "originalString": "1/2 cup all-purpose flour",
+                "unit": "cup",
+                "unitLong": "cups",
+                "unitShort": "c"
+            },
+            {
+                "amount": 1.0,
+                "id": 11297,
+                "name": "fresh parsley leaves",
+                "originalString": "1 tablespoon finely chopped fresh parsley leaves",
+                "unit": "tablespoon",
+                "unitLong": "tablespoon",
+                "unitShort": "T"
+            },
+            {
+                "amount": 24.0,
+                "id": 15036,
+                "name": "halibut",
+                "originalString": "4 (6-ounce) pieces halibut (preferably Pacific)",
+                "unit": "ounce",
+                "unitLong": "ounces",
+                "unitShort": "oz"
+            },
+            {
+                "amount": 1.0,
+                "id": 9152,
+                "name": "juice of lemon",
+                "originalString": "1 large lemon, juiced",
+                "unit": "",
+                "unitLong": "",
+                "unitShort": ""
+            },
+            {
+                "amount": 4.0,
+                "id": 2047,
+                "name": "salt and pepper",
+                "originalString": "Salt and freshly ground black pepper",
+                "unit": "servings",
+                "unitLong": "servings",
+                "unitShort": "servings"
+            },
+            {
+                "amount": 6.0,
+                "id": 18069,
+                "name": "white sandwich bread",
+                "originalString": "6 slices stale white sandwich bread, crusts removed and cut into 1/2-inch cubes",
+                "unit": "slices",
+                "unitLong": "slices",
+                "unitShort": "slices"
+            }
+        ],
+        "tags": ["vegan", "vegetarian", "pescetarian"],
+        "instructions": "Directions: In a medium saute pan over medium-high heat, melt 4 tablespoons of the butter. When the foam subsides, fry the cubes of bread until golden and crusty, about 4 to 7 minutes. Remove the croutons from the pan with a slotted spatula and set aside on paper towels to drain. Wipe out the pan.Place the flour on a plate and season well with salt and pepper. Dredge the halibut in the flour and shake off excess.Return the saute pan to the heat and melt 4 more tablespoons of butter. When the foam has subsided add the fish to the pan. Cook, turning once, until the fish is no longer translucent in the center, flakes easily, and is golden brown on both sides, about 4 to 7 minutes per side. Transfer the fish to a serving platter and wipe out the pan.Melt the additional 2 tablespoons of butter, and when the foam subsides add the capers and croutons. Saute briefly, then add the lemon juice and parsley and swirl to combine. Pour over the fish on the serving dish and serve immediately.",
+        "nutrition": [
+            {
+                "amount": 514.47,
+                "percentOfDailyNeeds": 25.72,
+                "title": "Calories",
+                "unit": "cal"
+            },
+            {
+                "amount": 26.55,
+                "percentOfDailyNeeds": 40.85,
+                "title": "Fat",
+                "unit": "g"
+            },
+            {
+                "amount": 15.3,
+                "percentOfDailyNeeds": 95.63,
+                "title": "Saturated Fat",
+                "unit": "g"
+            },
+            {
+                "amount": 30.52,
+                "percentOfDailyNeeds": 10.17,
+                "title": "Carbohydrates",
+                "unit": "g"
+            },
+            {
+                "amount": 1.98,
+                "percentOfDailyNeeds": 2.2,
+                "title": "Sugar",
+                "unit": "g"
+            },
+            {
+                "amount": 144.09,
+                "percentOfDailyNeeds": 48.03,
+                "title": "Cholesterol",
+                "unit": "mg"
+            },
+            {
+                "amount": 751.54,
+                "percentOfDailyNeeds": 32.68,
+                "title": "Sodium",
+                "unit": "mg"
+            },
+            {
+                "amount": 36.93,
+                "percentOfDailyNeeds": 73.87,
+                "title": "Protein",
+                "unit": "g"
+            },
+            {
+                "amount": 91.42,
+                "percentOfDailyNeeds": 130.6,
+                "title": "Selenium",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 13.83,
+                "percentOfDailyNeeds": 69.16,
+                "title": "Vitamin B3",
+                "unit": "mg"
+            },
+            {
+                "amount": 8.42,
+                "percentOfDailyNeeds": 56.12,
+                "title": "Vitamin D",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 0.97,
+                "percentOfDailyNeeds": 48.7,
+                "title": "Vitamin B6",
+                "unit": "mg"
+            },
+            {
+                "amount": 464.51,
+                "percentOfDailyNeeds": 46.45,
+                "title": "Phosphorus",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.92,
+                "percentOfDailyNeeds": 31.98,
+                "title": "Vitamin B12",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 0.41,
+                "percentOfDailyNeeds": 27.35,
+                "title": "Vitamin B1",
+                "unit": "mg"
+            },
+            {
+                "amount": 93.51,
+                "percentOfDailyNeeds": 23.38,
+                "title": "Folate",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 813.18,
+                "percentOfDailyNeeds": 23.23,
+                "title": "Potassium",
+                "unit": "mg"
+            },
+            {
+                "amount": 907.32,
+                "percentOfDailyNeeds": 18.15,
+                "title": "Vitamin A",
+                "unit": "IU"
+            },
+            {
+                "amount": 18.99,
+                "percentOfDailyNeeds": 18.09,
+                "title": "Vitamin K",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 0.35,
+                "percentOfDailyNeeds": 17.55,
+                "title": "Manganese",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.23,
+                "percentOfDailyNeeds": 13.69,
+                "title": "Vitamin B2",
+                "unit": "mg"
+            },
+            {
+                "amount": 2.45,
+                "percentOfDailyNeeds": 13.59,
+                "title": "Iron",
+                "unit": "mg"
+            },
+            {
+                "amount": 53.68,
+                "percentOfDailyNeeds": 13.42,
+                "title": "Magnesium",
+                "unit": "mg"
+            },
+            {
+                "amount": 120.85,
+                "percentOfDailyNeeds": 12.08,
+                "title": "Calcium",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.81,
+                "percentOfDailyNeeds": 12.07,
+                "title": "Vitamin E",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.89,
+                "percentOfDailyNeeds": 8.89,
+                "title": "Vitamin B5",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.08,
+                "percentOfDailyNeeds": 7.2,
+                "title": "Zinc",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.53,
+                "percentOfDailyNeeds": 6.13,
+                "title": "Fiber",
+                "unit": "g"
+            },
+            {
+                "amount": 0.12,
+                "percentOfDailyNeeds": 5.86,
+                "title": "Copper",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.51,
+                "percentOfDailyNeeds": 1.83,
+                "title": "Vitamin C",
+                "unit": "mg"
+            }
+        ],
+        "related recipes": [77261, 187051]
+    },
+    {
+        "spoonacular-id": 77261,
+        "title": "Linguine with Garlicky Breadcrumbs",
+        "image": "https://spoonacular.com/recipeImages/linguine-with-garlicky-breadcrumbs-77261.jpg",
+        "extendedIngredients": [
+            {
+                "amount": 0.25,
+                "id": 1002030,
+                "name": "pepper",
+                "originalString": "1/4 teaspoon freshly ground black pepper",
+                "unit": "teaspoon",
+                "unitLong": "teaspoons",
+                "unitShort": "t"
+            },
+            {
+                "amount": 1.0,
+                "id": 18064,
+                "name": "bread",
+                "originalString": "1 slice day-old hearty white bread (such as Pepperidge Farm), torn",
+                "unit": "slice",
+                "unitLong": "slice",
+                "unitShort": "slice"
+            },
+            {
+                "amount": 0.25,
+                "id": 11297,
+                "name": "fresh parsley",
+                "originalString": "1/4 cup chopped fresh parsley",
+                "unit": "cup",
+                "unitLong": "cups",
+                "unitShort": "c"
+            },
+            {
+                "amount": 6.0,
+                "id": 11215,
+                "name": "garlic cloves",
+                "originalString": "6 garlic cloves, minced",
+                "unit": "",
+                "unitLong": "",
+                "unitShort": ""
+            },
+            {
+                "amount": 2.0,
+                "id": 9152,
+                "name": "lemon juice",
+                "originalString": "2 teaspoons fresh lemon juice",
+                "unit": "teaspoons",
+                "unitLong": "teaspoons",
+                "unitShort": "t"
+            },
+            {
+                "amount": 8.0,
+                "id": 10720420,
+                "name": "linguine",
+                "originalString": "8 ounces uncooked linguine",
+                "unit": "ounces",
+                "unitLong": "ounces",
+                "unitShort": "oz"
+            },
+            {
+                "amount": 2.0,
+                "id": 4053,
+                "name": "olive oil",
+                "originalString": "2 tablespoons olive oil, divided",
+                "unit": "tablespoons",
+                "unitLong": "tablespoons",
+                "unitShort": "T"
+            },
+            {
+                "amount": 0.5,
+                "id": 2047,
+                "name": "salt",
+                "originalString": "1/2 teaspoon salt",
+                "unit": "teaspoon",
+                "unitLong": "teaspoons",
+                "unitShort": "t"
+            }
+        ],
+        "tags": ["vegan", "vegetarian", "pescetarian", "dairy_free"],
+        "instructions": "Preheat oven to 250.Place bread in a food processor; pulse 10 times or until coarse crumbs measure 2/3 cup. Place breadcrumbs on a baking sheet. Bake at 250 for 30 minutes or until dry.Heat 1 1/2 tablespoons oil in a large nonstick skillet over medium heat. Add garlic; cook 30 seconds, stirring constantly. Remove from heat, and let stand 5 minutes. Return pan to heat. Stir in breadcrumbs, and cook 6 minutes or until lightly browned, stirring frequently.Cook pasta according to package directions, omitting salt and fat; drain. Place pasta in a large bowl. Add 1 1/2 teaspoons oil, breadcrumbs, parsley, lemon juice, salt, and black pepper; toss gently to combine. Serve immediately.",
+        "nutrition": [
+            {
+                "amount": 300.05,
+                "percentOfDailyNeeds": 15.0,
+                "title": "Calories",
+                "unit": "cal"
+            },
+            {
+                "amount": 8.16,
+                "percentOfDailyNeeds": 12.55,
+                "title": "Fat",
+                "unit": "g"
+            },
+            {
+                "amount": 1.19,
+                "percentOfDailyNeeds": 7.45,
+                "title": "Saturated Fat",
+                "unit": "g"
+            },
+            {
+                "amount": 47.78,
+                "percentOfDailyNeeds": 15.93,
+                "title": "Carbohydrates",
+                "unit": "g"
+            },
+            {
+                "amount": 2.08,
+                "percentOfDailyNeeds": 2.31,
+                "title": "Sugar",
+                "unit": "g"
+            },
+            {
+                "amount": 0.0,
+                "percentOfDailyNeeds": 0.0,
+                "title": "Cholesterol",
+                "unit": "mg"
+            },
+            {
+                "amount": 333.47,
+                "percentOfDailyNeeds": 14.5,
+                "title": "Sodium",
+                "unit": "mg"
+            },
+            {
+                "amount": 8.54,
+                "percentOfDailyNeeds": 17.08,
+                "title": "Protein",
+                "unit": "g"
+            },
+            {
+                "amount": 66.39,
+                "percentOfDailyNeeds": 63.23,
+                "title": "Vitamin K",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 38.5,
+                "percentOfDailyNeeds": 55.0,
+                "title": "Selenium",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 0.7,
+                "percentOfDailyNeeds": 35.08,
+                "title": "Manganese",
+                "unit": "mg"
+            },
+            {
+                "amount": 127.33,
+                "percentOfDailyNeeds": 12.73,
+                "title": "Phosphorus",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.2,
+                "percentOfDailyNeeds": 9.82,
+                "title": "Copper",
+                "unit": "mg"
+            },
+            {
+                "amount": 2.37,
+                "percentOfDailyNeeds": 9.46,
+                "title": "Fiber",
+                "unit": "g"
+            },
+            {
+                "amount": 36.64,
+                "percentOfDailyNeeds": 9.16,
+                "title": "Magnesium",
+                "unit": "mg"
+            },
+            {
+                "amount": 7.37,
+                "percentOfDailyNeeds": 8.94,
+                "title": "Vitamin C",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.35,
+                "percentOfDailyNeeds": 7.49,
+                "title": "Iron",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.12,
+                "percentOfDailyNeeds": 7.45,
+                "title": "Vitamin E",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.15,
+                "percentOfDailyNeeds": 7.42,
+                "title": "Vitamin B6",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.46,
+                "percentOfDailyNeeds": 7.32,
+                "title": "Vitamin B3",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.98,
+                "percentOfDailyNeeds": 6.52,
+                "title": "Zinc",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.1,
+                "percentOfDailyNeeds": 6.46,
+                "title": "Vitamin B1",
+                "unit": "mg"
+            },
+            {
+                "amount": 317.28,
+                "percentOfDailyNeeds": 6.35,
+                "title": "Vitamin A",
+                "unit": "IU"
+            },
+            {
+                "amount": 22.51,
+                "percentOfDailyNeeds": 5.63,
+                "title": "Folate",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 182.37,
+                "percentOfDailyNeeds": 5.21,
+                "title": "Potassium",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.06,
+                "percentOfDailyNeeds": 3.66,
+                "title": "Vitamin B2",
+                "unit": "mg"
+            },
+            {
+                "amount": 35.84,
+                "percentOfDailyNeeds": 3.58,
+                "title": "Calcium",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.35,
+                "percentOfDailyNeeds": 3.49,
+                "title": "Vitamin B5",
+                "unit": "mg"
+            }
+        ]
+    },
+
+    {
+        "spoonacular-id": 187051,
+        "title": "Linguine with Baby Heirloom Tomatoes and Anchovy Breadcrumbs",
+        "image": "https://spoonacular.com/recipeImages/Linguine-with-Baby-Heirloom-Tomatoes-and-Anchovy-Breadcrumbs-187051.jpg",
+        "ingredients": [
+            {
+                "amount": 6.0,
+                "id": 15001,
+                "name": "anchovy",
+                "originalString": "6 anchovy fillets, mashed to paste with 1 teaspoon oil from can",
+                "unit": "fillet",
+                "unitLong": "fillets",
+                "unitShort": "fillet"
+            },
+            {
+                "amount": 1.0,
+                "id": 10311529,
+                "name": "cherry tomatoes",
+                "originalString": "1 1-pound container baby heirloom tomatoes or cherry tomatoes",
+                "unit": "pound",
+                "unitLong": "pound",
+                "unitShort": "lb"
+            },
+            {
+                "amount": 1.0,
+                "id": 18064,
+                "name": "bread",
+                "originalString": "1 cup coarse fresh breadcrumbs made from crustless country bread",
+                "unit": "cup",
+                "unitLong": "cup",
+                "unitShort": "c"
+            },
+            {
+                "amount": 1.0,
+                "id": 2044,
+                "name": "fresh basil",
+                "originalString": "1 cup thinly sliced fresh basil",
+                "unit": "cup",
+                "unitLong": "cup",
+                "unitShort": "c"
+            },
+            {
+                "amount": 3.0,
+                "id": 11215,
+                "name": "garlic cloves",
+                "originalString": "3 garlic cloves, pressed, divided",
+                "unit": "",
+                "unitLong": "",
+                "unitShort": ""
+            },
+            {
+                "amount": 8.0,
+                "id": 10720420,
+                "name": "linguine",
+                "originalString": "8 ounces linguine",
+                "unit": "ounces",
+                "unitLong": "ounces",
+                "unitShort": "oz"
+            },
+            {
+                "amount": 3.0,
+                "id": 4053,
+                "name": "olive oil",
+                "originalString": "3 tablespoons extra-virgin olive oil, divided",
+                "unit": "tablespoons",
+                "unitLong": "tablespoons",
+                "unitShort": "T"
+            },
+            {
+                "amount": 0.5,
+                "id": 1033,
+                "name": "parmesan cheese",
+                "originalString": "1/2 cup freshly grated Parmesan cheese",
+                "unit": "cup",
+                "unitLong": "cups",
+                "unitShort": "c"
+            }
+        ],
+        "tags": ["pescetarian"],
+        "instructions": "Preparation Cook linguine until just tender but firm tobite. Drain, reserving 1 cup cooking liquid.Heat 1 1/2 tablespoons olive oil inlarge nonstick skillet over medium heat.Add anchovies and 2 garlic cloves, thenbreadcrumbs. Cook breadcrumbs untilgolden, tossing to distribute evenly,about 5 minutes. Scrape crumbs ontoplate and cool. Heat remaining 1 1/2 tablespoons oilin same skillet over medium heat. Addtomatoes and remaining garlic clove.Cover; cook until tomatoes begin to breakdown, 3 to 4 minutes. Using fork, crush 1/4of tomatoes. Add pasta, basil, cheese, and1/2 cup reserved cooking liquid to tomatoes.Toss, adding more liquid if dry. Mix in half ofcrumbs. Season pasta with salt and pepper. Transfer pasta to large shallow bowl;top with remaining breadcrumbs and serve. Test-kitchen tip: To make coarse freshbreadcrumbs, trim the crust off slices of(fresh or stale) country bread. Tear thebread into chunks, then grind it in the processor until coarse crumbs are formed. Per serving: 531 calories, 19 g fat, 5 g fiber Nutritional analysis provided by Bon App\u00e9tit",
+        "nutrients": [
+            {
+                "amount": 404.08,
+                "percentOfDailyNeeds": 20.2,
+                "title": "Calories",
+                "unit": "cal"
+            },
+            {
+                "amount": 15.29,
+                "percentOfDailyNeeds": 23.52,
+                "title": "Fat",
+                "unit": "g"
+            },
+            {
+                "amount": 3.81,
+                "percentOfDailyNeeds": 23.83,
+                "title": "Saturated Fat",
+                "unit": "g"
+            },
+            {
+                "amount": 51.65,
+                "percentOfDailyNeeds": 17.22,
+                "title": "Carbohydrates",
+                "unit": "g"
+            },
+            {
+                "amount": 4.9,
+                "percentOfDailyNeeds": 5.45,
+                "title": "Sugar",
+                "unit": "g"
+            },
+            {
+                "amount": 12.1,
+                "percentOfDailyNeeds": 4.03,
+                "title": "Cholesterol",
+                "unit": "mg"
+            },
+            {
+                "amount": 259.53,
+                "percentOfDailyNeeds": 11.28,
+                "title": "Sodium",
+                "unit": "mg"
+            },
+            {
+                "amount": 15.22,
+                "percentOfDailyNeeds": 30.44,
+                "title": "Protein",
+                "unit": "g"
+            },
+            {
+                "amount": 43.76,
+                "percentOfDailyNeeds": 62.51,
+                "title": "Selenium",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 0.84,
+                "percentOfDailyNeeds": 41.78,
+                "title": "Manganese",
+                "unit": "mg"
+            },
+            {
+                "amount": 27.65,
+                "percentOfDailyNeeds": 33.52,
+                "title": "Vitamin C",
+                "unit": "mg"
+            },
+            {
+                "amount": 35.04,
+                "percentOfDailyNeeds": 33.37,
+                "title": "Vitamin K",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 253.62,
+                "percentOfDailyNeeds": 25.36,
+                "title": "Phosphorus",
+                "unit": "mg"
+            },
+            {
+                "amount": 205.66,
+                "percentOfDailyNeeds": 20.57,
+                "title": "Calcium",
+                "unit": "mg"
+            },
+            {
+                "amount": 971.98,
+                "percentOfDailyNeeds": 19.44,
+                "title": "Vitamin A",
+                "unit": "IU"
+            },
+            {
+                "amount": 2.33,
+                "percentOfDailyNeeds": 15.53,
+                "title": "Vitamin E",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.31,
+                "percentOfDailyNeeds": 15.33,
+                "title": "Copper",
+                "unit": "mg"
+            },
+            {
+                "amount": 2.93,
+                "percentOfDailyNeeds": 14.64,
+                "title": "Vitamin B3",
+                "unit": "mg"
+            },
+            {
+                "amount": 55.84,
+                "percentOfDailyNeeds": 13.96,
+                "title": "Magnesium",
+                "unit": "mg"
+            },
+            {
+                "amount": 2.34,
+                "percentOfDailyNeeds": 13.0,
+                "title": "Iron",
+                "unit": "mg"
+            },
+            {
+                "amount": 447.69,
+                "percentOfDailyNeeds": 12.79,
+                "title": "Potassium",
+                "unit": "mg"
+            },
+            {
+                "amount": 3.05,
+                "percentOfDailyNeeds": 12.18,
+                "title": "Fiber",
+                "unit": "g"
+            },
+            {
+                "amount": 0.23,
+                "percentOfDailyNeeds": 11.73,
+                "title": "Vitamin B6",
+                "unit": "mg"
+            },
+            {
+                "amount": 1.56,
+                "percentOfDailyNeeds": 10.42,
+                "title": "Zinc",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.14,
+                "percentOfDailyNeeds": 9.3,
+                "title": "Vitamin B1",
+                "unit": "mg"
+            },
+            {
+                "amount": 36.46,
+                "percentOfDailyNeeds": 9.12,
+                "title": "Folate",
+                "unit": "\u00b5g"
+            },
+            {
+                "amount": 0.14,
+                "percentOfDailyNeeds": 8.34,
+                "title": "Vitamin B2",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.57,
+                "percentOfDailyNeeds": 5.69,
+                "title": "Vitamin B5",
+                "unit": "mg"
+            },
+            {
+                "amount": 0.19,
+                "percentOfDailyNeeds": 3.12,
+                "title": "Vitamin B12",
+                "unit": "\u00b5g"
+            }
+        ]
+    }
+]
