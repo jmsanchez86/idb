@@ -66,7 +66,7 @@
     "upc": "015100001666",
     "tags": ["egg_free","peanut_free","sulfite_free","nut_free","vegan","no_preservatives","soy_free","msg_free","no_artificial_colors","sugar_free","no_artificial_flavors","vegetarian","no_artificial_ingredients","no_additives","corn_free","pescetarian","dairy_free"],
     "ingredients": ["linguini","long pasta","noodles"],
-    "related grocery items": [5]
+    "related grocery items": [5],
     "images": ["https://spoonacular.com/productImages/82225-312x231.jpg","https://spoonacular.com/productImages/82225-636x393.jpg","https://spoonacular.com/productImages/82225-90x90.jpg"],
 }
 ]
