@@ -4,17 +4,15 @@
 [Ingredient|name:string;image:string;|get_nutrition()],
 [Substitution|ingredient:Ingredient;substitute:Ingredient],
 [Related Ingredient|ingredient:Ingredient;related ingredient:Ingredient],
-[Recipe|name:string;image:string;instructions:string;⁄Total Nutrition:Nutrition|get_total_nutrition()],
+[Recipe|name:string;image:string;instructions:string|get_total_nutrition()],
 [Grocery Item|name:string;image:string;upc:string],
 [Tag|name:string;image:string;description:string],
-[Nutrition|get_nutrients()],
 [Nutrient|type:enumeration;amount:number],
 
 
 [Ingredient]0..*-0..*[Recipe],
 [Ingredient]0..*-0..*[Grocery Item],
-[Nutrient]++->[Nutrition],
-[Nutrition]++->[Ingredient],
+[Nutrient]++->[Ingredient],
 [Related Ingredient]0..*->[Ingredient],
 [Substitution]0..*->[Ingredient],
 
