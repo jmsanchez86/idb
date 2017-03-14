@@ -4,7 +4,7 @@
     "id": 1,
     "title": "linguine",
     "nutrition": [],
-    "recipes": [],
+    "recipes": [2, 3],
     "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
     "substitutes": ["spaghetti"],
     "related ingredients": ["bread", "halibut", "spaghetti"]
@@ -14,7 +14,7 @@
     "id": 2,
     "title": "halibut",
     "nutrition": [],
-    "recipes": [],
+    "recipes": [1],
     "tags": ["italian", "gluten_free", "mediterranean", "pescetarian"],
     "substitutes": [],
     "related ingredients": ["bread", "linguine"]
@@ -24,7 +24,7 @@
     "id": 3,
     "title": "bread",
     "nutrition": [],
-    "recipes": [],
+    "recipes": [1, 2, 3],
     "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
     "substitutes": [],
     "related ingredients": ["linguine", "spaghetti"]
