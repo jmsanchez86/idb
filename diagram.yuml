@@ -5,7 +5,7 @@
 [Substitution|ingredient:Ingredient;substitute:Ingredient],
 [Related Ingredient|ingredient:Ingredient;related ingredient:Ingredient],
 [Recipe|name:string;image:string;instructions:string;⁄Total Nutrition:Nutrition],
-[Grocery Item|name:string;image:string;price:number],
+[Grocery Item|name:string;image:string;upc:string],
 [Tag|name:string;image:string;description:string],
 [Nutrition|calories:number;calories from fat:number;fat:number; saturated fat:number;trans fat:number;cholesterol:number;sodium:number;carbohydrates:number;dietary fiber:number;sugars:number;protein:number;vitamin A:number;vitamin C:number;calcium:number;iron:number],
 
