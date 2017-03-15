@@ -16,7 +16,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import enum
 
-
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:////tmp/test.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -42,7 +41,7 @@ class NutrientCategory(enum.Enum):
 class IngredientNutrient(db.Model):
     ingredient_id     = db.Column(db.Integer, primary_key=True)
     category          = db.Column(db.Enum(NutrientCategory), primary_key=True)
-    unit              = db.Column(db.String(10))
+    quantity_unit     = db.Column(db.String(10))
     quantity          = db.Column(db.Integer)
 
     def __init__(self, ingredient_id, category, quantity):
