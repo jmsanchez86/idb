@@ -124,6 +124,15 @@ img.venn {
   width:auto; /* you can use % */
 }
 
+#grid-results {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
 /* Footer */
 .footer-distributed{
 	background-color: #454851;
