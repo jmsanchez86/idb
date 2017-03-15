@@ -44,9 +44,10 @@ class IngredientNutrient(db.Model):
     quantity_unit     = db.Column(db.String(10))
     quantity          = db.Column(db.Integer)
 
-    def __init__(self, ingredient_id, category, quantity):
+    def __init__(self, ingredient_id, category, quantity_unit, quantity):
         self.ingredient_id = ingredient_id
         self.category = category
+        self.quantity_unit = quantity_unit
         self.quantity = quantity
 
     def __repr__(self):
@@ -61,6 +62,7 @@ class RecipeNutrient(db.Model):
     def __init__(self, ingredient_id, category, quantity):
         self.recipe_id = recipe_id
         self.category = category
+        self.quantity_unit = quantity_unit
         self.quantity = quantity
 
     def __repr__(self):
@@ -85,16 +87,16 @@ class Ingredient(db.Model):
 class RecipeIngredient(db.Model):
     recipe_id       = db.Column(db.Integer, primary_key=True)
     ingredient_id   = db.Column(db.Integer, primary_key=True)
-    quantity_units  = db.Column(db.String(20))
+    quantity_unit   = db.Column(db.String(20))
     quantity        = db.Column(db.Integer)
     quantity_verbal = db.Column(db.String(100))
 
-    def __init__(self, recipe_id, ingredient_id, quantity, quantity_units,
+    def __init__(self, recipe_id, ingredient_id, quantity, quantity_unit,
                  quantity_verbal):
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
         self.quantity = quantity
-        self.quantity_units = quantity_units
+        self.quantity_unit = quantity_unit
         self.quantity_verbal = quantity_verbal
 
     def __repr__(self):
@@ -104,7 +106,7 @@ class Recipe(db.Model):
     recipe_id      = db.Column(db.Integer, primary_key=True)
     spoonacular_id = db.Column(db.Integer, unique=True)
     name           = db.Column(db.String(20), unique=True)
-    image_url      = db.Column(db.String(100), unique=True)
+    image_url      = db.Column(db.String(100))
     instructions   = db.Column(db.String(1000), primary_key=True)
 
     def __init__(self, spoonacular_id, name, image_url, instructions):
@@ -142,7 +144,7 @@ class TagItem(db.Model):
     item_id   = db.Column(db.String(20))
 
     def __repr__(self):
-        return "<Tag Item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
+        return "<Tag item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
 
 class Tag(db.Model):
     tag_name    = db.Column(db.String(20), primary_key=True)
@@ -159,7 +161,7 @@ class GroceryItem(db.Model):
     upc        = db.Column(db.String(20))
 
     def __repr__(self):
-        return "<Grocery Item %d %s>" % (self.grocery_id, self.name)
+        return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
 
 
