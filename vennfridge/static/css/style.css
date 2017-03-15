@@ -79,21 +79,21 @@ body {
 }
 .slide1{
   background-image: url('../images/greens.jpg');
-  height: 600px;
+  height: 400px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 .slide2{
   background-image: url('../images/eggs.jpg');
-  height: 600px;
+  height: 400px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 .slide3{
   background-image: url('../images/strawberries.jpg');
-  height: 600px;
+  height: 400px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
