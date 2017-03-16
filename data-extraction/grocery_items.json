@@ -1,0 +1,72 @@
+[
+{
+    "id": 1,
+    "spoonacular-id": 222240,
+    "title": "Nature's Promise Wild Caught Halibut",
+    "upc": "688267152580", 
+    "tags": ["egg_free","wild_caught","wheat_free","hormone_free","peanut_free","nut_free","soy_free","msg_free","grain_free","no_artificial_colors","sugar_free","no_artificial_flavors","no_artificial_ingredients","pescetarian","corn_free","dairy_free","gluten_free"],
+    "ingredients": ["halibut"],
+    "related grocery items": [],
+    "images": ["https://spoonacular.com/productImages/222240-312x231.jpg", "https://spoonacular.com/productImages/222240-636x393.jpg", "https://spoonacular.com/productImages/222240-90x90.jpg"]
+},
+
+
+{
+    "id": 2,
+    "spoonacular-id": 200581,
+    "title": "Sara Lee Texas Toast Bread, 24 oz",
+    "upc": "072945610804",
+    "tags": ["egg_free","msg_free","peanut_free","no_artificial_colors","vegetarian","no_artificial_flavors","no_artificial_ingredients","nut_free","vegan","pescetarian","dairy_free"],
+    "ingredients": ["bread", "baked goods"],
+    "related grocery items": [],
+    "images": ["https://spoonacular.com/productImages/200581-312x231.jpg","https://spoonacular.com/productImages/200581-636x393.jpg","https://spoonacular.com/productImages/200581-90x90.jpg"]
+},
+
+
+{
+    "id": 3,
+    "spoonacular-id": 184425,
+    "title": "Explore Asian Gluten Free Organic Black Bean Spaghetti Shape",
+    "upc": "650748777599",
+    "tags": ["egg_free","wheat_free","peanut_free","sulfite_free","nut_free","vegan","no_preservatives","soy_free","msg_free","grain_free","no_artificial_colors","no_artificial_flavors","vegetarian","sugar_free","no_artificial_ingredients","no_additives","corn_free","pescetarian","dairy_free","gluten_free","organic"],
+    "ingredients": ["spaghetti","long pasta","noodles"],
+    "related grocery items": [4],
+    "images": ["https://spoonacular.com/productImages/184425-312x231.jpg","https://spoonacular.com/productImages/184425-636x393.jpg","https://spoonacular.com/productImages/184425-90x90.jpg"]
+},
+
+
+{
+    "id": 4,
+    "spoonacular-id": 184816,
+    "title": "Bionaturae Organic Spaghetti 100% Durum Semolina",
+    "upc": "799210555515",
+    "tags": ["egg_free","peanut_free","sulfite_free","nut_free","vegan","no_preservatives","soy_free","msg_free","no_artificial_colors","vegetarian","no_artificial_flavors","sugar_free","no_artificial_ingredients","no_additives","corn_free","pescetarian","dairy_free","organic"],
+    "ingredients": ["spaghetti","long pasta","noodles"],
+    "related grocery items": [3],
+    "images": ["https://spoonacular.com/productImages/184816-312x231.jpg","https://spoonacular.com/productImages/184816-636x393.jpg","https://spoonacular.com/productImages/184816-90x90.jpg"],
+},
+
+
+{
+    "id": 5,
+    "spoonacular-id": 97430,
+    "title": "Bionaturae Linguine Organic 100% Durum Semolina",
+    "upc": "799210545479",
+    "tags": ["egg_free","peanut_free","sulfite_free","nut_free","vegan","no_preservatives","soy_free","msg_free","no_artificial_colors","vegetarian","no_artificial_flavors","sugar_free","no_artificial_ingredients","no_additives","pescetarian","corn_free","dairy_free","organic"],
+    "ingredients": ["linguini","long pasta","noodles"],
+    "related grocery items": [6],
+    "images": ["https://spoonacular.com/productImages/97430-312x231.jpg","https://spoonacular.com/productImages/97430-636x393.jpg","https://spoonacular.com/productImages/97430-90x90.jpg"],
+},
+
+
+{
+    "id": 6,
+    "spoonacular-id": 82225,
+    "title": "Creamette Linguine",
+    "upc": "015100001666",
+    "tags": ["egg_free","peanut_free","sulfite_free","nut_free","vegan","no_preservatives","soy_free","msg_free","no_artificial_colors","sugar_free","no_artificial_flavors","vegetarian","no_artificial_ingredients","no_additives","corn_free","pescetarian","dairy_free"],
+    "ingredients": ["linguini","long pasta","noodles"],
+    "related grocery items": [5],
+    "images": ["https://spoonacular.com/productImages/82225-312x231.jpg","https://spoonacular.com/productImages/82225-636x393.jpg","https://spoonacular.com/productImages/82225-90x90.jpg"],
+}
+]
