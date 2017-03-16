@@ -86,7 +86,8 @@ class Ingredient(db.Model):
     name           = db.Column(db.String(20), unique=True)
     image_url      = db.Column(db.String(100))
 
-    def __init__(self, spoonacular_id, name, image_url):
+    def __init__(self, ingredient_id, spoonacular_id, name, image_url):
+        self.ingredient_id = ingredient_id
         self.spoonacular_id = spoonacular_id
         self.name = name
         self.image_url = image_url
@@ -123,7 +124,8 @@ class Recipe(db.Model):
     image_url      = db.Column(db.String(100))
     instructions   = db.Column(db.String(1000), primary_key=True)
 
-    def __init__(self, spoonacular_id, name, image_url, instructions):
+    def __init__(self, recipe_id, spoonacular_id, name, image_url, instructions):
+        self.recipe_id = recipe_id
         self.spoonacular_id = spoonacular_id
         self.name = name
         self.image_url = image_url
@@ -136,7 +138,7 @@ class Recipe(db.Model):
 
     @property
     def nutrition(self):
-        # Compute and return aggreate nutrition based on ingredients.
+        # Fetch nutrition data.
         pass
 
     def __repr__(self):
@@ -159,6 +161,11 @@ class TagItem(db.Model):
     item_type = db.Column(db.Enum(ItemType), primary_key=True)
     item_id   = db.Column(db.String(20))
 
+    def __init__(self, tag_name, item_type, item_id):
+        self.tag_name = tag_name
+        self.item_type = item_type
+        self.item_id = item_id
+
     def __repr__(self):
         return "<Tag item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
 
@@ -168,6 +175,11 @@ class Tag(db.Model):
     tag_name    = db.Column(db.String(20), primary_key=True)
     image_url   = db.Column(db.String(100))
     description = db.Column(db.String(100))
+
+    def __init__(self, tag_name, image_url, description):
+        self.tag_name = tag_name
+        self.image_url = image_url
+        self.description = description
 
     def __repr__(self):
         return "<Tag %s>" % (self.tag_name)
@@ -180,11 +192,20 @@ class GroceryItem(db.Model):
     image_url  = db.Column(db.String(100))
     upc        = db.Column(db.String(20))
 
+    def __init__(self, grocery_id, name, image_url, upc):
+        self.grocery_id = grocery_id
+        self.name = name
+        self.image_url = image_url
+        self.upc = upc
+
     def __repr__(self):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
 if __name__ == "__main__":
     db.create_all()
+
+    ingredient = Ingredient(1, 1337, "licorice", "licorice.jpg")
+    print(ingredient)
 
     print("sqlalchemy version: %s" % sqlalchemy.__version__)
     print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
