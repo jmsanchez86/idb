@@ -25,28 +25,11 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
-class NutrientCategory(enum.Enum):
-    calories = 1
-    calories_from_fat = 2
-    fat = 3
-    saturated_fat = 4
-    trans_fat = 5
-    cholesterol = 6
-    sodium = 7
-    carbohydrates = 8
-    dietary_fiber = 9
-    sugars = 10
-    protein = 11
-    vitamin_a = 12
-    vitamin_c = 13
-    calcium = 14
-    iron = 15
-
 class IngredientNutrient(db.Model):
     __tablename__ = "ingredient_nutrient"
 
     ingredient_id     = db.Column(db.Integer, primary_key=True)
-    category          = db.Column(db.Enum(NutrientCategory), primary_key=True)
+    category          = db.Column(db.String(10), primary_key=True)
     quantity_unit     = db.Column(db.String(10))
     quantity          = db.Column(db.Integer)
 
@@ -63,7 +46,7 @@ class RecipeNutrient(db.Model):
     __tablename__ = "recipe_nutrient"
 
     recipe_id         = db.Column(db.Integer, primary_key=True)
-    category          = db.Column(db.Enum(NutrientCategory), primary_key=True)
+    category          = db.Column(db.String(10), primary_key=True)
     quantity_unit     = db.Column(db.String(10))
     quantity          = db.Column(db.Integer)
 
