@@ -10,10 +10,10 @@
     {
         "name": "Thomas Cardwell",
         "username": "thomascardwell7",
-        "bio": "",
-        "responsibilities": "",
-        "imgUrl": "",
-        "numberOfUnitTests": "",
+        "bio": "Thomas is a senior at the University of Texas at Austin studying Computer Science and Music Production. He has interned with HEB on their Store Systems IT team, and will be joining HomeAway full-time in the summer of 2017. Thomas also cofounded a music and video production company, InfiniD Music, and dabbles in music and videogames as pastimes.",
+        "responsibilities": "Front-end development, desiged grid pages with React and Bootstrap, assisted with database models and API research.",
+        "imgUrl": "https://thomascardwellsweblog.files.wordpress.com/2017/01/cropped-thomas-headshot.jpg",
+        "numberOfUnitTests": "0",
     },
     {
         "name": "Cory Dunn",
