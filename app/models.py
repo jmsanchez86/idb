@@ -12,12 +12,15 @@
 # the underlying database I think it matters that we know what the
 # values are so they don't change under our noses.
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 import enum
 
+from flask import Flask
+import sqlalchemy
+import flask_sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:////tmp/test.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -39,6 +42,8 @@ class NutrientCategory(enum.Enum):
     iron = 15
 
 class IngredientNutrient(db.Model):
+    __tablename__ = "ingredient_nutrient"
+
     ingredient_id     = db.Column(db.Integer, primary_key=True)
     category          = db.Column(db.Enum(NutrientCategory), primary_key=True)
     quantity_unit     = db.Column(db.String(10))
@@ -54,6 +59,8 @@ class IngredientNutrient(db.Model):
         return "<Ingredient Nutrient %d %s>" % (self.ingredient_id, self.category)
 
 class RecipeNutrient(db.Model):
+    __tablename__ = "recipe_nutrient"
+
     recipe_id         = db.Column(db.Integer, primary_key=True)
     category          = db.Column(db.Enum(NutrientCategory), primary_key=True)
     quantity_unit     = db.Column(db.String(10))
@@ -70,6 +77,8 @@ class RecipeNutrient(db.Model):
 
 
 class Ingredient(db.Model):
+    __tablename__ = "ingredient"
+
     ingredient_id  = db.Column(db.Integer, primary_key=True)
     spoonacular_id = db.Column(db.Integer, unique=True)
     # Does name need to be unique? Is there a possibility for name collision?
@@ -85,6 +94,8 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
 class RecipeIngredient(db.Model):
+    __tablename__ = "recipe_ingredient"
+
     recipe_id       = db.Column(db.Integer, primary_key=True)
     ingredient_id   = db.Column(db.Integer, primary_key=True)
     quantity_unit   = db.Column(db.String(20))
@@ -103,6 +114,8 @@ class RecipeIngredient(db.Model):
         return "<RecipeIngredient %d %d>" % (self.recipe_id, self.ingredient_id)
 
 class Recipe(db.Model):
+    __tablename__ = "recipe"
+
     recipe_id      = db.Column(db.Integer, primary_key=True)
     spoonacular_id = db.Column(db.Integer, unique=True)
     name           = db.Column(db.String(20), unique=True)
@@ -139,6 +152,8 @@ class ItemType(enum.Enum):
     grocery_item = 3
 
 class TagItem(db.Model):
+    __tablename__ = "tag_item"
+
     tag_name  = db.Column(db.String(20), primary_key=True)
     item_type = db.Column(db.Enum(ItemType), primary_key=True)
     item_id   = db.Column(db.String(20))
@@ -147,6 +162,8 @@ class TagItem(db.Model):
         return "<Tag item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
 
 class Tag(db.Model):
+    __tablename__ = "tag"
+
     tag_name    = db.Column(db.String(20), primary_key=True)
     image_url   = db.Column(db.String(100))
     description = db.Column(db.String(100))
@@ -155,6 +172,8 @@ class Tag(db.Model):
         return "<Tag %s>" % (self.tag_name)
 
 class GroceryItem(db.Model):
+    __tablename__ = "grocery_item"
+
     grocery_id = db.Column(db.Integer, primary_key=True)
     name       = db.Column(db.String(20))
     image_url  = db.Column(db.String(100))
@@ -163,5 +182,9 @@ class GroceryItem(db.Model):
     def __repr__(self):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
+if __name__ == "__main__":
+    db.create_all()
 
+    print("sqlalchemy version: %s" % sqlalchemy.__version__)
+    print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
 
