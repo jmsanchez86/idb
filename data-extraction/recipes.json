@@ -7,7 +7,8 @@
         "ingredients": [
             {
                 "amount": 1.0,
-                "id": 1001,
+                "id": 5,
+                "spoonacular-id": 1001,
                 "name": "butter",
                 "originalString": "1 stick plus 2 tablespoons butter",
                 "unit": "stick",
@@ -16,7 +17,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 2054,
+                "id": 6,
+                "spoonacular-id": 2054,
                 "name": "capers",
                 "originalString": "1 to 2 tablespoons capers (depending on taste)",
                 "unit": "tablespoons",
@@ -25,7 +27,8 @@
             },
             {
                 "amount": 0.5,
-                "id": 20081,
+                "id": 7,
+                "spoonacular-id": 20081,
                 "name": "flour",
                 "originalString": "1/2 cup all-purpose flour",
                 "unit": "cup",
@@ -34,7 +37,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 11297,
+                "id": 8,
+                "spoonacular-id": 11297,
                 "name": "fresh parsley leaves",
                 "originalString": "1 tablespoon finely chopped fresh parsley leaves",
                 "unit": "tablespoon",
@@ -43,7 +47,8 @@
             },
             {
                 "amount": 24.0,
-                "id": 15036,
+                "id": 2,
+                "spoonacular-id": 15036,
                 "name": "halibut",
                 "originalString": "4 (6-ounce) pieces halibut (preferably Pacific)",
                 "unit": "ounce",
@@ -52,7 +57,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 9152,
+                "id": 12,
+                "spoonacular-id": 9152,
                 "name": "juice of lemon",
                 "originalString": "1 large lemon, juiced",
                 "unit": "",
@@ -61,7 +67,8 @@
             },
             {
                 "amount": 4.0,
-                "id": 2047,
+                "id": 9,
+                "spoonacular-id": 2047,
                 "name": "salt and pepper",
                 "originalString": "Salt and freshly ground black pepper",
                 "unit": "servings",
@@ -70,7 +77,8 @@
             },
             {
                 "amount": 6.0,
-                "id": 18069,
+                "id": 3,
+                "spoonacular-id": 18069,
                 "name": "white sandwich bread",
                 "originalString": "6 slices stale white sandwich bread, crusts removed and cut into 1/2-inch cubes",
                 "unit": "slices",
@@ -272,7 +280,8 @@
         "extendedIngredients": [
             {
                 "amount": 0.25,
-                "id": 1002030,
+                "id": 10,
+                "spoonacular-id": 1002030,
                 "name": "pepper",
                 "originalString": "1/4 teaspoon freshly ground black pepper",
                 "unit": "teaspoon",
@@ -281,7 +290,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 18064,
+                "id": 3,
+                "spoonacular-id": 18064,
                 "name": "bread",
                 "originalString": "1 slice day-old hearty white bread (such as Pepperidge Farm), torn",
                 "unit": "slice",
@@ -290,7 +300,8 @@
             },
             {
                 "amount": 0.25,
-                "id": 11297,
+                "id": 8,
+                "spoonacular-id": 11297,
                 "name": "fresh parsley",
                 "originalString": "1/4 cup chopped fresh parsley",
                 "unit": "cup",
@@ -299,7 +310,8 @@
             },
             {
                 "amount": 6.0,
-                "id": 11215,
+                "id": 11,
+                "spoonacular-id": 11215,
                 "name": "garlic cloves",
                 "originalString": "6 garlic cloves, minced",
                 "unit": "",
@@ -308,7 +320,8 @@
             },
             {
                 "amount": 2.0,
-                "id": 9152,
+                "id": 12,
+                "spoonacular-id": 9152,
                 "name": "lemon juice",
                 "originalString": "2 teaspoons fresh lemon juice",
                 "unit": "teaspoons",
@@ -317,7 +330,8 @@
             },
             {
                 "amount": 8.0,
-                "id": 10720420,
+                "id": 1,
+                "spoonacular-id": 10720420,
                 "name": "linguine",
                 "originalString": "8 ounces uncooked linguine",
                 "unit": "ounces",
@@ -326,7 +340,8 @@
             },
             {
                 "amount": 2.0,
-                "id": 4053,
+                "id": 13,
+                "spoonacular-id": 4053,
                 "name": "olive oil",
                 "originalString": "2 tablespoons olive oil, divided",
                 "unit": "tablespoons",
@@ -335,7 +350,8 @@
             },
             {
                 "amount": 0.5,
-                "id": 2047,
+                "id": 9,
+                "spoonacular-id": 2047,
                 "name": "salt",
                 "originalString": "1/2 teaspoon salt",
                 "unit": "teaspoon",
@@ -525,7 +541,8 @@
         "ingredients": [
             {
                 "amount": 6.0,
-                "id": 15001,
+                "id": 14,
+                "spoonacular-id": 15001,
                 "name": "anchovy",
                 "originalString": "6 anchovy fillets, mashed to paste with 1 teaspoon oil from can",
                 "unit": "fillet",
@@ -534,7 +551,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 10311529,
+                "id": 15,
+                "spoonacular-id": 10311529,
                 "name": "cherry tomatoes",
                 "originalString": "1 1-pound container baby heirloom tomatoes or cherry tomatoes",
                 "unit": "pound",
@@ -543,7 +561,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 18064,
+                "id": 3,
+                "spoonacular-id": 18064,
                 "name": "bread",
                 "originalString": "1 cup coarse fresh breadcrumbs made from crustless country bread",
                 "unit": "cup",
@@ -552,7 +571,8 @@
             },
             {
                 "amount": 1.0,
-                "id": 2044,
+                "id": 16,
+                "spoonacular-id": 2044,
                 "name": "fresh basil",
                 "originalString": "1 cup thinly sliced fresh basil",
                 "unit": "cup",
@@ -561,7 +581,8 @@
             },
             {
                 "amount": 3.0,
-                "id": 11215,
+                "id": 11,
+                "spoonacular-id": 11215,
                 "name": "garlic cloves",
                 "originalString": "3 garlic cloves, pressed, divided",
                 "unit": "",
@@ -570,7 +591,8 @@
             },
             {
                 "amount": 8.0,
-                "id": 10720420,
+                "id": 1,
+                "spoonacular-id": 10720420,
                 "name": "linguine",
                 "originalString": "8 ounces linguine",
                 "unit": "ounces",
@@ -579,7 +601,8 @@
             },
             {
                 "amount": 3.0,
-                "id": 4053,
+                "id": 13,
+                "spoonacular-id": 4053,
                 "name": "olive oil",
                 "originalString": "3 tablespoons extra-virgin olive oil, divided",
                 "unit": "tablespoons",
@@ -588,7 +611,8 @@
             },
             {
                 "amount": 0.5,
-                "id": 1033,
+                "id": 17,
+                "spoonacular-id": 1033,
                 "name": "parmesan cheese",
                 "originalString": "1/2 cup freshly grated Parmesan cheese",
                 "unit": "cup",
