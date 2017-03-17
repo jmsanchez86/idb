@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Noel Benzinger",
+        "username": "noelbenz",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": "",
+    },
+    {
+        "name": "Thomas Cardwell",
+        "username": "thomascardwell7",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": "",
+    },
+    {
+        "name": "Cory Dunn",
+        "username": "CoryDunn",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": "",
+    },
+    {
+        "name": "Scott Hornberger",
+        "username": "scott-hornberger",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": "",
+    },
+    {
+        "name": "Scott Munro",
+        "username": "scottnm",
+        "bio": "Scott is a Senior at the University of Texas at Austin studying Computer Science. In the past he's interned with Google and Microsoft, and will be returning fulltime to Microsoft in the Fall of 2017. In his free time Scott enjoys playing videogames, listening to crazy music, and poorly quoting old episodes of the Simpsons.",
+        "responsibilities": "Setup Google Cloud Platform, helped design database models, scraped data for the database, led Agile Development.",
+        "imgUrl": "https://scottnm.github.io/images/profile_pic.jpg",
+        "numberOfUnitTests": "0",
+    },
+    {
+        "name": "Jose Sanchez",
+        "username": "jmsanchez86",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": "",
+    }
+]

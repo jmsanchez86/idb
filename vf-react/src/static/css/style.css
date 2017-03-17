@@ -1,0 +1,173 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #FFFEFE;
+
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+}
+
+/* Navbar */
+#logohome {
+  font-family: Dosis, sans-serif;
+  font-size: 50px;
+  font-weight: 800;
+  text-transform: lowercase;
+  color:#FFFEFE;
+  padding-top: 10px;
+}
+.navbar {
+  border-style: none;
+  border-radius: 0%;
+  z-index: 1000;
+  padding: 50px 0px 20px 0px;
+  background-color:#FC5D30;
+
+  box-shadow: 0  1px 15px 0px #292929;
+}
+.navbar-default .navbar-nav > li > a {
+   color: #FFFEFE; /*Change active text color here*/
+   font-size: 24px;
+   font-family: Raleway, san-serif;
+   text-transform: capitalize;
+}
+.nav > li > a:hover,
+.nav > li > a:focus {
+   text-decoration: none;
+   color: #FFFEFE; /*Change rollover cell color here*/
+ }
+
+/* This changes when navbar collapses */
+ @media (max-width: 900px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+}
+
+/* Carousel */
+
+#myCarousel {
+  z-idex:0;
+  width:auto;
+  margin-top: -40px;
+  box-shadow: 0 1px 15px 0px #292929;
+}
+.slide1{
+  background-image: url('../images/greens.jpg');
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.slide2{
+  background-image: url('../images/eggs.jpg');
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.slide3{
+  background-image: url('../images/strawberries.jpg');
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Main Text */
+#main-text {
+  margin-top: 80px;
+  margin-bottom:80px;
+
+}
+.container h2 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 80px;
+}
+.container h4 {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+.container p {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+}
+img.venn {
+  height: 30px;
+  width:auto; /* you can use % */
+}
+
+#grid-results {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  margin: 40px;
+}
+
+/* Footer */
+.footer-distributed{
+	background-color: #454851;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: normal 16px;
+  font-family: Raleway;
+
+	padding: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  box-shadow: 0 2px 15px 0px #292929;
+}
+.footer-distributed .footer-left p{
+	color:  #FFFEF9;
+	font-size: 14px;
+	margin: 0;
+}
