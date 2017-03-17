@@ -19,45 +19,14 @@ import sqlalchemy
 import flask_sqlalchemy
 from flask_sqlalchemy import SQLAlchemy
 
+
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
-class IngredientNutrient(db.Model):
-    __tablename__ = "ingredient_nutrient"
-
-    ingredient_id     = db.Column(db.Integer, primary_key=True)
-    category          = db.Column(db.String(10), primary_key=True)
-    quantity_unit     = db.Column(db.String(10))
-    quantity          = db.Column(db.Integer)
-
-    def __init__(self, ingredient_id, category, quantity_unit, quantity):
-        self.ingredient_id = ingredient_id
-        self.category = category
-        self.quantity_unit = quantity_unit
-        self.quantity = quantity
-
-    def __repr__(self):
-        return "<Ingredient Nutrient %d %s>" % (self.ingredient_id, self.category)
-
-class RecipeNutrient(db.Model):
-    __tablename__ = "recipe_nutrient"
-
-    recipe_id         = db.Column(db.Integer, primary_key=True)
-    category          = db.Column(db.String(10), primary_key=True)
-    quantity_unit     = db.Column(db.String(10))
-    quantity          = db.Column(db.Integer)
-
-    def __init__(self, ingredient_id, category, quantity):
-        self.recipe_id = recipe_id
-        self.category = category
-        self.quantity_unit = quantity_unit
-        self.quantity = quantity
-
-    def __repr__(self):
-        return "<Recipe Nutrient %d %s>" % (self.recipe_id, self.category)
 
 
 class Ingredient(db.Model):
@@ -77,26 +46,6 @@ class Ingredient(db.Model):
 
     def __repr__(self):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
-
-class RecipeIngredient(db.Model):
-    __tablename__ = "recipe_ingredient"
-
-    recipe_id       = db.Column(db.Integer, primary_key=True)
-    ingredient_id   = db.Column(db.Integer, primary_key=True)
-    quantity_unit   = db.Column(db.String(20))
-    quantity        = db.Column(db.Integer)
-    quantity_verbal = db.Column(db.String(100))
-
-    def __init__(self, recipe_id, ingredient_id, quantity, quantity_unit,
-                 quantity_verbal):
-        self.recipe_id = recipe_id
-        self.ingredient_id = ingredient_id
-        self.quantity = quantity
-        self.quantity_unit = quantity_unit
-        self.quantity_verbal = quantity_verbal
-
-    def __repr__(self):
-        return "<RecipeIngredient %d %d>" % (self.recipe_id, self.ingredient_id)
 
 class Recipe(db.Model):
     __tablename__ = "recipe"
@@ -126,31 +75,6 @@ class Recipe(db.Model):
 
     def __repr__(self):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
-
-class ItemType(enum.Enum):
-    """
-    Enumerate items that tags can be associated with. This is necessary to
-    distinguish the item_id field since it will not be unique
-    on its own (i.e. some recipe_id and ingredient_id share the same value.)
-    """
-    recipe = 1
-    ingredient = 2
-    grocery_item = 3
-
-class TagItem(db.Model):
-    __tablename__ = "tag_item"
-
-    tag_name  = db.Column(db.String(20), primary_key=True)
-    item_type = db.Column(db.Enum(ItemType), primary_key=True)
-    item_id   = db.Column(db.String(20))
-
-    def __init__(self, tag_name, item_type, item_id):
-        self.tag_name = tag_name
-        self.item_type = item_type
-        self.item_id = item_id
-
-    def __repr__(self):
-        return "<Tag item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
 
 class Tag(db.Model):
     __tablename__ = "tag"
@@ -184,11 +108,120 @@ class GroceryItem(db.Model):
     def __repr__(self):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
+
+
+
+
+class IngredientNutrient(db.Model):
+    __tablename__ = "ingredient_nutrient"
+
+    ingredient_id     = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
+    category          = db.Column(db.String(10), primary_key=True)
+    quantity_unit     = db.Column(db.String(10))
+    quantity          = db.Column(db.Integer)
+
+    ingredient = db.relationship("Ingredient", back_populates="nutrients")
+
+    def __init__(self, ingredient_id, category, quantity_unit, quantity):
+        self.ingredient_id = ingredient_id
+        self.category = category
+        self.quantity_unit = quantity_unit
+        self.quantity = quantity
+
+    def __repr__(self):
+        return "<Ingredient Nutrient %d %s>" % (self.ingredient_id, self.category)
+
+Ingredient.nutrients = db.relationship("IngredientNutrient", back_populates="ingredient")
+
+class RecipeNutrient(db.Model):
+    __tablename__ = "recipe_nutrient"
+
+    recipe_id         = db.Column(db.Integer, primary_key=True)
+    category          = db.Column(db.String(10), primary_key=True)
+    quantity_unit     = db.Column(db.String(10))
+    quantity          = db.Column(db.Integer)
+
+    def __init__(self, ingredient_id, category, quantity):
+        self.recipe_id = recipe_id
+        self.category = category
+        self.quantity_unit = quantity_unit
+        self.quantity = quantity
+
+    def __repr__(self):
+        return "<Recipe Nutrient %d %s>" % (self.recipe_id, self.category)
+
+
+class RecipeIngredient(db.Model):
+    __tablename__ = "recipe_ingredient"
+
+    recipe_id       = db.Column(db.Integer, primary_key=True)
+    ingredient_id   = db.Column(db.Integer, primary_key=True)
+    quantity_unit   = db.Column(db.String(20))
+    quantity        = db.Column(db.Integer)
+    quantity_verbal = db.Column(db.String(100))
+
+    def __init__(self, recipe_id, ingredient_id, quantity, quantity_unit,
+                 quantity_verbal):
+        self.recipe_id = recipe_id
+        self.ingredient_id = ingredient_id
+        self.quantity = quantity
+        self.quantity_unit = quantity_unit
+        self.quantity_verbal = quantity_verbal
+
+    def __repr__(self):
+        return "<RecipeIngredient %d %d>" % (self.recipe_id, self.ingredient_id)
+
+class ItemType(enum.Enum):
+    """
+    Enumerate items that tags can be associated with. This is necessary to
+    distinguish the item_id field since it will not be unique
+    on its own (i.e. some recipe_id and ingredient_id share the same value.)
+    """
+    recipe = 1
+    ingredient = 2
+    grocery_item = 3
+
+class TagItem(db.Model):
+    __tablename__ = "tag_item"
+
+    tag_name  = db.Column(db.String(20), primary_key=True)
+    item_type = db.Column(db.Enum(ItemType), primary_key=True)
+    item_id   = db.Column(db.String(20))
+
+    def __init__(self, tag_name, item_type, item_id):
+        self.tag_name = tag_name
+        self.item_type = item_type
+        self.item_id = item_id
+
+    def __repr__(self):
+        return "<Tag item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
+
+
+
+
 if __name__ == "__main__":
+
+    print("sqlalchemy version: %s" % sqlalchemy.__version__)
+    print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
+
     db.create_all()
 
-    ingredient = Ingredient(1, 1337, "licorice", "licorice.jpg")
-    print(ingredient)
+    licorice = Ingredient(1, 1337, "licorice", "licorice.jpg")
+    db.session.add(licorice)
+
+    query = db.session.query(Ingredient).filter_by(name="licorice")
+    result = query.first()
+    assert(result is licorice)
+    assert(result == licorice)
+
+    surgar = IngredientNutrient(1, "surgar", "kilograms", 100)
+    db.session.add(surgar)
+    calories = IngredientNutrient(1, "calories", "calories", 9001)
+    db.session.add(calories)
+    iron = IngredientNutrient(1, "iron", "grams", 123)
+    db.session.add(iron)
+
+    assert(set(licorice.nutrients) == {surgar, calories, iron})
 
     print("sqlalchemy version: %s" % sqlalchemy.__version__)
     print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
