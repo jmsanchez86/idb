@@ -28,7 +28,7 @@
       <div class="collapse navbar-collapse" id="lg-group">
         <ul class="nav navbar-nav">
           <li><a href="#">Ingredients</a></li>
-          <li><a href="#./grid.html">Recipes</a></li>
+          <li><a href="./grid.html">Recipes</a></li>
           <li><a href="#">Grocery Items</a></li>
           <li><a href="#">Badges</a></li>
         </ul>
@@ -40,62 +40,76 @@
   </nav>
 
 <div id="unique-content">
-     <!--Main Text-->
+
+    <!--Recipe Layout-->
+    <div id="recipe_main" class="container-fluid">
+      <div class="row">
+
+      <!--Icon Legend-->
+        <div class="col-lg-2">
+          <table class="table table-hover">
+            <tr><th>Legend</th></tr>
+            <tr><td><span class="glyphicon glyphicon-apple"></span> - contains fruit</td></tr>
+            <tr><td><span class="glyphicon glyphicon-leaf"></span> - vegetarian</td></tr>
+            <tr><td><span class="glyphicon glyphicon-piggy-bank"></span> - contains pork</td></tr>
+            <tr><td><span class="glyphicon glyphicon-tint"></span> - made with water</td></tr>
+            <tr><td><span class="glyphicon glyphicon-fire"></span> - spicy</td></tr>
+          </table> 
+        </div>
+
+      <!--Featured Recipe Image-->
+        <div class="col-lg-4">
+          <img  id="recp_img" src="../static/images/eggs.jpg"  class="img-responsive" alt="Eggs"/>
+
+          <ul id="tags">
+            <li><span class="glyphicon glyphicon-apple"></span></li>
+            <li><span class="glyphicon glyphicon-leaf"></span></li>
+            <li><span class="glyphicon glyphicon-piggy-bank"></span></li>
+            <li><span class="glyphicon glyphicon-tint"></span></li>
+            <li><span class="glyphicon glyphicon-fire"></span></li>
+          </ul>
+
+        </div>
+      <!--Ingredients-->
+        <div class="col-lg-4">
+          <table class="table">
+            <tr><th>Ingredients</th></tr>
+            <tr><td>
+              <ul>
+                <li><a href="#"/>5 Eggs</li>
+                <li><a href="#"/>5 Cuts of Pork</li>
+                <li><a href="#"/>2 Pints of Water</li>
+                <li><a href="#"/>2 Apples</li>
+              </ul>
+            </td></tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Directions-->
+    <div id="directions" class="container">
+        <h1> Cooking Directions </h1>
+        <ol>
+          <li><p>Grab ingredients.</p></li>
+          <li><p>Grab utensils.</p></li>
+          <li><p>Prepare apples by cutting them into the approatize of 15x15cm.</p></li>
+          <li><p>Separate the egg yolks from the egg whites.</p></li>
+          <li><p>Sear pork cuts until burnt.</p></li>
+          <li><p>Add water.</p></li>
+        </ol>
+    </div>
+ 
+
+    <!--Main Text-->
     <div id="main-text" class="container">
       <div class="col-sm-8 col-sm-offset-2 text-center">
-        <h4>Nom nom nom...</h4>
+        <h4>Time to get cooking!</h4>
         <img class="venn" src="../static/images/diagram.png" />
         <p>Let us help you help yourself to some tasty food.</p>
       </div><!--/col-->
     </div><!--/container-->
-     
-     <!--Grid Content-->
-    <div id="grid-results" class="row">
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="../static/images/diagram.png">
-            <div class="caption">
-                <h3>MegaCool Recipe</h3>
-                <p>This is totally the first part of the best MegaCool you have ever eaten...</p>
-                <p><a href="#" class="btn btn-primary" role="button">Get Recipe</a> <a href="#" class="btn btn-default" role="button">Find More Like This</a></p>
-            </div>
-          </div>
-        </div>
-       
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <img src="../static/images/eggs.jpg">
-            <div class="caption">
-                <h3>MegaCool 2 Recipe</h3>
-                <p>This is totally the egg part of the best MegaCool you have ever eaten...</p>
-                <p><a href="./page.html" class="btn btn-primary" role="button">Get Recipe</a> <a href="#" class="btn btn-default" role="button">Find More Like This</a></p>
-            </div>
-            </div>
-        </div>
-        
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <img src="../static/images/greens.jpg">
-            <div class="caption">
-                <h3>MegaLeek Recipe</h3>
-                <p>Chefs around the universe agree, when you put leeks with onions, you win...</p>
-                <p><a href="#" class="btn btn-primary" role="button">Get Recipe</a> <a href="#" class="btn btn-default" role="button">Find More Like This</a></p>
-            </div>
-            </div>
-        </div>
-        
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <img src="../static/images/strawberries.jpg">
-            <div class="caption">
-                <h3>MegaStrawberry Recipe</h3>
-                <p>Snozberries? What's a Snozberry?</p>
-                <p><a href="#" class="btn btn-primary" role="button">Get Recipe</a> <a href="#" class="btn btn-default" role="button">Find More Like This</a></p>
-            </div>
-            </div>
-        </div>
-    
-    </div><!--/grid-->
 </div>
 
 
