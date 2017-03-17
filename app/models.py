@@ -63,16 +63,6 @@ class Recipe(db.Model):
         self.image_url = image_url
         self.instructions = instructions
 
-    @property
-    def ingredients(self):
-        # Return a list of RecipeIngredients.
-        pass
-
-    @property
-    def nutrition(self):
-        # Fetch nutrition data.
-        pass
-
     def __repr__(self):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
@@ -129,47 +119,57 @@ class IngredientNutrient(db.Model):
         self.quantity = quantity
 
     def __repr__(self):
-        return "<Ingredient Nutrient %d %s>" % (self.ingredient_id, self.category)
+        return "<IngredientNutrient %d %s>" % (self.ingredient_id, self.category)
 
 Ingredient.nutrients = db.relationship("IngredientNutrient", back_populates="ingredient")
 
 class RecipeNutrient(db.Model):
     __tablename__ = "recipe_nutrient"
 
-    recipe_id         = db.Column(db.Integer, primary_key=True)
+    recipe_id         = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
     category          = db.Column(db.String(10), primary_key=True)
     quantity_unit     = db.Column(db.String(10))
     quantity          = db.Column(db.Integer)
 
-    def __init__(self, ingredient_id, category, quantity):
+    recipe = db.relationship("Recipe", back_populates="nutrients")
+
+    def __init__(self, recipe_id, category, quantity_unit, quantity):
         self.recipe_id = recipe_id
         self.category = category
         self.quantity_unit = quantity_unit
         self.quantity = quantity
 
     def __repr__(self):
-        return "<Recipe Nutrient %d %s>" % (self.recipe_id, self.category)
+        return "<RecipeNutrient %d %s>" % (self.recipe_id, self.category)
+
+Recipe.nutrients = db.relationship("RecipeNutrient", back_populates="recipe")
 
 
 class RecipeIngredient(db.Model):
     __tablename__ = "recipe_ingredient"
 
-    recipe_id       = db.Column(db.Integer, primary_key=True)
+    recipe_id       = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
     ingredient_id   = db.Column(db.Integer, primary_key=True)
     quantity_unit   = db.Column(db.String(20))
     quantity        = db.Column(db.Integer)
     quantity_verbal = db.Column(db.String(100))
 
-    def __init__(self, recipe_id, ingredient_id, quantity, quantity_unit,
+    recipe = db.relationship("Recipe", back_populates="ingredients")
+
+    def __init__(self, recipe_id, ingredient_id, quantity_unit, quantity,
                  quantity_verbal):
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
-        self.quantity = quantity
         self.quantity_unit = quantity_unit
+        self.quantity = quantity
         self.quantity_verbal = quantity_verbal
 
     def __repr__(self):
         return "<RecipeIngredient %d %d>" % (self.recipe_id, self.ingredient_id)
+
+Recipe.ingredients = db.relationship("RecipeIngredient", back_populates="recipe")
+
+
 
 class ItemType(enum.Enum):
     """
@@ -194,7 +194,7 @@ class TagItem(db.Model):
         self.item_id = item_id
 
     def __repr__(self):
-        return "<Tag item %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
+        return "<TagItem %s %s %d>" % (self.tag_name, self.item_type, self.item_id)
 
 
 
@@ -206,22 +206,92 @@ if __name__ == "__main__":
 
     db.create_all()
 
-    licorice = Ingredient(1, 1337, "licorice", "licorice.jpg")
-    db.session.add(licorice)
+    data = Ingredient(1, 1337, "licorice", "licorice.jpg")
+    db.session.add(data)
+    data = Ingredient(2, 11784, "lettuce", "lettuce.jpg")
+    db.session.add(data)
+    data = Ingredient(3, 900, "bread", "bread.jpg")
+    db.session.add(data)
 
+    data = IngredientNutrient(1, "surgar", "kilograms", 100)
+    db.session.add(data)
+    data = IngredientNutrient(1, "calories", "calories", 9001)
+    db.session.add(data)
+    data = IngredientNutrient(1, "iron", "grams", 123)
+    db.session.add(data)
+
+    data = IngredientNutrient(2, "surgar", "grams", 50)
+    db.session.add(data)
+    data = IngredientNutrient(2, "calories", "joules", 1001)
+    db.session.add(data)
+    data = IngredientNutrient(2, "iron", "miligrams", 150)
+    db.session.add(data)
+
+    data = Recipe(1, 981, "licorlettuce", "licorlettuce.jpg",
+        "Blend licorice and lettuce to a liquid consistency. Serve.")
+    db.session.add(data)
+    data = Recipe(2, 322, "sandwich", "sandwich.jpg",
+        "Insert lettuce between two slices of bread.")
+    db.session.add(data)
+
+    data = RecipeNutrient(1, "surgar", "kilograms", 1)
+    db.session.add(data)
+    data = RecipeNutrient(1, "calories", "calories", 2)
+    db.session.add(data)
+    data = RecipeNutrient(1, "iron", "grams", 3)
+    db.session.add(data)
+
+    data = RecipeIngredient(1, 1, "grams", 50, "50 grams of licorice")
+    db.session.add(data)
+    data = RecipeIngredient(1, 2, "grams", 100, "100 grams of lettuce")
+    db.session.add(data)
+
+    data = RecipeNutrient(2, "surgar", "meters", 82)
+    db.session.add(data)
+    data = RecipeNutrient(2, "calories", "calories", 23)
+    db.session.add(data)
+    data = RecipeNutrient(2, "iron", "micrograms", 166)
+    db.session.add(data)
+
+    data = RecipeIngredient(2, 2, "grams", 50, "1 leaf of lettuce")
+    db.session.add(data)
+    data = RecipeIngredient(2, 3, "grams", 100, "2 slices of bread")
+    db.session.add(data)
+
+
+    db.session.commit()
+
+    # Ingredient by name.
     query = db.session.query(Ingredient).filter_by(name="licorice")
-    result = query.first()
-    assert(result is licorice)
-    assert(result == licorice)
+    licorice = query.first()
+    assert(licorice.ingredient_id == 1)
 
-    surgar = IngredientNutrient(1, "surgar", "kilograms", 100)
-    db.session.add(surgar)
-    calories = IngredientNutrient(1, "calories", "calories", 9001)
-    db.session.add(calories)
-    iron = IngredientNutrient(1, "iron", "grams", 123)
-    db.session.add(iron)
+    # Nutrition data of an ingredient.
+    nutrients = licorice.nutrients
+    nutrient_data = set((n.category, n.quantity_unit, n.quantity)
+                        for n in nutrients)
+    assert(nutrient_data == {("surgar", "kilograms", 100),
+                             ("calories", "calories", 9001),
+                             ("iron", "grams", 123)})
 
-    assert(set(licorice.nutrients) == {surgar, calories, iron})
+    # Recipe by name.
+    query = db.session.query(Recipe).filter_by(name="sandwich")
+    sandwich = query.first()
+    assert(sandwich.recipe_id == 2)
+
+    # Nutrition data for recipe.
+    nutrients = sandwich.nutrients
+    nutrient_data = set((n.category, n.quantity_unit, n.quantity)
+                        for n in nutrients)
+    assert(nutrient_data == {("surgar", "meters", 82),
+                             ("calories", "calories", 23),
+                             ("iron", "micrograms", 166)})
+
+    # Ingredients of a recipe.
+    ingredients = sandwich.ingredients
+    ingredient_data = set((i.ingredient_id, i.quantity_unit, i.quantity)
+                          for i in ingredients)
+    assert(ingredient_data == {(2, "grams", 50), (3, "grams", 100)})
 
     print("sqlalchemy version: %s" % sqlalchemy.__version__)
     print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
