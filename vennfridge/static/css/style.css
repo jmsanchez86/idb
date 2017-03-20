@@ -149,6 +149,42 @@ img.venn {
   margin-right: 40px;
 }
 
+/* Recepie Page */
+#recipe_main {
+  background-color: #FFDCCC;
+}
+#recipe_main table {
+  background-color: white;
+  border: solid;
+  margin: 10px;
+  font-size: 20px;
+}
+#recp_img {
+  height: 150%;
+  width: 150%;
+  padding: 15px;
+}
+#tags {
+  list-style-type: none;
+  padding: 0px;
+}
+#tags li {
+  float: left;
+  padding: 10px;
+}
+.glyphicon {
+  font-size: 25px;
+}
+#directions {
+  background-color: #FFEEE6;
+  font-size: 25px;
+  border: solid;
+  border-radius: 25px;
+}
+#directions h1 {
+  text-align: center;
+}
+
 /* Footer */
 .footer-distributed{
 	background-color: #454851;
