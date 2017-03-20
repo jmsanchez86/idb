@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Noel Benzinger",
+        "username": "ndbenzinger",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": ""
+    },
+   {
+        "name": "Thomas Cardwell",
+        "username": "thomascardwell7",
+        "bio": "Thomas is a senior at the University of Texas at Austin studying Computer Science and Music Production. He has interned with HEB on their Store Systems IT team, and will be joining HomeAway full-time in the summer of 2017. Thomas also cofounded a music and video production company, InfiniD Music, and dabbles in music and videogames as pastimes.",
+        "responsibilities": "Front-end development, designed grid pages with React and Bootstrap, assisted with database models and API research.",
+        "imgUrl": "https://thomascardwellsweblog.files.wordpress.com/2017/01/cropped-thomas-headshot.jpg",
+        "numberOfUnitTests": "0"
+    },
+    {
+        "name": "Cory Dunn",
+        "username": "CoryDunn",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": ""
+    },
+    {
+        "name": "Scott Hornberger",
+        "username": "scott-hornberger",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": ""
+    },
+    {
+        "name": "Scott Munro",
+        "username": "scottnm",
+        "bio": "Scott is a Senior at the University of Texas at Austin studying Computer Science. In the past he's interned with Google and Microsoft, and will be returning fulltime to Microsoft in the Fall of 2017. In his free time Scott enjoys playing videogames, listening to crazy music, and poorly quoting old episodes of the Simpsons.",
+        "responsibilities": "Setup Google Cloud Platform, helped design database models, scraped data for the database, led Agile Development.",
+        "imgUrl": "https://scottnm.github.io/images/profile_pic.jpg",
+        "numberOfUnitTests": "0"
+    },
+    {
+        "name": "Jose Sanchez",
+        "username": "jmsanchez86",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": ""
+    }
+]
