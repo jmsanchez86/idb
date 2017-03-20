@@ -15,7 +15,7 @@
 [Grocery Item]0..*-0..*[Grocery Item], 
 
 [Ingredient]1-0..*[IngredientAmount], 
-[Ingredient]0..*-0..*[Grocery Item], 
+[Ingredient]1-0..*[Grocery Item], 
 [Ingredient]0..*-0..*[Ingredient],
 [Ingredient]0..*-0..*[IngNutrient],
 
