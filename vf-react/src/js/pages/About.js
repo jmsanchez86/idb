@@ -111,9 +111,9 @@ export default class Settings extends React.Component {
         </div>);});
 
     return (
-      <div>
+      <div id="unique-content">
 
-        <div id="main-text" class="container">
+        <div class="container">
           <div class="col-sm-8 col-sm-offset-2 text-center">
             <h2>Meat the team</h2>
             <img class="venn" src="../static/images/diagram.png" />
