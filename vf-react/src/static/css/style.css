@@ -41,7 +41,6 @@ ul.nav a:hover {
 }
 #logohome:hover {
   color: rgba(255,255,255,0.8);
-
 }
 
 .navbar {
@@ -61,7 +60,7 @@ ul.nav a:hover {
 }
 
 /* This changes when navbar collapses */
- @media (max-width: 900px) {
+ @media (max-width: 1100px) {
   .navbar-header {
       float: none;
   }
@@ -98,8 +97,32 @@ ul.nav a:hover {
   }
 }
 
-/* Carousel */
+.glyphicon-cutlery {
+  color: #FFFEFE;
+}
 
+/* navbar button */
+.navbar-default .navbar-toggle {
+  transition: .2s;
+  border: transparent;
+  box-shadow: 0px 2px 7px #292929;
+}
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+  box-shadow: 0px 2px 15px #292929;
+}
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle:active {
+  background-color: transparent;
+  box-shadow: 0px 2px 7px #292929;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: transparent;
+}
+
+/* Carousel */
 #myCarousel {
   z-idex:0;
   width:auto;
@@ -176,7 +199,7 @@ img.venn {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  box-shadow: 0 2px 15px 0px #292929;
+  box-shadow: 0 2px 15px 0px #1F2421;
 }
 .footer-distributed .footer-left p{
 	color:  #FFFEF9;
