@@ -1,0 +1,47 @@
+[
+
+{
+    "id": 1,
+    "spoonacular-id": 10720420,
+    "title": "linguine",
+    "nutrition": [],
+    "recipes": [2, 3],
+    "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
+    "substitutes": ["spaghetti"],
+    "related ingredients": ["bread", "halibut", "spaghetti"]
+},
+
+{
+    "id": 2,
+    "spoonacular-id": 15036,
+    "title": "halibut",
+    "nutrition": [],
+    "recipes": [1],
+    "tags": ["italian", "gluten_free", "mediterranean", "pescetarian"],
+    "substitutes": [],
+    "related ingredients": ["bread", "linguine"]
+},
+
+{
+    "id": 3,
+    "spoonacular-id": 18069,
+    "title": "bread",
+    "nutrition": [],
+    "recipes": [1, 2, 3],
+    "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
+    "substitutes": [],
+    "related ingredients": ["linguine", "spaghetti"]
+},
+
+{
+    "id": 4,
+    "spoonacular-id": 11420420,
+    "title": "spaghetti",
+    "nutrition": [],
+    "recipes": [],
+    "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
+    "substitutes": ["linguine"],
+    "related ingredients": ["bread", "halibut", "linguine"]
+}
+
+]
