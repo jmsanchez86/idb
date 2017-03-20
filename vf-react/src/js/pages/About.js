@@ -1,29 +1,29 @@
 import React from "react";
 
-export default class Settings extends React.Component {
+export default class About extends React.Component {
   constructor() {
     super();
     this.state = {
       gitDataUrl: 'https://api.github.com/repos/jmsanchez86/idb/stats/contributors',
       contributors: new Map(),
       teamDataUrl: '../../static/data/team-info.json',
-    }; 
+    };
   }
 
   // when the component loads
   componentDidMount() {
     var _this = this;
-    fetch(this.state.gitDataUrl)  
-      .then(  
-        function(response) {  
-          if (response.status !== 200) {  
-            console.log('Looks like there was a problem. Status Code: ' +  
-              response.status);  
-            return;  
+    fetch(this.state.gitDataUrl)
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
           }
 
-          // Examine the text in the response  
-          response.json().then(function(data) {  
+          // Examine the text in the response
+          response.json().then(function(data) {
             // update our state for each contributor
             for(var i=0; i<data.length; ++i) {
               _this.setState(_this.state.contributors.set(data[i].author.login, {
@@ -32,19 +32,19 @@ export default class Settings extends React.Component {
                   totalCommits: data[i].total,
                   profUrl: data[i].author.html_url
                 }));
-            }  
-            fetch(_this.state.teamDataUrl)  
-              .then(  
-                function(response) {  
-                  if (response.status !== 200) {  
-                    console.log('Looks like there was a problem. Status Code: ' +  
-                      response.status);  
-                    return;  
+            }
+            fetch(_this.state.teamDataUrl)
+              .then(
+                function(response) {
+                  if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                      response.status);
+                    return;
                   }
 
-                  // Examine the text in the response  
-                  response.json().then(function(data) {  
-                  
+                  // Examine the text in the response
+                  response.json().then(function(data) {
+
                     // update our state for each contributor
                     for(var i=0; i<data.length; ++i) {
                       const gitContributor = _this.state.contributors.get(data[i].username);
@@ -57,25 +57,25 @@ export default class Settings extends React.Component {
                                 responsibilities: data[i].responsibilities,
                                 numberOfUnitTests: data[i].numberOfUnitTests
                           };
-                          for (var attrname in teamDataContr) 
+                          for (var attrname in teamDataContr)
                             { gitContributor[attrname] = teamDataContr[attrname]; }
                           // this will force an update before rendering
                           _this.setState();
                       }
-                    }  
-                  });  
-                }  
-              )  
-              .catch(function(err) {  
-                console.log('Fetch Error :-S', err);  
+                    }
+                  });
+                }
+              )
+              .catch(function(err) {
+                console.log('Fetch Error :-S', err);
               });
-                  });  
-                }  
-      )  
-      .catch(function(err) {  
-        console.log('Fetch Error :-S', err);  
+                  });
+                }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
       });
-      
+
   }
 
   render() {
@@ -106,7 +106,7 @@ export default class Settings extends React.Component {
             <p>{contributor.bio}</p>
             <h4>{contributor.responsibilities ? 'Responsibilities' : ''}</h4>
             <p>{contributor.responsibilities}</p>
-            
+
           </div>
         </div>);});
 
@@ -120,7 +120,7 @@ export default class Settings extends React.Component {
           </div>
         </div>
 
-        <div id="contributor-list" class="list-group container">      
+        <div id="contributor-list" class="list-group container">
           {contrList}
         </div>
 

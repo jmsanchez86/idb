@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Settings extends React.Component {
+export default class Badges extends React.Component {
   render() {
     console.log("settings");
     return (
