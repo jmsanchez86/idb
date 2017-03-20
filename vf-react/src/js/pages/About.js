@@ -5,8 +5,9 @@ export default class Settings extends React.Component {
     super();
     this.state = {
       gitDataUrl: 'https://api.github.com/repos/jmsanchez86/idb/stats/contributors',
-      contributors: []
-    };
+      contributors: new Map(),
+      teamDataUrl: '../../static/data/team-info.json',
+    }; 
   }
 
   // when the component loads
@@ -23,48 +24,106 @@ export default class Settings extends React.Component {
 
           // Examine the text in the response  
           response.json().then(function(data) {  
-            //console.log(data);
             // update our state for each contributor
             for(var i=0; i<data.length; ++i) {
-              _this.setState(_this.state.contributors[i] = {
+              _this.setState(_this.state.contributors.set(data[i].author.login, {
                   login: data[i].author.login,
-                  picUrl: data[i].author.avatar_url,
-                  totalCommits: data[i].total 
-                });
+                  gitPicUrl: data[i].author.avatar_url,
+                  totalCommits: data[i].total,
+                  profUrl: data[i].author.html_url
+                }));
             }  
-          });  
-        }  
+            fetch(_this.state.teamDataUrl)  
+              .then(  
+                function(response) {  
+                  if (response.status !== 200) {  
+                    console.log('Looks like there was a problem. Status Code: ' +  
+                      response.status);  
+                    return;  
+                  }
+
+                  // Examine the text in the response  
+                  response.json().then(function(data) {  
+                  
+                    // update our state for each contributor
+                    for(var i=0; i<data.length; ++i) {
+                      const gitContributor = _this.state.contributors.get(data[i].username);
+                      if(gitContributor)
+                      {
+                          var teamDataContr = {
+                                name: data[i].name,
+                                bio: data[i].bio,
+                                picUrl: data[i].imgUrl,
+                                responsibilities: data[i].responsibilities,
+                                numberOfUnitTests: data[i].numberOfUnitTests
+                          };
+                          for (var attrname in teamDataContr) 
+                            { gitContributor[attrname] = teamDataContr[attrname]; }
+                          // this will force an update before rendering
+                          _this.setState();
+                      }
+                    }  
+                  });  
+                }  
+              )  
+              .catch(function(err) {  
+                console.log('Fetch Error :-S', err);  
+              });
+                  });  
+                }  
       )  
       .catch(function(err) {  
         console.log('Fetch Error :-S', err);  
       });
+      
   }
 
   render() {
     console.log("settings");
-    return (
-      <div id="main-text" class="container">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
-          <h2>Meat the team</h2>
-          <img class="venn" src="../static/images/diagram.png" />
-        </div>
-        <div id="grid-results" class="row">      
-        {this.state.contributors.map(function(contributor) {
-            return (
-              <div key={contributor.login} className="contributor" class='col-sm-8 col-md-6'>
-                <div class="thumbnail">
-                  <img src={contributor.picUrl} />
-                  <div class="caption">
-                      <h3 href='contributor.profUrl'>{contributor.login}</h3>
-                      <p>{contributor.totalCommits + ' '}
-                        fridgetacular commit
-                        {contributor.totalCommits > 1?'s':''}.</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+    var r = Array.from(this.state.contributors, (contributor) => contributor);
+    var contrList = r.map(function(c){
+      const contributor = c[1];
+      return (
+        <div key={contributor.login} className='contributor' class='list-group-item container'>
+          <div class="thumbnail col-sm-4">
+            <img src={contributor.picUrl ? contributor.picUrl : contributor.gitPicUrl} />
+            <div class="caption">
+              <h3>{contributor.name + ' '}
+                <small><a href={contributor.profUrl}>{contributor.login}</a></small>
+              </h3>
+              <p><span class="badge active">{contributor.totalCommits}</span>
+                {' '}fridgetacular commit
+                {contributor.totalCommits > 1?'s':''}.
+              </p>
+              <p>
+                <span class="badge active">{contributor.numberOfUnitTests}</span>
+                {contributor.numberOfUnitTests ? ' contributed unit tests.' : ''}
+              </p>
+            </div>
           </div>
+          <div class='col-md-6'>
+            <h4>{contributor.bio ? 'Bio' : ''}</h4>
+            <p>{contributor.bio}</p>
+            <h4>{contributor.responsibilities ? 'Responsibilities' : ''}</h4>
+            <p>{contributor.responsibilities}</p>
+            
+          </div>
+        </div>);});
+
+    return (
+      <div>
+
+        <div id="main-text" class="container">
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            <h2>Meat the team</h2>
+            <img class="venn" src="../static/images/diagram.png" />
+          </div>
+        </div>
+
+        <div id="contributor-list" class="list-group container">      
+          {contrList}
+        </div>
+
       </div>
     );
   }
