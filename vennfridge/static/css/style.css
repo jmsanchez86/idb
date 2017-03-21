@@ -19,6 +19,16 @@ body {
 }
 
 /* Navbar */
+ul.nav a{
+   transition: .2s;
+}
+
+ul.nav a:hover {
+  color: rgba(255,254,254,0.7) !important;
+}
+
+
+
 #logohome {
   font-family: Dosis, sans-serif;
   font-size: 50px;
@@ -26,7 +36,13 @@ body {
   text-transform: lowercase;
   color:#FFFEFE;
   padding-top: 10px;
+
+  transition: .2s;
 }
+#logohome:hover {
+  color: rgba(255,255,255,0.8);
+}
+
 .navbar {
   border-style: none;
   border-radius: 0%;
@@ -42,14 +58,9 @@ body {
    font-family: Raleway, san-serif;
    text-transform: capitalize;
 }
-.nav > li > a:hover,
-.nav > li > a:focus {
-   text-decoration: none;
-   color: #FFFEFE; /*Change rollover cell color here*/
- }
 
 /* This changes when navbar collapses */
- @media (max-width: 991px) {
+ @media (max-width: 1100px) {
   .navbar-header {
       float: none;
   }
@@ -86,10 +97,35 @@ body {
   }
 }
 
-/* Carousel */
+.glyphicon-cutlery {
+  color: #FFFEFE;
+}
 
+/* navbar button */
+.navbar-default .navbar-toggle {
+  transition: .2s;
+  border: transparent;
+  box-shadow: 0px 2px 7px #292929;
+}
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+  box-shadow: 0px 2px 15px #292929;
+}
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle:active {
+  background-color: transparent;
+  box-shadow: 0px 2px 7px #292929;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: transparent;
+}
+
+/* Carousel */
 #myCarousel {
-  z-index:0;
+  z-idex:0;
+  width:auto;
   margin-top: -40px;
   box-shadow: 0 1px 15px 0px #292929;
 }
@@ -117,8 +153,9 @@ body {
 
 /* Main Text */
 #main-text {
-  margin-top: 50px;
-  margin-bottom:50px;
+  margin-top: 80px;
+  margin-bottom:80px;
+
 }
 .container h2 {
   font-family: Dosis, sans-serif;
@@ -143,46 +180,7 @@ img.venn {
 #grid-results {
   font-family: Raleway, sans-serif;
   font-weight: 400;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  margin-left: 40px;
-  margin-right: 40px;
-}
-
-/* Recepie Page */
-#recipe_main {
-  background-color: #FFDCCC;
-}
-#recipe_main table {
-  background-color: white;
-  border: solid;
-  margin: 10px;
-  font-size: 20px;
-}
-#recp_img {
-  height: 150%;
-  width: 150%;
-  padding: 15px;
-}
-#tags {
-  list-style-type: none;
-  padding: 0px;
-}
-#tags li {
-  float: left;
-  padding: 10px;
-}
-.glyphicon {
-  font-size: 25px;
-}
-#directions {
-  background-color: #FFEEE6;
-  font-size: 25px;
-  border: solid;
-  border-radius: 25px;
-}
-#directions h1 {
-  text-align: center;
+  margin: 40px;
 }
 
 /* Footer */
@@ -201,7 +199,7 @@ img.venn {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  box-shadow: 0 2px 15px 0px #292929;
+  box-shadow: 0 2px 15px 0px #1F2421;
 }
 .footer-distributed .footer-left p{
 	color:  #FFFEF9;
