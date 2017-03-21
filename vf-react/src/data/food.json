@@ -8,7 +8,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [1,2,3],
         "grocery-items": [],
-        "Tags": []
+        "tags": []
       },
       {
         "id": 2,
@@ -16,7 +16,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [1],
         "grocery-items": [],
-        "Tags": [3]
+        "tags": [3]
       },
       {
         "id": 3,
@@ -24,7 +24,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [1],
         "grocery-items": [],
-        "Tags": []
+        "tags": []
       },
       {
         "id": 4,
@@ -32,7 +32,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [2,3],
         "grocery-items": [1],
-        "Tags": [1]
+        "tags": [1]
       },
       {
         "id": 5,
@@ -40,7 +40,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [2,3],
         "grocery-items": [],
-        "Tags": [3]
+        "tags": [3]
       },
       {
         "id": 6,
@@ -48,7 +48,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [2,3],
         "grocery-items": [],
-        "Tags": [3]
+        "tags": [3]
       },
       {
         "id": 7,
@@ -56,7 +56,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [2],
         "grocery-items": [2],
-        "Tags": [3]
+        "tags": [3]
       },
       {
         "id": 8,
@@ -64,7 +64,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [],
         "grocery-items": [],
-        "Tags": [1]
+        "tags": [1]
       },
       {
         "id": 9,
@@ -72,7 +72,7 @@
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [1,2,3],
         "grocery-items": [3],
-        "Tags": []
+        "tags": []
       }
     ],
 
