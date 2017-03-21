@@ -60,7 +60,7 @@ export default class About extends React.Component {
                           for (var attrname in teamDataContr)
                             { gitContributor[attrname] = teamDataContr[attrname]; }
                           // this will force an update before rendering
-                          _this.setState();
+                          _this.forceUpdate();
                       }
                     }
                   });
