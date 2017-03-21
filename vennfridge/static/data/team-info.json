@@ -2,10 +2,10 @@
     {
         "name": "Noel Benzinger",
         "username": "noelbenz",
-        "bio": "",
-        "responsibilities": "",
+        "bio": "Noel is a senior at the University of Texas Austin studying Computer Science. In his free time he enjoys working on side programming projects, drawing pixel art, and walking.",
+        "responsibilities": "Back-end database modeling and testing.",
         "imgUrl": "",
-        "numberOfUnitTests": ""
+        "numberOfUnitTests": "http://www.cs.utexas.edu/users/noelb/1683124062/avatar.jpg"
     },
     {
         "name": "Thomas Cardwell",
