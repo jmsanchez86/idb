@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<background-color="#00000">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width = device-width, initial-scale = 1">
+  <title>Venn Fridge</title>
+  <link href="https://fonts.googleapis.com/css?family=Pacifico|Raleway|Dosis:800|Dosis:400" rel="stylesheet"><!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="../static/css/style.css" type="text/css" rel="Stylesheet">
+</head>
+
+<body>
+<!--Navbar-->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#lg-group" aria-expanded="false">
+        <span class="glyphicon glyphicon-cutlery"></span>
+        </button>
+        <a id="logohome" class="navbar-brand" href="./base.html">Venn Fridge</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="lg-group">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Ingredients</a></li>
+          <li><a href="./grid.html">Recipes</a></li>
+          <li><a href="#">Grocery Items</a></li>
+          <li><a href="#">Badges</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+<div id="unique-content">
+
+    <!--Recipe Layout-->
+    <div id="recipe_main" class="container-fluid">
+      <div class="row">
+
+      <!--Icon Legend-->
+        <div class="col-lg-2">
+          <table class="table table-hover">
+            <tr><th>Legend</th></tr>
+            <tr><td><span class="glyphicon glyphicon-apple"></span> - contains fruit</td></tr>
+            <tr><td><span class="glyphicon glyphicon-leaf"></span> - vegetarian</td></tr>
+            <tr><td><span class="glyphicon glyphicon-piggy-bank"></span> - contains pork</td></tr>
+            <tr><td><span class="glyphicon glyphicon-tint"></span> - made with water</td></tr>
+            <tr><td><span class="glyphicon glyphicon-fire"></span> - spicy</td></tr>
+          </table> 
+        </div>
+
+      <!--Featured Recipe Image-->
+        <div class="col-lg-4">
+          <img  id="recp_img" src="../static/images/eggs.jpg"  class="img-responsive" alt="Eggs"/>
+
+          <ul id="tags">
+            <li><span class="glyphicon glyphicon-apple"></span></li>
+            <li><span class="glyphicon glyphicon-leaf"></span></li>
+            <li><span class="glyphicon glyphicon-piggy-bank"></span></li>
+            <li><span class="glyphicon glyphicon-tint"></span></li>
+            <li><span class="glyphicon glyphicon-fire"></span></li>
+          </ul>
+
+        </div>
+      <!--Ingredients-->
+        <div class="col-lg-4">
+          <table class="table">
+            <tr><th>Ingredients</th></tr>
+            <tr><td>
+              <ul>
+                <li><a href="#"/>5 Eggs</li>
+                <li><a href="#"/>5 Cuts of Pork</li>
+                <li><a href="#"/>2 Pints of Water</li>
+                <li><a href="#"/>2 Apples</li>
+              </ul>
+            </td></tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Directions-->
+    <div id="directions" class="container">
+        <h1> Cooking Directions </h1>
+        <ol>
+          <li><p>Grab ingredients.</p></li>
+          <li><p>Grab utensils.</p></li>
+          <li><p>Prepare apples by cutting them into the approatize of 15x15cm.</p></li>
+          <li><p>Separate the egg yolks from the egg whites.</p></li>
+          <li><p>Sear pork cuts until burnt.</p></li>
+          <li><p>Add water.</p></li>
+        </ol>
+    </div>
+ 
+
+    <!--Main Text-->
+    <div id="main-text" class="container">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <h4>Time to get cooking!</h4>
+        <img class="venn" src="../static/images/diagram.png" />
+        <p>Let us help you help yourself to some tasty food.</p>
+      </div><!--/col-->
+    </div><!--/container-->
+</div>
+
+
+<!--Footer-->
+  <footer class="footer-distributed">
+    <div class="footer-left">
+      <p>Venn Fridge &copy; 2017</p>
+    </div>
+  </footer>
+
+<!--Necessary Bootstrap Scripts-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>

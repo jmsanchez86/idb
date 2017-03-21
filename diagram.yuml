@@ -1,0 +1,32 @@
+//Venn Fridge yUML
+
+//Main classes
+[GroceryItem|name:string;image:string;upc:string;|ingredients();tags();],
+[Ingredient|name:string;image:string;|ingredients();tags();nutrients();grocery_items();],
+[Recipe|name:string;image:string;description:string;instructions:string;|ingredients();tags();nutrients();],
+[Tag|name:string;image:string;description:string|ingredients();recipes();grocery_items();],
+
+// Supporting classes
+[RecipeIngredient|quantity:float;verbal quantity:string;],
+[IngredientNutrient|type:string;quantity:float;unit:string],
+[RecipeNutrient|type:string;quantity:float;unit:string;],
+
+// Ingredient relations
+[Ingredient]1-0..*[RecipeIngredient],
+[Ingredient]1-0..*[GroceryItem],
+[Ingredient]0..*-0..*[Ingredient],
+[Ingredient]0..*-0..*[IngredientNutrient],
+
+// Recipe relations
+[Recipe]0..*-0..*[Recipe],
+[Recipe]0..*-0..*[RecipeNutrient],
+[Recipe]1-0..*[RecipeIngredient],
+
+// Grocery item relations
+[GroceryItem]0..*-0..*[GroceryItem],
+
+// Tag relations
+[Tag]0..*-0..*[Tag],
+[Tag]0..*-0..*[Recipe],
+[Tag]0..*-0..*[Ingredient],
+[Tag]0..*-0..*[GroceryItem], 

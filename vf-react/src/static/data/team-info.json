@@ -1,27 +1,27 @@
 [
     {
         "name": "Noel Benzinger",
-        "username": "noelbenz",
-        "bio": "Noel is a senior at the University of Texas Austin studying Computer Science. In his free time he enjoys working on side programming projects, drawing pixel art, and walking.",
-        "responsibilities": "Back-end database modeling and testing.",
-        "imgUrl": "http://www.cs.utexas.edu/~noelb/1683124062/avatar.jpg",
+        "username": "ndbenzinger",
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
         "numberOfUnitTests": ""
     },
-    {
+   {
         "name": "Thomas Cardwell",
         "username": "thomascardwell7",
         "bio": "Thomas is a senior at the University of Texas at Austin studying Computer Science and Music Production. He has interned with HEB on their Store Systems IT team, and will be joining HomeAway full-time in the summer of 2017. Thomas also cofounded a music and video production company, InfiniD Music, and dabbles in music and videogames as pastimes.",
-        "responsibilities": "Front-end development, desiged grid pages with React and Bootstrap, assisted with database models and API research.",
+        "responsibilities": "Front-end development, designed grid pages with React and Bootstrap, assisted with database models and API research.",
         "imgUrl": "https://thomascardwellsweblog.files.wordpress.com/2017/01/cropped-thomas-headshot.jpg",
         "numberOfUnitTests": "0"
     },
     {
         "name": "Cory Dunn",
         "username": "CoryDunn",
-        "bio": "Cory is a senior at the University of Texas at Austin pursuing a Bachelor of Science in Computer Science and a Business Foundations Certificate.  He will be interning with Citrix in the summer of 2017, and in his free time he enjoys playing board games, walking, and dabbling in game development.",
-        "responsibilities": "Back-End, API design and documentation",
-        "imgUrl": "https://avatars3.githubusercontent.com/u/21698102",
-        "numberOfUnitTests": "0"
+        "bio": "",
+        "responsibilities": "",
+        "imgUrl": "",
+        "numberOfUnitTests": ""
     },
     {
         "name": "Scott Hornberger",
