@@ -16,7 +16,6 @@ Retrieve a list of all ingredients.
                 "title": "linguine",
                 "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
                 "image": "http://placehold.it/500x500",
-                "substitutes": ["spaghetti"],
             }
         ]
         
@@ -30,12 +29,11 @@ Retrieve details of a single ingredient.
  
         {
             "id": 1,
-            "spoonacular-id": 10720420,
             "title": "linguine",
             "nutrition": [],
-            "recipes": [2, 3],
+            "recipesIDs": [2, 3],
             "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
-             "substitutes": ["spaghetti"],
+            "substitutes": ["spaghetti"],
             "related ingredients": ["bread", "halibut", "spaghetti"]
             "image": "http://placehold.it/500x500"
         }
@@ -71,14 +69,12 @@ Retrieve details of a single recipe.
  
         {
         "id": 1,
-        "spoonacular-id": 333606,
         "title": "Halibut with Lemon, Capers, and Croutons",
         "image": "https://spoonacular.com/recipeImages/halibut-with-lemon-capers-and-croutons-333606.jpeg",
         "ingredients": [
             {
                 "amount": 1.0,
                 "id": 5,
-                "spoonacular-id": 1001,
                 "name": "butter",
                 "originalString": "1 stick plus 2 tablespoons butter",
                 "unit": "stick",
@@ -88,7 +84,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 1.0,
                 "id": 6,
-                "spoonacular-id": 2054,
                 "name": "capers",
                 "originalString": "1 to 2 tablespoons capers (depending on taste)",
                 "unit": "tablespoons",
@@ -98,7 +93,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 0.5,
                 "id": 7,
-                "spoonacular-id": 20081,
                 "name": "flour",
                 "originalString": "1/2 cup all-purpose flour",
                 "unit": "cup",
@@ -108,7 +102,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 1.0,
                 "id": 8,
-                "spoonacular-id": 11297,
                 "name": "fresh parsley leaves",
                 "originalString": "1 tablespoon finely chopped fresh parsley leaves",
                 "unit": "tablespoon",
@@ -118,7 +111,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 24.0,
                 "id": 2,
-                "spoonacular-id": 15036,
                 "name": "halibut",
                 "originalString": "4 (6-ounce) pieces halibut (preferably Pacific)",
                 "unit": "ounce",
@@ -128,7 +120,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 1.0,
                 "id": 12,
-                "spoonacular-id": 9152,
                 "name": "juice of lemon",
                 "originalString": "1 large lemon, juiced",
                 "unit": "",
@@ -138,7 +129,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 4.0,
                 "id": 9,
-                "spoonacular-id": 2047,
                 "name": "salt and pepper",
                 "originalString": "Salt and freshly ground black pepper",
                 "unit": "servings",
@@ -148,7 +138,6 @@ Retrieve details of a single recipe.
             {
                 "amount": 6.0,
                 "id": 3,
-                "spoonacular-id": 18069,
                 "name": "white sandwich bread",
                 "originalString": "6 slices stale white sandwich bread, crusts removed and cut into 1/2-inch cubes",
                 "unit": "slices",
@@ -374,11 +363,10 @@ Retrieve details of a single grocery item.
  
         {
             "id": 1,
-            "spoonacular-id": 222240,
             "title": "Nature's Promise Wild Caught Halibut",
             "upc": "688267152580", 
             "tags": ["egg_free","wild_caught","wheat_free","hormone_free","peanut_free","nut_free","soy_free","msg_free","grain_free","no_artificial_colors","sugar_free","no_artificial_flavors","no_artificial_ingredients","pescetarian","corn_free","dairy_free","gluten_free"],
-            "ingredients": ["halibut"],
+            "ingredientID": 1,
             "related grocery items": [],
             "images": ["https://spoonacular.com/productImages/222240-312x231.jpg", "https://spoonacular.com/productImages/222240-636x393.jpg", "https://spoonacular.com/productImages/222240-90x90.jpg"]
         }
