@@ -5,67 +5,77 @@
       "id": 1,
       "name" : "Tomato",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [1,2,3],
+      "grocery-items": [],
+      "Tags": []
     },
     {
       "id": 2,
       "name" : "Cheese",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [1],
+      "grocery-items": [],
       "Tags": [3]
     },
     {
       "id": 3,
       "name" : "Butter",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [1],
+      "grocery-items": [],
       "Tags": []
     },
     {
       "id": 4,
       "name" : "Bacon",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [2,3],
+      "grocery-items": [],
       "Tags": [1]
     },
     {
       "id": 5,
       "name" : "Lettuce",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [2,3],
+      "grocery-items": [],
       "Tags": [3]
     },
     {
       "id": 6,
       "name" : "Mayonnaise",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [2,3],
+      "grocery-items": [],
       "Tags": [3]
     },
     {
       "id": 7,
       "name" : "Turkey Breast Sandwich Meat",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [2],
+      "grocery-items": [],
       "Tags": [3]
     },
     {
       "id": 8,
       "name" : "Avocado",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [],
+      "grocery-items": [],
       "Tags": [1]
     },
     {
       "id": 9,
       "name" : "Bread",
       "image": "http://placehold.it/500/FCC730?text=",
-      "GroceryItems": [],
+      "recipes": [1,2,3],
+      "grocery-items": [],
       "Tags": []
     }
   ],
 
-  "Recipes":
+  "recipes":
   [
     {
       "id": 1,
@@ -186,7 +196,7 @@
     }
   ],
 
-  "GroceryItems":
+  "grocery-items":
   [
     {
       "id": 1,
@@ -211,39 +221,39 @@
     }
   ],
 
-  "Tags":
+  "tags":
   [
     {
       "id": 1,
       "name": "Crowd Pleaser",
       "description": "This item is sure please nearly everyone. Bring this dish to win the party!",
       "Ingredients": [4, 8],
-      "Recipes": [1],
-      "GroceryItems": []
+      "recipes": [1],
+      "grocery-items": []
     },
     {
       "id": 2,
       "name": "Vegetarian",
       "description": "These items are for those who choose to eat a semi-plant-based diet. These items will include dishes with egg and dairy products.",
-      "Ingredients": [],
-      "Recipes": [1],
-      "GroceryItems": []
+      "ingredients": [],
+      "recipes": [1],
+      "grocery-items": []
     },
     {
       "id": 3,
       "name": "Great For Sandwiches",
       "description": "These items are made to be between two pieces of bread.",
       "Ingredients": [2,5,6,7],
-      "Recipes": [],
-      "GroceryItems": [2, 3]
+      "recipes": [],
+      "grocery-items": [2, 3]
     },
     {
       "id": 4,
       "name": "Quick!",
       "description": "These items can be quickly made for when you're pressed for time. Great for lunches.",
       "Ingredients": [],
-      "Recipes": [1, 2, 3],
-      "GroceryItems": []
+      "recipes": [1, 2, 3],
+      "grocery-items": []
     }
   ]
 }
