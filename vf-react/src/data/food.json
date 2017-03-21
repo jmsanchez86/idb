@@ -31,7 +31,7 @@
         "name" : "Bacon",
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [2,3],
-        "grocery-items": [],
+        "grocery-items": [1],
         "Tags": [1]
       },
       {
@@ -55,7 +55,7 @@
         "name" : "Turkey Breast Sandwich Meat",
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [2],
-        "grocery-items": [],
+        "grocery-items": [2],
         "Tags": [3]
       },
       {
@@ -71,7 +71,7 @@
         "name" : "Bread",
         "image": "http://placehold.it/500/FCC730?text=",
         "recipes": [1,2,3],
-        "grocery-items": [],
+        "grocery-items": [3],
         "Tags": []
       }
     ],
