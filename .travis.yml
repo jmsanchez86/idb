@@ -1,0 +1,25 @@
+sudo: false
+
+language: python
+
+python:
+    - "3.5"
+
+before_install:
+    - pip install --upgrade pip
+
+install:
+    - pip install autopep8
+    - pip install coverage
+    - pip install numpy
+    - pip install pylint
+
+before_script:
+    - uname -a
+    - printenv | sort
+    - make versions
+
+script:
+    - date
+    - ls -al
+    - make test
