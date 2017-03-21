@@ -77,8 +77,8 @@
     },
 
     "recipes":
-    [
-      {
+    {
+      "1": {
         "id": 1,
         "name": "Grilled Cheese with Tomato",
         "image": "http://placehold.it/500/8F23A6",
@@ -107,7 +107,7 @@
           ],
         "tags": [1, 2, 4]
       },
-      {
+      "2": {
         "id": 2,
         "name": "Classic Turkey Club",
         "image": "http://placehold.it/500/8F23A6",
@@ -154,7 +154,7 @@
           ],
         "tags": [4]
       },
-      {
+      "3": {
         "id": 3,
         "name": "B.L.T.",
         "image": "http://placehold.it/500/8F23A6",
@@ -195,32 +195,32 @@
           ],
         "tags": [4]
       }
-    ],
+    },
 
     "grocery_items":
-    [
-      {
+    {
+      "1": {
         "id": 1,
         "name": "Kirkland Signature Regular Sliced",
         "image": "http://i.huffpost.com/gadgets/slideshows/320101/slide_320101_2986024_free.jpg",
         "upc": "0-75987-67890-5",
         "tags": [2]
       },
-      {
+      "2":{
         "id": 2,
         "name": "Applegate Naturals Roasted Turkey Breast",
         "image": "https://foodfetepress.files.wordpress.com/2012/04/applegate_og_rsttky-2.jpg",
         "upc": "0-21436-67890-5",
         "tags": [3]
       },
-      {
+      "3":{
         "id": 3,
         "name": "Ezekiel 4:9 Low Sodium Sprouted Whole Grain Bread",
         "image": "http://s.eatthis-cdn.com/media/images/ext/437304009/ezekiel-low-sodium-sprouted-bread.jpg",
         "upc": "0-98875-67890-5",
         "tags": [3]
       }
-    ],
+    },
 
     "tags":
     {
