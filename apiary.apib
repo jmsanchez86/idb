@@ -3,9 +3,9 @@ FORMAT: 1A
 # VennFridge
 VennFridge provides information on and relationships between ingredients, recipes, grocery items, and tags.
 
-## Ingredients Collection [/ingredients]
+## Ingredients Collection [/api/ingredients]
   
-### List All Ingredients [GET /ingredients]
+### List All Ingredients [GET /api/ingredients]
 Retrieve a list of all ingredients.
 
 + Response 200 (application/json)
@@ -19,7 +19,7 @@ Retrieve a list of all ingredients.
             }
         ]
         
-### View Ingredient Details [GET /ingredients/{id}]
+### View Ingredient Details [GET /api/ingredients/{id}]
 Retrieve details of a single ingredient.
 
 + Parameters
@@ -42,9 +42,9 @@ Retrieve details of a single ingredient.
         
         No ingredient with that id exists.
 
-## Recipes Collection [/recipes]
+## Recipes Collection [/api/recipes]
   
-### List All Recipes [GET /recipes]
+### List All Recipes [GET /api/recipes]
 Retrieve a list of all recipes.
 
 + Response 200 (application/json)
@@ -59,7 +59,7 @@ Retrieve a list of all recipes.
             }
         ]
         
-### View Recipe Details [GET /recipes/{id}]
+### View Recipe Details [GET /api/recipes/{id}]
 Retrieve details of a single recipe.
 
 + Parameters
@@ -336,9 +336,9 @@ Retrieve details of a single recipe.
         
         No recipe with that id exists.
         
-## Grocery Items Collection [/grocery_items]
+## Grocery Items Collection [/api/grocery_items]
   
-### List All Grocery items [GET /grocery_items]
+### List All Grocery items [GET /api/grocery_items]
 Retrieve a list of all grocery items.
 
 + Response 200 (application/json)
@@ -353,7 +353,7 @@ Retrieve a list of all grocery items.
             }
         ]
         
-### View Grocery Item Details [GET /grocery_items/{id}]
+### View Grocery Item Details [GET /api/grocery_items/{id}]
 Retrieve details of a single grocery item.
 
 + Parameters
@@ -375,9 +375,9 @@ Retrieve details of a single grocery item.
         
         No grocery item with that id exists.
 
-## Tags Collection [/tags]
+## Tags Collection [/api/tags]
   
-### List All Tags [GET /tags]
+### List All Tags [GET /api/tags]
 Retrieve a list of all tags.
 
 + Response 200 (application/json)
@@ -391,7 +391,7 @@ Retrieve a list of all tags.
             }
         ]
         
-### View Tag Details [GET /tags/{id}]
+### View Tag Details [GET /api/tags/{id}]
 Retrieve details of a single tag.
 
 + Parameters
