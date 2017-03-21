@@ -2,11 +2,15 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 
 var data = require('json!../../data/food.json');
-const recipes = data.recipes;
 
-
-export default class Recipes extends React.Component {
+export default class Tags extends React.Component {
+  getName(name) {
+    return "http://placehold.it/500?text=" + name;
+  }
   render() {
+    const tags = data["tags"];
+
+
     return (
       <div id="unique-content">
           <div class="container">
@@ -21,33 +25,30 @@ export default class Recipes extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={recipes[0].image} />
+                <img src={this.getName(tags[0].name)} />
                 <div class="caption">
-                    <h3>{recipes[0].name}</h3>
-                    <p>{recipes[0].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="recipes/0">Details</Link></p>
+                    <h3>{tags[0].name}</h3>
+                    <p><Link class="btn btn-primary" role="button" to="tags/0">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={recipes[1].image} />
+                <img src={this.getName(tags[1].name)} />
                 <div class="caption">
-                    <h3>{recipes[1].name}</h3>
-                    <p>{recipes[1].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="recipes/1">Details</Link></p>
+                    <h3>{tags[1].name}</h3>
+                    <p><Link class="btn btn-primary" role="button" to="tags/1">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={recipes[2].image} />
+                <img src={this.getName(tags[2].name)} />
                 <div class="caption">
-                    <h3>{recipes[2].name}</h3>
-                    <p>{recipes[2].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="recipes/2">Details</Link></p>
+                    <h3>{tags[2].name}</h3>
+                    <p><Link class="btn btn-primary" role="button" to="tags/2">Details</Link></p>
                 </div>
               </div>
             </div>

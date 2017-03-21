@@ -12,7 +12,7 @@ export default class Layout extends React.Component {
       /* push content down so it won't be covered by navbar */
       marginTop: "40px"
     };
-    console.log("layout");
+
     return (
       <div >
 

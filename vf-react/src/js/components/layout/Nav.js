@@ -44,7 +44,7 @@ export default class Nav extends React.Component {
                 <Link to="grocery-items" onClick={this.toggleCollapse.bind(this)}>Grocery Items</Link>
               </li>
               <li activeClassName="active">
-                <Link to="badges" onClick={this.toggleCollapse.bind(this)}>Badges</Link>
+                <Link to="tags" onClick={this.toggleCollapse.bind(this)}>Tags</Link>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -1,4 +1,4 @@
-{ "data":
+
   {
     "ingredients":
     [
@@ -227,7 +227,7 @@
       {
         "id": 1,
         "name": "Crowd Pleaser",
-        "description": "This item is sure please nearly everyone. Bring this dish to win the party!",
+        "blurb": "This item is sure please nearly everyone. Bring this dish to win the party!",
         "ingredients": [4, 8],
         "recipes": [1],
         "grocery-items": []
@@ -235,7 +235,7 @@
       {
         "id": 2,
         "name": "Vegetarian",
-        "description": "These items are for those who choose to eat a semi-plant-based diet. These items will include dishes with egg and dairy products.",
+        "blurb": "These items are for those who choose to eat a semi-plant-based diet. These items will include dishes with egg and dairy products.",
         "ingredients": [],
         "recipes": [1],
         "grocery-items": []
@@ -243,7 +243,7 @@
       {
         "id": 3,
         "name": "Great For Sandwiches",
-        "description": "These items are made to be between two pieces of bread.",
+        "blurb": "These items are made to be between two pieces of bread.",
         "ingredients": [2,5,6,7],
         "recipes": [],
         "grocery-items": [2, 3]
@@ -251,11 +251,10 @@
       {
         "id": 4,
         "name": "Quick!",
-        "description": "These items can be quickly made for when you're pressed for time. Great for lunches.",
+        "blurb": "These items can be quickly made for when you're pressed for time. Great for lunches.",
         "ingredients": [],
         "recipes": [1, 2, 3],
         "grocery-items": []
       }
     ]
   }
-}
