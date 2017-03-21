@@ -222,6 +222,9 @@ class TagRecipe(db.Model):
     tag_name  = db.Column(db.String(20), db.ForeignKey("tag.tag_name"), primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
 
+    tag = db.relationship("Tag", back_populates="tag_recipe_assocs")
+    recipe = db.relationship("Recipe", back_populates="tag_recipe_assocs")
+
     def __init__(self, tag_name, recipe_id):
         self.tag_name = tag_name
         self.recipe_id = recipe_id
@@ -229,11 +232,19 @@ class TagRecipe(db.Model):
     def __repr__(self):
         return "<TagRecipe %s %d>" % (self.tag_name, self.recipe_id)
 
+Recipe.tag_recipe_assocs = db.relationship("TagRecipe", back_populates="recipe")
+Tag.tag_recipe_assocs = db.relationship("TagRecipe", back_populates="tag")
+Recipe.tags = association_proxy("tag_recipe_assocs", "tag")
+Tag.recipes = association_proxy("tag_recipe_assocs", "recipe")
+
 class TagGroceryItem(db.Model):
     __tablename__ = "tag_grocery_item"
 
     tag_name   = db.Column(db.String(20), db.ForeignKey("tag.tag_name"), primary_key=True)
     grocery_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
+
+    tag = db.relationship("Tag", back_populates="tag_grocery_item_assocs")
+    grocery_item = db.relationship("GroceryItem", back_populates="tag_grocery_item_assocs")
 
     def __init__(self, tag_name, grocery_id):
         self.tag_name = tag_name
@@ -242,6 +253,11 @@ class TagGroceryItem(db.Model):
     def __repr__(self):
         return "<TagGroceryItem %s %d>" % (self.tag_name, self.grocery_id)
 
+
+GroceryItem.tag_grocery_item_assocs = db.relationship("TagGroceryItem", back_populates="grocery_item")
+Tag.tag_grocery_item_assocs = db.relationship("TagGroceryItem", back_populates="tag")
+GroceryItem.tags = association_proxy("tag_grocery_item_assocs", "tag")
+Tag.grocery_items = association_proxy("tag_grocery_item_assocs", "grocery_item")
 
 
 if __name__ == "__main__":
@@ -320,8 +336,6 @@ if __name__ == "__main__":
 
     data = TagIngredient("candy", 1)
     db.session.add(data)
-    data = TagIngredient("natural", 1)
-    db.session.add(data)
     data = TagIngredient("natural", 2)
     db.session.add(data)
     data = TagIngredient("natural", 3)
@@ -382,8 +396,25 @@ if __name__ == "__main__":
                           for i in ingredients)
     assert(ingredient_data == {(3, "slices", 12)})
 
-    # Ingredients of a grocery item.
+    # Tag by name
+    query = db.session.query(Tag).filter_by(tag_name="natural")
+    tag = query.first()
+    assert(tag.image_url == "industrial.jpg")
 
+    # Tag ingredients
+    ingredients = tag.ingredients
+    ingredient_data = set(i.ingredient_id for i in ingredients)
+    assert(ingredient_data == {2, 3})
+
+    # Tag recipes
+    recipes = tag.recipes
+    recipe_data = set(r.recipe_id for r in recipes)
+    assert(recipe_data == {2})
+
+    # Tag grocery items
+    items = tag.grocery_items
+    item_data = set(i.grocery_id for i in items)
+    assert(item_data == {1, 2})
 
     print("sqlalchemy version: %s" % sqlalchemy.__version__)
     print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
