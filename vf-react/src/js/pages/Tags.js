@@ -52,6 +52,16 @@ export default class Tags extends React.Component {
                 </div>
               </div>
             </div>
+            
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src={tags[4].image} />
+                <div class="caption">
+                    <h3>{tags[4].name}</h3>
+                    <p><Link class="btn btn-primary" role="button" to="tags/4">Details</Link></p>
+                </div>
+              </div>
+            </div>
 
           </div>
       </div>
