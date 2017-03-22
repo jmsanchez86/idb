@@ -28,15 +28,11 @@ export default class Landing extends React.Component {
               <div class="col-sm-8 col-sm-offset-2 text-center">
                 <h2>We Love Your Fridge</h2>
                 <img class="venn" src="../static/images/diagram.png" />
-                <h4>We love food. We eat almost everyday.</h4>
+                <h4>We love food. We eat almost every day.</h4>
                 <p>Let us help you help yourself to some tasty food.</p>
               </div>
             </div>
-
           </div>
-
-
-
     );
   }
 }
