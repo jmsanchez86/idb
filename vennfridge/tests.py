@@ -9,8 +9,7 @@ import sqlalchemy
 import flask_sqlalchemy
 from flask import Flask
 
-import models
-from models import *
+from models import Ingredient, Tag, Recipe, GroceryItem, db
 from tests_data import mock_data
 
 class TestModels(TestCase):
@@ -55,8 +54,8 @@ class TestModels(TestCase):
         nutrient_data = set((n.category, n.quantity_unit, n.quantity)
                             for n in nutrients)
         self.assertEqual(nutrient_data, {("surgar", "kilograms", 100),
-                                           ("calories", "calories", 9001),
-                                           ("iron", "grams", 123)})
+                                         ("calories", "calories", 9001),
+                                         ("iron", "grams", 123)})
 
     def test_recipe(self):
         # Recipe by name.
@@ -117,4 +116,3 @@ class TestModels(TestCase):
 
 if __name__ == "__main__":  # pragma: no cover
     main()
-
