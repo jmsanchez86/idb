@@ -8,7 +8,7 @@
         "image": "https://bonnieplants.com/wp-content/uploads/better-bush-tomato.jpg",
         "recipes": [1,2,3],
         "grocery_items": [],
-        "tags": []
+        "tags": [2]
       },
       "2": {
         "id": 2,
@@ -16,7 +16,7 @@
         "image": "https://c2.staticflickr.com/4/3778/11893492083_ce613d2892_b.jpg",
         "recipes": [1],
         "grocery_items": [],
-        "tags": [3]
+        "tags": [2,3]
       },
       "3": {
         "id": 3,
@@ -24,7 +24,7 @@
         "image": "https://c1.staticflickr.com/5/4084/5020808475_809a3cc560_b.jpg",
         "recipes": [1],
         "grocery_items": [],
-        "tags": []
+        "tags": [2]
       },
       "4": {
         "id": 4,
@@ -32,7 +32,7 @@
         "image": "https://c2.staticflickr.com/4/3603/3603122710_6ea3b5447c_z.jpg?zz=1",
         "recipes": [2,3],
         "grocery_items": [1],
-        "tags": [1]
+        "tags": [2]
       },
       "5": {
         "id": 5,
@@ -40,7 +40,7 @@
         "image": "https://c1.staticflickr.com/3/2866/9054249842_a0108e22ff_c.jpg",
         "recipes": [2,3],
         "grocery_items": [],
-        "tags": [3]
+        "tags": [2,3]
       },
       "6": {
         "id": 6,
@@ -48,7 +48,7 @@
         "image": "https://c2.staticflickr.com/4/3205/3048070242_305d588993_z.jpg",
         "recipes": [2,3],
         "grocery_items": [],
-        "tags": [3]
+        "tags": [2,3]
       },
       "7": {
         "id": 7,
@@ -56,7 +56,7 @@
         "image": "https://img.clipartfest.com/4b0880d59be58ff4bb1c84ce5957888d_gc52y6axltth-jzlkzq6hfhwn-turkey-lunch-meat-clipart_1280-960.jpeg",
         "recipes": [2],
         "grocery_items": [2],
-        "tags": [3]
+        "tags": [2]
       },
       "8": {
         "id": 8,
@@ -64,7 +64,7 @@
         "image": "https://c1.staticflickr.com/9/8433/29424695541_29288edfd2_c.jpg",
         "recipes": [],
         "grocery_items": [],
-        "tags": [1]
+        "tags": [2]
       },
       "9": {
         "id": 9,
@@ -72,7 +72,7 @@
         "image": "https://c1.staticflickr.com/1/647/33323504266_93ae1664a0_c.jpg",
         "recipes": [1,2,3],
         "grocery_items": [3],
-        "tags": []
+        "tags": [2]
       }
     },
 
