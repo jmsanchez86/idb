@@ -42,17 +42,17 @@ export default class IngredientSingle extends React.Component {
             </div>
 
             <div class="col-sm-6 list-group-container">
-              <h4>Recipes</h4>
+              {recipeList.length > 0 ? (<h4>Recipes with this Ingredient</h4>) : (<h4/>)}
               {recipeList}
             </div>
 
             <div class="col-sm-6 list-group-container">
-              <h4>Grocery Items</h4>
+              {groceryList.length > 0 ? (<h4>Grocery Items</h4>) : (<h4/>)}
               {groceryList}
             </div>
 
             <div class="col-sm-6 list-group-container">
-              <h4>Tags</h4>
+              {tagList.length > 0 ? (<h4>Tags</h4>) : (<h4/>)}
               {tagList}
             </div>
           </div>

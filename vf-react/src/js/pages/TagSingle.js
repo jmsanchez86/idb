@@ -42,8 +42,8 @@ export default class TagSingle extends React.Component {
             </div>
             <div class="row">
               <div class="col-lg-6 list-group">
-                <h4>Recipes  with this Tag</h4>
-                {recipeList}
+                {recipeList.length > 0 ? (<h4>Recipes with this Tag</h4>) : (<h4/>)}
+              {recipeList}
               </div>
             </div>
 
