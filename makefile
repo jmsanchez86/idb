@@ -76,6 +76,7 @@ versions:
 
 .PHONY: check
 check:
+	make mypy-check
 	@not_found=0;                                 \
 	for i in $(FILES);                            \
 	do                                            \
@@ -106,6 +107,10 @@ test: .pylintrc
 format:
 	$(AUTOPEP8) -i app/models.py
 	$(AUTOPEP8) -i app/tests.py
+
+MYPY_SOURCES := $(shell find ./app -name '*.py')
+mypy-check: $(MYPY_SOURCES)
+	mypy --ignore-missing-imports $(MYPY_SOURCES)
 
 IDB1.html:
 	pydoc3 -w IDB1
