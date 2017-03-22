@@ -21,8 +21,6 @@ export default class TagSingle extends React.Component {
         </div>);
     });
 
-    console.log(ingredientList);
-
     var recipeList = tag.recipes.map(function(recipe_id){
       return(
         <div key={recipe_id} class="list-group-item">
