@@ -32,7 +32,7 @@
         "image": "https://c2.staticflickr.com/4/3603/3603122710_6ea3b5447c_z.jpg?zz=1",
         "recipes": [2,3],
         "grocery_items": [1],
-        "tags": [2]
+        "tags": [1]
       },
       "5": {
         "id": 5,
@@ -64,7 +64,7 @@
         "image": "https://c1.staticflickr.com/9/8433/29424695541_29288edfd2_c.jpg",
         "recipes": [],
         "grocery_items": [],
-        "tags": [2]
+        "tags": [1,2]
       },
       "9": {
         "id": 9,
@@ -254,7 +254,7 @@
       "4": {
         "id": 4,
         "name": "Quick!",
-        "image": "../static/images/tags/quick.png", 
+        "image": "../static/images/tags/quick.png",
         "blurb": "These items can be quickly made for when you're pressed for time. Great for lunches.",
         "ingredients": [],
         "recipes": [1, 2, 3],
