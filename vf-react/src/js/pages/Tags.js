@@ -43,6 +43,7 @@ export default class Tags extends React.Component {
               <li><a href="#">Crowd Pleaser</a></li>
               <li><a href="#">Vegetarian</a></li>
               <li><a href="#">Great For Sandwiches</a></li>
+              <li><a href="#">Quick!</a></li>
             </ul>
             </div>
           </div>
