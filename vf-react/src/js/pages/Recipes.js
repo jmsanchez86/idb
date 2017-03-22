@@ -21,7 +21,9 @@ export default class Recipes extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={recipes[1].image} />
+                <div class="image">
+                  <img class="img img-responsive full-width" src={recipes[1].image} />
+                </div>
                 <div class="caption">
                     <h3>{recipes[1].name}</h3>
                     <p>{recipes[1].blurb}</p>
@@ -32,7 +34,9 @@ export default class Recipes extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={recipes[2].image} />
+                <div class="image">
+                  <img class="img img-responsive full-width" src={recipes[2].image} />
+                </div>
                 <div class="caption">
                     <h3>{recipes[2].name}</h3>
                     <p>{recipes[2].blurb}</p>
@@ -43,7 +47,9 @@ export default class Recipes extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={recipes[3].image} />
+                <div class="image">
+                  <img class="img img-responsive full-width" src={recipes[3].image} />
+                </div>
                 <div class="caption">
                     <h3>{recipes[3].name}</h3>
                     <p>{recipes[3].blurb}</p>
