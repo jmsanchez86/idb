@@ -32,6 +32,7 @@ export default class Landing extends React.Component {
                 <p>Let us help you help yourself to some tasty food.</p>
               </div>
             </div>
+            
           </div>
     );
   }
