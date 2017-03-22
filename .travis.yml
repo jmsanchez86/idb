@@ -23,4 +23,5 @@ before_script:
 script:
     - date
     - ls -al
+    - export PYTHONPATH=$PWD
     - make test
