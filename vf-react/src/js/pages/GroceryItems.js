@@ -6,7 +6,7 @@ var data = require('json!../../data/food.json');
 
 export default class GroceryItems extends React.Component {
   render() {
-    const groceryitems = data["grocery-items"];
+    const groceryitems = data.grocery_items;
 
 
     return (
@@ -23,17 +23,9 @@ export default class GroceryItems extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={groceryitems[0].image} />
-                <div class="caption">
-                    <h3>{groceryitems[0].name}</h3>
-                    <p><Link class="btn btn-primary" role="button" to="grocery-items/0">Details</Link></p>
+                <div class="image">
+                  <img class="img img-responsive full-width" src={groceryitems[1].image} />
                 </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src={groceryitems[1].image} />
                 <div class="caption">
                     <h3>{groceryitems[1].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="grocery-items/1">Details</Link></p>
@@ -43,9 +35,23 @@ export default class GroceryItems extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={groceryitems[2].image} />
+                <div class="image">
+                  <img class="img img-responsive full-width" src={groceryitems[2].image} />
+                </div>
                 <div class="caption">
                     <h3>{groceryitems[2].name}</h3>
+                    <p><Link class="btn btn-primary" role="button" to="grocery-items/2">Details</Link></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <div class="image">
+                  <img class="img img-responsive full-width" src={groceryitems[3].image} />
+                </div>
+                <div class="caption">
+                    <h3>{groceryitems[3].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="grocery-items/2">Details</Link></p>
                 </div>
               </div>

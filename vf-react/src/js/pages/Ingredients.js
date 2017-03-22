@@ -22,18 +22,9 @@ export default class Ingredients extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[0].image} />
-                <div class="caption">
-                    <h3>{ingredients[0].name}</h3>
-                    <p>{ingredients[0].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/0">Details</Link></p>
+                <div class="image">
+                  <img class="img img-responsive full-width" src={ingredients[1].image} />
                 </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src={ingredients[1].image} />
                 <div class="caption">
                     <h3>{ingredients[1].name}</h3>
                     <p>{ingredients[1].blurb}</p>
@@ -44,7 +35,9 @@ export default class Ingredients extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[2].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[2].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[2].name}</h3>
                     <p>{ingredients[2].blurb}</p>
@@ -55,66 +48,91 @@ export default class Ingredients extends React.Component {
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[3].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[3].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[3].name}</h3>
                     <p>{ingredients[3].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/3">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[4].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[4].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[4].name}</h3>
                     <p>{ingredients[4].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/4">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[5].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[5].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[5].name}</h3>
                     <p>{ingredients[5].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/5">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[6].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[6].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[6].name}</h3>
                     <p>{ingredients[6].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/6">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[7].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[7].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[7].name}</h3>
                     <p>{ingredients[7].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/7">Details</Link></p>
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
-                <img src={ingredients[8].image} />
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[8].image} />
+              </div>
                 <div class="caption">
                     <h3>{ingredients[8].name}</h3>
                     <p>{ingredients[8].blurb}</p>
-                    <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/8">Details</Link></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+              <div class="image">
+                <img class="img img-responsive full-width" src={ingredients[9].image} />
+              </div>
+                <div class="caption">
+                    <h3>{ingredients[9].name}</h3>
+                    <p>{ingredients[9].blurb}</p>
+                    <p><Link class="btn btn-primary" role="button" to="ingredients/9">Details</Link></p>
                 </div>
               </div>
             </div>
