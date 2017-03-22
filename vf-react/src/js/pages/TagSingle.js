@@ -4,7 +4,6 @@ import { IndexLink, Link } from "react-router";
 var data = require('json!../../data/food.json');
 const recipes = data.recipes;
 const ingredients = data.ingredients;
-console.log(ingredients[1].name);
 const tags = data.tags;
 
 
@@ -20,8 +19,6 @@ export default class TagSingle extends React.Component {
           <p><Link to={"ingredients/" + ingredient_id}>{ingredients[ingredient_id].name}</Link></p>
         </div>);
     });
-
-    console.log(ingredientList);
 
     var recipeList = tag.recipes.map(function(recipe_id){
       return(

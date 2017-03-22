@@ -13,6 +13,7 @@ install:
     - pip install coverage
     - pip install numpy
     - pip install pylint
+    - pip install flask_sqlalchemy
 
 before_script:
     - uname -a
@@ -22,4 +23,5 @@ before_script:
 script:
     - date
     - ls -al
+    - export PYTHONPATH=$PWD
     - make test

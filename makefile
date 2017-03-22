@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := test
 
 FILES :=                 \
-	vennfridge/models.py \
-	vennfridge/tests.py  \
+	app/models.py \
+	app/tests.py  \
 	apiary.apib          \
 	.gitignore           \
 	.travis.yml          \
@@ -40,7 +40,7 @@ else ifeq ($(shell uname -p), unknown)
 else
 	PYTHON   := python3
 	PIP      := pip3
-	PYLINT   := pylint3
+	PYLINT   := pylint
 	COVERAGE := coverage-3.5
 	PYDOC    := pydoc3.5
 	AUTOPEP8 := autopep8
@@ -99,12 +99,13 @@ check:
 
 .PHONY: test
 test: .pylintrc
-	echo "All tests passed! (no tests ran)"
+	$(PYLINT) --generated-members=query app/tests.py
+	$(PYTHON) app/tests.py
 
 .PHONY: format
 format:
-	$(AUTOPEP8) -i vennfridge/models.py
-	$(AUTOPEP8) -i vennfridge/tests.py
+	$(AUTOPEP8) -i app/models.py
+	$(AUTOPEP8) -i app/tests.py
 
 IDB1.html:
 	pydoc3 -w IDB1
