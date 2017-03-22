@@ -9,8 +9,8 @@ import sqlalchemy
 import flask_sqlalchemy
 from flask import Flask
 
-from models import Ingredient, Tag, Recipe, GroceryItem, db
-from tests_data import mock_data
+from vennfridge.models import Ingredient, Tag, Recipe, GroceryItem, db
+from vennfridge.tests_data import mock_data
 
 class TestModels(TestCase):
 
