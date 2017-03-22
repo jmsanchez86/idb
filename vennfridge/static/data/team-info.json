@@ -26,10 +26,10 @@
     {
         "name": "Scott Hornberger",
         "username": "scott-hornberger",
-        "bio": "",
-        "responsibilities": "",
-        "imgUrl": "",
-        "numberOfUnitTests": ""
+        "bio": "Scott is a Junior at the Univesity of Texas at Austin. He will be interning with Uber in Seatlle over the summer of 2017. Lately, when he can find the time, he makes art, builds things, and two-steps.",
+        "responsibilities": "Front-end Framework Design and Development. HTML, CSS, Bootstrap, and React.",
+        "imgUrl": "http://i.imgur.com/g5DgROj.png",
+        "numberOfUnitTests": "0"
     },
     {
         "name": "Scott Munro",
