@@ -37,7 +37,7 @@ export default class IngredientSingle extends React.Component {
 
           <div class="container">
             <h2>{ingredient.name}</h2>
-            <div class="col-lg-12 col-sm-6 thumbnail text-center">
+            <div class="offset-4 col-lg-4 col-md-4 col-sm-4 thumbnail text-center">
               <img src={ingredient.image}/>
             </div>
 
