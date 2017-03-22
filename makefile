@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := test
 
 FILES :=                 \
-	vennfridge/models.py \
-	vennfridge/tests.py  \
+	app/models.py \
+	app/tests.py  \
 	apiary.apib          \
 	.gitignore           \
 	.travis.yml          \
@@ -99,13 +99,13 @@ check:
 
 .PHONY: test
 test: .pylintrc
-	$(PYLINT) --generated-members=query vennfridge/tests.py
-	$(PYTHON) vennfridge/tests.py
+	$(PYLINT) --generated-members=query app/tests.py
+	$(PYTHON) app/tests.py
 
 .PHONY: format
 format:
-	$(AUTOPEP8) -i vennfridge/models.py
-	$(AUTOPEP8) -i vennfridge/tests.py
+	$(AUTOPEP8) -i app/models.py
+	$(AUTOPEP8) -i app/tests.py
 
 IDB1.html:
 	pydoc3 -w IDB1
