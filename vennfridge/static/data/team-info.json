@@ -11,7 +11,7 @@
         "name": "Thomas Cardwell",
         "username": "thomascardwell7",
         "bio": "Thomas is a senior at the University of Texas at Austin studying Computer Science and Music Production. He has interned with HEB on their Store Systems IT team, and will be joining HomeAway full-time in the summer of 2017. Thomas also cofounded a music and video production company, InfiniD Music, and dabbles in music and videogames as pastimes.",
-        "responsibilities": "Front-end development, desiged grid pages with React and Bootstrap, assisted with database models and API research.",
+        "responsibilities": "Front-end development with HTML, React, Bootstrap and CSS, assisted with database models and API research.",
         "imgUrl": "https://thomascardwellsweblog.files.wordpress.com/2017/01/cropped-thomas-headshot.jpg",
         "numberOfUnitTests": "0"
     },
@@ -26,7 +26,7 @@
     {
         "name": "Scott Hornberger",
         "username": "scott-hornberger",
-        "bio": "Scott is a Junior at the Univesity of Texas at Austin. He will be interning with Uber in Seatlle over the summer of 2017. Lately, when he can find the time, he makes art, builds things, and two-steps.",
+        "bio": "Scott is a Junior at the Univesity of Texas at Austin. He will be interning with Uber in Seattle over the summer of 2017. Lately, when he can find the time, he makes art, builds things, and two-steps.",
         "responsibilities": "Front-end Framework Design and Development. HTML, CSS, Bootstrap, and React.",
         "imgUrl": "http://i.imgur.com/g5DgROj.png",
         "numberOfUnitTests": "0"

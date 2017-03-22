@@ -1,17 +1,30 @@
 import React from "react";
 
+var teamData = require('json!../../../../vennfridge/static/data/team-info.json');
+
 export default class About extends React.Component {
   constructor() {
     super();
     this.state = {
       gitDataUrl: 'https://api.github.com/repos/jmsanchez86/idb/stats/contributors',
       contributors: new Map(),
-      teamDataUrl: '../../../vennfridge/static/data/team-info.json',
     };
   }
 
   // when the component loads
   componentDidMount() {
+    // update our state for each contributor
+    for(var i=0; i<teamData.length; ++i) {
+      this.state.contributors.set(teamData[i].username,
+      {
+            name: teamData[i].name,
+            bio: teamData[i].bio,
+            picUrl: teamData[i].imgUrl,
+            responsibilities: teamData[i].responsibilities,
+            numberOfUnitTests: teamData[i].numberOfUnitTests
+      });
+          
+    }
     var _this = this;
     fetch(this.state.gitDataUrl)
       .then(
@@ -24,62 +37,33 @@ export default class About extends React.Component {
 
           // Examine the text in the response
           response.json().then(function(data) {
-            // update our state for each contributor
+            console.log(data);
             for(var i=0; i<data.length; ++i) {
-              _this.setState(_this.state.contributors.set(data[i].author.login, {
-                  login: data[i].author.login,
-                  gitPicUrl: data[i].author.avatar_url,
-                  totalCommits: data[i].total,
-                  profUrl: data[i].author.html_url
-                }));
+              // update our state for each contributor
+              const contributor = _this.state.contributors.get(data[i].author.login);
+              if(contributor){
+                  var gitContr = {
+                    login: data[i].author.login,
+                    gitPicUrl: data[i].author.avatar_url,
+                    totalCommits: data[i].total,
+                    profUrl: data[i].author.html_url
+                  };
+              }
+              for (var attrname in gitContr)
+                { contributor[attrname] = gitContr[attrname]; }
             }
-            fetch(_this.state.teamDataUrl)
-              .then(
-                function(response) {
-                  if (response.status !== 200) {
-                    console.log('Looks like there was a problem loading team-info. Status Code: ' +
-                      response.status);
-                    return;
-                  }
-
-                  // Examine the text in the response
-                  response.json().then(function(data) {
-
-                    // update our state for each contributor
-                    for(var i=0; i<data.length; ++i) {
-                      const gitContributor = _this.state.contributors.get(data[i].username);
-                      if(gitContributor)
-                      {
-                          var teamDataContr = {
-                                name: data[i].name,
-                                bio: data[i].bio,
-                                picUrl: data[i].imgUrl,
-                                responsibilities: data[i].responsibilities,
-                                numberOfUnitTests: data[i].numberOfUnitTests
-                          };
-                          for (var attrname in teamDataContr)
-                            { gitContributor[attrname] = teamDataContr[attrname]; }
-                          // this will force an update before rendering
-                          _this.forceUpdate();
-                      }
-                    }
-                  });
-                }
-              )
-              .catch(function(err) {
-                console.log('Fetch Error :-S', err);
-              });
-                  });
-                }
-      )
+            _this.forceUpdate();
+          });
+        })
       .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
-
+    // this will force an update before rendering
+    console.log(this.state.contributors);
+    this.forceUpdate();
   }
 
   render() {
-    console.log("settings");
     var r = Array.from(this.state.contributors, (contributor) => contributor);
     var contrList = r.map(function(c){
       const contributor = c[1];

@@ -4,7 +4,6 @@ import { IndexLink, Link } from "react-router";
 var data = require('json!../../data/food.json');
 const recipes = data.recipes;
 const ingredients = data.ingredients;
-console.log(ingredients[1].name);
 const tags = data.tags;
 
 
