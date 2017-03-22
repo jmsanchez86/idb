@@ -10,10 +10,10 @@ export default class RecipeSingle extends React.Component {
   render() {
     const id = this.props.params.id;
     var recipe = recipes[id];
-    var ingredientList = recipe["ingredient-amount"].map(function(ingredient){
+    var ingredientList = recipe.ingredient_amount.map(function(ingredient){
       return(
-        <div key={ingredient["ingredient-id"]} class="list-group-item">
-          <p><Link to={"ingredients/" + ingredient["ingredient-id"]}>{ingredient["original-string"]}</Link></p>
+        <div key={ingredient["ingredient_id"]} class="list-group-item">
+          <p><Link to={"ingredients/" + ingredient["ingredient_id"]}>{ingredient["original_string"]}</Link></p>
         </div>);
     });
     return (

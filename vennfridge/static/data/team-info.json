@@ -42,9 +42,9 @@
     {
         "name": "Jose Sanchez",
         "username": "jmsanchez86",
-        "bio": "",
-        "responsibilities": "",
+        "bio": "Jose is a Sophomore at the University of Texas at Austin. In his free time he enjoys reading, writing fiction, and playing videogames when not surrounded by his 5 sisters.",
+        "responsibilities": "Front-end Development using Bootstrap, React, HTML, and CSS.",
         "imgUrl": "",
-        "numberOfUnitTests": ""
+        "numberOfUnitTests": "0"
     }
 ]
