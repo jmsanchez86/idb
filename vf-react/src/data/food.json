@@ -227,6 +227,7 @@
       "1": {
         "id": 1,
         "name": "Crowd Pleaser",
+        "image": "../static/images/tags/crowd_pleaser.png",
         "blurb": "This item is sure please nearly everyone. Bring this dish to win the party!",
         "ingredients": [4, 8],
         "recipes": [1],
@@ -235,6 +236,7 @@
       "2": {
         "id": 2,
         "name": "Vegetarian",
+        "image": "../static/images/tags/veggie.png",
         "blurb": "These items are for those who choose to eat a semi-plant-based diet. These items will include dishes with egg and dairy products.",
         "ingredients": [1,2,3,5,6,8,9],
         "recipes": [1],
@@ -243,6 +245,7 @@
       "3": {
         "id": 3,
         "name": "Great For Sandwiches",
+        "image": "../static/images/tags/sandwichey.png",
         "blurb": "These items are made to be between two pieces of bread.",
         "ingredients": [2,5,6,7],
         "recipes": [],
@@ -251,6 +254,7 @@
       "4": {
         "id": 4,
         "name": "Quick!",
+        "image": "../static/images/tags/quick.png", 
         "blurb": "These items can be quickly made for when you're pressed for time. Great for lunches.",
         "ingredients": [],
         "recipes": [1, 2, 3],
