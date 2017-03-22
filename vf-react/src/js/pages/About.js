@@ -1,6 +1,6 @@
 import React from "react";
 
-var teamData = require('json!../../../../vennfridge/static/data/team-info.json');
+var teamData = require('json!../../../../app/static/data/team-info.json');
 
 export default class About extends React.Component {
   constructor() {
@@ -37,7 +37,6 @@ export default class About extends React.Component {
 
           // Examine the text in the response
           response.json().then(function(data) {
-            console.log(data);
             for(var i=0; i<data.length; ++i) {
               // update our state for each contributor
               const contributor = _this.state.contributors.get(data[i].author.login);
@@ -59,7 +58,6 @@ export default class About extends React.Component {
         console.log('Fetch Error :-S', err);
       });
     // this will force an update before rendering
-    console.log(this.state.contributors);
     this.forceUpdate();
   }
 
@@ -68,7 +66,7 @@ export default class About extends React.Component {
     var contrList = r.map(function(c){
       const contributor = c[1];
       return (
-        <div key={contributor.login} className='contributor' class='list-group-item container'>
+        <div key={contributor.name} className='contributor' class='list-group-item container'>
           <div class="thumbnail col-sm-4">
             <img src={contributor.picUrl ? contributor.picUrl : contributor.gitPicUrl} />
             <div class="caption">
