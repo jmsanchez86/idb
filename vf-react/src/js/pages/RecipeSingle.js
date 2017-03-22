@@ -12,8 +12,8 @@ export default class RecipeSingle extends React.Component {
     var recipe = recipes[id];
     var ingredientList = recipe.ingredient_amount.map(function(ingredient){
       return(
-        <div key={ingredient["ingredient_id"]} class="list-group-item">
-          <p><Link to={"ingredients/" + ingredient["ingredient_id"]}>{ingredient["original_string"]}</Link></p>
+        <div key={ingredient.ingredient_id} class="list-group-item">
+          <p><Link to={"ingredients/" + ingredient.ingredient_id}>{ingredient.original_string}</Link></p>
         </div>);
     });
     return (
