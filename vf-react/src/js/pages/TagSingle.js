@@ -26,30 +26,32 @@ export default class TagSingle extends React.Component {
     var recipeList = tag.recipes.map(function(recipe_id){
       return(
         <div key={recipe_id} class="list-group-item">
-          <p><Link to={"recipes/" + recipe_id}>{recipes[recipe_id][name]}</Link></p>
+          <p><Link to={"recipes/" + recipe_id}>{recipes[recipe_id].name}</Link></p>
         </div>);
     });
 
     return (
       <div id="unique-content">
           <div class="container">
-            <h2>{tag.name}</h2>
-            <div class="col-sm-6 thumbnail">
-              <div class="caption">
-                <p>{tag.blurb}</p>
+            <div class="text-center">
+              <h2>{tag.name}</h2>
+              <p>{tag.blurb}</p>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 list-group">
+                <h4>Ingredients with this Tag</h4>
+                {ingredientList}
               </div>
             </div>
-          <div class="col-sm-6 list-group container">
-            <h4>Ingredients with this Tag</h4>
-            {ingredientList}
-          </div>
-          <div class="col-sm-6 list-group container">
-            <h4>Recipes  with this Tag</h4>
-            {recipeList}
-          </div>
+            <div class="row">
+              <div class="col-lg-6 list-group">
+                <h4>Recipes  with this Tag</h4>
+                {recipeList}
+              </div>
+            </div>
+
         </div>
       </div>
-
     );
   }
 }
