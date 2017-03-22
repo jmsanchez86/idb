@@ -30,7 +30,7 @@ export default class GroceryItemSingle extends React.Component {
               </div>
             </div>
           <div class="col-sm-6 list-group container">
-            <h4>Tags</h4>
+            {tagList.length > 0 ? (<h4>Tags</h4>) : (<h4/>)}
             {tagList}
           </div>
           <div class="container">
