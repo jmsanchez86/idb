@@ -6,7 +6,7 @@ export default class About extends React.Component {
     this.state = {
       gitDataUrl: 'https://api.github.com/repos/jmsanchez86/idb/stats/contributors',
       contributors: new Map(),
-      teamDataUrl: '../../static/data/team-info.json',
+      teamDataUrl: '../../../vennfridge/static/data/team-info.json',
     };
   }
 
@@ -17,7 +17,7 @@ export default class About extends React.Component {
       .then(
         function(response) {
           if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
+            console.log('Looks like there was a problem loading github info. Status Code: ' +
               response.status);
             return;
           }
@@ -37,7 +37,7 @@ export default class About extends React.Component {
               .then(
                 function(response) {
                   if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
+                    console.log('Looks like there was a problem loading team-info. Status Code: ' +
                       response.status);
                     return;
                   }
