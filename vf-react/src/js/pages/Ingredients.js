@@ -18,9 +18,34 @@ export default class Ingredients extends React.Component {
             </div>
           </div>
 
-          <div id="grid-results" class="row">
+          <div class="container">
+            <div class="col-lg-1 dropdown">
+            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+              Sort Results
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">A-Z</a></li>
+              <li><a href="#">Z-A</a></li>
+              <li><a href="#">Most Popular</a></li>
+            </ul>
+            </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="offset-2 col-lg-1 dropdown">
+            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+              Filter
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Crowd Pleaser</a></li>
+              <li><a href="#">Vegetarian</a></li>
+              <li><a href="#">Great For Sandwiches</a></li>
+            </ul>
+            </div>
+          </div>
+
+          <div id="grid-results" class="row">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
                 <div class="image">
                   <img class="img img-responsive full-width" src={ingredients[1].image} />
@@ -33,7 +58,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[2].image} />
@@ -46,7 +71,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[3].image} />
@@ -59,7 +84,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[4].image} />
@@ -72,7 +97,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[5].image} />
@@ -85,7 +110,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[6].image} />
@@ -98,7 +123,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[7].image} />
@@ -111,7 +136,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[8].image} />
@@ -124,7 +149,7 @@ export default class Ingredients extends React.Component {
               </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-lg-4 col-sm-6 col-xs-12 col-md-4">
               <div class="thumbnail">
               <div class="image">
                 <img class="img img-responsive full-width" src={ingredients[9].image} />
