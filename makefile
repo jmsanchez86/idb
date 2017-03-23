@@ -75,8 +75,7 @@ versions:
 	$(PIP) list
 
 .PHONY: check
-check:
-	make mypy-check
+check: static-check
 	@not_found=0;                                 \
 	for i in $(FILES);                            \
 	do                                            \
@@ -95,12 +94,16 @@ check:
 	fi;                                           \
 	echo "success";
 
+.PHONY: .pylintrc
 .pylintrc:
-	$(PYLINT) --disable=locally-disabled --reports=no --generate-rcfile > $@
+	$(PYLINT) --disable=locally-disabled \
+			  --reports=no \
+			  --generated-members=query,Integer,Column,String,ForeignKey,relationship,Float\
+			  --generate-rcfile > $@
 
 .PHONY: test
 test: .pylintrc
-	$(PYLINT) --generated-members=query app/tests.py
+	$(PYLINT) app/tests.py
 	$(PYTHON) app/tests.py
 
 .PHONY: format
@@ -111,6 +114,11 @@ format:
 MYPY_SOURCES := $(shell find ./app -name '*.py')
 mypy-check: $(MYPY_SOURCES)
 	mypy --ignore-missing-imports $(MYPY_SOURCES)
+
+pylint-check: $(MYPY_SOURCES)
+	$(PYLINT) $(MYPY_SOURCES)
+
+static-check: mypy-check pylint-check
 
 IDB1.html:
 	pydoc3 -w IDB1
