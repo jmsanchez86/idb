@@ -94,7 +94,6 @@ check: static-check
 	fi;                                           \
 	echo "success";
 
-.PHONY: .pylintrc
 .pylintrc:
 	$(PYLINT) --disable=locally-disabled \
 			  --reports=no \
