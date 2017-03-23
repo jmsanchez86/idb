@@ -1,26 +1,13 @@
-# Currently this file is meant to run separately.
-# The only two python modules necessary to run this are:
-#     flask
-#     flask_sqlalchemy
-#
-# Both of these can be installed with pip.
-# pip install flask
-# pip install flask_sqlalchemy
-#
-# For enumerations there's a funtion called enum.auto() that
-# will generate a distinct value for each item but thinking about
-# the underlying database I think it matters that we know what the
-# values are so they don't change under our noses.
+# pylint: disable=missing-docstring
+# pylint: disable=invalid-name
+# pylint: disable=too-few-public-methods
+# pylint: disable=bad-whitespace
+# pylint: disable=too-many-arguments
 
-import enum
-
-from flask import Flask
-import sqlalchemy
-import flask_sqlalchemy
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy
 
-db = SQLAlchemy()
+db = SQLAlchemy() # type: SQLAlchemy
 
 class Ingredient(db.Model):
     __tablename__ = "ingredient"
@@ -48,7 +35,8 @@ class Recipe(db.Model):
     image_url      = db.Column(db.String(100))
     instructions   = db.Column(db.String(1000), primary_key=True)
 
-    def __init__(self, recipe_id, spoonacular_id, name, image_url, instructions):
+    def __init__(self, recipe_id, spoonacular_id, name, image_url,
+                 instructions):
         self.recipe_id = recipe_id
         self.spoonacular_id = spoonacular_id
         self.name = name
@@ -99,103 +87,119 @@ class Tag(db.Model):
 class IngredientNutrient(db.Model):
     __tablename__ = "ingredient_nutrient"
 
-    ingredient_id     = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
+    ingredient_id     = db.Column(db.Integer,
+                                  db.ForeignKey("ingredient.ingredient_id"),
+                                  primary_key=True)
     category          = db.Column(db.String(10), primary_key=True)
-    quantity_unit     = db.Column(db.String(10))
+    unit              = db.Column(db.String(10))
     quantity          = db.Column(db.Float)
 
     ingredient = db.relationship("Ingredient", back_populates="nutrients")
 
-    def __init__(self, ingredient_id, category, quantity_unit, quantity):
+    def __init__(self, ingredient_id, category, unit, quantity):
         self.ingredient_id = ingredient_id
         self.category = category
-        self.quantity_unit = quantity_unit
+        self.unit = unit
         self.quantity = quantity
 
     def __repr__(self):
-        return "<IngredientNutrient %d %s>" % (self.ingredient_id, self.category)
+        return "<IngredientNutrient %d %s>" % \
+                (self.ingredient_id, self.category)
 
-Ingredient.nutrients = db.relationship("IngredientNutrient", back_populates="ingredient")
+Ingredient.nutrients = db.relationship("IngredientNutrient",
+                                       back_populates="ingredient")
 
 class RecipeNutrient(db.Model):
     __tablename__ = "recipe_nutrient"
 
-    recipe_id         = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
-    category          = db.Column(db.String(10), primary_key=True)
-    quantity_unit     = db.Column(db.String(10))
-    quantity          = db.Column(db.Float)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
+                          primary_key=True)
+    category  = db.Column(db.String(10), primary_key=True)
+    unit      = db.Column(db.String(10))
+    quantity  = db.Column(db.Float)
 
     recipe = db.relationship("Recipe", back_populates="nutrients")
 
-    def __init__(self, recipe_id, category, quantity_unit, quantity):
+    def __init__(self, recipe_id, category, unit, quantity):
         self.recipe_id = recipe_id
         self.category = category
-        self.quantity_unit = quantity_unit
+        self.unit = unit
         self.quantity = quantity
 
     def __repr__(self):
         return "<RecipeNutrient %d %s>" % (self.recipe_id, self.category)
 
-Recipe.nutrients = db.relationship("RecipeNutrient", back_populates="recipe")
+Recipe.nutrients = db.relationship("RecipeNutrient",
+                                   back_populates="recipe")
 
 
 class RecipeIngredient(db.Model):
     __tablename__ = "recipe_ingredient"
 
-    recipe_id       = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
+    recipe_id       = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
+                                primary_key=True)
     ingredient_id   = db.Column(db.Integer, primary_key=True)
-    quantity_unit   = db.Column(db.String(20))
+    unit            = db.Column(db.String(20))
     quantity        = db.Column(db.Float)
     quantity_verbal = db.Column(db.String(100))
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
 
-    def __init__(self, recipe_id, ingredient_id, quantity_unit, quantity,
+    def __init__(self, recipe_id, ingredient_id, unit, quantity,
                  quantity_verbal):
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
-        self.quantity_unit = quantity_unit
+        self.unit = unit
         self.quantity = quantity
         self.quantity_verbal = quantity_verbal
 
     def __repr__(self):
         return "<RecipeIngredient %d %d>" % (self.recipe_id, self.ingredient_id)
 
-Recipe.ingredients = db.relationship("RecipeIngredient", back_populates="recipe")
+Recipe.ingredients = db.relationship("RecipeIngredient",
+                                     back_populates="recipe")
 
 
 class GroceryItemIngredient(db.Model):
     __tablename__ = "grocery_item_ingredient"
 
-    grocery_id      = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
+    grocery_id      = db.Column(db.Integer,
+                                db.ForeignKey("grocery_item.grocery_id"),
+                                primary_key=True)
     ingredient_id   = db.Column(db.Integer, primary_key=True)
-    quantity_unit   = db.Column(db.String(20))
+    unit            = db.Column(db.String(20))
     quantity        = db.Column(db.Float)
     quantity_verbal = db.Column(db.String(100))
 
     grocery_item = db.relationship("GroceryItem", back_populates="ingredients")
 
-    def __init__(self, grocery_id, ingredient_id, quantity_unit, quantity,
+    def __init__(self, grocery_id, ingredient_id, unit, quantity,
                  quantity_verbal):
         self.grocery_id = grocery_id
         self.ingredient_id = ingredient_id
-        self.quantity_unit = quantity_unit
+        self.unit = unit
         self.quantity = quantity
         self.quantity_verbal = quantity_verbal
 
     def __repr__(self):
-        return "<GroceryItemIngredient %d %d>" % (self.grocery_id, self.ingredient_id)
+        return "<GroceryItemIngredient %d %d>" % \
+                (self.grocery_id, self.ingredient_id)
 
-GroceryItem.ingredients = db.relationship("GroceryItemIngredient", back_populates="grocery_item")
+GroceryItem.ingredients = db.relationship("GroceryItemIngredient",
+                                          back_populates="grocery_item")
 
 class TagIngredient(db.Model):
     __tablename__ = "tag_ingredient"
 
-    tag_name      = db.Column(db.String(20), db.ForeignKey("tag.tag_name"), primary_key=True)
-    ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
+    tag_name      = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+                              primary_key=True)
+    ingredient_id = db.Column(db.Integer,
+                              db.ForeignKey("ingredient.ingredient_id"),
+                              primary_key=True)
 
     tag = db.relationship("Tag", back_populates="tag_ingredient_assocs")
-    ingredient = db.relationship("Ingredient", back_populates="tag_ingredient_assocs")
+    ingredient = db.relationship("Ingredient",
+                                 back_populates="tag_ingredient_assocs")
 
     def __init__(self, tag_name, ingredient_id):
         self.tag_name = tag_name
@@ -204,16 +208,20 @@ class TagIngredient(db.Model):
     def __repr__(self):
         return "<TagIngredient %s %d>" % (self.tag_name, self.ingredient_id)
 
-Ingredient.tag_ingredient_assocs = db.relationship("TagIngredient", back_populates="ingredient")
-Tag.tag_ingredient_assocs = db.relationship("TagIngredient", back_populates="tag")
+Ingredient.tag_ingredient_assocs = db.relationship("TagIngredient",
+                                                   back_populates="ingredient")
+Tag.tag_ingredient_assocs = db.relationship("TagIngredient",
+                                            back_populates="tag")
 Ingredient.tags = association_proxy("tag_ingredient_assocs", "tag")
 Tag.ingredients = association_proxy("tag_ingredient_assocs", "ingredient")
 
 class TagRecipe(db.Model):
     __tablename__ = "tag_recipe"
 
-    tag_name  = db.Column(db.String(20), db.ForeignKey("tag.tag_name"), primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
+    tag_name  = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+                          primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
+                          primary_key=True)
 
     tag = db.relationship("Tag", back_populates="tag_recipe_assocs")
     recipe = db.relationship("Recipe", back_populates="tag_recipe_assocs")
@@ -233,11 +241,15 @@ Tag.recipes = association_proxy("tag_recipe_assocs", "recipe")
 class TagGroceryItem(db.Model):
     __tablename__ = "tag_grocery_item"
 
-    tag_name   = db.Column(db.String(20), db.ForeignKey("tag.tag_name"), primary_key=True)
-    grocery_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
+    tag_name   = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+                           primary_key=True)
+    grocery_id = db.Column(db.Integer,
+                           db.ForeignKey("grocery_item.grocery_id"),
+                           primary_key=True)
 
     tag = db.relationship("Tag", back_populates="tag_grocery_item_assocs")
-    grocery_item = db.relationship("GroceryItem", back_populates="tag_grocery_item_assocs")
+    grocery_item = db.relationship("GroceryItem",
+                                   back_populates="tag_grocery_item_assocs")
 
     def __init__(self, tag_name, grocery_id):
         self.tag_name = tag_name
@@ -247,8 +259,9 @@ class TagGroceryItem(db.Model):
         return "<TagGroceryItem %s %d>" % (self.tag_name, self.grocery_id)
 
 
-GroceryItem.tag_grocery_item_assocs = db.relationship("TagGroceryItem", back_populates="grocery_item")
-Tag.tag_grocery_item_assocs = db.relationship("TagGroceryItem", back_populates="tag")
+GroceryItem.tag_grocery_item_assocs = db.relationship("TagGroceryItem",
+                                                      back_populates="grocery_item")
+Tag.tag_grocery_item_assocs = db.relationship("TagGroceryItem",
+                                              back_populates="tag")
 GroceryItem.tags = association_proxy("tag_grocery_item_assocs", "tag")
 Tag.grocery_items = association_proxy("tag_grocery_item_assocs", "grocery_item")
-

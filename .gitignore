@@ -6,4 +6,3 @@ venv
 config.py
 Thumbs.db
 node_modules/
-.pylintrc
