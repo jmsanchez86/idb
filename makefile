@@ -129,6 +129,5 @@ IDB1.log:
 .PHONY: all
 all: IDB1.html IDB1.log
 	make format
-	make run
 	make test
 	make check
