@@ -52,7 +52,7 @@ export default class Ingredients extends React.Component {
                   <img class="img img-responsive full-width" src={ingredients[1].image} />
                 </div>
                 <div class="caption">
-                    <h3>{ingredients[1].name}</h3>
+                    <h3 class="grid">{ingredients[1].name}</h3>
                     <p>{ingredients[1].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/1">Details</Link></p>
                 </div>
@@ -65,7 +65,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[2].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[2].name}</h3>
+                    <h3 class="grid">{ingredients[2].name}</h3>
                     <p>{ingredients[2].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/2">Details</Link></p>
                 </div>
@@ -78,7 +78,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[3].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[3].name}</h3>
+                    <h3 class="grid">{ingredients[3].name}</h3>
                     <p>{ingredients[3].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/3">Details</Link></p>
                 </div>
@@ -91,7 +91,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[4].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[4].name}</h3>
+                    <h3 class="grid">{ingredients[4].name}</h3>
                     <p>{ingredients[4].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/4">Details</Link></p>
                 </div>
@@ -104,7 +104,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[5].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[5].name}</h3>
+                    <h3 class="grid">{ingredients[5].name}</h3>
                     <p>{ingredients[5].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/5">Details</Link></p>
                 </div>
@@ -117,7 +117,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[6].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[6].name}</h3>
+                    <h3 class="grid">{ingredients[6].name}</h3>
                     <p>{ingredients[6].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/6">Details</Link></p>
                 </div>
@@ -130,7 +130,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[7].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[7].name}</h3>
+                    <h3 class="grid">{ingredients[7].name}</h3>
                     <p>{ingredients[7].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/7">Details</Link></p>
                 </div>
@@ -143,7 +143,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[8].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[8].name}</h3>
+                    <h3 class="grid">{ingredients[8].name}</h3>
                     <p>{ingredients[8].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/8">Details</Link></p>
                 </div>
@@ -156,7 +156,7 @@ export default class Ingredients extends React.Component {
                 <img class="img img-responsive full-width" src={ingredients[9].image} />
               </div>
                 <div class="caption">
-                    <h3>{ingredients[9].name}</h3>
+                    <h3 class="grid">{ingredients[9].name}</h3>
                     <p>{ingredients[9].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="ingredients/9">Details</Link></p>
                 </div>

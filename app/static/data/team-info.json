@@ -5,7 +5,7 @@
         "bio": "Noel is a senior at the University of Texas Austin studying Computer Science. In his free time he enjoys working on side programming projects, drawing pixel art, and walking.",
         "responsibilities": "Back-end database modeling and testing.",
         "imgUrl": "http://www.cs.utexas.edu/~noelb/1683124062/avatar.jpg",
-        "numberOfUnitTests": ""
+        "numberOfUnitTests": "11"
     },
     {
         "name": "Thomas Cardwell",
@@ -26,7 +26,7 @@
     {
         "name": "Scott Hornberger",
         "username": "scott-hornberger",
-        "bio": "Scott is a Junior at the Univesity of Texas at Austin. He will be interning with Uber in Seattle over the summer of 2017. Lately, when he can find the time, he makes art, builds things, and two-steps.",
+        "bio": "Scott is a junior at the Univesity of Texas at Austin. He will be interning with Uber in Seattle over the summer of 2017. Lately, when he can find the time, he makes art, builds things, and two-steps.",
         "responsibilities": "Front-end Framework Design and Development. HTML, CSS, Bootstrap, and React.",
         "imgUrl": "http://i.imgur.com/g5DgROj.png",
         "numberOfUnitTests": "0"
@@ -34,7 +34,7 @@
     {
         "name": "Scott Munro",
         "username": "scottnm",
-        "bio": "Scott is a Senior at the University of Texas at Austin studying Computer Science. In the past he's interned with Google and Microsoft, and will be returning fulltime to Microsoft in the Fall of 2017. In his free time Scott enjoys playing videogames, listening to crazy music, and poorly quoting old episodes of the Simpsons.",
+        "bio": "Scott is a senior at the University of Texas at Austin studying Computer Science. In the past he's interned with Google and Microsoft, and will be returning fulltime to Microsoft in the Fall of 2017. In his free time Scott enjoys playing videogames, listening to crazy music, and poorly quoting old episodes of the Simpsons.",
         "responsibilities": "Setup Google Cloud Platform, helped design database models, scraped data for the database, led Agile Development.",
         "imgUrl": "https://scottnm.github.io/images/profile_pic.jpg",
         "numberOfUnitTests": "0"
@@ -42,7 +42,7 @@
     {
         "name": "Jose Sanchez",
         "username": "jmsanchez86",
-        "bio": "Jose is a Sophomore at the University of Texas at Austin. In his free time he enjoys reading, writing fiction, and playing videogames when not surrounded by his 5 sisters.",
+        "bio": "Jose is a sophomore at the University of Texas at Austin. In his free time he enjoys reading, writing fiction, and playing videogames when not surrounded by his 5 sisters.",
         "responsibilities": "Front-end Development using Bootstrap, React, HTML, and CSS.",
         "imgUrl": "",
         "numberOfUnitTests": "0"

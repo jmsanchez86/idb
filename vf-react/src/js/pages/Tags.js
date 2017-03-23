@@ -54,7 +54,7 @@ export default class Tags extends React.Component {
               <div class="thumbnail">
                 <img src={tags[1].image} />
                 <div class="caption">
-                    <h3>{tags[1].name}</h3>
+                    <h3 class="grid">{tags[1].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="tags/1">Details</Link></p>
                 </div>
               </div>
@@ -64,7 +64,7 @@ export default class Tags extends React.Component {
               <div class="thumbnail">
                 <img src={tags[2].image} />
                 <div class="caption">
-                    <h3>{tags[2].name}</h3>
+                    <h3 class="grid">{tags[2].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="tags/2">Details</Link></p>
                 </div>
               </div>
@@ -74,17 +74,17 @@ export default class Tags extends React.Component {
               <div class="thumbnail">
                 <img src={tags[3].image} />
                 <div class="caption">
-                    <h3>{tags[3].name}</h3>
+                    <h3 class="grid">{tags[3].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="tags/3">Details</Link></p>
                 </div>
               </div>
             </div>
-            
+
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
                 <img src={tags[4].image} />
                 <div class="caption">
-                    <h3>{tags[4].name}</h3>
+                    <h3 class="grid">{tags[4].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="tags/4">Details</Link></p>
                 </div>
               </div>
