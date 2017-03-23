@@ -29,16 +29,16 @@ export default class RecipeSingle extends React.Component {
       <div class="container">
         <div class="media hidden-sm hidden-xs">
           <h2>{recipe.name}</h2>
-          <div class="media-left">
+          <div id="media-left" class="media-left">
             <img class="media-object" id="image-single-lg" src={recipe.image} alt="..." />
+            {tagList}
           </div>
           <div class="media-body">
-            <h4 class="media-heading">Ingredients</h4>
+            {ingredientList.length > 0 ? (<h4 class="media-heading">Ingredients</h4>) : (<h4/>)}
             {ingredientList}
             <h4 class="media-heading">Instructions</h4>
             <p>{recipe.instructions}</p>
-            {tagList.length > 0 ? (<h4>Tags</h4>) : (<h4/>)}
-            {tagList}
+
           </div>
         </div>
 
@@ -48,28 +48,31 @@ export default class RecipeSingle extends React.Component {
               <h3>{recipe.name}</h3>
             </div>
           </div>
-          <div class="row text-center">
-            <img id="image-single-sm" src={recipe.image} alt="..." />
+
+          <div class="row">
+            <img class="image1" id="image-single-sm" src={recipe.image} alt="..." />
           </div>
           <div class="row">
-          <div class="col">
-              <h4>Ingredients</h4>
-              {ingredientList}
+            <div class="col-sm-12 col-xs-12">
+                {tagList}
+            </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-sm-10 col-xs-12">
-              <h4>Instructions</h4>
-              <p>{recipe.instructions}</p>
-              {tagList.length > 0 ? (<h4>Tags</h4>) : (<h4/>)}
-              {tagList}
+          <div id="ingSingleList" class="row">
+            <div class="col">
+                {ingredientList.length > 0 ? (<h4 class="media-heading">Ingredients</h4>) : (<h4/>)}
+                {ingredientList}
+            </div>
           </div>
+          <div id="ingSingleList" class="row">
+            <div class="col">
+                <h4>Instructions</h4>
+                <p>{recipe.instructions}</p>
+
+            </div>
         </div>
       </div>
-
-
-        </div>
+    </div>
 
 
 

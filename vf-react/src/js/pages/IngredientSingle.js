@@ -28,37 +28,59 @@ export default class IngredientSingle extends React.Component {
     var tagList = ingredient.tags.map(function(tag){
       var tagItem = tags[tag];
       return (
-        <div key={tag} class="list-group-item">
-          <p><Link to={"tags/" + tag}>{tagItem.name}</Link></p>
+        <div key={tag} class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+          <Link to={"tags/" + tag}><img id="tag-single" src={tagItem.image} /></Link>
         </div>);
     });
     return (
-      <div id="unique-content">
 
-          <div class="container">
-            <h2>{ingredient.name}</h2>
-            <div class="offset-4 col-lg-4 col-md-4 col-sm-4 thumbnail text-center">
-              <img src={ingredient.image}/>
-            </div>
+      <div class="container">
+        <div class="media hidden-sm hidden-xs">
+          <h2>{ingredient.name}</h2>
+          <div id="media-left" class="media-left">
+            <img class="media-object" id="image-single-lg" src={ingredient.image} alt="..." />
+            {tagList}
+          </div>
+          <div class="media-body">
+            {recipeList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4/>)}
+            {recipeList}
+            <br />
+            {groceryList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4/>)}
+            {groceryList}
+          </div>
+        </div>
 
-            <div class="col-sm-6 list-group-container">
-              {recipeList.length > 0 ? (<h4>Recipes with this Ingredient</h4>) : (<h4/>)}
-              {recipeList}
-            </div>
-
-            <div class="col-sm-6 list-group-container">
-              {groceryList.length > 0 ? (<h4>Grocery Items</h4>) : (<h4/>)}
-              {groceryList}
-            </div>
-
-            <div class="col-sm-6 list-group-container">
-              {tagList.length > 0 ? (<h4>Tags</h4>) : (<h4/>)}
-              {tagList}
+        <div class="container hidden-md hidden-lg">
+          <div class="row">
+            <div>
+              <h3>{ingredient.name}</h3>
             </div>
           </div>
 
+            <div class="row">
+              <img class="image1" id="image-single-sm" src={ingredient.image} alt="..." />
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-xs-12">
+                  {tagList}
+              </div>
+            </div>
 
+          <div id="ingSingleList" class="row">
+            <div class="col">
+            {recipeList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4/>)}
+            {recipeList}
+            </div>
+          </div>
+          <div id="ingSingleList" class="row">
+            <div class="col">
+            {groceryList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4/>)}
+            {groceryList}
+            </div>
+          </div>
       </div>
+
+    </div>
 
     );
   }

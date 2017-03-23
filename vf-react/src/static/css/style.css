@@ -231,20 +231,25 @@ img.venn {
   height:auto;
 }
 
-#image-single-sm {
-  margin: 20px;
-  width: 100%;
-  height:auto;
-}
-
 #image-single-lg {
-  margin: 20px;
+  border-radius: 5px;
+  margin: 10px;
   width: calc(200px + 25vw);
   height:auto;
 }
 
 #image-single-sm {
-  margin: 20px;
-  width: 70vw;
+  border-radius: 5px;
+  width: 100%;
   height:auto;
+}
+
+#ingSingleList {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.image1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
