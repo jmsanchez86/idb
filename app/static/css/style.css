@@ -27,6 +27,20 @@ ul.nav a:hover {
   color: rgba(255,254,254,0.7) !important;
 }
 
+.image{
+    position:relative;
+    overflow:hidden;
+    padding-bottom:100%;
+}
+.image img{
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+}
+
 
 
 #logohome {
@@ -124,7 +138,7 @@ ul.nav a:hover {
 
 /* Carousel */
 #myCarousel {
-  z-idex:0;
+  z-index:0;
   width:auto;
   margin-top: -40px;
   box-shadow: 0 1px 15px 0px #292929;
@@ -157,21 +171,48 @@ ul.nav a:hover {
   margin-bottom:80px;
 
 }
-.container h2 {
+h2 {
   font-family: Dosis, sans-serif;
   font-weight: 400;
   font-size: 80px;
 }
+
+h3.grid {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+
 .container h4 {
   font-family: Raleway, sans-serif;
   font-weight: 400;
   font-size: 30px;
 }
+
+.container h6 {
+  font-family: Raleway, sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+h3 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+}
+
+h4 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+
 .container p {
   font-family: Raleway, sans-serif;
   font-weight: 400;
   font-size: 17px;
 }
+
 img.venn {
   height: 30px;
   width:auto; /* you can use % */
@@ -205,4 +246,47 @@ img.venn {
 	color:  #FFFEF9;
 	font-size: 14px;
 	margin: 0;
+}
+
+#tag-single {
+  width:70px;
+  height:auto;
+}
+
+#image-single-lg {
+  border-radius: 5px;
+  margin: 10px;
+  width: calc(200px + 25vw);
+  height:auto;
+}
+
+#image-single-sm {
+  border-radius: 5px;
+  width: 100%;
+  height:auto;
+}
+
+#image-single {
+  border-radius: 5px;
+  width: 250px;
+
+}
+
+
+#ingSingleList {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.image1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.no {
+  color: #e6e6e6;
+}
+
+#upc {
+  color: #cccccc;
 }
