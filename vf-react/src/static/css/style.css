@@ -176,6 +176,11 @@ ul.nav a:hover {
   font-weight: 400;
   font-size: 80px;
 }
+.container h3 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+}
 .container h4 {
   font-family: Raleway, sans-serif;
   font-weight: 400;
@@ -219,4 +224,27 @@ img.venn {
 	color:  #FFFEF9;
 	font-size: 14px;
 	margin: 0;
+}
+
+#tag-single {
+  width:70px;
+  height:auto;
+}
+
+#image-single-sm {
+  margin: 20px;
+  width: 100%;
+  height:auto;
+}
+
+#image-single-lg {
+  margin: 20px;
+  width: calc(200px + 25vw);
+  height:auto;
+}
+
+#image-single-sm {
+  margin: 20px;
+  width: 70vw;
+  height:auto;
 }
