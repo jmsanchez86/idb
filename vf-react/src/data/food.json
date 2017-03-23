@@ -236,7 +236,7 @@
       "2": {
         "id": 2,
         "name": "Vegetarian",
-        "image": "../static/images/tags/veggie.png",
+        "image": "../static/images/tags/vegetarian.png",
         "blurb": "These items are for those who choose to eat a semi-plant-based diet. These items will include dishes with egg and dairy products.",
         "ingredients": [1,2,3,5,6,8,9],
         "recipes": [1],
