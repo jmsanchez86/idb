@@ -204,13 +204,15 @@
         "name": "Kirkland Signature Regular Sliced",
         "image": "http://i.huffpost.com/gadgets/slideshows/320101/slide_320101_2986024_free.jpg",
         "upc": "0-75987-67890-5",
-        "tags": [2]
+        "ingredient": 4,
+        "tags": [1]
       },
       "2":{
         "id": 2,
         "name": "Applegate Naturals Roasted Turkey Breast",
-        "image": "https://foodfetepress.files.wordpress.com/2012/04/applegate_og_rsttky-2.jpg",
+        "image": "http://happymart.co/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/i/m/img_0880.jpg",
         "upc": "0-21436-67890-5",
+        "ingredient": 7,
         "tags": [3]
       },
       "3":{
@@ -218,6 +220,7 @@
         "name": "Ezekiel 4:9 Low Sodium Sprouted Whole Grain Bread",
         "image": "http://s.eatthis-cdn.com/media/images/ext/437304009/ezekiel-low-sodium-sprouted-bread.jpg",
         "upc": "0-98875-67890-5",
+        "ingredient": 9,
         "tags": [3]
       }
     },

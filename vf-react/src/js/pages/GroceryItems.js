@@ -54,7 +54,7 @@ export default class GroceryItems extends React.Component {
                   <img class="img img-responsive full-width" src={groceryitems[1].image} />
                 </div>
                 <div class="caption">
-                    <h3>{groceryitems[1].name}</h3>
+                    <h3 class="grid">{groceryitems[1].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="grocery-items/1">Details</Link></p>
                 </div>
               </div>
@@ -66,7 +66,7 @@ export default class GroceryItems extends React.Component {
                   <img class="img img-responsive full-width" src={groceryitems[2].image} />
                 </div>
                 <div class="caption">
-                    <h3>{groceryitems[2].name}</h3>
+                    <h3 class="grid">{groceryitems[2].name}</h3>
                     <p><Link class="btn btn-primary" role="button" to="grocery-items/2">Details</Link></p>
                 </div>
               </div>
@@ -78,8 +78,8 @@ export default class GroceryItems extends React.Component {
                   <img class="img img-responsive full-width" src={groceryitems[3].image} />
                 </div>
                 <div class="caption">
-                    <h3>{groceryitems[3].name}</h3>
-                    <p><Link class="btn btn-primary" role="button" to="grocery-items/2">Details</Link></p>
+                    <h3 class="grid">{groceryitems[3].name}</h3>
+                    <p><Link class="btn btn-primary" role="button" to="grocery-items/3">Details</Link></p>
                 </div>
               </div>
             </div>

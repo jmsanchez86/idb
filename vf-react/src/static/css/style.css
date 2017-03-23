@@ -171,22 +171,36 @@ ul.nav a:hover {
   margin-bottom:80px;
 
 }
-.container h2 {
+h2 {
   font-family: Dosis, sans-serif;
   font-weight: 400;
   font-size: 80px;
 }
-.container h3 {
-  font-family: Dosis, sans-serif;
+
+h3.grid {
+  font-family: Raleway, sans-serif;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 30px;
 }
+
 .container h4 {
   font-family: Raleway, sans-serif;
   font-weight: 400;
   font-size: 30px;
 }
-.container p {
+
+h3 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+}
+
+h4 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+p {
   font-family: Raleway, sans-serif;
   font-weight: 400;
   font-size: 17px;
@@ -244,6 +258,13 @@ img.venn {
   height:auto;
 }
 
+#image-single {
+  border-radius: 5px;
+  width: 250px;
+
+}
+
+
 #ingSingleList {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -256,4 +277,8 @@ img.venn {
 
 .no {
   color: #e6e6e6;
+}
+
+#upc {
+  color: #cccccc;
 }
