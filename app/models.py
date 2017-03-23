@@ -1,3 +1,7 @@
+"""
+Database models described with SQLAlchemy.
+"""
+
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-name
 # pylint: disable=too-few-public-methods
@@ -10,6 +14,10 @@ from sqlalchemy.ext.associationproxy import association_proxy
 db = SQLAlchemy() # type: SQLAlchemy
 
 class Ingredient(db.Model):
+    """
+    Table of ingredients.
+    """
+
     __tablename__ = "ingredient"
 
     ingredient_id  = db.Column(db.Integer, primary_key=True)
@@ -27,6 +35,10 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
 class Recipe(db.Model):
+    """
+    Table of recipes.
+    """
+
     __tablename__ = "recipe"
 
     recipe_id      = db.Column(db.Integer, primary_key=True)
@@ -47,6 +59,10 @@ class Recipe(db.Model):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
 class GroceryItem(db.Model):
+    """
+    Table of Grocery Items.
+    """
+
     __tablename__ = "grocery_item"
 
     grocery_id     = db.Column(db.Integer, primary_key=True)
@@ -66,6 +82,10 @@ class GroceryItem(db.Model):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
 class Tag(db.Model):
+    """
+    Table of tags.
+    """
+
     __tablename__ = "tag"
 
     tag_name    = db.Column(db.String(20), primary_key=True)
@@ -85,6 +105,10 @@ class Tag(db.Model):
 
 
 class IngredientNutrient(db.Model):
+    """
+    Describe nutrient quantities for ingredients.
+    """
+
     __tablename__ = "ingredient_nutrient"
 
     ingredient_id     = db.Column(db.Integer,
@@ -110,6 +134,10 @@ Ingredient.nutrients = db.relationship("IngredientNutrient",
                                        back_populates="ingredient")
 
 class RecipeNutrient(db.Model):
+    """
+    Describe nutrient quantities for recipes.
+    """
+
     __tablename__ = "recipe_nutrient"
 
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
@@ -134,6 +162,10 @@ Recipe.nutrients = db.relationship("RecipeNutrient",
 
 
 class RecipeIngredient(db.Model):
+    """
+    Ingredients and quantities contained in a recipe.
+    """
+
     __tablename__ = "recipe_ingredient"
 
     recipe_id       = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
@@ -161,6 +193,10 @@ Recipe.ingredients = db.relationship("RecipeIngredient",
 
 
 class GroceryItemIngredient(db.Model):
+    """
+    Ingredients and quantities contained in a grocery item.
+    """
+
     __tablename__ = "grocery_item_ingredient"
 
     grocery_id      = db.Column(db.Integer,
@@ -189,6 +225,10 @@ GroceryItem.ingredients = db.relationship("GroceryItemIngredient",
                                           back_populates="grocery_item")
 
 class TagIngredient(db.Model):
+    """
+    Association table for tags to ingredients.
+    """
+
     __tablename__ = "tag_ingredient"
 
     tag_name      = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
@@ -216,6 +256,10 @@ Ingredient.tags = association_proxy("tag_ingredient_assocs", "tag")
 Tag.ingredients = association_proxy("tag_ingredient_assocs", "ingredient")
 
 class TagRecipe(db.Model):
+    """
+    Association table for tags to recipes.
+    """
+
     __tablename__ = "tag_recipe"
 
     tag_name  = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
@@ -239,6 +283,10 @@ Recipe.tags = association_proxy("tag_recipe_assocs", "tag")
 Tag.recipes = association_proxy("tag_recipe_assocs", "recipe")
 
 class TagGroceryItem(db.Model):
+    """
+    Association table for tags to grocery items.
+    """
+
     __tablename__ = "tag_grocery_item"
 
     tag_name   = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
