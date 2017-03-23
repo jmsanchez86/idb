@@ -52,7 +52,7 @@ export default class Recipes extends React.Component {
                   <img class="img img-responsive full-width" src={recipes[1].image} />
                 </div>
                 <div class="caption">
-                    <h3>{recipes[1].name}</h3>
+                    <h3 class="grid">{recipes[1].name}</h3>
                     <p>{recipes[1].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="recipes/1">Details</Link></p>
                 </div>
@@ -65,7 +65,7 @@ export default class Recipes extends React.Component {
                   <img class="img img-responsive full-width" src={recipes[2].image} />
                 </div>
                 <div class="caption">
-                    <h3>{recipes[2].name}</h3>
+                    <h3 class="grid">{recipes[2].name}</h3>
                     <p>{recipes[2].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="recipes/2">Details</Link></p>
                 </div>
@@ -78,7 +78,7 @@ export default class Recipes extends React.Component {
                   <img class="img img-responsive full-width" src={recipes[3].image} />
                 </div>
                 <div class="caption">
-                    <h3>{recipes[3].name}</h3>
+                    <h3 class="grid">{recipes[3].name}</h3>
                     <p>{recipes[3].blurb}</p>
                     <p><Link class="btn btn-primary" role="button" to="recipes/3">Details</Link></p>
                 </div>
