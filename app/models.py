@@ -7,7 +7,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy
 
-db = SQLAlchemy()
+db = SQLAlchemy() # type: SQLAlchemy
 
 class Ingredient(db.Model):
     __tablename__ = "ingredient"
