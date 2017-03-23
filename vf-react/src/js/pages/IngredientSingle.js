@@ -42,10 +42,10 @@ export default class IngredientSingle extends React.Component {
             {tagList}
           </div>
           <div class="media-body">
-            {recipeList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4/>)}
+            {recipeList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4 class="no">Recipes with this Ingredient</h4>)}
             {recipeList}
             <br />
-            {groceryList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4/>)}
+            {groceryList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4 class="no">Related Grocery Items</h4>)}
             {groceryList}
           </div>
         </div>
@@ -68,13 +68,13 @@ export default class IngredientSingle extends React.Component {
 
           <div id="ingSingleList" class="row">
             <div class="col">
-            {recipeList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4/>)}
+            {recipeList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4 class="no">Recipes with this Ingredient</h4>)}
             {recipeList}
             </div>
           </div>
           <div id="ingSingleList" class="row">
             <div class="col">
-            {groceryList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4/>)}
+            {groceryList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4 class="no">Related Grocery Items</h4>)}
             {groceryList}
             </div>
           </div>

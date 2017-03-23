@@ -34,9 +34,9 @@ export default class RecipeSingle extends React.Component {
             {tagList}
           </div>
           <div class="media-body">
-            {ingredientList.length > 0 ? (<h4 class="media-heading">Ingredients</h4>) : (<h4/>)}
+            {ingredientList.length > 0 ? (<h4 class="media-heading">Ingredients</h4>) : (<h4 class="no">Ingredient</h4>)}
             {ingredientList}
-            <h4 class="media-heading">Instructions</h4>
+            {recipe.instructions.length > 0 ? (<h4 class="media-heading">Instructions</h4>) :  (<h4 class="no">Instructions</h4>)}
             <p>{recipe.instructions}</p>
 
           </div>
