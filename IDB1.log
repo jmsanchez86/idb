@@ -1,3 +1,48 @@
+commit c8f440de718150cd62eea6ab771aee74da00ef0c
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 23 21:29:23 2017 -0500
+
+    updating min client with ndbenzinger
+
+commit 08bf9482ecc922e8bcade6c88956aa2565e296f0
+Merge: ebb554d c5136b5
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 23 21:28:10 2017 -0500
+
+    Merge branch 'master' of https://github.com/jmsanchez86/idb
+
+commit ebb554df18ed5c9c102cbdf18c3aac3c660b4683
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 23 21:27:51 2017 -0500
+
+    moving app run behind if flag
+
+commit c5136b552e103d14fd61c1683c0a83bd6dda73a8
+Merge: 336feca dee437d
+Author: Thomas Cardwell <Thomas Cardwell>
+Date:   Thu Mar 23 21:27:46 2017 -0500
+
+    Merge branch 'master' of https://github.com/jmsanchez86/idb
+
+commit 336fecab8b25c89ea3f5aec44ac851b2c9e24122
+Merge: 687397a cabdf5f
+Author: Thomas Cardwell <Thomas Cardwell>
+Date:   Thu Mar 23 21:24:18 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 687397a2a2c2ff818f1dfc5d9f4446d41db6d42b
+Author: Thomas Cardwell <Thomas Cardwell>
+Date:   Thu Mar 23 21:24:07 2017 -0500
+
+    prevented non team json people from breaking about page
+
+commit dee437d561ac45886a24fb6ab62a74252ea39c42
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Mar 23 20:27:30 2017 -0500
+
+    Added git log
+
 commit 6843743e09e7d29b1acfa1ba6c66d562d906eb5f
 Merge: 02dae6f cabdf5f
 Author: Scott Munro <scottnmunro@gmail.com>
