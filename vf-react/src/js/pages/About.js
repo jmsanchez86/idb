@@ -201,9 +201,10 @@ export default class About extends React.Component {
                     profUrl: data[i].author.html_url
                   };
                    _this.totalCommits();
+                  for (var attrname in gitContr)
+                    { contributor[attrname] = gitContr[attrname]; }
               }
-              for (var attrname in gitContr)
-                { contributor[attrname] = gitContr[attrname]; }
+              
             }
              var cont = _this.state.contributors;
             cont.get('scottnm').numIssues = 32;
