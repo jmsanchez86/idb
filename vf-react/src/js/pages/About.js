@@ -283,6 +283,9 @@ export default class About extends React.Component {
           <p><span class="badge active">{60}</span>
                 {' '}total issues.
           </p>
+          <p><span class="badge active">{11}</span>
+                {' '}total unit tests.
+          </p>
           <h6><a href="https://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
         </div>
         <div class="container" dangerouslySetInnerHTML={{__html: html}} />
