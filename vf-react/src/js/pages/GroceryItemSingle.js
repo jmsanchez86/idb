@@ -26,7 +26,7 @@ export default class GroceryItemSingle extends React.Component {
             <img class="media-object" id="image-single" src={groceryItem.image} alt="..." />
           </div>
           <div class="media-body hidden-xs">
-          <h4>UPC:</h4>
+          <h4>Related Ingredient:</h4>
           <div class="list-group-item">
             <p><Link to={"ingredients/" + groceryItem.ingredient}>{ingredients[groceryItem.ingredient].name}</Link></p>
           </div>

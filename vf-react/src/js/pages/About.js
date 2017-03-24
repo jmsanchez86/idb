@@ -149,10 +149,19 @@ export default class About extends React.Component {
     super();
     this.state = {
       gitDataUrl: 'https://api.github.com/repos/jmsanchez86/idb/stats/contributors',
+      gitIssuesUrl: 'https://api.github.com/repos/jmsanchez86/idb/issues',
       contributors: new Map(),
+      totalIssues: 0,
+      totalCommits: 0
     };
   }
-
+  totalCommits() {
+    var total = 0;
+    for (cont in this.contributors) {
+      total = total + this.cont.totalCommits;
+    }
+    this.setState({totalCommits : total});
+  }
   // when the component loads
   componentDidMount() {
     // update our state for each contributor
@@ -163,11 +172,13 @@ export default class About extends React.Component {
             bio: teamData[i].bio,
             picUrl: teamData[i].imgUrl,
             responsibilities: teamData[i].responsibilities,
-            numberOfUnitTests: teamData[i].numberOfUnitTests
+            numberOfUnitTests: teamData[i].numberOfUnitTests,
+            numIssues:0
       });
           
     }
     var _this = this;
+    
     fetch(this.state.gitDataUrl)
       .then(
         function(response) {
@@ -176,7 +187,7 @@ export default class About extends React.Component {
               response.status);
             return;
           }
-
+        
           // Examine the text in the response
           response.json().then(function(data) {
             for(var i=0; i<data.length; ++i) {
@@ -189,16 +200,27 @@ export default class About extends React.Component {
                     totalCommits: data[i].total,
                     profUrl: data[i].author.html_url
                   };
+                   _this.totalCommits();
               }
               for (var attrname in gitContr)
                 { contributor[attrname] = gitContr[attrname]; }
             }
+             var cont = _this.state.contributors;
+            cont.get('scottnm').numIssues = 32;
+            cont.get('CoryDunn').numIssues = 1;
+            cont.get('jmsanchez86').numIssues = 0;
+            cont.get('ndbenzinger').numIssues = 1;
+            cont.get('scott-hornberger').numIssues = 5;
+            cont.get('thomascardwell7').numIssues = 21;
+            _this.totalIssues = 60;
+            
             _this.forceUpdate();
           });
         })
       .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
+      
     // this will force an update before rendering
     this.forceUpdate();
   }
@@ -212,12 +234,16 @@ export default class About extends React.Component {
           <div class="thumbnail col-sm-4">
             <img src={contributor.picUrl ? contributor.picUrl : contributor.gitPicUrl} />
             <div class="caption">
-              <h3>{contributor.name + ' '}
+              <h4>{contributor.name + ' '}
                 <small><a href={contributor.profUrl}>{contributor.login}</a></small>
-              </h3>
+              </h4>
               <p><span class="badge active">{contributor.totalCommits}</span>
                 {' '}fridgetacular commit
                 {contributor.totalCommits > 1?'s':''}.
+              </p>
+              <p><span class="badge active">{contributor.numIssues}</span>
+                {' '}fridgetacular issue
+                {contributor.numIssues > 1?'s':''}.
               </p>
               <p>
                 <span class="badge active">{contributor.numberOfUnitTests}</span>
@@ -243,9 +269,21 @@ export default class About extends React.Component {
             <img class="venn" src="../static/images/diagram.png" />
           </div>
         </div>
-
+        
         <div id="contributor-list" class="list-group container">
           {contrList}
+        </div>
+        <div class="container">
+          <h4>Useful Links!</h4>
+          <h6><a href="https://github.com/jsanchez86/idb">GitHub Repo</a></h6>
+          <p><span class="badge active">{181}</span>
+                {' '}total commits.
+          </p>
+          <h6><a href="https://github.com/jsanchez86/idb/issues">Issue Tracker</a></h6>
+          <p><span class="badge active">{60}</span>
+                {' '}total issues.
+          </p>
+          <h6><a href="https://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
         </div>
         <div class="container" dangerouslySetInnerHTML={{__html: html}} />
       </div>
