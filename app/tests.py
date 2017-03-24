@@ -77,7 +77,7 @@ class TestModels(TestCase):
         ingredient_data = set((i.ingredient_id, i.unit, i.quantity)
                               for i in ingredients)
         self.assertEqual(ingredient_data, {
-                         (2, "grams", 50), (3, "grams", 100)})
+            (2, "grams", 50), (3, "grams", 100)})
 
     def test_grocery_item(self):
         # Grocery item by name.
