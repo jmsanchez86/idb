@@ -12,6 +12,7 @@ from flask import Flask
 from app.models import Ingredient, Tag, Recipe, GroceryItem, db
 from app.tests_data import mock_data
 
+
 class TestModels(TestCase):
 
     @classmethod
@@ -41,7 +42,6 @@ class TestModels(TestCase):
 
         query = db.session.query(Tag).filter_by(tag_name="natural")
         cls.tag = query.first()
-
 
     def test_ingredient(self):
         # Ingredient by name.
@@ -76,7 +76,8 @@ class TestModels(TestCase):
         ingredients = self.sandwich.ingredients
         ingredient_data = set((i.ingredient_id, i.unit, i.quantity)
                               for i in ingredients)
-        self.assertEqual(ingredient_data, {(2, "grams", 50), (3, "grams", 100)})
+        self.assertEqual(ingredient_data, {
+                         (2, "grams", 50), (3, "grams", 100)})
 
     def test_grocery_item(self):
         # Grocery item by name.
@@ -111,7 +112,6 @@ class TestModels(TestCase):
         items = self.tag.grocery_items
         item_data = set(i.grocery_id for i in items)
         self.assertEqual(item_data, {1, 2})
-
 
 
 if __name__ == "__main__":  # pragma: no cover
