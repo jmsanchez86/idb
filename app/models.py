@@ -1,3 +1,7 @@
+"""
+Database models described with SQLAlchemy.
+"""
+
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-name
 # pylint: disable=too-few-public-methods
@@ -7,15 +11,20 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy
 
-db = SQLAlchemy() # type: SQLAlchemy
+db = SQLAlchemy()  # type: SQLAlchemy
+
 
 class Ingredient(db.Model):
+    """
+    Table of ingredients.
+    """
+
     __tablename__ = "ingredient"
 
-    ingredient_id  = db.Column(db.Integer, primary_key=True)
+    ingredient_id = db.Column(db.Integer, primary_key=True)
     spoonacular_id = db.Column(db.Integer, unique=True)
-    name           = db.Column(db.String(20), unique=True)
-    image_url      = db.Column(db.String(100))
+    name = db.Column(db.String(20), unique=True)
+    image_url = db.Column(db.String(100))
 
     def __init__(self, ingredient_id, spoonacular_id, name, image_url):
         self.ingredient_id = ingredient_id
@@ -26,14 +35,19 @@ class Ingredient(db.Model):
     def __repr__(self):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
+
 class Recipe(db.Model):
+    """
+    Table of recipes.
+    """
+
     __tablename__ = "recipe"
 
-    recipe_id      = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, primary_key=True)
     spoonacular_id = db.Column(db.Integer, unique=True)
-    name           = db.Column(db.String(20), unique=True)
-    image_url      = db.Column(db.String(100))
-    instructions   = db.Column(db.String(1000), primary_key=True)
+    name = db.Column(db.String(20), unique=True)
+    image_url = db.Column(db.String(100))
+    instructions = db.Column(db.String(1000), primary_key=True)
 
     def __init__(self, recipe_id, spoonacular_id, name, image_url,
                  instructions):
@@ -46,14 +60,19 @@ class Recipe(db.Model):
     def __repr__(self):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
+
 class GroceryItem(db.Model):
+    """
+    Table of Grocery Items.
+    """
+
     __tablename__ = "grocery_item"
 
-    grocery_id     = db.Column(db.Integer, primary_key=True)
+    grocery_id = db.Column(db.Integer, primary_key=True)
     spoonacular_id = db.Column(db.Integer, unique=True)
-    name           = db.Column(db.String(20))
-    image_url      = db.Column(db.String(100))
-    upc            = db.Column(db.String(20))
+    name = db.Column(db.String(20))
+    image_url = db.Column(db.String(100))
+    upc = db.Column(db.String(20))
 
     def __init__(self, grocery_id, spoonacular_id, name, image_url, upc):
         self.grocery_id = grocery_id
@@ -65,11 +84,16 @@ class GroceryItem(db.Model):
     def __repr__(self):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
+
 class Tag(db.Model):
+    """
+    Table of tags.
+    """
+
     __tablename__ = "tag"
 
-    tag_name    = db.Column(db.String(20), primary_key=True)
-    image_url   = db.Column(db.String(100))
+    tag_name = db.Column(db.String(20), primary_key=True)
+    image_url = db.Column(db.String(100))
     description = db.Column(db.String(100))
 
     def __init__(self, tag_name, image_url, description):
@@ -81,18 +105,19 @@ class Tag(db.Model):
         return "<Tag %s>" % (self.tag_name)
 
 
-
-
-
 class IngredientNutrient(db.Model):
+    """
+    Describe nutrient quantities for ingredients.
+    """
+
     __tablename__ = "ingredient_nutrient"
 
-    ingredient_id     = db.Column(db.Integer,
-                                  db.ForeignKey("ingredient.ingredient_id"),
-                                  primary_key=True)
-    category          = db.Column(db.String(10), primary_key=True)
-    unit              = db.Column(db.String(10))
-    quantity          = db.Column(db.Float)
+    ingredient_id = db.Column(db.Integer,
+                              db.ForeignKey("ingredient.ingredient_id"),
+                              primary_key=True)
+    category = db.Column(db.String(10), primary_key=True)
+    unit = db.Column(db.String(10))
+    quantity = db.Column(db.Float)
 
     ingredient = db.relationship("Ingredient", back_populates="nutrients")
 
@@ -104,19 +129,25 @@ class IngredientNutrient(db.Model):
 
     def __repr__(self):
         return "<IngredientNutrient %d %s>" % \
-                (self.ingredient_id, self.category)
+            (self.ingredient_id, self.category)
+
 
 Ingredient.nutrients = db.relationship("IngredientNutrient",
                                        back_populates="ingredient")
 
+
 class RecipeNutrient(db.Model):
+    """
+    Describe nutrient quantities for recipes.
+    """
+
     __tablename__ = "recipe_nutrient"
 
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
-    category  = db.Column(db.String(10), primary_key=True)
-    unit      = db.Column(db.String(10))
-    quantity  = db.Column(db.Float)
+    category = db.Column(db.String(10), primary_key=True)
+    unit = db.Column(db.String(10))
+    quantity = db.Column(db.Float)
 
     recipe = db.relationship("Recipe", back_populates="nutrients")
 
@@ -129,18 +160,23 @@ class RecipeNutrient(db.Model):
     def __repr__(self):
         return "<RecipeNutrient %d %s>" % (self.recipe_id, self.category)
 
+
 Recipe.nutrients = db.relationship("RecipeNutrient",
                                    back_populates="recipe")
 
 
 class RecipeIngredient(db.Model):
+    """
+    Ingredients and quantities contained in a recipe.
+    """
+
     __tablename__ = "recipe_ingredient"
 
-    recipe_id       = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
-                                primary_key=True)
-    ingredient_id   = db.Column(db.Integer, primary_key=True)
-    unit            = db.Column(db.String(20))
-    quantity        = db.Column(db.Float)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
+                          primary_key=True)
+    ingredient_id = db.Column(db.Integer, primary_key=True)
+    unit = db.Column(db.String(20))
+    quantity = db.Column(db.Float)
     quantity_verbal = db.Column(db.String(100))
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
@@ -154,21 +190,28 @@ class RecipeIngredient(db.Model):
         self.quantity_verbal = quantity_verbal
 
     def __repr__(self):
-        return "<RecipeIngredient %d %d>" % (self.recipe_id, self.ingredient_id)
+        return "<RecipeIngredient %d %d>" % (
+            self.recipe_id,
+            self.ingredient_id)
+
 
 Recipe.ingredients = db.relationship("RecipeIngredient",
                                      back_populates="recipe")
 
 
 class GroceryItemIngredient(db.Model):
+    """
+    Ingredients and quantities contained in a grocery item.
+    """
+
     __tablename__ = "grocery_item_ingredient"
 
-    grocery_id      = db.Column(db.Integer,
-                                db.ForeignKey("grocery_item.grocery_id"),
-                                primary_key=True)
-    ingredient_id   = db.Column(db.Integer, primary_key=True)
-    unit            = db.Column(db.String(20))
-    quantity        = db.Column(db.Float)
+    grocery_id = db.Column(db.Integer,
+                           db.ForeignKey("grocery_item.grocery_id"),
+                           primary_key=True)
+    ingredient_id = db.Column(db.Integer, primary_key=True)
+    unit = db.Column(db.String(20))
+    quantity = db.Column(db.Float)
     quantity_verbal = db.Column(db.String(100))
 
     grocery_item = db.relationship("GroceryItem", back_populates="ingredients")
@@ -183,16 +226,22 @@ class GroceryItemIngredient(db.Model):
 
     def __repr__(self):
         return "<GroceryItemIngredient %d %d>" % \
-                (self.grocery_id, self.ingredient_id)
+            (self.grocery_id, self.ingredient_id)
+
 
 GroceryItem.ingredients = db.relationship("GroceryItemIngredient",
                                           back_populates="grocery_item")
 
+
 class TagIngredient(db.Model):
+    """
+    Association table for tags to ingredients.
+    """
+
     __tablename__ = "tag_ingredient"
 
-    tag_name      = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
-                              primary_key=True)
+    tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+                         primary_key=True)
     ingredient_id = db.Column(db.Integer,
                               db.ForeignKey("ingredient.ingredient_id"),
                               primary_key=True)
@@ -208,6 +257,7 @@ class TagIngredient(db.Model):
     def __repr__(self):
         return "<TagIngredient %s %d>" % (self.tag_name, self.ingredient_id)
 
+
 Ingredient.tag_ingredient_assocs = db.relationship("TagIngredient",
                                                    back_populates="ingredient")
 Tag.tag_ingredient_assocs = db.relationship("TagIngredient",
@@ -215,11 +265,16 @@ Tag.tag_ingredient_assocs = db.relationship("TagIngredient",
 Ingredient.tags = association_proxy("tag_ingredient_assocs", "tag")
 Tag.ingredients = association_proxy("tag_ingredient_assocs", "ingredient")
 
+
 class TagRecipe(db.Model):
+    """
+    Association table for tags to recipes.
+    """
+
     __tablename__ = "tag_recipe"
 
-    tag_name  = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
-                          primary_key=True)
+    tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+                         primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
 
@@ -233,16 +288,23 @@ class TagRecipe(db.Model):
     def __repr__(self):
         return "<TagRecipe %s %d>" % (self.tag_name, self.recipe_id)
 
-Recipe.tag_recipe_assocs = db.relationship("TagRecipe", back_populates="recipe")
+
+Recipe.tag_recipe_assocs = db.relationship(
+    "TagRecipe", back_populates="recipe")
 Tag.tag_recipe_assocs = db.relationship("TagRecipe", back_populates="tag")
 Recipe.tags = association_proxy("tag_recipe_assocs", "tag")
 Tag.recipes = association_proxy("tag_recipe_assocs", "recipe")
 
+
 class TagGroceryItem(db.Model):
+    """
+    Association table for tags to grocery items.
+    """
+
     __tablename__ = "tag_grocery_item"
 
-    tag_name   = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
-                           primary_key=True)
+    tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+                         primary_key=True)
     grocery_id = db.Column(db.Integer,
                            db.ForeignKey("grocery_item.grocery_id"),
                            primary_key=True)
@@ -259,9 +321,130 @@ class TagGroceryItem(db.Model):
         return "<TagGroceryItem %s %d>" % (self.tag_name, self.grocery_id)
 
 
-GroceryItem.tag_grocery_item_assocs = db.relationship("TagGroceryItem",
-                                                      back_populates="grocery_item")
+GroceryItem.tag_grocery_item_assocs = (
+    db.relationship("TagGroceryItem", back_populates="grocery_item"))
 Tag.tag_grocery_item_assocs = db.relationship("TagGroceryItem",
                                               back_populates="tag")
 GroceryItem.tags = association_proxy("tag_grocery_item_assocs", "tag")
-Tag.grocery_items = association_proxy("tag_grocery_item_assocs", "grocery_item")
+Tag.grocery_items = association_proxy(
+    "tag_grocery_item_assocs", "grocery_item")
+
+
+# Pylint Report
+#
+# ======
+#
+# 166 statements analysed.
+#
+#
+#
+# Statistics by type
+#
+# ------------------
+#
+#
+# +---------+-------+-----------+-----------+------------+---------+
+# |type     |number |old number |difference |%documented |%badname |
+# +=========+=======+===========+===========+============+=========+
+# |module   |1      |1          |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |class    |11     |11         |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |method   |22     |22         |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |function |0      |0          |=          |0           |0        |
+# +---------+-------+-----------+-----------+------------+---------+
+#
+#
+#
+#
+#
+#
+# External dependencies
+#
+# ---------------------
+#
+# ::
+#
+#
+#     flask_sqlalchemy (app.models)
+#
+#     sqlalchemy
+#
+#       \-ext
+#
+#         \-associationproxy (app.models)
+#
+#
+#
+#
+#
+#
+#
+# Raw metrics
+#
+# -----------
+#
+#
+# +----------+-------+------+---------+-----------+
+# |type      |number |%     |previous |difference |
+# +==========+=======+======+=========+===========+
+# |code      |196    |61.83 |196      |=          |
+# +----------+-------+------+---------+-----------+
+# |docstring |36     |11.36 |36       |=          |
+# +----------+-------+------+---------+-----------+
+# |comment   |5      |1.58  |5        |=          |
+# +----------+-------+------+---------+-----------+
+# |empty     |80     |25.24 |80       |=          |
+# +----------+-------+------+---------+-----------+
+#
+#
+#
+#
+#
+#
+# Duplication
+#
+# -----------
+#
+#
+# +-------------------------+------+---------+-----------+
+# |                         |now   |previous |difference |
+# +=========================+======+=========+===========+
+# |nb duplicated lines      |0     |0        |=          |
+# +-------------------------+------+---------+-----------+
+# |percent duplicated lines |0.000 |0.000    |=          |
+# +-------------------------+------+---------+-----------+
+#
+#
+#
+#
+#
+#
+# Messages by category
+#
+# --------------------
+#
+#
+# +-----------+-------+---------+-----------+
+# |type       |number |previous |difference |
+# +===========+=======+=========+===========+
+# |convention |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |refactor   |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |warning    |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |error      |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+#
+#
+#
+#
+#
+#
+# Global evaluation
+#
+# -----------------
+#
+# Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)

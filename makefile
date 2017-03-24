@@ -120,7 +120,8 @@ pylint-check: $(MYPY_SOURCES)
 static-check: mypy-check pylint-check
 
 IDB1.html:
-	pydoc3 -w IDB1
+	$(PYDOC) -w app.models
+	mv app.models.html IDB1.html
 
 IDB1.log:
 	git log > IDB1.log
@@ -128,6 +129,5 @@ IDB1.log:
 .PHONY: all
 all: IDB1.html IDB1.log
 	make format
-	make run
 	make test
 	make check
