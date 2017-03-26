@@ -33,7 +33,7 @@ Cooking meals at home is a useful skill that leads to eating healthier, saving m
 
 #### Data Models
 
-![image alt text](/static/images/image_0.png)
+<div class="container">![image alt text](/static/images/image_0.png)<div class="container">
 
 The four pillars of our model are ingredients, recipes, grocery items, and tags. Ingredients are the individual items that go into making a recipe. Recipes are the completed dishes that our users want to cook. Grocery items are cooking items purchasable in a grocery stores. Tags are descriptive categories containing subsets of ingredients, recipes, and grocery items. Nutrition information is also included to provide useful health information about ingredients and recipes. In addition to viewing all the elements of one of our pillars and viewing details about an individual element, we provide a few more useful relationships such as finding which ingredients can be substituted for other ingredients and searching for recipes that are similar to each other.
 
@@ -152,15 +152,17 @@ export default class About extends React.Component {
       gitIssuesUrl: 'https://api.github.com/repos/jmsanchez86/idb/issues',
       contributors: new Map(),
       totalIssues: 0,
-      totalCommits: 0
+      totalCommits: 0,
+      totalUnitTests: 0,
     };
   }
-  totalCommits() {
+  getTotals(attributeToTotal) {
     var total = 0;
-    for (cont in this.contributors) {
-      total = total + this.cont.totalCommits;
+    for (var[name, cont] of this.state.contributors) {
+      total = total + cont[attributeToTotal];
     }
-    this.setState({totalCommits : total});
+    this.state[attributeToTotal] = total;
+    this.forceUpdate();
   }
   // when the component loads
   componentDidMount() {
@@ -172,8 +174,8 @@ export default class About extends React.Component {
             bio: teamData[i].bio,
             picUrl: teamData[i].imgUrl,
             responsibilities: teamData[i].responsibilities,
-            numberOfUnitTests: teamData[i].numberOfUnitTests,
-            numIssues:0
+            totalUnitTests: teamData[i].numberOfUnitTests,
+            totalIssues:0
       });
           
     }
@@ -200,20 +202,22 @@ export default class About extends React.Component {
                     totalCommits: data[i].total,
                     profUrl: data[i].author.html_url
                   };
-                   _this.totalCommits();
+                  
                   for (var attrname in gitContr)
                     { contributor[attrname] = gitContr[attrname]; }
               }
               
             }
              var cont = _this.state.contributors;
-            cont.get('scottnm').numIssues = 32;
-            cont.get('CoryDunn').numIssues = 1;
-            cont.get('jmsanchez86').numIssues = 0;
-            cont.get('ndbenzinger').numIssues = 1;
-            cont.get('scott-hornberger').numIssues = 5;
-            cont.get('thomascardwell7').numIssues = 21;
-            _this.totalIssues = 60;
+            cont.get('scottnm').totalIssues = 32;
+            cont.get('CoryDunn').totalIssues = 1;
+            cont.get('jmsanchez86').totalIssues = 0;
+            cont.get('ndbenzinger').totalIssues = 1;
+            cont.get('scott-hornberger').totalIssues = 5;
+            cont.get('thomascardwell7').totalIssues = 21;
+            _this.getTotals("totalIssues");
+            _this.getTotals("totalCommits");
+            _this.getTotals("totalUnitTests");
             
             _this.forceUpdate();
           });
@@ -242,9 +246,9 @@ export default class About extends React.Component {
                 {' '}fridgetacular commit
                 {contributor.totalCommits > 1?'s':''}.
               </p>
-              <p><span class="badge active">{contributor.numIssues}</span>
+              <p><span class="badge active">{contributor.totalIssues}</span>
                 {' '}fridgetacular issue
-                {contributor.numIssues > 1?'s':''}.
+                {contributor.totalIssues > 1?'s':''}.
               </p>
               <p>
                 <span class="badge active">{contributor.numberOfUnitTests}</span>
@@ -277,14 +281,14 @@ export default class About extends React.Component {
         <div class="container">
           <h4>Useful Links!</h4>
           <h6><a href="https://github.com/jsanchez86/idb">GitHub Repo</a></h6>
-          <p><span class="badge active">{181}</span>
+          <p><span class="badge active">{this.state.totalCommits}</span>
                 {' '}total commits.
           </p>
           <h6><a href="https://github.com/jsanchez86/idb/issues">Issue Tracker</a></h6>
-          <p><span class="badge active">{60}</span>
+          <p><span class="badge active">{this.state.totalIssues}</span>
                 {' '}total issues.
           </p>
-          <p><span class="badge active">{11}</span>
+          <p><span class="badge active">{this.state.totalUnitTests}</span>
                 {' '}total unit tests.
           </p>
           <h6><a href="https://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
