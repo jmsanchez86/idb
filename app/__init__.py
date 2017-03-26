@@ -1,2 +1,2 @@
 # pylint: disable=missing-docstring
-from app.app import create_app
+from app.startup import create_app
