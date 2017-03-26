@@ -107,15 +107,16 @@ export default class About extends React.Component {
               </h4>
               <p><span class="badge active">{contributor.totalCommits}</span>
                 {' '}fridgetacular commit
-                {contributor.totalCommits > 1?'s':''}.
+                {contributor.totalCommits > 1 || contributor.totalIssues == 0?'s':''}.
               </p>
               <p><span class="badge active">{contributor.totalIssues}</span>
                 {' '}fridgetacular issue
-                {contributor.totalIssues > 1?'s':''}.
+                {contributor.totalIssues > 1 || contributor.totalIssues == 0?'s':''}.
               </p>
               <p>
-                <span class="badge active">{contributor.numberOfUnitTests}</span>
-                {contributor.numberOfUnitTests ? ' contributed unit tests.' : ''}
+                <span class="badge active">{contributor.totalUnitTests}</span>
+                {' '}contributed unit test
+                {contributor.totalUnitTests > 1 || contributor.totalUnitTests == 0?'s':''}.
               </p>
             </div>
           </div>
