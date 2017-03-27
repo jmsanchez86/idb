@@ -1,7 +1,11 @@
 # pylint: disable=missing-docstring
 
-from functools import wraps
+
+from   functools import wraps
+import math
+
 import flask
+
 from app.api import food_data
 
 API_BP = flask.Blueprint('api', __name__)
@@ -45,13 +49,44 @@ def mock_loop_list(li, page, pagesize, maxsize):
     assert len(resultlist) > 0
     return resultlist
 
+def get_continuation_links(base_url, page, pagesize, maxsize):
+    total_pages = int(math.ceil(maxsize / pagesize))
+    last_page = total_pages - 1
+    url_template = base_url + "?page={page}&pagesize={pagesize}"
+    first_link = url_template.format(page=0, pagesize=pagesize)
+    prev_link = url_template.format(page=(page - 1), pagesize=pagesize)
+    next_link = url_template.format(page=(page + 1), pagesize=pagesize)
+    last_link = url_template.format(page=last_page, pagesize=pagesize)
+
+
+    # first page
+    if page == 0:
+        return {
+            "next": next_link,
+            "last": last_link}
+    # last page
+    elif page == last_page:
+        return {
+            "first": first_link,
+            "prev": prev_link}
+    else:
+        return {
+            "first": first_link,
+            "prev": prev_link,
+            "next": next_link,
+            "last": last_link}
+
+
 def continuation_route(route_fn):
     from flask import request as req
     @wraps(route_fn)
     def wrapped_route_function(*args, **kwargs):
         page = int(req.args.get("page")) if "page" in req.args else 0
         psize = int(req.args.get("pagesize")) if "pagesize" in req.args else 10
-        return route_fn(page, psize, *args, **kwargs)
+        if page * psize >= MOCK_DATA_MAX_SIZE:
+            flask.abort(404)
+        else:
+            return route_fn(page, psize, *args, **kwargs)
     return wrapped_route_function
 
 
