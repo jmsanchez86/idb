@@ -1,8 +1,8 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
-import IngredientItem from "../components/layout/IngredientItem";
 import Greeting from "../components/layout/Greeting";
+import GridItem from "../components/layout/GridItem";
 
 var data = require('json!../../data/food.json');
 const ingredients = data.ingredients;
@@ -13,7 +13,7 @@ export default class Ingredients extends React.Component {
     var i=0;
     const gridItems=[];
     for (var id in ingredients) {
-      gridItems[i++] = <IngredientItem key={id} ingredient={ingredients[id]} />
+      gridItems[i++] = <GridItem key={id} cat="ingredients" item={ingredients[id]} />
     }
     return gridItems;
   }
