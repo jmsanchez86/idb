@@ -7,6 +7,7 @@ import math
 import flask
 
 from app.api import food_data
+from typing import Any, List, Callable
 
 API_BP = flask.Blueprint('api', __name__)
 
@@ -20,7 +21,7 @@ This temporary mock variable exists to simulate that we have 50 items
 for each entry. In reality we will just simulate having 50 items for
 each by looping the lists over and over
 """
-MOCK_DATA_MAX_SIZE = 50
+MOCK_DATA_MAX_SIZE = 50 # type: int
 
 """
 This function will make a mock list from looping a source list up to a maxsize
@@ -31,7 +32,7 @@ page     the row of results to return
 pagesize the size of the row to return
 maxsize  the size of the mocked out loop list
 """
-def mock_loop_list(li, page, pagesize, maxsize):
+def mock_loop_list(li: List[Any], page: int, pagesize: int, maxsize: int):
     # pylint: disable=invalid-name
     assert page >= 0
     assert pagesize > 0
@@ -49,7 +50,7 @@ def mock_loop_list(li, page, pagesize, maxsize):
     assert len(resultlist) > 0
     return resultlist
 
-def get_continuation_links(base_url, page, pagesize, maxsize):
+def get_continuation_links(base_url: str, page: int, pagesize: int, maxsize: int):
     total_pages = int(math.ceil(maxsize / pagesize))
     last_page = total_pages - 1
     url_template = base_url + "?page={page}&pagesize={pagesize}"
@@ -77,7 +78,7 @@ def get_continuation_links(base_url, page, pagesize, maxsize):
             "last": last_link}
 
 
-def continuation_route(route_fn):
+def continuation_route(route_fn: Callable[[int, int], Callable]):
     from flask import request as req
     @wraps(route_fn)
     def wrapped_route_function(*args, **kwargs):
