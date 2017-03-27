@@ -86,7 +86,10 @@ def continuation_route(route_fn):
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
-            return route_fn(page, psize, *args, **kwargs)
+            links = get_continuation_links(req.base_url, page, psize,
+                                           MOCK_DATA_MAX_SIZE)
+            data = flask.json.loads(route_fn(page, psize, *args, **kwargs).data)
+            return flask.json.jsonify({"data": data, "links": links})
     return wrapped_route_function
 
 
