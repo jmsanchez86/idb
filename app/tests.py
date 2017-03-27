@@ -12,6 +12,7 @@ from flask import Flask
 from app.models import Ingredient, Tag, Recipe, GroceryItem, db
 from app.tests_data import mock_data
 
+
 class TestModels(TestCase):
 
     @classmethod
@@ -42,7 +43,6 @@ class TestModels(TestCase):
         query = db.session.query(Tag).filter_by(tag_name="natural")
         cls.tag = query.first()
 
-
     def test_ingredient(self):
         # Ingredient by name.
         self.assertIsNotNone(self.licorice)
@@ -51,7 +51,7 @@ class TestModels(TestCase):
     def test_ingredient_nutrition(self):
         # Nutrition data of an ingredient.
         nutrients = self.licorice.nutrients
-        nutrient_data = set((n.category, n.quantity_unit, n.quantity)
+        nutrient_data = set((n.category, n.unit, n.quantity)
                             for n in nutrients)
         self.assertEqual(nutrient_data, {("surgar", "kilograms", 100),
                                          ("calories", "calories", 9001),
@@ -65,7 +65,7 @@ class TestModels(TestCase):
     def test_recipe_nutrition(self):
         # Nutrition data for recipe.
         nutrients = self.sandwich.nutrients
-        nutrient_data = set((n.category, n.quantity_unit, n.quantity)
+        nutrient_data = set((n.category, n.unit, n.quantity)
                             for n in nutrients)
         self.assertEqual(nutrient_data, {("surgar", "meters", 82),
                                          ("calories", "calories", 23),
@@ -74,9 +74,10 @@ class TestModels(TestCase):
     def test_recipe_ingredients(self):
         # Ingredients of a recipe.
         ingredients = self.sandwich.ingredients
-        ingredient_data = set((i.ingredient_id, i.quantity_unit, i.quantity)
+        ingredient_data = set((i.ingredient_id, i.unit, i.quantity)
                               for i in ingredients)
-        self.assertEqual(ingredient_data, {(2, "grams", 50), (3, "grams", 100)})
+        self.assertEqual(ingredient_data, {
+            (2, "grams", 50), (3, "grams", 100)})
 
     def test_grocery_item(self):
         # Grocery item by name.
@@ -86,7 +87,7 @@ class TestModels(TestCase):
     def test_grocery_item_ingredients(self):
         # Ingredients of a grocery item.
         ingredients = self.jakes_bread.ingredients
-        ingredient_data = set((i.ingredient_id, i.quantity_unit, i.quantity)
+        ingredient_data = set((i.ingredient_id, i.unit, i.quantity)
                               for i in ingredients)
         self.assertEqual(ingredient_data, {(3, "slices", 12)})
 
@@ -111,7 +112,6 @@ class TestModels(TestCase):
         items = self.tag.grocery_items
         item_data = set(i.grocery_id for i in items)
         self.assertEqual(item_data, {1, 2})
-
 
 
 if __name__ == "__main__":  # pragma: no cover

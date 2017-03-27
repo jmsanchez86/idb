@@ -6,4 +6,4 @@ venv
 config.py
 Thumbs.db
 node_modules/
-.pylintrc
+npm-debug.log

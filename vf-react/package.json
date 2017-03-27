@@ -24,7 +24,7 @@
   "devDependencies": {},
   "scripts": {
     "dev": "./node_modules/.bin/webpack-dev-server --content-base src --inline --hot",
-    "pro": "webpack && copy ./src/client.min.js ../static/js"
+    "pro": "webpack && cp ./src/client.min.js ../app/static/js/client.min.js"
   },
   "author": "",
   "license": "ISC"
