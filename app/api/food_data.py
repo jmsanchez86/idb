@@ -2,8 +2,8 @@
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
 
-ingredients = {
-    1: {
+ingredients = [
+    {
         "id": 1,
         "name": "Tomato",
         "image": "https://bonnieplants.com/wp-content/uploads/better-bush-tomato.jpg",
@@ -11,7 +11,7 @@ ingredients = {
         "grocery_items": [],
         "tags": [2]
     },
-    2: {
+    {
         "id": 2,
         "name": "Cheddar Cheese",
         "image": "https://c2.staticflickr.com/4/3778/11893492083_ce613d2892_b.jpg",
@@ -19,7 +19,7 @@ ingredients = {
         "grocery_items": [],
         "tags": [2, 3]
     },
-    3: {
+    {
         "id": 3,
         "name": "Butter",
         "image": "https://c1.staticflickr.com/5/4084/5020808475_809a3cc560_b.jpg",
@@ -27,7 +27,7 @@ ingredients = {
         "grocery_items": [],
         "tags": [2]
     },
-    4: {
+    {
         "id": 4,
         "name": "Bacon",
         "image": "https://c2.staticflickr.com/4/3603/3603122710_6ea3b5447c_z.jpg?zz=1",
@@ -35,7 +35,7 @@ ingredients = {
         "grocery_items": [1],
         "tags": [1]
     },
-    5: {
+    {
         "id": 5,
         "name": "Lettuce",
         "image": "https://c1.staticflickr.com/3/2866/9054249842_a0108e22ff_c.jpg",
@@ -43,7 +43,7 @@ ingredients = {
         "grocery_items": [],
         "tags": [2, 3]
     },
-    6: {
+    {
         "id": 6,
         "name": "Mayonnaise",
         "image": "https://c2.staticflickr.com/4/3205/3048070242_305d588993_z.jpg",
@@ -51,7 +51,7 @@ ingredients = {
         "grocery_items": [],
         "tags": [2, 3]
     },
-    7: {
+    {
         "id": 7,
         "name": "Turkey Breast Sandwich Meat",
         "image": "https://img.clipartfest.com/4b0880d59be58ff4bb1c84ce5957888d_gc52y6axltth-jzlkzq6hfhwn-turkey-lunch-meat-clipart_1280-960.jpeg",
@@ -59,7 +59,7 @@ ingredients = {
         "grocery_items": [2],
         "tags": [2]
     },
-    8: {
+    {
         "id": 8,
         "name": "Avocado",
         "image": "https://c1.staticflickr.com/9/8433/29424695541_29288edfd2_c.jpg",
@@ -67,7 +67,7 @@ ingredients = {
         "grocery_items": [],
         "tags": [1, 2]
     },
-    9: {
+    {
         "id": 9,
         "name": "Bread",
         "image": "https://c1.staticflickr.com/1/647/33323504266_93ae1664a0_c.jpg",
@@ -75,11 +75,11 @@ ingredients = {
         "grocery_items": [3],
         "tags": [2]
     }
-}
+]
 
 recipes =\
-    {
-        1: {
+    [
+        {
             "id": 1,
             "name": "Grilled Cheese with Tomato",
             "image": "http://akns-images.eonline.com/eol_images/Entire_Site/2013424/rs_1024x759-130524141502-1024.GrilledCheeseTomato.ms.052413.jpg",
@@ -108,7 +108,7 @@ recipes =\
             ],
             "tags": [1, 2, 4]
         },
-        2: {
+        {
             "id": 2,
             "name": "Classic Turkey Club",
             "image": "http://cdn.boarshead.com/img/_content/recipe/38-classic-turkey-club/detail-001.1465313338.jpg",
@@ -155,7 +155,7 @@ recipes =\
             ],
             "tags": [4]
         },
-        3: {
+        {
             "id": 3,
             "name": "B.L.T.",
             "image": "http://www.tabletmag.com/wp-content/files_mf/blt_101113_820px.jpg",
@@ -196,11 +196,11 @@ recipes =\
             ],
             "tags": [4]
         }
-    }
+    ]
 
 grocery_items =\
-    {
-        1: {
+    [
+        {
             "id": 1,
             "name": "Kirkland Signature Regular Sliced",
             "image": "http://i.huffpost.com/gadgets/slideshows/320101/slide_320101_2986024_free.jpg",
@@ -208,7 +208,7 @@ grocery_items =\
             "ingredient": 4,
             "tags": [1]
         },
-        2: {
+        {
             "id": 2,
             "name": "Applegate Naturals Roasted Turkey Breast",
             "image": "http://happymart.co/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/i/m/img_0880.jpg",
@@ -216,7 +216,7 @@ grocery_items =\
             "ingredient": 7,
             "tags": [3]
         },
-        3: {
+        {
             "id": 3,
             "name": "Ezekiel 4:9 Low Sodium Sprouted Whole Grain Bread",
             "image": "http://s.eatthis-cdn.com/media/images/ext/437304009/ezekiel-low-sodium-sprouted-bread.jpg",
@@ -224,11 +224,11 @@ grocery_items =\
             "ingredient": 9,
             "tags": [3]
         }
-    }
+    ]
 
 tags =\
-    {
-        1: {
+    [
+        {
             "id": 1,
             "name": "Crowd Pleaser",
             "image": "../static/images/tags/crowd_pleaser.png",
@@ -237,7 +237,7 @@ tags =\
             "recipes": [1],
             "grocery_items": []
         },
-        2: {
+        {
             "id": 2,
             "name": "Vegetarian",
             "image": "../static/images/tags/vegetarian.png",
@@ -246,7 +246,7 @@ tags =\
             "recipes": [1],
             "grocery_items": []
         },
-        3: {
+        {
             "id": 3,
             "name": "Great For Sandwiches",
             "image": "../static/images/tags/sandwichey.png",
@@ -255,7 +255,7 @@ tags =\
             "recipes": [],
             "grocery_items": [2, 3]
         },
-        4: {
+        {
             "id": 4,
             "name": "Quick!",
             "image": "../static/images/tags/quick.png",
@@ -264,4 +264,4 @@ tags =\
             "recipes": [1, 2, 3],
             "grocery_items": []
         }
-    }
+    ]
