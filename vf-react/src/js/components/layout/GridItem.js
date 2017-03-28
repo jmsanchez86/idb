@@ -3,7 +3,7 @@ import { IndexLink, Link } from "react-router";
 
 export default class RecipeItem extends React.Component {
   getLink(id) {
-    return this.props.cat + "/" + id;
+    return this.props.path + "/" + id;
   }
   render() {
     const item  = this.props.item;

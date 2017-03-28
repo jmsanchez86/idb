@@ -13,7 +13,7 @@ export default class Ingredients extends React.Component {
     var i=0;
     const gridItems=[];
     for (var id in ingredients) {
-      gridItems[i++] = <GridItem key={id} cat="ingredients" item={ingredients[id]} />
+      gridItems[i++] = <GridItem key={id} path="ingredients" item={ingredients[id]} />
     }
     return gridItems;
   }

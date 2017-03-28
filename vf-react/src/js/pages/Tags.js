@@ -12,7 +12,7 @@ export default class Tags extends React.Component {
     var i=0;
     const gridItems=[];
     for (var id in tags) {
-      gridItems[i++] = <GridItem key={id} cat="tags" item={tags[id]} />
+      gridItems[i++] = <GridItem key={id} path="tags" item={tags[id]} />
     }
     return gridItems;
   }
