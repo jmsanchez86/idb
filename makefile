@@ -1,8 +1,9 @@
 .DEFAULT_GOAL := test
 
+PY_SOURCE := $(shell find ./app -name '*.py')
 FILES :=                 \
-	app/models.py \
-	app/tests.py  \
+	app/models.py        \
+	app/tests.py         \
 	apiary.apib          \
 	.gitignore           \
 	.travis.yml          \
@@ -75,7 +76,7 @@ versions:
 	$(PIP) list
 
 .PHONY: check
-check: static-check
+check:
 	@not_found=0;                                 \
 	for i in $(FILES);                            \
 	do                                            \
@@ -107,15 +108,18 @@ test: .pylintrc
 
 .PHONY: format
 format:
-	$(AUTOPEP8) -i app/models.py
-	$(AUTOPEP8) -i app/tests.py
+	for i in $(PY_SOURCE);                        \
+	do                                            \
+		$(AUTOPEP8) -i "$$i";                     \
+	done;                                         \
+	fi
 
-MYPY_SOURCES := $(shell find ./app -name '*.py')
-mypy-check: $(MYPY_SOURCES)
-	mypy --ignore-missing-imports $(MYPY_SOURCES)
 
-pylint-check: $(MYPY_SOURCES)
-	$(PYLINT) $(MYPY_SOURCES)
+mypy-check: $(PY_SOURCE)
+	mypy --ignore-missing-imports $(PY_SOURCE)
+
+pylint-check: $(PY_SOURCE)
+	$(PYLINT) $(PY_SOURCE)
 
 static-check: mypy-check pylint-check
 
