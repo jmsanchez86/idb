@@ -43,6 +43,8 @@ ul.nav a:hover {
 
 
 
+
+
 #logohome {
   font-family: Dosis, sans-serif;
   font-size: 50px;
@@ -289,4 +291,16 @@ img.venn {
 
 #upc {
   color: #cccccc;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+}
+
+.thumbnail {
+  transition: .2s;
+}
+
+.thumbnail:hover {
+  border-color: #949494;
 }
