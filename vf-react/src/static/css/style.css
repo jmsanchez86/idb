@@ -41,9 +41,7 @@ ul.nav a:hover {
       transform: translateX(-50%) translateY(-50%);
 }
 
-a:focus, a:hover {
-  text-decoration: none;
-}
+
 
 
 
@@ -293,4 +291,16 @@ img.venn {
 
 #upc {
   color: #cccccc;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+}
+
+.thumbnail {
+  transition: .2s;
+}
+
+.thumbnail:hover {
+  border-color: #949494;
 }
