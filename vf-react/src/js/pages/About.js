@@ -276,11 +276,11 @@ export default class About extends React.Component {
         </div>
         <div class="container">
           <h4>Useful Links!</h4>
-          <h6><a href="https://github.com/jmsanchez86/idb">GitHub Repo</a></h6>
+          <h6><a href="https://github.com/jsanchez86/idb">GitHub Repo</a></h6>
           <p><span class="badge active">{181}</span>
                 {' '}total commits.
           </p>
-          <h6><a href="https://github.com/jmsanchez86/idb/issues">Issue Tracker</a></h6>
+          <h6><a href="https://github.com/jsanchez86/idb/issues">Issue Tracker</a></h6>
           <p><span class="badge active">{60}</span>
                 {' '}total issues.
           </p>
