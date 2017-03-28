@@ -10,10 +10,9 @@ const recipes = data.recipes;
 
 export default class Recipes extends React.Component {
   getGridItems() {
-    var i=0;
     const gridItems=[];
     for (var id in recipes) {
-      gridItems[i++] = <GridItem key={id} path="recipes" item={recipes[id]} />
+      gridItems.push(<GridItem key={id} cat="recipes" item={recipes[id]} />);
     }
     return gridItems;
   }
@@ -51,7 +50,7 @@ export default class Recipes extends React.Component {
             </div>
           </div>
 
-          <div id="grid-results" class="row">
+          <div id="grid-results">
             {this.getGridItems()}
           </div>
       </div>

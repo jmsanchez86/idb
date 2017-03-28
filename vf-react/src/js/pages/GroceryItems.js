@@ -10,10 +10,9 @@ const groceryItems = data.grocery_items;
 
 export default class GroceryItems extends React.Component {
   getGridItems() {
-    var i=0;
     const gridItems=[];
     for (var id in groceryItems) {
-      gridItems[i++] = <GridItem key={id} path="grocery-items" item={groceryItems[id]} />
+      gridItems.push(<GridItem key={id} path="grocery-items" item={groceryItems[id]} />);
     }
     return gridItems;
   }
