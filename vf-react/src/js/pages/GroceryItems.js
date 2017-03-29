@@ -3,6 +3,7 @@ import { IndexLink, Link } from "react-router";
 
 import Greeting from "../components/layout/Greeting";
 import GridItem from "../components/layout/GridItem";
+import GridSystem from "../components/layout/GridSystem";
 
 var data = require('json!../../data/food.json');
 const groceryItems = data.grocery_items;
@@ -12,7 +13,7 @@ export default class GroceryItems extends React.Component {
   getGridItems() {
     const gridItems=[];
     for (var id in groceryItems) {
-      gridItems.push(<GridItem key={id} path="grocery-items" item={groceryItems[id]} />);
+      gridItems.push(<GridItem key={id} path="groceryItems" item={groceryItems[id]} />);
     }
     return gridItems;
   }
@@ -49,9 +50,7 @@ export default class GroceryItems extends React.Component {
           </div>
         </div>
 
-        <div id="grid-results" class="row">
-          {this.getGridItems()}
-        </div>
+        <GridSystem path="groceryItems" data={groceryItems} />
       </div>
     );
   }
