@@ -15,6 +15,7 @@ export default class Ingredients extends React.Component {
     super(props);
     this.state = {
       ingredients: this.initialQuery(), // query database with no params
+      tags: this.getTags(),
       sort_params:
         [
           {
@@ -26,7 +27,6 @@ export default class Ingredients extends React.Component {
             query: "zeta"
           }
         ],
-      tags: this.getTags()
       };
 
   }
@@ -34,15 +34,27 @@ export default class Ingredients extends React.Component {
     return ingredients;
   }
   getTags() {
-    return data.tags; // {id, name, active}
+    const filters = [];
+    const tags = data.tags;
+    for (var id in tags) {
+      filters.push(
+        {
+          id: id,
+          name: tags[id].name,
+          active: false,
+        }
+      );
+    }
+    return filters; // {id, name, active}
   }
   updateIngredients(params) {
+    console.log("Hi Scott. Which one?");
+    console.log(params);
     // call api with new params
     // update ingredient
     this.setState({ingredients}); // re-renders
   }
   render() {
-    console.log(this.props.msg);
     const ingredients = this.state.ingredients;
     return (
 

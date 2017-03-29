@@ -19,7 +19,7 @@ export default class RecipeItem extends React.Component {
         <div class="thumbnail">
           <div class="image">
 
-              <img class="img img-responsive full-width" src={image} />
+              <img class="img img-responsive full-width thumb" src={image} />
 
           </div>
 
