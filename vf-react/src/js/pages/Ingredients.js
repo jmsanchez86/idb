@@ -42,7 +42,6 @@ export default class Ingredients extends React.Component {
     this.setState({ingredients}); // re-renders
   }
   render() {
-    console.log(this.props.msg);
     const ingredients = this.state.ingredients;
     return (
 
