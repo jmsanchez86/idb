@@ -106,6 +106,7 @@ recipes =\
                     "original_string": "2 slices of bread"
                 }
             ],
+            "ready_time": 10,
             "tags": [1, 2, 4]
         },
         {
@@ -153,6 +154,7 @@ recipes =\
                     "original_string": "5 slices of turkey breast"
                 }
             ],
+            "ready_time": 4,
             "tags": [4]
         },
         {
@@ -194,6 +196,7 @@ recipes =\
                     "original_string": "4 slices of cooked bacon"
                 }
             ],
+            "ready_time": 15,
             "tags": [4]
         }
     ]
