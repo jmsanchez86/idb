@@ -2,8 +2,9 @@
 # pylint: disable=invalid-name
 
 from app.models import Ingredient, Recipe, RecipeNutrient, GroceryItem,\
-        GroceryItemIngredient, Tag, TagIngredient, TagRecipe,\
-        TagGroceryItem, IngredientNutrient, RecipeIngredient
+    GroceryItemIngredient, Tag, TagIngredient, TagRecipe,\
+    TagGroceryItem, IngredientNutrient, RecipeIngredient
+
 
 def mock_data(db):
     db.session.add(Ingredient(1, 1337, "licorice", "licorice.jpg"))
@@ -27,9 +28,9 @@ def mock_data(db):
     db.session.add(RecipeNutrient(1, "calories", "calories", 2))
     db.session.add(RecipeNutrient(1, "iron", "grams", 3))
 
-    db.session.add(RecipeIngredient(1, 1, "grams", 50,\
+    db.session.add(RecipeIngredient(1, 1, "grams", 50,
                                     "50 grams of licorice"))
-    db.session.add(RecipeIngredient(1, 2, "grams", 100,\
+    db.session.add(RecipeIngredient(1, 2, "grams", 100,
                                     "100 grams of lettuce"))
 
     db.session.add(RecipeNutrient(2, "surgar", "meters", 82))
@@ -39,17 +40,17 @@ def mock_data(db):
     db.session.add(RecipeIngredient(2, 2, "grams", 50, "1 leaf of lettuce"))
     db.session.add(RecipeIngredient(2, 3, "grams", 100, "2 slices of bread"))
 
-    db.session.add(GroceryItem(1, 999, "Tom's lettuce", "toms_lettuce.jpg",\
+    db.session.add(GroceryItem(1, 999, "Tom's lettuce", "toms_lettuce.jpg",
                                141645278962))
-    db.session.add(GroceryItem(2, 4321, "Jake's bread", "jakes_bread.jpg",\
+    db.session.add(GroceryItem(2, 4321, "Jake's bread", "jakes_bread.jpg",
                                1234567890))
 
-    db.session.add(GroceryItemIngredient(1, 2, "kilograms", 2,\
+    db.session.add(GroceryItemIngredient(1, 2, "kilograms", 2,
                                          "2 kilograms of lettuce"))
-    db.session.add(GroceryItemIngredient(2, 3, "slices", 12,\
+    db.session.add(GroceryItemIngredient(2, 3, "slices", 12,
                                          "a dozen slices of bread"))
 
-    db.session.add(Tag("candy", "caramel_apple.jpg",\
+    db.session.add(Tag("candy", "caramel_apple.jpg",
                        "Candy foods and snacks."))
     db.session.add(Tag("natural", "industrial.jpg", "Non-artificial."))
 

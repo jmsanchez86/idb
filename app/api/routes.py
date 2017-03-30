@@ -53,6 +53,7 @@ def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
     assert len(resultlist) > 0
     return resultlist
 
+
 def loop_filter_sort(page: int, page_size: int, filters: List[int],
                      sort_key: Tuple[Callable[[Any], bool], bool],
                      li: List[Any]):
@@ -125,15 +126,16 @@ def continuation_route(route_fn: Callable[[int, int], Callable]):
     @wraps(route_fn)
     def wrapped_route_function(*args, **kwargs):
         page = int(req.args.get("page")) if "page" in req.args else 0
-        psize = int(req.args.get("page_size")) if "page_size" in req.args else 10
+        psize = int(req.args.get("page_size")
+                   ) if "page_size" in req.args else 10
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
             sort_param = req.args.get("sort") if "sort" in req.args\
-                                              else "unsorted"
+                else "unsorted"
             sorter = sort_functions[sort_param]
             tag_params = req.args.get("tags").split(",") if "tags" in req.args \
-                                                       else []
+                else []
             taglist = [int(tag) for tag in tag_params]
             data = flask.json.loads(
                 route_fn(page, psize, taglist, sorter, *args, **kwargs).data)
