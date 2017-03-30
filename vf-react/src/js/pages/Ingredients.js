@@ -5,8 +5,7 @@ import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
 
-
-var data = require('json!../../data/food.json');
+const data = require('json!../../data/food.json');
 const ingredients = data.ingredients;
 
 
