@@ -17,11 +17,22 @@ API_BP = flask.Blueprint('api', __name__)
 # Browse Views #
 ################
 
-"""
-This temporary mock variable exists to simulate that we have 50 items
-for each entry. In reality we will just simulate having 50 items for
-each by looping the lists over and over
-"""
+class QueryParams:
+    # pylint: disable=too-few-public-methods
+    def __init__(self,
+                 page: int,
+                 page_size: int,
+                 tag_filters: List[int],
+                 sort_key: Tuple[Callable[[Any], Any], bool, str]) -> None:
+        self.page = page
+        self.page_size = page_size
+        self.tag_filters = tag_filters
+        self.sort_key = sort_key
+
+
+# This temporary mock variable exists to simulate that we have 50 items
+# for each entry. In reality we will just simulate having 50 items for
+# each by looping the lists over and over
 MOCK_DATA_MAX_SIZE = 50  # type: int
 
 """
@@ -33,8 +44,6 @@ page     the row of results to return
 page_size the size of the row to return
 maxsize  the size of the mocked out loop list
 """
-
-
 def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
     # pylint: disable=invalid-name
     assert page >= 0
@@ -54,30 +63,34 @@ def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
     return resultlist
 
 
-def loop_filter_sort(page: int, page_size: int, filters: List[int],
-                     sort_key: Tuple[Callable[[Any], bool], bool],
-                     li: List[Any]):
+def loop_filter_sort(query_params: QueryParams, li: List[Any]):
     # pylint: disable=invalid-name
-    li = sorted(li, key=sort_key[0], reverse=sort_key[1])
-    li = mock_loop_list(li, page, page_size, MOCK_DATA_MAX_SIZE)
-    return list(filter(tag_filter(filters), li))
 
-
-def tag_filter(tag_filters: List[int]):
-    def filter_func(ele: Any):
-        if len(tag_filters) == 0:
-            return True
-
-        for tag in tag_filters:
-            if tag in ele["tags"]:
+    def generate_tag_filter(tag_filters: List[int]):
+        def filter_func(ele: Any):
+            if len(tag_filters) == 0:
                 return True
-        return False
-    return filter_func
+
+            for tag in tag_filters:
+                if tag in ele["tags"]:
+                    return True
+            return False
+        return filter_func
+
+    li = sorted(li, key=query_params.sort_key[0],
+                reverse=query_params.sort_key[1])
+    li = mock_loop_list(li, query_params.page, query_params.page_size,
+                        MOCK_DATA_MAX_SIZE)
+    return list(filter(generate_tag_filter(query_params.tag_filters), li))
 
 
-def get_continuation_links(base_url: str, page: int, psize: int, maxsize: int,
-                           sort_param: str, tag_params: List[str]):
+def get_continuation_links(base_url: str, maxsize: int,
+                           query_params: QueryParams):
     # pylint: disable=too-many-arguments
+    page = query_params.page
+    psize = query_params.page_size
+    tag_filters = [str(t) for t in query_params.tag_filters]
+    sort_param = query_params.sort_key[2]
 
     total_pages = int(math.ceil(maxsize / psize))
     last_page = total_pages - 1
@@ -87,8 +100,8 @@ def get_continuation_links(base_url: str, page: int, psize: int, maxsize: int,
     next_link = url_template.format(p=(page + 1), ps=psize, s=sort_param)
     last_link = url_template.format(p=last_page, ps=psize, s=sort_param)
 
-    if len(tag_params) > 0:
-        tag_query = "&tags={ts}".format(ts=",".join(tag_params))
+    if len(tag_filters) > 0:
+        tag_query = "&tags={ts}".format(ts=",".join(tag_filters))
         first_link += tag_query
         prev_link += tag_query
         next_link += tag_query
@@ -112,73 +125,64 @@ def get_continuation_links(base_url: str, page: int, psize: int, maxsize: int,
             "last": last_link}
 
 
-def continuation_route(route_fn: Callable[[int, int], Callable]):
+def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
     from flask import request as req
 
     sort_functions = {
-        "alpha": (lambda ele: ele["name"], False),
-        "alpha_reverse": (lambda ele: ele["name"], True),
-        "ready_time_asc": (lambda ele: ele["ready_time"], False),
-        "ready_time_desc": (lambda ele: ele["ready_time"], True),
-        "unsorted": (lambda ele: 0, False)
+        "alpha":           (lambda e: e["name"], False, "alpha"),
+        "alpha_reverse":   (lambda e: e["name"], True, "alpha_reverse"),
+        "ready_time_asc":  (lambda e: e["ready_time"], False, "ready_time_asc"),
+        "ready_time_desc": (lambda e: e["ready_time"], True, "ready_time_desc"),
+        "unsorted":        (lambda e: 0, False, "unsorted")
     }
 
     @wraps(route_fn)
-    def wrapped_route_function(*args, **kwargs):
+    def wrapped_route_function():
         page = int(req.args.get("page")) if "page" in req.args else 0
         psize = int(req.args.get("page_size")
                    ) if "page_size" in req.args else 10
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
-            sort_param = req.args.get("sort") if "sort" in req.args\
+            sort_param = req.args.get("sort") if "sort" in req.args \
                 else "unsorted"
-            sorter = sort_functions[sort_param]
-            tag_params = req.args.get("tags").split(",") if "tags" in req.args \
-                else []
-            taglist = [int(tag) for tag in tag_params]
-            data = flask.json.loads(
-                route_fn(page, psize, taglist, sorter, *args, **kwargs).data)
-            links = get_continuation_links(req.base_url, page, psize,
-                                           MOCK_DATA_MAX_SIZE, sort_param,
-                                           tag_params)
+            tags = req.args.get("tags").split(
+                ",") if "tags" in req.args else []
+            query_params = QueryParams(page=page, page_size=psize,
+                                       tag_filters=[int(tag) for tag in tags],
+                                       sort_key=sort_functions[sort_param])
+            data = flask.json.loads(route_fn(query_params).data)
+            links = get_continuation_links(req.base_url, MOCK_DATA_MAX_SIZE,
+                                           query_params)
             return flask.json.jsonify({"data": data, "links": links})
     return wrapped_route_function
 
 
 @API_BP.route('/ingredients')
 @continuation_route
-def get_all_ingredients(page: int, page_size: int, filters: List[int],
-                        sort_key: Tuple[Callable[[Any], bool], bool]):
-    mock_data = loop_filter_sort(page, page_size, filters, sort_key,
-                                 food_data.ingredients)
+def get_all_ingredients(query_params: QueryParams):
+    mock_data = loop_filter_sort(query_params, food_data.ingredients)
     return flask.json.jsonify(mock_data)
 
 
 @API_BP.route('/recipes')
 @continuation_route
-def get_all_recipes(page: int, page_size: int, filters: List[int],
-                    sort_key: Tuple[Callable[[Any], bool], bool]):
-    mock_data = loop_filter_sort(page, page_size, filters, sort_key,
-                                 food_data.recipes)
+def get_all_recipes(query_params: QueryParams):
+    mock_data = loop_filter_sort(query_params, food_data.recipes)
     return flask.json.jsonify(mock_data)
 
 
 @API_BP.route('/grocery_items/')
 @continuation_route
-def get_all_grocery_items(page: int, page_size: int, filters: List[int],
-                          sort_key: Tuple[Callable[[Any], bool], bool]):
-    mock_data = loop_filter_sort(page, page_size, filters, sort_key,
-                                 food_data.grocery_items)
+def get_all_grocery_items(query_params: QueryParams):
+    mock_data = loop_filter_sort(query_params, food_data.grocery_items)
     return flask.json.jsonify(mock_data)
 
 
 @API_BP.route('/tags')
 @continuation_route
-def get_all_tags(page: int, page_size: int, filters: List[int],
-                 sort_key: Tuple[Callable[[Any], bool], bool]):
-    mock_data = loop_filter_sort(page, page_size, filters, sort_key,
-                                 food_data.grocery_items)
+def get_all_tags(query_params: QueryParams):
+    mock_data = loop_filter_sort(query_params, food_data.grocery_items)
     return flask.json.jsonify(mock_data)
 
 
