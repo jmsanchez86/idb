@@ -4,9 +4,9 @@ import { IndexLink, Link } from "react-router";
 export default class SortModule extends React.Component {
   getSortButtons() {
     const bar = [];
-    const sort_params = this.props.sort_params;
+    const sorters = this.props.sorters;
     var i = 0;
-    for (var p of sort_params) {
+    for (var p of sorters) {
       if (i++ == 0) {
         bar.push(
           <label key={p.query} class="btn btn-sm btn-default active">
@@ -14,7 +14,6 @@ export default class SortModule extends React.Component {
               <h5>{p.name}</h5>
           </label>
         );
-        console.log(bar);
       }
       else {
         bar.push(

@@ -14,8 +14,8 @@ export default class Ingredients extends React.Component {
     super(props);
     this.state = {
       ingredients: this.initialQuery(), // query database with no params
-      tags: this.getTags(),
-      sort_params:
+      filters: this.getAllTags(),
+      sorters:
         [
           {
             name: "A - Z",
@@ -32,35 +32,40 @@ export default class Ingredients extends React.Component {
   initialQuery() {
     return ingredients;
   }
-  getTags() {
-    const filters = [];
-    const tags = data.tags;
-    for (var id in tags) {
-      filters.push(
-        {
-          id: id,
-          name: tags[id].name,
-          active: false,
+  getAllTags() {
+    const tags = {};
+
+    for (var id in data.tags) {
+      tags[id] = {
+          name: data.tags[id].name,
+          checked: false,
         }
-      );
     }
-    return filters; // {id, name, active}
+    return tags; // {id, name, checked}
   }
-  updateIngredients(params) {
-    console.log("Hi Scott. Which one?");
-    console.log(params);
+  handleApply(updatedList) {
+    for (var id in updatedList) {
+      this.state.filters[id].checked = updatedList[id];
+    }
+
     // call api with new params
     // update ingredient
     this.setState({ingredients}); // re-renders
   }
   render() {
+    console.log(this.state.filters);
     const ingredients = this.state.ingredients;
     return (
 
       <div class="contatiner">
         <Greeting />
-        <Controller sort_params={this.state.sort_params} filters={this.state.tags} updateList={this.updateIngredients.bind(this)} />
-        <GridSystem path="ingredients" data={this.state.ingredients} />
+        <Controller
+          sorters={this.state.sorters}
+          filters={this.state.filters}
+          handleApply={this.handleApply.bind(this)} />
+        <GridSystem
+          path="ingredients"
+          data={this.state.ingredients} />
       </div>
 
     );
