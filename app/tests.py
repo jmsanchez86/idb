@@ -13,7 +13,7 @@ from app.models import Ingredient, Tag, Recipe, GroceryItem, db
 from app.tests_data import mock_data
 
 
-class TestModels(TestCase):
+class ModelTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
