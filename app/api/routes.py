@@ -74,14 +74,24 @@ def tag_filter(tag_filters: List[int]):
     return filter_func
 
 
-def get_continuation_links(base_url: str, page: int, psize: int, maxsize: int):
+def get_continuation_links(base_url: str, page: int, psize: int, maxsize: int,
+                           sort_param: str, tag_params: List[str]):
+    # pylint: disable=too-many-arguments
+
     total_pages = int(math.ceil(maxsize / psize))
     last_page = total_pages - 1
-    url_template = base_url + "?page={page}&page_size={page_size}"
-    first_link = url_template.format(page=0, page_size=psize)
-    prev_link = url_template.format(page=(page - 1), page_size=psize)
-    next_link = url_template.format(page=(page + 1), page_size=psize)
-    last_link = url_template.format(page=last_page, page_size=psize)
+    url_template = base_url + "?page={p}&page_size={ps}&sort={s}"
+    first_link = url_template.format(p=0, ps=psize, s=sort_param)
+    prev_link = url_template.format(p=(page - 1), ps=psize, s=sort_param)
+    next_link = url_template.format(p=(page + 1), ps=psize, s=sort_param)
+    last_link = url_template.format(p=last_page, ps=psize, s=sort_param)
+
+    if len(tag_params) > 0:
+        tag_query = "&tags={ts}".format(ts=",".join(tag_params))
+        first_link += tag_query
+        prev_link += tag_query
+        next_link += tag_query
+        last_link += tag_query
 
     # first page
     if page == 0:
@@ -119,15 +129,17 @@ def continuation_route(route_fn: Callable[[int, int], Callable]):
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
-            links = get_continuation_links(req.base_url, page, psize,
-                                           MOCK_DATA_MAX_SIZE)
-            sort_arg = req.args.get("sort") if "sort" in req.args else "unsorted"
-            sorter = sort_functions[sort_arg]
-            tag_args = req.args.get("tags").split(",") if "tags" in req.args \
+            sort_param = req.args.get("sort") if "sort" in req.args\
+                                              else "unsorted"
+            sorter = sort_functions[sort_param]
+            tag_params = req.args.get("tags").split(",") if "tags" in req.args \
                                                        else []
-            taglist = [int(tag) for tag in tag_args]
+            taglist = [int(tag) for tag in tag_params]
             data = flask.json.loads(
                 route_fn(page, psize, taglist, sorter, *args, **kwargs).data)
+            links = get_continuation_links(req.base_url, page, psize,
+                                           MOCK_DATA_MAX_SIZE, sort_param,
+                                           tag_params)
             return flask.json.jsonify({"data": data, "links": links})
     return wrapped_route_function
 
