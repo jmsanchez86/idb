@@ -44,6 +44,8 @@ page     the row of results to return
 page_size the size of the row to return
 maxsize  the size of the mocked out loop list
 """
+
+
 def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
     # pylint: disable=invalid-name
     assert page >= 0
@@ -139,8 +141,8 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
     @wraps(route_fn)
     def wrapped_route_function():
         page = int(req.args.get("page")) if "page" in req.args else 0
-        psize = int(req.args.get("page_size")
-                   ) if "page_size" in req.args else 10
+        psize = int(req.args.get("page_size")) if "page_size" in req.args \
+            else 10
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
