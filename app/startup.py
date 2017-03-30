@@ -3,7 +3,7 @@
 import logging
 
 from flask import Flask
-from app import api, site
+from app import api, site, tests_api
 
 
 def create_app(config, debug=False, testing=False, config_overrides=None):
@@ -32,6 +32,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         """.format(err), 500
 
     app.register_blueprint(api.routes.API_BP, url_prefix='/api')
+    app.register_blueprint(tests_api.routes.TEST_BP, url_prefix='/test')
     app.register_blueprint(site.routes.SITE_BP)
 
     return app
