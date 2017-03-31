@@ -6,6 +6,7 @@ from app.tests_api.run_tests import run_tests
 
 TEST_BP = flask.Blueprint('test', __name__)
 
+
 @TEST_BP.route('/')
 def get_test_results():
     result, out_stream = run_tests()
@@ -19,4 +20,4 @@ def get_test_results():
             "failures": failures,
             "errors": errors,
             "output": out_stream.getvalue()
-            })
+        })

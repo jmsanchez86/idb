@@ -11,11 +11,11 @@ def mock_data(db):
     db.session.add(Ingredient(2, 11784, "lettuce", "lettuce.jpg"))
     db.session.add(Ingredient(3, 900, "bread", "bread.jpg"))
 
-    db.session.add(IngredientNutrient(1, "surgar", "kilograms", 100))
+    db.session.add(IngredientNutrient(1, "sugar", "kilograms", 100))
     db.session.add(IngredientNutrient(1, "calories", "calories", 9001))
     db.session.add(IngredientNutrient(1, "iron", "grams", 123))
 
-    db.session.add(IngredientNutrient(2, "surgar", "grams", 50))
+    db.session.add(IngredientNutrient(2, "sugar", "grams", 50))
     db.session.add(IngredientNutrient(2, "calories", "joules", 1001))
     db.session.add(IngredientNutrient(2, "iron", "miligrams", 150))
 
@@ -24,7 +24,7 @@ def mock_data(db):
     db.session.add(Recipe(2, 322, "sandwich", "sandwich.jpg",
                           "Insert lettuce between two slices of bread."))
 
-    db.session.add(RecipeNutrient(1, "surgar", "kilograms", 1))
+    db.session.add(RecipeNutrient(1, "sugar", "kilograms", 1))
     db.session.add(RecipeNutrient(1, "calories", "calories", 2))
     db.session.add(RecipeNutrient(1, "iron", "grams", 3))
 
@@ -33,7 +33,7 @@ def mock_data(db):
     db.session.add(RecipeIngredient(1, 2, "grams", 100,
                                     "100 grams of lettuce"))
 
-    db.session.add(RecipeNutrient(2, "surgar", "meters", 82))
+    db.session.add(RecipeNutrient(2, "sugar", "meters", 82))
     db.session.add(RecipeNutrient(2, "calories", "calories", 23))
     db.session.add(RecipeNutrient(2, "iron", "micrograms", 166))
 
