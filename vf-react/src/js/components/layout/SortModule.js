@@ -11,19 +11,19 @@ export default class SortModule extends React.Component {
   }
   getRadioButtons() {
     const sorters = this.props.sorters;
-    const res = [];
+    const buttons = [];
     for (var id in sorters) {
       var cls = "btn btn-default";
       if (id == this.state.selectedValue)
         cls = "btn btn-default active";
-      res.push(
+      buttons.push(
         <label class={cls}>
           <h5>{sorters[id].name}</h5>
           <Radio value={id} />
         </label>
       );
     }
-    return res;
+    return buttons;
   }
   onRadio(event) {
     this.setState({selectedValue: event})

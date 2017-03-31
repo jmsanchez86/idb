@@ -20,20 +20,25 @@ export default class Ingredients extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    const sort_query = [];
-    const tags_query = [];
+    var params = ".../api/ingredients?sort=";
     for (var id in sorters) {
       if (sorters[id].checked)
-        sort_query.push(id);
+        params += id;
     }
+    console.log(filters);
+
+    var firstTag = true;
     for (var id in filters ) {
-      if (filters[id].checked)
-        tags_query.push(id);
+      if (filters[id].checked) {
+        if (firstTag) {
+          firstTag = false;
+          params += "&tags="
+        }
+        params += id + ",";
+      }
     }
-
-    console.log("tags: " + tags_query);
-    console.log("sort: " + sort_query);
-
+    params = firstTag ? params : params.substring(0, params.length-1);
+    console.log(params);
     // Query with state.filters and state.sorters
     return ingredients; //TODO
   }
@@ -64,25 +69,11 @@ export default class Ingredients extends React.Component {
       }
     )
   }
-  updateFilters(updatedList) {
-    const filters = this.state.filters;
-    for (var id in updatedList) {
-      filters[id].checked = updatedList[id].checked;
-    }
-    return filters;
-  }
-  updateSorters(updatedList) {
-    const sorters = this.state.sorters;
-    for (var id in updatedList) {
-      sorters[id].checked = updatedList[id].checked;
-    }
-  }
   handleApply(_filters,_sorters) {
     this.setState({
         sorters: _sorters,
         filters: _filters,
       });
-
   }
   render() {
     return (
