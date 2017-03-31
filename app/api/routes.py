@@ -184,7 +184,8 @@ def get_all_grocery_items(query_params: QueryParams):
 @API_BP.route('/tags')
 @continuation_route
 def get_all_tags(query_params: QueryParams):
-    mock_data = loop_filter_sort(query_params, food_data.grocery_items)
+    query_params.tag_filters = []
+    mock_data = loop_filter_sort(query_params, food_data.tags)
     return flask.json.jsonify(mock_data)
 
 
