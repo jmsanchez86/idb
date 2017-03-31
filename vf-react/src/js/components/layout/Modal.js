@@ -12,7 +12,7 @@ export default class Modal extends React.Component {
   onCheck(event) {
     this.props.onCheck(event);
   }
-  onRadio(event) {
+onRadio(event) {
     this.props.onRadio(event);
   }
   render() {

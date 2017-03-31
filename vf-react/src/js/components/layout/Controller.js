@@ -1,8 +1,6 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
-
-
 import BigButton from "./BigButton";
 import Modal from "./Modal";
 

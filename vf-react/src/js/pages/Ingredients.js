@@ -20,7 +20,7 @@ export default class Ingredients extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = ".../api/ingredients?sort=";
+    var params = "/api/ingredients?sort=";
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
@@ -68,6 +68,19 @@ export default class Ingredients extends React.Component {
           }
       }
     )
+  }
+  updateFilters(updatedList) {
+    const filters = this.state.filters;
+    for (var id in updatedList) {
+      filters[id].checked = updatedList[id].checked;
+    }
+    return filters;
+  }
+  updateSorters(updatedList) {
+    const sorters = this.state.sorters;
+    for (var id in updatedList) {
+      sorters[id].checked = updatedList[id].checked;
+    }
   }
   handleApply(_filters,_sorters) {
     this.setState({
