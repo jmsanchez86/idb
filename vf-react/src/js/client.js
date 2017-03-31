@@ -26,14 +26,14 @@ ReactDOM.render(
 
       <Route path="recipes" name="recipes" component={Recipes}></Route>
       <Route path="ingredients" name="ingredients" component={Ingredients}></Route>
-      <Route path="groceryItems" name="groceryItems" component={GroceryItems}></Route>
+      <Route path="grocery_items" name="grocery_items" component={GroceryItems}></Route>
       <Route path="tags" name="tags" component={Tags}></Route>
 
       <Route path="about" name="about" component={About}></Route>
 
       <Route path="recipes(/:id)" name="recipe-single" component={RecipeSingle}></Route>
       <Route path="ingredients(/:id)" name="ingredient-single" component={IngredientSingle}></Route>
-      <Route path="groceryItems(/:id)" name="gi-single" component={GroceryItemSingle}></Route>
+      <Route path="grocery_items(/:id)" name="gi-single" component={GroceryItemSingle}></Route>
       <Route path="tags(/:id)" name="tag-single" component={TagSingle}></Route>
 
 

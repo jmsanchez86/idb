@@ -38,7 +38,7 @@ export default class Recipes extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    alert("Mock API Request:\n" + params);
+    alert("Mock API Request:\n" + params);  
     // Query with state.filters and state.sorters
     return recipes; //TODO
   }
