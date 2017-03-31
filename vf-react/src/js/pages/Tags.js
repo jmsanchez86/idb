@@ -50,39 +50,38 @@ export default class Tags extends React.Component {
       if (sorters[id].checked)
         params += id;
     }
-    console.log(filters);
 
     var firstTag = true;
     for (var id in filters ) {
       if (filters[id].checked) {
         if (firstTag) {
           firstTag = false;
-          params += "&limit="
+          params += "&min="
         }
         params += id + ",";
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    console.log(params);
+    console.log("Mock API Request:\n" + params);
     // Query with state.filters and state.sorters
     return tags; //TODO
   }
   initFilters() {
     return (
       {
+        0:
+          {
+            name: "All",
+            checked: true
+          },
         10:
           {
-            name: "> 10",
-            checked: true
+             name: "> 10",
+             checked: false
           },
         20:
           {
              name: "> 20",
-             checked: false
-          },
-        30:
-          {
-             name: "> 30",
              checked: false
           }
       }
