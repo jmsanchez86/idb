@@ -8,7 +8,6 @@ from app.api.test.tests import ModelTests
 from app.api.test.TestResultWithSuccess import TestResultWithSuccess
 
 
-
 def run_tests():
     out_stream = StringIO()
     runner = TextTestRunner(
