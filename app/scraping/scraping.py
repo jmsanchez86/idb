@@ -123,3 +123,65 @@ tag:
 
 """
 
+import json
+from http.client import HTTPSConnection
+
+class ConnectionException(Exception):
+    """
+    Raised when a Connection object has an unexpected error.
+    """
+
+    def __init__(self, connection, message):
+        self.connection = connection
+        self.message = message
+
+class Connection:
+    """
+    Light wrapper over an HTTP connection for making consecutive
+    requests to a restful API.
+    """
+
+    def __init__(self, domain_url):
+        self.connection = HTTPSConnection(domain_url)
+
+
+    def request(self, path, post_headers=None):
+        """
+        Make a request for a resource described by path and returns the
+        response object.
+        """
+
+        if post_headers == None:
+            self.connection.request("GET", path)
+            res = self.connection.getresponse()
+
+            if res.status != 200:
+                msg = "Request %s returned status %d with reason: %s."
+                msg = msg % (path, res.status, res.reason)
+                raise ConnectionException(self, msg)
+
+            return res
+
+        else:
+
+            self.connection.request("POST", path, post_headers)
+            res = self.connection.getresponse()
+
+            if res.status != 200:
+                msg = "Request %s returned status %d with reason: %s."
+                msg = msg % (path, res.status, res.reason)
+                raise ConnectionException(self, msg)
+
+            return res
+
+
+if __name__ == "__main__":
+
+    conn = Connection("jsonplaceholder.typicode.com")
+
+    data = conn.request("/posts/1").read()
+
+    print(json.loads(data))
+
+
+
