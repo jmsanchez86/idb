@@ -1,6 +1,6 @@
 ...........
 ----------------------------------------------------------------------
-Ran 11 tests in 0.119s
+Ran 11 tests in 0.122s
 
 OK
 sqlalchemy version: 1.1.7
@@ -16,10 +16,10 @@ app/site/__init__.py                         1      0   100%
 app/site/routes.py                           4      1    75%   9
 app/startup.py                              18     14    22%   10-38
 app/tests.py                                79      0   100%
-app/tests_api/TestResultWithSuccess.py       8      4    50%   7-8, 11-12
+app/tests_api/TestResultWithSuccess.py       8      4    50%   8-9, 12-13
 app/tests_api/__init__.py                    1      0   100%
-app/tests_api/routes.py                      9      5    44%   11-15
-app/tests_api/run_tests.py                  10      4    60%   11-14
+app/tests_api/routes.py                      9      5    44%   12-16
+app/tests_api/run_tests.py                  10      4    60%   12-16
 app/tests_data.py                           37      0   100%
 ----------------------------------------------------------------------
 TOTAL                                      449    101    78%
