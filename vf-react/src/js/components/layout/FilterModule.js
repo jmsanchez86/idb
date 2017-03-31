@@ -28,7 +28,7 @@ export default class FilterModule extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div class="panel">
         <h5>Filter</h5>
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
           {this.getFilters()}

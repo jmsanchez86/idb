@@ -365,3 +365,13 @@ label.btn.btn-default.active {
 input[type="radio"] {
     display: none;
 }
+
+#BigButton {
+  display: block;
+  width: 100%;
+}
+
+
+#Controller {
+  margin-bottom: 10px;
+}

@@ -33,6 +33,7 @@ export default class SortModule extends React.Component {
   render() {
     return (
         <RadioGroup name="fruit" selectedValue={this.state.selectedValue} onChange={this.onRadio.bind(this)}>
+        <h5>Sort</h5>
         <div class="btn-group btn-group-justified">
           {this.getRadioButtons()}
           </div>

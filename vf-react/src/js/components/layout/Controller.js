@@ -33,15 +33,19 @@ export default class Controller extends React.Component {
 
   render() {
     return (
-      <div class="container-fluid">
-        <BigButton />
-        <Modal
-          sorters ={this.props.sorters}
-          filters ={this.props.filters}
-          onCheck ={this.handleCheck.bind(this)}
-          onRadio ={this.handleRadio.bind(this)}
-          onApply ={this.handleApply.bind(this)}
-        />
+      <div id="Controller" class="container-fluid">
+      <div class="row ">
+        <div class="pull-right col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+          <BigButton />
+          <Modal
+            sorters ={this.props.sorters}
+            filters ={this.props.filters}
+            onCheck ={this.handleCheck.bind(this)}
+            onRadio ={this.handleRadio.bind(this)}
+            onApply ={this.handleApply.bind(this)}
+          />
+        </div>
+      </div>
       </div>
     )
   }
