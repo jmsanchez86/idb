@@ -110,6 +110,7 @@ test: .pylintrc
 
 .PHONY: format
 format:
+	@not_found=0;                                 \
 	for i in $(PY_SOURCE);                        \
 	do                                            \
 		$(AUTOPEP8) -i "$$i";                     \
