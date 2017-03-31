@@ -12,5 +12,5 @@ beta_settings:
     #   "project:region:cloudsql-instance"
     # You must also update the values in config.py.
     #
-    # cloud_sql_instances: "vennfridge:us-central1:<db-name-here>"
+    cloud_sql_instances: "vennfridge:us-central1:prod"
 #[END cloudsql_settings]
