@@ -11,7 +11,7 @@ html {
 
 body {
   background-color: #FFFEFE;
-
+  padding-top: 90px;
   position: relative;
   margin: 0;
   padding-bottom: 6rem;
@@ -40,9 +40,6 @@ ul.nav a:hover {
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
 }
-
-
-
 
 
 #logohome {
@@ -169,10 +166,10 @@ ul.nav a:hover {
 
 /* Main Text */
 #main-text {
-  margin-top: 80px;
+  margin-top: 400px;
   margin-bottom:80px;
-
 }
+
 h2 {
   font-family: Dosis, sans-serif;
   font-weight: 400;
@@ -230,6 +227,7 @@ img.venn {
   font-family: Raleway, sans-serif;
   font-weight: 400;
   margin: 40px;
+  padding-top: 70px;
 }
 
 /* Footer */

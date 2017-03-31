@@ -23,7 +23,7 @@ export default class Nav extends React.Component {
     return (
  /* NEW */
 
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" onClick={this.toggleCollapse.bind(this)}>
