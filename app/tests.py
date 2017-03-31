@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-# pylint: disable = missing-docstring
-# pylint: disable = no-self-use
+# pylint: disable=missing-docstring
+# pylint: disable=no-self-use
+# pylint: disable=pointless-string-statement
 
 from unittest import main, TestCase
 
@@ -12,12 +13,10 @@ from flask import Flask
 from app.models import Ingredient, Tag, Recipe, GroceryItem, db
 from app.tests_data import mock_data
 
-
-class TestModels(TestCase):
+class ModelTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
-
         print("sqlalchemy version: %s" % sqlalchemy.__version__)
         print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
 
@@ -26,7 +25,8 @@ class TestModels(TestCase):
         cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         cls.app.config["SQLALCHEMY_ECHO"] = False
         db.init_app(cls.app)
-        cls.app.app_context().push()
+        cls.ctx = cls.app.app_context()
+        cls.ctx.push()
         db.create_all()
 
         mock_data(db)
@@ -42,6 +42,10 @@ class TestModels(TestCase):
 
         query = db.session.query(Tag).filter_by(tag_name="natural")
         cls.tag = query.first()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.ctx.pop()
 
     def test_ingredient(self):
         # Ingredient by name.
@@ -112,7 +116,6 @@ class TestModels(TestCase):
         items = self.tag.grocery_items
         item_data = set(i.grocery_id for i in items)
         self.assertEqual(item_data, {1, 2})
-
 
 if __name__ == "__main__":  # pragma: no cover
     main()
