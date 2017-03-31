@@ -1,7 +1,7 @@
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-name
 
-from app.models import Ingredient, Recipe, RecipeNutrient, GroceryItem,\
+from app.api.models import Ingredient, Recipe, RecipeNutrient, GroceryItem,\
     GroceryItemIngredient, Tag, TagIngredient, TagRecipe,\
     TagGroceryItem, IngredientNutrient, RecipeIngredient
 

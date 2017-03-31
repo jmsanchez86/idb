@@ -4,8 +4,9 @@ import unittest
 from unittest.runner import TextTestRunner
 from io import StringIO
 
-from app.tests import ModelTests
-from app.tests_api.TestResultWithSuccess import TestResultWithSuccess
+from app.api.test.tests import ModelTests
+from app.api.test.TestResultWithSuccess import TestResultWithSuccess
+
 
 
 def run_tests():
