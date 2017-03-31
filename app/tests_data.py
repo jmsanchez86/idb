@@ -7,9 +7,9 @@ from app.models import Ingredient, Recipe, RecipeNutrient, GroceryItem,\
 
 
 def mock_data(db):
-    db.session.add(Ingredient(1, 1337, "licorice", "licorice.jpg"))
-    db.session.add(Ingredient(2, 11784, "lettuce", "lettuce.jpg"))
-    db.session.add(Ingredient(3, 900, "bread", "bread.jpg"))
+    db.session.add(Ingredient(1, "licorice", "licorice.jpg"))
+    db.session.add(Ingredient(2, "lettuce", "lettuce.jpg"))
+    db.session.add(Ingredient(3, "bread", "bread.jpg"))
 
     db.session.add(IngredientNutrient(1, "sugar", "kilograms", 100))
     db.session.add(IngredientNutrient(1, "calories", "calories", 9001))
@@ -19,9 +19,9 @@ def mock_data(db):
     db.session.add(IngredientNutrient(2, "calories", "joules", 1001))
     db.session.add(IngredientNutrient(2, "iron", "miligrams", 150))
 
-    db.session.add(Recipe(1, 981, "licorlettuce", "licorlettuce.jpg",
+    db.session.add(Recipe(1, "licorlettuce", "licorlettuce.jpg",
                           "Blend licorice and lettuce. Serve."))
-    db.session.add(Recipe(2, 322, "sandwich", "sandwich.jpg",
+    db.session.add(Recipe(2, "sandwich", "sandwich.jpg",
                           "Insert lettuce between two slices of bread."))
 
     db.session.add(RecipeNutrient(1, "sugar", "kilograms", 1))
@@ -40,9 +40,9 @@ def mock_data(db):
     db.session.add(RecipeIngredient(2, 2, "grams", 50, "1 leaf of lettuce"))
     db.session.add(RecipeIngredient(2, 3, "grams", 100, "2 slices of bread"))
 
-    db.session.add(GroceryItem(1, 999, "Tom's lettuce", "toms_lettuce.jpg",
+    db.session.add(GroceryItem(1, "Tom's lettuce", "toms_lettuce.jpg",
                                141645278962))
-    db.session.add(GroceryItem(2, 4321, "Jake's bread", "jakes_bread.jpg",
+    db.session.add(GroceryItem(2, "Jake's bread", "jakes_bread.jpg",
                                1234567890))
 
     db.session.add(GroceryItemIngredient(1, 2, "kilograms", 2,
