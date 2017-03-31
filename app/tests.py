@@ -13,6 +13,7 @@ from flask import Flask
 from app.models import Ingredient, Tag, Recipe, GroceryItem, db
 from app.tests_data import mock_data
 
+
 class ModelTests(TestCase):
 
     @classmethod
@@ -99,7 +100,8 @@ class ModelTests(TestCase):
         # Grocery item by name.
         self.assertIsNotNone(self.jakes_bread)
         self.assertEqual(self.jakes_bread.grocery_id, 2)
-        self.assertEqual(repr(self.jakes_bread), "<Grocery item 2 Jake's bread>")
+        self.assertEqual(repr(self.jakes_bread),
+                         "<Grocery item 2 Jake's bread>")
 
     def test_grocery_item_ingredients(self):
         # Ingredients of a grocery item.
@@ -140,6 +142,7 @@ class ModelTests(TestCase):
         self.assertEqual({repr(tgi) for tgi in self.tag.tag_grocery_item_assocs},
                          {"<TagGroceryItem natural 1>",
                           "<TagGroceryItem natural 2>"})
+
 
 if __name__ == "__main__":  # pragma: no cover
     main()
