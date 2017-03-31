@@ -14,20 +14,20 @@ export default class RecipeItem extends React.Component {
 
     return (
 
-      <div class="col-sm-6 col-md-4">
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
         <Link to={this.getLink(id)}>
         <div class="thumbnail">
           <div class="image">
 
-              <img class="img img-responsive full-width" src={image} />
+              <img class="img img-responsive full-width thumb" src={image} />
 
           </div>
 
           <div class="caption">
 
-              <h3 class="grid">
+              <h5 class="grid">
                 {name}
-              </h3>
+              </h5>
               <p>
                 {blurb}
               </p>

@@ -7,13 +7,11 @@ export default class RecipeItem extends React.Component {
     const msg = this.props.msg ? this.props.msg : "Let us help you help yourself to some tasty food.";
 
     return (
-      <div class="container">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
+        <div class="container text-center">
           <h4>{heading}</h4>
           <img class="venn" src="../static/images/diagram.png" />
           <p>{msg}</p>
         </div>
-      </div>
     );
   }
 }
