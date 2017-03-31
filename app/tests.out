@@ -1,0 +1,25 @@
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 0.119s
+
+OK
+sqlalchemy version: 1.1.7
+flask_sqlalchemy version: 2.2
+Name                                     Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------
+app/__init__.py                              1      0   100%
+app/api/__init__.py                          1      0   100%
+app/api/food_data.py                         4      0   100%
+app/api/routes.py                          110     73    34%   27-30, 51-65, 71-86, 92-123, 143-159, 166-167, 173-174, 180-181, 187-188, 197, 202, 207, 212
+app/models.py                              166      0   100%
+app/site/__init__.py                         1      0   100%
+app/site/routes.py                           4      1    75%   9
+app/startup.py                              18     14    22%   10-38
+app/tests.py                                79      0   100%
+app/tests_api/TestResultWithSuccess.py       8      4    50%   7-8, 11-12
+app/tests_api/__init__.py                    1      0   100%
+app/tests_api/routes.py                      9      5    44%   11-15
+app/tests_api/run_tests.py                  10      4    60%   11-14
+app/tests_data.py                           37      0   100%
+----------------------------------------------------------------------
+TOTAL                                      449    101    78%
