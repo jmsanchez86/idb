@@ -27,7 +27,6 @@ export default class FilterModule extends React.Component {
       this.props.onCheck(event);
   }
   render() {
-    console.log(this.props.filters);
     return (
       <div>
         <h5>Filter</h5>

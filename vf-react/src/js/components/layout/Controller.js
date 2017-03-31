@@ -2,29 +2,35 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 
 
+
 import BigButton from "./BigButton";
 import Modal from "./Modal";
 
 export default class Controller extends React.Component {
   constructor() {
     super();
-    this.state = {
-      filters: {},
-      sorters: {},
-    };
   }
   handleApply(event) {
-    this.props.handleApply(this.state.filters);
-
+    this.props.handleApply(this.props.filters,this.props.sorters);
   }
   handleRadio(event) {
-    console.log("Radio");
+    const id = event;
+    const sorters = this.props.sorters;
+    for (var i in sorters) {
+      if (id == i) {
+        sorters[i].checked = true;
+      }
+      else {
+        sorters[i].checked = false;
+      }
+    }
+
   }
   handleCheck(event) {
     const id = event.target.id;
     const checked = event.target.checked;
 
-    this.state.filters[id] = checked;
+    this.props.filters[id].checked = checked;
   }
 
   render() {

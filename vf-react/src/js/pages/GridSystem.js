@@ -16,7 +16,7 @@ export default class GridSystem extends React.Component {
 
   render() {
     return (
-        <div class="contatiner well">
+        <div class="contatiner">
           {this.getGridItems(this.props.data, this.props.path)}
         </div>
 

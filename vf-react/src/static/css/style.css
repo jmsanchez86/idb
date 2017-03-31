@@ -360,3 +360,8 @@ label.btn.btn-default.active {
 .btn.active span.glyphicon {
 	opacity: 1;
 }
+
+/* Hidding the radiobuttons & checkboxes */
+input[type="radio"] {
+    display: none;
+}

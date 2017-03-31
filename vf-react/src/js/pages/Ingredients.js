@@ -13,26 +13,31 @@ export default class Ingredients extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredients: this.initialQuery(), // query database with no params
-      filters: this.getAllTags(),
-      sorters:
-        [
-          {
-            name: "A - Z",
-            query: "alpha"
-          },
-          {
-            name: "Z - A",
-            query: "zeta"
-          }
-        ],
+      filters: this.initFilters(),
+      sorters: this.initSorters()
       };
+  }
+  query() {
+    const sorters = this.state.sorters;
+    const filters = this.state.filters;
+    const sort_query = [];
+    const tags_query = [];
+    for (var id in sorters) {
+      if (sorters[id].checked)
+        sort_query.push(id);
+    }
+    for (var id in filters ) {
+      if (filters[id].checked)
+        tags_query.push(id);
+    }
 
+    console.log("tags: " + tags_query);
+    console.log("sort: " + sort_query);
+
+    // Query with state.filters and state.sorters
+    return ingredients; //TODO
   }
-  initialQuery() {
-    return ingredients;
-  }
-  getAllTags() {
+  initFilters() {
     const tags = {};
 
     for (var id in data.tags) {
@@ -43,20 +48,44 @@ export default class Ingredients extends React.Component {
     }
     return tags; // {id, name, checked}
   }
-  handleApply(updatedList) {
+  initSorters() {
+    return (
+      {
+        alpha:
+          {
+            name: "A - Z",
+            checked: true
+          },
+        alpha_reversed:
+          {
+             name: "Z - A",
+             checked: false
+          }
+      }
+    )
+  }
+  updateFilters(updatedList) {
+    const filters = this.state.filters;
     for (var id in updatedList) {
-      this.state.filters[id].checked = updatedList[id];
+      filters[id].checked = updatedList[id].checked;
     }
+    return filters;
+  }
+  updateSorters(updatedList) {
+    const sorters = this.state.sorters;
+    for (var id in updatedList) {
+      sorters[id].checked = updatedList[id].checked;
+    }
+  }
+  handleApply(_filters,_sorters) {
+    this.setState({
+        sorters: _sorters,
+        filters: _filters,
+      });
 
-    // call api with new params
-    // update ingredient
-    this.setState({ingredients}); // re-renders
   }
   render() {
-    console.log(this.state.filters);
-    const ingredients = this.state.ingredients;
     return (
-
       <div class="contatiner">
         <Greeting />
         <Controller
@@ -65,7 +94,7 @@ export default class Ingredients extends React.Component {
           handleApply={this.handleApply.bind(this)} />
         <GridSystem
           path="ingredients"
-          data={this.state.ingredients} />
+          data={this.query()} />
       </div>
 
     );

@@ -12,8 +12,8 @@ export default class Modal extends React.Component {
   onCheck(event) {
     this.props.onCheck(event);
   }
-  onRadio() {
-    this.props.onRadio();
+  onRadio(event) {
+    this.props.onRadio(event);
   }
   render() {
     return (
