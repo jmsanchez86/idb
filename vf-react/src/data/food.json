@@ -73,6 +73,14 @@
         "recipes": [1,2,3],
         "grocery_items": [3],
         "tags": [2]
+      },
+      "10": {
+        "id": 10,
+        "name" : "Pineapple",
+        "image": "https://spoonacular.com/cdn/ingredients_100x100/pineapple.jpg",
+        "recipes": [1,2,3],
+        "grocery_items": [],
+        "tags": [2]
       }
     },
 

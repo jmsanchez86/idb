@@ -310,6 +310,53 @@ a:focus, a:hover {
 .thumbnail:hover {
   border-color: #949494;
 }
-.nav-pills li a {
+.nav-pills li a{
+  border: red;
 
+}
+
+label.btn.btn-default{
+  color: #428AB0 !important;
+  border-color:#428AB0 !important;
+  background-color: rgba(0,0,0,0) !important;
+}
+
+label.btn.btn-default.active {
+  background-color:#428AB0 !important;
+  color: #fffefe !important;
+}
+
+.btn.btn-default {
+  transition: .2s;
+  color: #fffefe !important;
+  background-color:#428AB0 !important;
+  outline: #fffefe !important;
+  border-color: #fff;
+}
+
+.btn.btn-default:active:focus:hover  {
+  color: #fff !important;
+  background-color: #6AA8C9 !important;
+  outline: #fffefe !important;
+}
+
+.btn.btn-success {
+  transition: .2s;
+  color: #fffefe !important;
+  background-color: #6DCA07 !important;
+  outline: #fffefe !important;
+  border-color: #fff !important;
+}
+
+.btn.btn-success:active:focus:hover  {
+  color: #fff !important;
+  background-color: #B7F178 !important;
+  outline: #fffefe !important;
+}
+
+.btn span.glyphicon {
+	opacity: 0;
+}
+.btn.active span.glyphicon {
+	opacity: 1;
 }
