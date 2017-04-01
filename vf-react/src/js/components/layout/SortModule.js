@@ -17,7 +17,7 @@ export default class SortModule extends React.Component {
       if (id == this.state.selectedValue)
         cls = "btn btn-default active";
       buttons.push(
-        <label class={cls}>
+        <label key={id} class={cls}>
           <h5>{sorters[id].name}</h5>
           <Radio value={id} />
         </label>

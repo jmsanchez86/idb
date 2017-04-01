@@ -7,7 +7,7 @@ export default class FilterModule extends React.Component {
     const filters = this.props.filters;
     for (var id in filters) {
       res.push(
-        <div key={filters[id].id} class="checkbox">
+        <div key={id} class="checkbox">
           <label>
             <h5>
               <input
