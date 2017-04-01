@@ -32,9 +32,7 @@ export default class Controller extends React.Component {
 
   render() {
     return (
-      <div id="Controller" class="container-fluid">
-      <div class="row ">
-        <div class="pull-right col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+      <div id="Controller" class="row ">
           <BigButton />
           <Modal
             sorters ={this.props.sorters}
@@ -44,8 +42,6 @@ export default class Controller extends React.Component {
             onApply ={this.handleApply.bind(this)}
           />
         </div>
-      </div>
-      </div>
     )
   }
 }
