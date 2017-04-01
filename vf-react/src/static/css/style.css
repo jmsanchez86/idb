@@ -14,6 +14,7 @@ body {
   position: relative;
   margin: 0;
   padding-top: 6rem;
+  padding-bottom: 9rem;
   min-height: calc(100%);
 }
 
@@ -179,6 +180,8 @@ h2 {
   font-family: Dosis, sans-serif;
   font-weight: 400;
   font-size: 80px;
+  font-size: calc(20px + 5vw);
+
 }
 
 h3.grid {
@@ -217,10 +220,14 @@ h4 {
   font-size: 30px;
 }
 
-.container p {
+p {
   font-family: Raleway, sans-serif;
   font-weight: 400;
   font-size: 17px;
+}
+
+.single p {
+  font-size: 24px;
 }
 
 img.venn {
@@ -267,36 +274,6 @@ img.venn {
 	color:  #FFFEF9;
 	font-size: 14px;
 	margin: 0;
-}
-
-#tag-single {
-  width:70px;
-  height:auto;
-}
-
-#image-single-lg {
-  border-radius: 5px;
-  margin: 10px;
-  width: calc(200px + 25vw);
-  height:auto;
-}
-
-#image-single-sm {
-  border-radius: 5px;
-  width: 100%;
-  height:auto;
-}
-
-#image-single {
-  border-radius: 5px;
-  width: 250px;
-
-}
-
-
-#ingSingleList {
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 
 .image1 {
@@ -387,4 +364,22 @@ input[type="radio"] {
 
 #Controller {
   margin-bottom: 10px;
+}
+
+#pagination {
+  margin:0px 40px 50px 40px;
+}
+
+.gutter-20.row {
+  margin-right: -20px;
+  margin-left: -20px;
+}
+.gutter-20 > [class^="col-lg"] {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#blurb {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
