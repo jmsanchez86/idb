@@ -1,0 +1,12 @@
+service: api
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT app.api.main:API_SERVICE
+
+runtime_config:
+  python_version: 3
+
+#[START cloudsql_settings]
+beta_settings:
+    cloud_sql_instances: "vennfridge:us-central1:prod"
+#[END cloudsql_settings]

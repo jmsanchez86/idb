@@ -1,59 +1,66 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
+import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
-import GridItem from "../components/layout/GridItem";
+import GridSystem from "../components/layout/GridSystem";
 
-var data = require('json!../../data/food.json');
+const data = require('json!../../data/food.json');
 const ingredients = data.ingredients;
 
 
 export default class Ingredients extends React.Component {
-  getGridItems() {
-    var i=0;
-    const gridItems=[];
-    for (var id in ingredients) {
-      gridItems[i++] = <GridItem key={id} path="ingredients" item={ingredients[id]} />
-    }
-    return gridItems;
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredients: this.initialQuery(), // query database with no params
+      tags: this.getTags(),
+      sort_params:
+        [
+          {
+            name: "A - Z",
+            query: "alpha"
+          },
+          {
+            name: "Z - A",
+            query: "zeta"
+          }
+        ],
+      };
+
   }
-
+  initialQuery() {
+    return ingredients;
+  }
+  getTags() {
+    const filters = [];
+    const tags = data.tags;
+    for (var id in tags) {
+      filters.push(
+        {
+          id: id,
+          name: tags[id].name,
+          active: false,
+        }
+      );
+    }
+    return filters; // {id, name, active}
+  }
+  updateIngredients(params) {
+    console.log("Hi Scott. Which one?");
+    console.log(params);
+    // call api with new params
+    // update ingredient
+    this.setState({ingredients}); // re-renders
+  }
   render() {
+    const ingredients = this.state.ingredients;
     return (
-      <div id="unique-content">
-          <Greeting />
 
-          <div class="container">
-            <div class="col-lg-1 dropdown">
-            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-              Sort Results
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#">A-Z</a></li>
-              <li><a href="#">Z-A</a></li>
-              <li><a href="#">Most Popular</a></li>
-            </ul>
-            </div>
-
-            <div class="offset-2 col-lg-1 dropdown">
-            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-              Filter
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#">Crowd Pleaser</a></li>
-              <li><a href="#">Vegetarian</a></li>
-              <li><a href="#">Great For Sandwiches</a></li>
-              <li><a href="#">Quick!</a></li>
-            </ul>
-            </div>
-          </div>
-
-          <div id="grid-results" class="row">
-            {this.getGridItems()}
-
-          </div>
+      <div class="contatiner">
+        <Greeting />
+        <Controller sort_params={this.state.sort_params} filters={this.state.tags} updateList={this.updateIngredients.bind(this)} />
+        <GridSystem path="ingredients" data={this.state.ingredients} />
       </div>
 
     );
