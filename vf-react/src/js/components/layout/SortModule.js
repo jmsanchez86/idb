@@ -1,40 +1,46 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
+import { RadioGroup, Radio } from 'react-radio-group'
 
 export default class SortModule extends React.Component {
-  getSortButtons() {
-    const bar = [];
-    const sort_params = this.props.sort_params;
-    var i = 0;
-    for (var p of sort_params) {
-      if (i++ == 0) {
-        bar.push(
-          <label key={p.query} class="btn btn-sm btn-default active">
-            <input type="radio"  name={p.query} autocomplete="off"  />
-              <h5>{p.name}</h5>
-          </label>
-        );
-        console.log(bar);
-      }
-      else {
-        bar.push(
-          <label key={p.query} class="btn btn-sm btn-default">
-            <input type="radio" name={p.query} autocomplete="off"  />
-              <h5>{p.name}</h5>
-          </label>
-        );
-      }
+  constructor() {
+    super();
+    this.state = {
+      selectedValue: "alpha"
     }
-    return bar;
+  }
+  getRadioButtons() {
+    const sorters = this.props.sorters;
+    const buttons = [];
+    for (var id in sorters) {
+      var cls = "btn btn-default";
+      if (id == this.state.selectedValue)
+        cls = "btn btn-default active";
+      buttons.push(
+        <label key={id} class={cls}>
+          <h5>{sorters[id].name}</h5>
+          <Radio value={id} />
+        </label>
+      );
+    }
+    return buttons;
+  }
+  onRadio(event) {
+    this.setState({selectedValue: event})
+    this.props.onRadio(event);
+
   }
   render() {
     return (
-      <div>
+        <RadioGroup name="fruit" selectedValue={this.state.selectedValue} onChange={this.onRadio.bind(this)}>
         <h5>Sort</h5>
-        <div class="btn-group btn-group-justified" data-toggle="buttons" role="group" aria-label="...">
-          {this.getSortButtons()}
-        </div>
-      </div>
+        <div class="btn-group btn-group-justified">
+          {this.getRadioButtons()}
+          </div>
+        </RadioGroup>
+
+
+
     )
   }
 };

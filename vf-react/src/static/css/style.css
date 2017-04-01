@@ -358,3 +358,18 @@ label.btn.btn-default.active {
 .btn.active span.glyphicon {
 	opacity: 1;
 }
+
+/* Hiding the radiobuttons & checkboxes */
+input[type="radio"] {
+    display: none;
+}
+
+#BigButton {
+  display: block;
+  width: 100%;
+}
+
+
+#Controller {
+  margin-bottom: 10px;
+}

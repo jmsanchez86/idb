@@ -1,4 +1,6 @@
 import React from "react";
+import { IndexLink, Link } from "react-router";
+
 import GridItem from "./GridItem";
 
 
@@ -14,10 +16,8 @@ export default class GridSystem extends React.Component {
 
   render() {
     return (
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-            {this.getGridItems(this.props.data, this.props.path)}
-          </div>
+        <div class="contatiner">
+          {this.getGridItems(this.props.data, this.props.path)}
         </div>
 
     );
