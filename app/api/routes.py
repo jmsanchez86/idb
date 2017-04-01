@@ -156,7 +156,9 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
             data = flask.json.loads(route_fn(query_params).data)
             links = get_continuation_links(req.base_url, MOCK_DATA_MAX_SIZE,
                                            query_params)
-            return flask.json.jsonify({"data": data, "links": links})
+            resp = flask.json.jsonify({"data": data, "links": links})
+            resp.headers["Access-Control-Allow-Origin"] = "*"
+            return resp
     return wrapped_route_function
 
 
