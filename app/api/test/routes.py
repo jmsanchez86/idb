@@ -2,7 +2,7 @@
 
 import flask
 
-from app.tests_api.run_tests import run_tests
+from app.api.test.run_tests import run_tests
 
 TEST_BP = flask.Blueprint('test', __name__)
 

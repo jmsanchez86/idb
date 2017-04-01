@@ -2,8 +2,8 @@
 
 PY_SOURCE := $(shell find ./app -name '*.py')
 FILES :=                 \
-	app/models.py        \
-	app/tests.py         \
+	app/api/models.py    \
+	app/api/test/tests.py\
 	apiary.apib          \
 	.gitignore           \
 	.travis.yml          \
@@ -103,9 +103,9 @@ check:
 
 .PHONY: test
 test: .pylintrc
-	-$(PYLINT) app/tests.py
-	-$(COVERAGE) run app/tests.py > app/tests.out 2>&1
-	-$(COVERAGE) report -m                    >> app/tests.out
+	-$(PYLINT) app/api/test/tests.py
+	-$(COVERAGE) run app/api/test/tests.py > app/api/test/tests.out 2>&1
+	-$(COVERAGE) report -m                    >> app/api/test/tests.out
 	rm .coverage
 
 .PHONY: format

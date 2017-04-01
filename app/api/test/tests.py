@@ -10,8 +10,8 @@ import sqlalchemy
 import flask_sqlalchemy
 from flask import Flask
 
-from app.models import Ingredient, Tag, Recipe, GroceryItem, db
-from app.tests_data import mock_data
+from app.api.models import Ingredient, Tag, Recipe, GroceryItem, db
+from app.api.test.test_data import mock_data
 
 
 class ModelTests(TestCase):
