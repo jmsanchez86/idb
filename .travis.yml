@@ -11,7 +11,6 @@ before_install:
 install:
     - pip install autopep8
     - pip install coverage
-    - pip install numpy
     - pip install pylint
     - pip install flask_sqlalchemy
 

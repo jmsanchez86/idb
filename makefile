@@ -2,8 +2,8 @@
 
 PY_SOURCE := $(shell find ./app -name '*.py')
 FILES :=                 \
-	app/models.py        \
-	app/tests.py         \
+	app/api/models.py    \
+	app/api/test/tests.py\
 	apiary.apib          \
 	.gitignore           \
 	.travis.yml          \
@@ -39,7 +39,7 @@ else ifeq ($(shell uname -p), unknown)
 	AUTOPEP8 := autopep8
 # UTCS
 else
-	PYTHON   := python3
+	PYTHON   := python3.5
 	PIP      := pip3
 	PYLINT   := pylint
 	COVERAGE := coverage-3.5
@@ -103,11 +103,14 @@ check:
 
 .PHONY: test
 test: .pylintrc
-	$(PYLINT) app/tests.py
-	$(PYTHON) app/tests.py
+	-$(PYLINT) app/api/test/tests.py
+	-$(COVERAGE) run app/api/test/tests.py > app/api/test/tests.out 2>&1
+	-$(COVERAGE) report -m                    >> app/api/test/tests.out
+	rm .coverage
 
 .PHONY: format
 format:
+	@not_found=0;                                 \
 	for i in $(PY_SOURCE);                        \
 	do                                            \
 		$(AUTOPEP8) -i "$$i";                     \

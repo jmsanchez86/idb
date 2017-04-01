@@ -1,12 +1,17 @@
+#!/usr/bin/env python3
 # pylint: disable=missing-docstring
+# pylint: disable=invalid-sequence-index
 
 import logging
+from types import ModuleType
+from flask import Flask, Blueprint
+from typing import List, Tuple
 
-from flask import Flask
-from app import api, site
 
-
-def create_app(config, debug=False, testing=False, config_overrides=None):
+def create_app(config: ModuleType,
+               route_blueprints: List[Tuple[Blueprint, dict]],
+               debug: bool=False, testing: bool=False,
+               config_overrides: ModuleType=None):
     app = Flask(__name__)
     app.config.from_object(config)
 
@@ -31,7 +36,6 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         See logs for full stacktrace.
         """.format(err), 500
 
-    app.register_blueprint(api.routes.API_BP, url_prefix='/api')
-    app.register_blueprint(site.routes.SITE_BP)
-
+    for blueprint in route_blueprints:
+        app.register_blueprint(blueprint[0], **blueprint[1])
     return app
