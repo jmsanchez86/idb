@@ -13,8 +13,8 @@ body {
   background-color: #FFFEFE;
   position: relative;
   margin: 0;
-  padding-bottom: 6rem;
-  min-height: calc(100% - 40px);
+  padding-top: 6rem;
+  min-height: calc(100%);
 }
 
 /* Navbar */
@@ -224,17 +224,17 @@ h4 {
 }
 
 img.venn {
-  height: 50px;
+  height: 30px;
   width:auto; /* you can use % */
 }
 
-#landing-h3 {
-  font-size: 50px;
+#landing-h4 {
+  font-size: 40px;
   font-family: Dosis, sans-serif;
 }
 
 #landing-p {
-  font-size: 20px;
+  font-size: 16px;
   font-family: Raleway, sans-serif;
 }
 

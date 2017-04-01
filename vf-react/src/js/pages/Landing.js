@@ -24,10 +24,10 @@ export default class Landing extends React.Component {
             </div>
           </div>
           <div id="main-text" >
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-              <h1>We Love Your Fridge</h1>
+            <div class="text-center">
+              <h2>We Love Your Fridge</h2>
               <img class="venn" src="../static/images/diagram.png" />
-              <h3 id="landing-h3">We love food. We eat almost every day.</h3>
+              <h4 id="landing-h4">We love food. We eat almost every day.</h4>
               <p id="landing-p">Let us help you help yourself to some tasty food.</p>
             </div>
           </div>
