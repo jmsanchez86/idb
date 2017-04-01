@@ -11,11 +11,10 @@ html {
 
 body {
   background-color: #FFFEFE;
-  padding-top: 100px;
   position: relative;
   margin: 0;
   padding-bottom: 6rem;
-  min-height: 100%;
+  min-height: calc(100% - 40px);
 }
 
 /* Navbar */
@@ -60,7 +59,7 @@ ul.nav a:hover {
   border-style: none;
   border-radius: 0%;
   z-index: 1000;
-  padding: 50px 0px 20px 0px;
+  padding: 5px 0px 5px 0px;
   background-color:#FC5D30;
 
   box-shadow: 0  1px 15px 0px #292929;
@@ -170,6 +169,12 @@ ul.nav a:hover {
   margin-bottom:80px;
 }
 
+h1 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 110px;
+}
+
 h2 {
   font-family: Dosis, sans-serif;
   font-weight: 400;
@@ -219,8 +224,18 @@ h4 {
 }
 
 img.venn {
-  height: 30px;
+  height: 50px;
   width:auto; /* you can use % */
+}
+
+#landing-h3 {
+  font-size: 50px;
+  font-family: Dosis, sans-serif;
+}
+
+#landing-p {
+  font-size: 20px;
+  font-family: Raleway, sans-serif;
 }
 
 #grid-results {
