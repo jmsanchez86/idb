@@ -38,31 +38,6 @@ export default class GroceryItems extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    console.log(params);
-    // Query with state.filters and state.sorters
-    return grocery_items; //TODO
-  }
-  query() {
-    const sorters = this.state.sorters;
-    const filters = this.state.filters;
-    var params = ".../api/grocery_items?sort=";
-    for (var id in sorters) {
-      if (sorters[id].checked)
-        params += id;
-    }
-    console.log(filters);
-
-    var firstTag = true;
-    for (var id in filters ) {
-      if (filters[id].checked) {
-        if (firstTag) {
-          firstTag = false;
-          params += "&tags="
-        }
-        params += id + ",";
-      }
-    }
-    params = firstTag ? params : params.substring(0, params.length-1);
     console.log("Mock API Request:\n" + params);
     // Query with state.filters and state.sorters
     return grocery_items; //TODO
