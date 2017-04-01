@@ -22,15 +22,17 @@ export default class Ingredients extends React.Component {
       links :  this.initLinks(),
       };
   }
+
   query() {
+    console.log("entering query");
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "/api/ingredients?sort=";
+    var params = "http://api.vennfridge.appspot.com/ingredients?sort=";
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
     }
-    console.log(filters);
+    console.log("filters");
 
     var firstTag = true;
     for (var id in filters ) {
@@ -43,15 +45,57 @@ export default class Ingredients extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    params += "?page=" + this.state.activePage;
+    params += "&page=" + this.state.links.activePage;
     console.log("Mock API Request:\n" + params);
     // Query with state.filters and state.sorters
-    const response = {
+    return params; //TODO
+  }
+
+  requestQuery(requestString) {
+    console.log("entering requestQuery");
+    console.log(requestString);
+    // call api with new params
+    var _ingredients = {}
+    var _links = {}
+
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        console.log("in Fetch in requestQuery");
+        response.json().then(function(responseData) {
+          for (var id in responseData.data){
+            _ingredients[id] = responseData.data[id];
+          }
+          for (var id in responseData.links){
+            _links[id] = responseData.links[id];
+          }
+        
+          const response = {
+            data: _ingredients,
+            links: _links
+          }
+
+          console.log("Leaving fetch");
+          console.log(response);
+          return response;
+        
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+
+    console.log("Leaving requestQuery");
+    const _response = {
       data: ingredients,
       links: this.state.links
     };
-    return response; //TODO
+    return _response;
   }
+
   initFilters() {
     const tags = {};
 
@@ -113,9 +157,15 @@ export default class Ingredients extends React.Component {
     console.log(links[type]);
   }
   render() {
-    const response = this.query();
+    console.log("entering render");
+    const request = this.query();
+    const response = this.requestQuery(request);
+    console.log("respons is:\n");
+    console.log(response);
+    console.log("Did we change?");
     const data = response.data;
     const links= response.links;
+    console.log("huh");
     return (
       <div class="contatiner">
         <Greeting />
