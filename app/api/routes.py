@@ -195,8 +195,6 @@ def get_all_tags(query_params: QueryParams):
 ################
 # Detail Views #
 ################
-####
-# Notes: TAG ING join, TAG REC join, TAG groc_item
 
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
@@ -243,4 +241,18 @@ def get_grocery_items(grocery_item_id: int):
 
 @API_BP.route('/tags/<int:tag_id>')
 def get_tag(tag_id: int):
-    return flask.json.jsonify(food_data.tags[tag_id - 1])
+    ing = food_data.ingredients
+    grocery_items = food_data.grocery_items
+    recipes = food_data.recipes
+
+    tag = deepcopy(food_data.tags[tag_id - 1])
+    tag["ingredients"] = [
+        {"id": ing[i - 1]["id"], "name": ing[i - 1]["name"], "image": ing[i - 1]["image"]}
+        for i in tag["ingredients"]]
+    tag["grocery_items"] = [
+        {"id": grocery_items[i - 1]["id"], "name": grocery_items[i - 1]["name"]}
+        for i in tag["grocery_items"]]
+    tag["recipes"] = [
+        {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
+        for i in tag["recipes"]]
+    return flask.json.jsonify(tag)
