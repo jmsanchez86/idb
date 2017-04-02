@@ -142,7 +142,7 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
     def wrapped_route_function():
         page = int(req.args.get("page")) if "page" in req.args else 0
         psize = int(req.args.get("page_size")) if "page_size" in req.args \
-            else 10
+            else 16
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
