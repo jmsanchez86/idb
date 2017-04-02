@@ -24,7 +24,6 @@ export default class Ingredients extends React.Component {
   }
 
   query() {
-    console.log("entering query");
     const sorters = this.state.sorters;
     const filters = this.state.filters;
     var params = "http://api.vennfridge.appspot.com/ingredients?sort=";
@@ -32,7 +31,6 @@ export default class Ingredients extends React.Component {
       if (sorters[id].checked)
         params += id;
     }
-    console.log("filters");
 
     var firstTag = true;
     for (var id in filters ) {
@@ -52,7 +50,6 @@ export default class Ingredients extends React.Component {
   }
 
   requestQuery(requestString) {
-    console.log("entering requestQuery");
     console.log(requestString);
     // call api with new params
     var _ingredients = {}
@@ -64,7 +61,6 @@ export default class Ingredients extends React.Component {
             console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
               response.status);
         }
-        console.log("in Fetch in requestQuery");
         response.json().then(function(responseData) {
           for (var id in responseData.data){
             _ingredients[id] = responseData.data[id];
@@ -77,9 +73,6 @@ export default class Ingredients extends React.Component {
             data: _ingredients,
             links: _links
           }
-
-          console.log("Leaving fetch");
-          console.log(response);
           return response;
         
         });
@@ -88,7 +81,6 @@ export default class Ingredients extends React.Component {
         console.log('Fetch Error :-S', err);
       });
 
-    console.log("Leaving requestQuery");
     const _response = {
       data: ingredients,
       links: this.state.links
@@ -157,15 +149,10 @@ export default class Ingredients extends React.Component {
     console.log(links[type]);
   }
   render() {
-    console.log("entering render");
     const request = this.query();
     const response = this.requestQuery(request);
-    console.log("respons is:\n");
-    console.log(response);
-    console.log("Did we change?");
     const data = response.data;
     const links= response.links;
-    console.log("huh");
     return (
       <div class="contatiner">
         <Greeting />
