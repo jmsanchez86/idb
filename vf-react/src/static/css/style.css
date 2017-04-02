@@ -232,6 +232,10 @@ p {
   font-size: 24px;
 }
 
+.single [disabled] {
+  color: #e6e6e6;
+}
+
 img.venn {
   height: 30px;
   width:auto; /* you can use % */
@@ -281,10 +285,6 @@ img.venn {
 .image1 {
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-.no {
-  color: #e6e6e6;
 }
 
 #upc {

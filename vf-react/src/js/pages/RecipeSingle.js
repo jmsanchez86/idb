@@ -67,14 +67,14 @@ export default class RecipeSingle extends React.Component {
     return (
       <div class="single container-fluid">
         <div class="row">
-          <div class="col-lg-offset-1 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
             <h2>
               {name}
             </h2>
           </div>
         </div>
         <div class="row">
-          <div id="blurb" class="col-lg-offset-1 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div id="blurb" class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
             <p>
             {blurb}
             </p>
@@ -99,12 +99,12 @@ export default class RecipeSingle extends React.Component {
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4>Ready in {ready_time} minutes.</h4>
+                <h4 >Ready in {ready_time} minutes.</h4>
               </div>
             </div>
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3>Ingredients</h3>
+                <h3 disabled={!ingredients.length}>Ingredients</h3>
               </div>
             </div>
             <div class="row">
@@ -114,7 +114,7 @@ export default class RecipeSingle extends React.Component {
             </div>
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3>Instructions</h3>
+                <h3 disabled={!instructions.length}>Instructions</h3>
               </div>
             </div>
             <div class="row">
