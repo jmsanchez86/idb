@@ -196,8 +196,6 @@ def get_all_tags(query_params: QueryParams):
 # Detail Views #
 ################
 ####
-# Notes: do a replace for REC tags (list comprehension)
-# Notes: do a replace for GROCERY_ITEMS tags (list comprehension)
 # Notes: TAG ING join, TAG REC join, TAG groc_item
 
 
@@ -223,12 +221,24 @@ def get_ingredient(ingredient_id: int):
 
 @API_BP.route('/recipes/<int:recipe_id>')
 def get_recipe(recipe_id: int):
-    return flask.json.jsonify(food_data.recipes[recipe_id - 1])
+    recipe = deepcopy(food_data.recipes[recipe_id - 1])
+    tags = food_data.tags
+
+    recipe["tags"] = [
+        {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
+        for i in recipe["tags"]]
+    return flask.json.jsonify(recipe)
 
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
-    return flask.json.jsonify(food_data.grocery_items[grocery_item_id - 1])
+    grocery_item = deepcopy(food_data.grocery_items[grocery_item_id - 1])
+    tags = food_data.tags
+
+    grocery_item["tags"] = [
+        {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
+        for i in grocery_item["tags"]]
+    return flask.json.jsonify(grocery_item)
 
 
 @API_BP.route('/tags/<int:tag_id>')
