@@ -1,1 +1,5 @@
-{"cuisine":"Indian","cuisines":["Indian","Asian"],"confidence":0.85}
+{
+    "cuisine": "Indian",
+    "cuisines": ["Indian","Asian"],
+    "confidence": 0.85
+}
