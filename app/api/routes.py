@@ -2,6 +2,7 @@
 # pylint: disable=invalid-sequence-index
 
 
+from copy import deepcopy
 from functools import wraps
 import math
 
@@ -194,10 +195,30 @@ def get_all_tags(query_params: QueryParams):
 ################
 # Detail Views #
 ################
+####
+# Notes: do a replace for REC tags (list comprehension)
+# Notes: do a replace for GROCERY_ITEMS tags (list comprehension)
+# Notes: TAG ING join, TAG REC join, TAG groc_item
+
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
-    return flask.json.jsonify(food_data.ingredients[ingredient_id - 1])
+    ing = food_data.ingredients
+    grocery_items = food_data.grocery_items
+    recipes = food_data.recipes
+    tags = food_data.tags
+
+    ingredient = deepcopy(ing[ingredient_id - 1])
+    ingredient["related_grocery_items"] = [
+        {"id": grocery_items[i - 1]["id"], "name": grocery_items[i - 1]["name"]}
+        for i in ingredient["related_grocery_items"]]
+    ingredient["related_recipes"] = [
+        {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
+        for i in ingredient["related_recipes"]]
+    ingredient["tags"] = [
+        {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
+        for i in ingredient["tags"]]
+    return flask.json.jsonify(ingredient)
 
 
 @API_BP.route('/recipes/<int:recipe_id>')
