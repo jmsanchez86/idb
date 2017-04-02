@@ -135,8 +135,7 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
         "alpha":           (lambda e: e["name"], False, "alpha"),
         "alpha_reverse":   (lambda e: e["name"], True, "alpha_reverse"),
         "ready_time_asc":  (lambda e: e["ready_time"], False, "ready_time_asc"),
-        "ready_time_desc": (lambda e: e["ready_time"], True, "ready_time_desc"),
-        "unsorted":        (lambda e: 0, False, "unsorted")
+        "ready_time_desc": (lambda e: e["ready_time"], True, "ready_time_desc")
     }
 
     @wraps(route_fn)
@@ -148,7 +147,7 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
             flask.abort(404)
         else:
             sort_param = req.args.get("sort") if "sort" in req.args \
-                else "unsorted"
+                else "alpha"
             tags = req.args.get("tags").split(
                 ",") if "tags" in req.args else []
             query_params = QueryParams(page=page, page_size=psize,
