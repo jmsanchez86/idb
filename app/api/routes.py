@@ -203,13 +203,13 @@ def get_ingredient(ingredient_id: int):
     ingredient = deepcopy(ing[ingredient_id - 1])
     ingredient["related_grocery_items"] = [
         {"id": grocery_items[i - 1]["id"], "name": grocery_items[i - 1]["name"]}
-        for i in ingredient["related_grocery_items"]]
+        for i in ingredient["related_grocery_items"]] # type: ignore
     ingredient["related_recipes"] = [
         {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
-        for i in ingredient["related_recipes"]]
+        for i in ingredient["related_recipes"]] # type: ignore
     ingredient["tags"] = [
         {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
-        for i in ingredient["tags"]]
+        for i in ingredient["tags"]] # type: ignore
     return flask.json.jsonify(ingredient)
 
 
@@ -220,7 +220,7 @@ def get_recipe(recipe_id: int):
 
     recipe["tags"] = [
         {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
-        for i in recipe["tags"]]
+        for i in recipe["tags"]] # type: ignore
     return flask.json.jsonify(recipe)
 
 
@@ -229,14 +229,14 @@ def get_grocery_items(grocery_item_id: int):
     grocery_item = deepcopy(food_data.grocery_items[grocery_item_id - 1])
 
     ingredient_id = grocery_item["ingredient"]
-    ingredient = food_data.ingredients[ingredient_id - 1]
+    ingredient = food_data.ingredients[ingredient_id - 1] # type: ignore
     grocery_item["ingredient"] = {"id": ingredient["id"],
                                   "name": ingredient["name"]}
 
     tags = food_data.tags
     grocery_item["tags"] = [
         {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
-        for i in grocery_item["tags"]]
+        for i in grocery_item["tags"]] # type: ignore
     return flask.json.jsonify(grocery_item)
 
 
@@ -253,11 +253,11 @@ def get_tag(tag_id: int):
             "name": ing[i - 1]["name"],
             "image": ing[i - 1]["image"]
         }
-        for i in tag["ingredients"]]
+        for i in tag["ingredients"]] # type: ignore
     tag["grocery_items"] = [
         {"id": grocery_items[i - 1]["id"], "name": grocery_items[i - 1]["name"]}
-        for i in tag["grocery_items"]]
+        for i in tag["grocery_items"]] # type: ignore
     tag["recipes"] = [
         {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
-        for i in tag["recipes"]]
+        for i in tag["recipes"]] # type: ignore
     return flask.json.jsonify(tag)
