@@ -7,20 +7,29 @@ import GridSystem from "../components/layout/GridSystem";
 
 const data = require('json!../../data/food.json');
 const recipes = data.recipes;
-
+const links = {
+  activePage: 0,
+  next: ".../api/grocery_items?sort=aplha&page=1",
+  last: ".../api/grocery_items?sort=aplha&page=100" // MOCK DATA
+}
 
 export default class Recipes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: this.initFilters(),
-      sorters: this.initSorters()
+      sorters: this.initSorters(),
+      links:   this.initLinks(),
+      response: {
+                    data: recipes,
+                    links: links
+                },
       };
   }
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = ".../api/recipes?sort=";
+    var params = "http://api.vennfridge.appspot.com/recipes?sort=";
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
@@ -38,10 +47,44 @@ export default class Recipes extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    console.log(params);
+    params += "&page=" + this.state.links.activePage;
+    console.log("Mock API Request:\n" + params);
     // Query with state.filters and state.sorters
-    return recipes; //TODO
+    return params; //TODO
   }
+  requestQuery(requestString) {
+    var _this = this;
+    var _recipes = {}
+    var _links = {}
+
+    //call api with new query params
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+          for (var id in responseData.data){
+            _recipes[id] = responseData.data[id];
+          }
+          for (var id in responseData.links){
+            _links[id] = responseData.links[id];
+          }
+
+          _this.state.response.data = _recipes;
+          _this.state.response.links = _links;
+          _this.forceUpdate();
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error : -S', err);
+      });
+
+    this.forceUpdate();
+  }
+
   initFilters() {
     const tags = {};
 
@@ -69,6 +112,16 @@ export default class Recipes extends React.Component {
       }
     )
   }
+  initLinks() {
+    return (
+      {
+       activePage: 0,
+       next: ".../api/recipes?sort=aplha&page=1",
+       last: ".../api/recipes?sort=aplha&page=100" // MOCK DATA
+      }
+    )
+  }
+
   updateFilters(updatedList) {
     const filters = this.state.filters;
     for (var id in updatedList) {
@@ -86,10 +139,13 @@ export default class Recipes extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
+        activePage: 0
       });
+    const request = this.query();
+    this.requestQuery(request);
   }
   render() {
-
+    const data = this.state.response.data;
     return (
       <div>
           <Greeting />
@@ -99,7 +155,7 @@ export default class Recipes extends React.Component {
             handleApply={this.handleApply.bind(this)} />
           <GridSystem
             path="recipes"
-            data={this.query()} />
+            data={data} />
       </div>
 
     );
