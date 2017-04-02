@@ -14,11 +14,11 @@ export default class GridSystem extends React.Component {
 
   render() {
     return (
+      <div class="contatiner-fluid">
         <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
             {this.getGridItems(this.props.data, this.props.path)}
-          </div>
         </div>
+      </div>
 
     );
   }
