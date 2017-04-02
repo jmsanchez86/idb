@@ -21,8 +21,8 @@ export default class Ingredients extends React.Component {
       sorters: this.initSorters(),
       links :  this.initLinks(),
       response : {
-                    data: {},
-                    links: {}
+                    data: ingredients,
+                    links: links
                  },
       };
   }
