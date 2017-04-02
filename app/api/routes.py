@@ -8,7 +8,7 @@ import math
 
 import flask
 
-from app.api import food_data
+from app.api import food_data, cors
 from typing import Any, Callable, List, Tuple
 
 API_BP = flask.Blueprint('api', __name__)
@@ -36,18 +36,16 @@ class QueryParams:
 # each by looping the lists over and over
 MOCK_DATA_MAX_SIZE = 50  # type: int
 
-"""
-This function will make a mock list from looping a source list up to a maxsize
-
-PARAMS:
-li       a list to loop
-page     the row of results to return
-page_size the size of the row to return
-maxsize  the size of the mocked out loop list
-"""
-
-
 def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
+    """
+    This function will make a mock list from looping a source list up to maxsize
+
+    PARAMS:
+    li       a list to loop
+    page     the row of results to return
+    page_size the size of the row to return
+    maxsize  the size of the mocked out loop list
+    """
     # pylint: disable=invalid-name
     assert page >= 0
     assert page_size > 0
@@ -153,17 +151,19 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
             query_params = QueryParams(page=page, page_size=psize,
                                        tag_filters=[int(tag) for tag in tags],
                                        sort_key=sort_functions[sort_param])
-            data = flask.json.loads(route_fn(query_params).data)
+            route_resp = route_fn(query_params)
+            data = flask.json.loads(route_resp.data)
             links = get_continuation_links(req.base_url, MOCK_DATA_MAX_SIZE,
                                            query_params)
             resp = flask.json.jsonify({"data": data, "links": links})
-            resp.headers["Access-Control-Allow-Origin"] = "*"
+            resp.headers = route_resp.headers
             return resp
     return wrapped_route_function
 
 
 @API_BP.route('/ingredients')
 @continuation_route
+@cors.allow_cors
 def get_all_ingredients(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.ingredients)
     return flask.json.jsonify(mock_data)
@@ -171,13 +171,15 @@ def get_all_ingredients(query_params: QueryParams):
 
 @API_BP.route('/recipes')
 @continuation_route
+@cors.allow_cors
 def get_all_recipes(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.recipes)
     return flask.json.jsonify(mock_data)
 
 
-@API_BP.route('/grocery_items/')
+@API_BP.route('/grocery_items')
 @continuation_route
+@cors.allow_cors
 def get_all_grocery_items(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.grocery_items)
     return flask.json.jsonify(mock_data)
@@ -185,6 +187,7 @@ def get_all_grocery_items(query_params: QueryParams):
 
 @API_BP.route('/tags')
 @continuation_route
+@cors.allow_cors
 def get_all_tags(query_params: QueryParams):
     query_params.tag_filters = []
     mock_data = loop_filter_sort(query_params, food_data.tags)
