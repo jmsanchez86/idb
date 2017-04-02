@@ -200,6 +200,7 @@ def get_all_tags(query_params: QueryParams):
 
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
+@cors.allow_cors
 def get_ingredient(ingredient_id: int):
     ing = food_data.ingredients
     grocery_items = food_data.grocery_items
@@ -220,6 +221,7 @@ def get_ingredient(ingredient_id: int):
 
 
 @API_BP.route('/recipes/<int:recipe_id>')
+@cors.allow_cors
 def get_recipe(recipe_id: int):
     recipe = deepcopy(food_data.recipes[recipe_id - 1])
     tags = food_data.tags
@@ -231,6 +233,7 @@ def get_recipe(recipe_id: int):
 
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
+@cors.allow_cors
 def get_grocery_items(grocery_item_id: int):
     grocery_item = deepcopy(food_data.grocery_items[grocery_item_id - 1])
 
@@ -247,6 +250,7 @@ def get_grocery_items(grocery_item_id: int):
 
 
 @API_BP.route('/tags/<int:tag_id>')
+@cors.allow_cors
 def get_tag(tag_id: int):
     ing = food_data.ingredients
     grocery_items = food_data.grocery_items
