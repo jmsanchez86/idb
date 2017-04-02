@@ -3,9 +3,13 @@
 Imports json data into the database.
 """
 
+import unittest
 from pathlib import Path
 from flask import Flask
 from app.api import models
+
+
+
 
 class Import:
     """
@@ -30,32 +34,40 @@ class Import:
         self.db.session.add(ingredient)
         self.db.session.commit()
 
-    # TODO: Remove this and add proper unit tests.
-    def check(self):
-        """
-        Make some basic data integrity checks.
-        """
 
+class TestDatabaseIntegrity(unittest.TestCase):
+    """
+    Ensure that data was properly imported into the database.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.app = Flask(__name__)
+        cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
+        cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        cls.app.config["SQLALCHEMY_ECHO"] = False
+        cls.db = models.db
+        cls.db.init_app(cls.app)
+        cls.ctx = cls.app.app_context()
+        cls.ctx.push()
+        cls.db.create_all()
+
+        imp = Import("data", models.db)
+        imp.run()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.ctx.pop()
+
+    def test_ingredient(self):
         query = self.db.session.query(models.Ingredient).filter_by(name="star anise")
         ingredient = query.first()
 
-        assert ingredient.ingredient_id == 8
+        self.assertEqual(ingredient.ingredient_id, 8)
 
+def main():
+    unittest.main()
 
 if __name__ == "__main__":
-    app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SQLALCHEMY_ECHO"] = False
-    models.db.init_app(app)
-    ctx = app.app_context()
-    ctx.push()
-    models.db.create_all()
-
-    imp = Import("data", models.db)
-    imp.run()
-    imp.check()
-
-    ctx.pop()
-
+    main()
 
