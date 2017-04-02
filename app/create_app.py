@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-sequence-index
+# pylint: disable=fixme
 
 import logging
-from types import ModuleType
 from flask import Flask, Blueprint
-from typing import List, Tuple
+from typing import List, Tuple, Any
 
 
-def create_app(config: ModuleType,
+# TODO: fix when mypy bug resolved and remove pylint message
+# there is currently a mypy bug that won't let us use ModuleType here for
+# config. https://github.com/python/mypy/issues/1498
+def create_app(config: Any,
                route_blueprints: List[Tuple[Blueprint, dict]],
                debug: bool=False, testing: bool=False,
-               config_overrides: ModuleType=None):
+               config_overrides: Any=None):
     app = Flask(__name__)
     app.config.from_object(config)
 

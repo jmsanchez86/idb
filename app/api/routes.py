@@ -2,6 +2,7 @@
 # pylint: disable=invalid-sequence-index
 
 
+from copy import deepcopy
 from functools import wraps
 import math
 
@@ -35,18 +36,17 @@ class QueryParams:
 # each by looping the lists over and over
 MOCK_DATA_MAX_SIZE = 50  # type: int
 
-"""
-This function will make a mock list from looping a source list up to a maxsize
-
-PARAMS:
-li       a list to loop
-page     the row of results to return
-page_size the size of the row to return
-maxsize  the size of the mocked out loop list
-"""
-
 
 def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
+    """
+    This function will make a mock list from looping a source list up to maxsize
+
+    PARAMS:
+    li       a list to loop
+    page     the row of results to return
+    page_size the size of the row to return
+    maxsize  the size of the mocked out loop list
+    """
     # pylint: disable=invalid-name
     assert page >= 0
     assert page_size > 0
@@ -134,20 +134,19 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
         "alpha":           (lambda e: e["name"], False, "alpha"),
         "alpha_reverse":   (lambda e: e["name"], True, "alpha_reverse"),
         "ready_time_asc":  (lambda e: e["ready_time"], False, "ready_time_asc"),
-        "ready_time_desc": (lambda e: e["ready_time"], True, "ready_time_desc"),
-        "unsorted":        (lambda e: 0, False, "unsorted")
+        "ready_time_desc": (lambda e: e["ready_time"], True, "ready_time_desc")
     }
 
     @wraps(route_fn)
     def wrapped_route_function():
         page = int(req.args.get("page")) if "page" in req.args else 0
         psize = int(req.args.get("page_size")) if "page_size" in req.args \
-            else 10
+            else 16
         if page * psize >= MOCK_DATA_MAX_SIZE:
             flask.abort(404)
         else:
             sort_param = req.args.get("sort") if "sort" in req.args \
-                else "unsorted"
+                else "alpha"
             tags = req.args.get("tags").split(
                 ",") if "tags" in req.args else []
             query_params = QueryParams(page=page, page_size=psize,
@@ -156,7 +155,8 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
             data = flask.json.loads(route_fn(query_params).data)
             links = get_continuation_links(req.base_url, MOCK_DATA_MAX_SIZE,
                                            query_params)
-            return flask.json.jsonify({"data": data, "links": links})
+            resp = flask.json.jsonify({"data": data, "links": links})
+            return resp
     return wrapped_route_function
 
 
@@ -174,7 +174,7 @@ def get_all_recipes(query_params: QueryParams):
     return flask.json.jsonify(mock_data)
 
 
-@API_BP.route('/grocery_items/')
+@API_BP.route('/grocery_items')
 @continuation_route
 def get_all_grocery_items(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.grocery_items)
@@ -193,21 +193,74 @@ def get_all_tags(query_params: QueryParams):
 # Detail Views #
 ################
 
+
 @API_BP.route('/ingredients/<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
-    return flask.json.jsonify(food_data.ingredients[ingredient_id - 1])
+    ing = food_data.ingredients
+    grocery_items = food_data.grocery_items
+    recipes = food_data.recipes
+    tags = food_data.tags
+
+    ingredient = deepcopy(ing[ingredient_id - 1])
+    ingredient["related_grocery_items"] = [
+        {"id": grocery_items[i - 1]["id"],
+         "name": grocery_items[i - 1]["name"]}
+        for i in ingredient["related_grocery_items"]]  # type: ignore
+    ingredient["related_recipes"] = [
+        {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
+        for i in ingredient["related_recipes"]]  # type: ignore
+    ingredient["tags"] = [
+        {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
+        for i in ingredient["tags"]]  # type: ignore
+    return flask.json.jsonify(ingredient)
 
 
 @API_BP.route('/recipes/<int:recipe_id>')
 def get_recipe(recipe_id: int):
-    return flask.json.jsonify(food_data.recipes[recipe_id - 1])
+    recipe = deepcopy(food_data.recipes[recipe_id - 1])
+    tags = food_data.tags
+
+    recipe["tags"] = [
+        {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
+        for i in recipe["tags"]]  # type: ignore
+    return flask.json.jsonify(recipe)
 
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
-    return flask.json.jsonify(food_data.grocery_items[grocery_item_id - 1])
+    grocery_item = deepcopy(food_data.grocery_items[grocery_item_id - 1])
+
+    ingredient_id = grocery_item["ingredient"]
+    ingredient = food_data.ingredients[ingredient_id - 1]  # type: ignore
+    grocery_item["ingredient"] = {"id": ingredient["id"],
+                                  "name": ingredient["name"]}
+
+    tags = food_data.tags
+    grocery_item["tags"] = [
+        {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
+        for i in grocery_item["tags"]]  # type: ignore
+    return flask.json.jsonify(grocery_item)
 
 
 @API_BP.route('/tags/<int:tag_id>')
 def get_tag(tag_id: int):
-    return flask.json.jsonify(food_data.tags[tag_id - 1])
+    ing = food_data.ingredients
+    grocery_items = food_data.grocery_items
+    recipes = food_data.recipes
+
+    tag = deepcopy(food_data.tags[tag_id - 1])
+    tag["ingredients"] = [
+        {
+            "id": ing[i - 1]["id"],
+            "name": ing[i - 1]["name"],
+            "image": ing[i - 1]["image"]
+        }
+        for i in tag["ingredients"]]  # type: ignore
+    tag["grocery_items"] = [
+        {"id": grocery_items[i - 1]["id"],
+         "name": grocery_items[i - 1]["name"]}
+        for i in tag["grocery_items"]]  # type: ignore
+    tag["recipes"] = [
+        {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
+        for i in tag["recipes"]]  # type: ignore
+    return flask.json.jsonify(tag)

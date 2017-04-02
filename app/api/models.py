@@ -22,13 +22,11 @@ class Ingredient(db.Model):
     __tablename__ = "ingredient"
 
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    spoonacular_id = db.Column(db.Integer, unique=True)
     name = db.Column(db.String(20), unique=True)
     image_url = db.Column(db.String(100))
 
-    def __init__(self, ingredient_id, spoonacular_id, name, image_url):
+    def __init__(self, ingredient_id, name, image_url):
         self.ingredient_id = ingredient_id
-        self.spoonacular_id = spoonacular_id
         self.name = name
         self.image_url = image_url
 
@@ -44,15 +42,13 @@ class Recipe(db.Model):
     __tablename__ = "recipe"
 
     recipe_id = db.Column(db.Integer, primary_key=True)
-    spoonacular_id = db.Column(db.Integer, unique=True)
     name = db.Column(db.String(20), unique=True)
     image_url = db.Column(db.String(100))
     instructions = db.Column(db.String(1000), primary_key=True)
 
-    def __init__(self, recipe_id, spoonacular_id, name, image_url,
+    def __init__(self, recipe_id, name, image_url,
                  instructions):
         self.recipe_id = recipe_id
-        self.spoonacular_id = spoonacular_id
         self.name = name
         self.image_url = image_url
         self.instructions = instructions
@@ -69,14 +65,12 @@ class GroceryItem(db.Model):
     __tablename__ = "grocery_item"
 
     grocery_id = db.Column(db.Integer, primary_key=True)
-    spoonacular_id = db.Column(db.Integer, unique=True)
     name = db.Column(db.String(20))
     image_url = db.Column(db.String(100))
     upc = db.Column(db.String(20))
 
-    def __init__(self, grocery_id, spoonacular_id, name, image_url, upc):
+    def __init__(self, grocery_id, name, image_url, upc):
         self.grocery_id = grocery_id
-        self.spoonacular_id = spoonacular_id
         self.name = name
         self.image_url = image_url
         self.upc = upc
