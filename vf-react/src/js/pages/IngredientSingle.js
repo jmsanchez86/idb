@@ -8,6 +8,38 @@ const grocery_items = data.grocery_items;
 const tags = data.tags;
 
 export default class IngredientSingle extends React.Component {
+  requestQuery(requestString) {
+
+    var _this = this;
+    var _ingredients = {}
+    var _links = {}
+    // call api with new query params
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+          for (var id in responseData.data){
+            _ingredients[id] = responseData.data[id];
+          }
+          for (var id in responseData.links){
+            _links[id] = responseData.links[id];
+          }
+
+          _this.state.response.data = _ingredients;
+          _this.state.response.links = _links;
+          _this.forceUpdate();
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+
+    this.forceUpdate();
+  }
   render() {
     console.log(data.recipes);
     const id = this.props.params.id;

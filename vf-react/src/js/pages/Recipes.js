@@ -91,7 +91,7 @@ export default class Recipes extends React.Component {
   render() {
 
     return (
-      <div>
+        <div id="grid-page" class="contatiner">
           <Greeting />
           <Controller
             sorters={this.state.sorters}
