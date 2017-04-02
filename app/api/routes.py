@@ -230,8 +230,13 @@ def get_recipe(recipe_id: int):
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
     grocery_item = deepcopy(food_data.grocery_items[grocery_item_id - 1])
-    tags = food_data.tags
 
+    ingredient_id = grocery_item["ingredient"]
+    ingredient = food_data.ingredients[ingredient_id - 1]
+    grocery_item["ingredient"] = {"id": ingredient["id"],
+                                  "name": ingredient["name"]}
+
+    tags = food_data.tags
     grocery_item["tags"] = [
         {"id": tags[i - 1]["id"], "image": tags[i - 1]["image"]}
         for i in grocery_item["tags"]]
@@ -246,7 +251,11 @@ def get_tag(tag_id: int):
 
     tag = deepcopy(food_data.tags[tag_id - 1])
     tag["ingredients"] = [
-        {"id": ing[i - 1]["id"], "name": ing[i - 1]["name"], "image": ing[i - 1]["image"]}
+        {
+            "id": ing[i - 1]["id"],
+            "name": ing[i - 1]["name"],
+            "image": ing[i - 1]["image"]
+        }
         for i in tag["ingredients"]]
     tag["grocery_items"] = [
         {"id": grocery_items[i - 1]["id"], "name": grocery_items[i - 1]["name"]}
