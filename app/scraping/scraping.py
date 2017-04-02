@@ -5,8 +5,8 @@
 Read data from soure API and write json results to files.
 """
 
-from functools import reduce
 import json
+import os
 import requests
 from config import api_key
 
@@ -43,6 +43,9 @@ def post_request_json(path, *, post_data=None, json_data=None):
 
     return res.json()
 
+def data_exists(filename: str):
+    return os.path.isfile("data/" + filename)
+
 def write_json(filename: str, data: dict):
     with open("data/" + filename, 'w') as f:
         print("writing " + filename + "...")
@@ -50,17 +53,21 @@ def write_json(filename: str, data: dict):
 
 def product(grocery_data):
     grocery_id = grocery_data["id"]
+    filename = "get_product_information/" + str(grocery_id) + ".json"
+    if data_exists(filename):
+        return
     product_data = get_request_json("food/products/" + str(grocery_id))
-    write_json("get_product_information/" +
-               str(grocery_id) + ".json", product_data)
+    write_json(filename, product_data)
+
 
 def ingredient(ingredient_data):
     ingredient_id = ingredient_data["id"]
+    filename = "get_ingredient_substitutes/" + str(ingredient_id) + ".json"
+    if data_exists(filename):
+        return
     substitute_data = get_request_json("food/ingredients/" +
                                        str(ingredient_id) + "/substitutes")
-    write_json("get_ingredient_substitute/" +
-               str(ingredient_id) + ".json", substitute_data)
-
+    write_json(filename, substitute_data)
     grocery_list_data = post_request_json("food/ingredients/map", json_data={
         "ingredients": [ingredient_data["name"]],
         "servings": 1})
@@ -72,18 +79,18 @@ def ingredient(ingredient_data):
 
 def recipe(recipe_data):
     recipe_id = recipe_data["id"]
+    filename = "recipes/" + str(recipe_id) + ".json"
 
-    write_json("get_random_recipes/" + str(recipe_id) + ".json", recipe_data)
-    ingredient_names = [i["name"] for i in recipe_data["extendedIngredients"]]
+    if data_exists(filename):
+        return
 
+    write_json(filename, recipe_data)
     summary_data = get_request_json("recipes/" + str(recipe_id) + "/summary")
     write_json("summarize_recipe/" + str(recipe_id) + ".json", summary_data)
-
     similar_recipes_data = get_request_json("recipes/" + str(recipe_id) +
                                             "/similar")
     write_json("find_similar_recipes/" + str(recipe_id) +
                ".json", similar_recipes_data)
-
     for ingredient_data in recipe_data["extendedIngredients"]:
         ingredient(ingredient_data)
         break
