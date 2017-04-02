@@ -25,7 +25,7 @@ export default class IngredientSingle extends React.Component {
       const groceryItem = data.grocery_items[item];
       return (
         <div key={item} class="list-group-item">
-          <p><Link to={"grocery-items/" + item}>{groceryItem.name}</Link></p>
+          <p><Link to={"grocery_items/" + item}>{groceryItem.name}</Link></p>
         </div>);
     });
     const tags = ingredient.tags.map(function(tag){
@@ -47,21 +47,16 @@ export default class IngredientSingle extends React.Component {
           </div>
         </div>
         <div class="row gutter-20">
-          <div class="col-lg-offset-1 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+          <div class="col-lg-offset-1 col-lg-5 col-md-6 col-sm-6 col-xs-12">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="row">
                   <p>
                     <img class="img-rounded img-responsive" src={image} />
                   </p>
-                </div>
-                <div class="row ">
-                    {tags}
-                </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                 <h3 disabled={!ingredient.recipes.length}>Related Recipes</h3>
@@ -80,6 +75,16 @@ export default class IngredientSingle extends React.Component {
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                 <p>{grocery_items}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                <h3 disabled={!tags.length}>Tags</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="panel-body">
+                {tags}
               </div>
             </div>
           </div>

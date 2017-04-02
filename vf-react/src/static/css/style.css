@@ -13,7 +13,9 @@ body {
   background-color: #FFFEFE;
   position: relative;
   margin: 0;
+  padding: 5%;
   padding-top: 8rem;
+  padding-bottom: 8rem;
 
   min-height: calc(100%);
 }
@@ -40,6 +42,8 @@ ul.nav a:hover {
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
 }
+
+.top-buffer { margin-top:20px; }
 
 
 #logohome {
@@ -389,4 +393,8 @@ input[type="radio"] {
 #Controller > div > div {
   padding-right: 0px;
 
+}
+
+.grocery-item-single {
+  margin-top:40px;
 }

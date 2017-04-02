@@ -92,16 +92,18 @@ export default class RecipeSingle extends React.Component {
               <div class="row ">
                   {tags}
               </div>
+              <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="panel-body">
+              <h4 >Ready in {ready_time} minutes.</h4>
+              </div>
+              </div>
+              </div>
 
               </div>
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="row">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4 >Ready in {ready_time} minutes.</h4>
-              </div>
-            </div>
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                 <h3 disabled={!ingredients.length}>Ingredients</h3>
@@ -127,12 +129,6 @@ export default class RecipeSingle extends React.Component {
           </div>
         </div>
       </div>
-
-
-
-
-
-
     );
   }
 }
