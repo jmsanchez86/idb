@@ -8,7 +8,7 @@ import math
 
 import flask
 
-from app.api import food_data, cors
+from app.api import food_data
 from typing import Any, Callable, List, Tuple
 
 API_BP = flask.Blueprint('api', __name__)
@@ -151,19 +151,16 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
             query_params = QueryParams(page=page, page_size=psize,
                                        tag_filters=[int(tag) for tag in tags],
                                        sort_key=sort_functions[sort_param])
-            route_resp = route_fn(query_params)
-            data = flask.json.loads(route_resp.data)
+            data = flask.json.loads(route_fn(query_params).data)
             links = get_continuation_links(req.base_url, MOCK_DATA_MAX_SIZE,
                                            query_params)
             resp = flask.json.jsonify({"data": data, "links": links})
-            resp.headers = route_resp.headers
             return resp
     return wrapped_route_function
 
 
 @API_BP.route('/ingredients')
 @continuation_route
-@cors.allow_cors
 def get_all_ingredients(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.ingredients)
     return flask.json.jsonify(mock_data)
@@ -171,7 +168,6 @@ def get_all_ingredients(query_params: QueryParams):
 
 @API_BP.route('/recipes')
 @continuation_route
-@cors.allow_cors
 def get_all_recipes(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.recipes)
     return flask.json.jsonify(mock_data)
@@ -179,7 +175,6 @@ def get_all_recipes(query_params: QueryParams):
 
 @API_BP.route('/grocery_items')
 @continuation_route
-@cors.allow_cors
 def get_all_grocery_items(query_params: QueryParams):
     mock_data = loop_filter_sort(query_params, food_data.grocery_items)
     return flask.json.jsonify(mock_data)
@@ -187,7 +182,6 @@ def get_all_grocery_items(query_params: QueryParams):
 
 @API_BP.route('/tags')
 @continuation_route
-@cors.allow_cors
 def get_all_tags(query_params: QueryParams):
     query_params.tag_filters = []
     mock_data = loop_filter_sort(query_params, food_data.tags)
@@ -200,7 +194,6 @@ def get_all_tags(query_params: QueryParams):
 
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
-@cors.allow_cors
 def get_ingredient(ingredient_id: int):
     ing = food_data.ingredients
     grocery_items = food_data.grocery_items
@@ -221,7 +214,6 @@ def get_ingredient(ingredient_id: int):
 
 
 @API_BP.route('/recipes/<int:recipe_id>')
-@cors.allow_cors
 def get_recipe(recipe_id: int):
     recipe = deepcopy(food_data.recipes[recipe_id - 1])
     tags = food_data.tags
@@ -233,7 +225,6 @@ def get_recipe(recipe_id: int):
 
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
-@cors.allow_cors
 def get_grocery_items(grocery_item_id: int):
     grocery_item = deepcopy(food_data.grocery_items[grocery_item_id - 1])
 
@@ -250,7 +241,6 @@ def get_grocery_items(grocery_item_id: int):
 
 
 @API_BP.route('/tags/<int:tag_id>')
-@cors.allow_cors
 def get_tag(tag_id: int):
     ing = food_data.ingredients
     grocery_items = food_data.grocery_items
