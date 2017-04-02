@@ -54,11 +54,11 @@ export default class Ingredients extends React.Component {
   }
 
   requestQuery(requestString) {
+    
     var _this = this;
-    // call api with new params
     var _ingredients = {}
     var _links = {}
-
+    // call api with new query params
     fetch(requestString)
       .then(function(response) {
         if (response.status !== 200) {
@@ -105,7 +105,7 @@ export default class Ingredients extends React.Component {
             name: "A - Z",
             checked: true
           },
-        alpha_reversed:
+        alpha_reverse:
           {
              name: "Z - A",
              checked: false

@@ -61,7 +61,7 @@ export default class Recipes extends React.Component {
             name: "A - Z",
             checked: true
           },
-        alpha_reversed:
+        alpha_reverse:
           {
              name: "Z - A",
              checked: false
