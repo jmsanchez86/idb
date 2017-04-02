@@ -20,6 +20,10 @@ export default class Ingredients extends React.Component {
       filters: this.initFilters(),
       sorters: this.initSorters(),
       links :  this.initLinks(),
+      response : {
+                    data: {},
+                    links: {}
+                 },
       };
   }
 
@@ -50,7 +54,7 @@ export default class Ingredients extends React.Component {
   }
 
   requestQuery(requestString) {
-    console.log(requestString);
+    var _this = this;
     // call api with new params
     var _ingredients = {}
     var _links = {}
@@ -69,11 +73,9 @@ export default class Ingredients extends React.Component {
             _links[id] = responseData.links[id];
           }
         
-          const response = {
-            data: _ingredients,
-            links: _links
-          }
-          return response;
+          _this.state.response.data = _ingredients;
+          _this.state.response.links = _links;
+          _this.forceUpdate();
         
         });
       })
@@ -81,11 +83,7 @@ export default class Ingredients extends React.Component {
         console.log('Fetch Error :-S', err);
       });
 
-    const _response = {
-      data: ingredients,
-      links: this.state.links
-    };
-    return _response;
+    this.forceUpdate();
   }
 
   initFilters() {
@@ -144,15 +142,15 @@ export default class Ingredients extends React.Component {
         filters: _filters,
         activePage: 0
       });
+    const request = this.query();
+    this.requestQuery(request);
   }
   handleSelect(type) {
     console.log(links[type]);
   }
   render() {
-    const request = this.query();
-    const response = this.requestQuery(request);
-    const data = response.data;
-    const links= response.links;
+    const data = this.state.response.data;
+    const links= this.state.response.links;
     return (
       <div class="contatiner">
         <Greeting />
