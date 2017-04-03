@@ -49,7 +49,6 @@ export default class Tags extends React.Component {
     }
     params = firstTag ? params : params.substring(0, params.length-1);
     params += "&page=" + this.state.links.activePage;
-    console.log("Mock API Request:\n" + params);
     // Query with state.filters and state.sorters
     return params; //TODO
   }

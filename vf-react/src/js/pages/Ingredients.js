@@ -131,19 +131,6 @@ export default class Ingredients extends React.Component {
     )
   }
 
-  updateFilters(updatedList) {
-    const filters = this.state.filters;
-    for (var id in updatedList) {
-      filters[id].checked = updatedList[id].checked;
-    }
-    return filters;
-  }
-  updateSorters(updatedList) {
-    const sorters = this.state.sorters;
-    for (var id in updatedList) {
-      sorters[id].checked = updatedList[id].checked;
-    }
-  }
   handleApply(_filters,_sorters) {
     this.setState({
         sorters: _sorters,
@@ -154,7 +141,7 @@ export default class Ingredients extends React.Component {
     this.requestQuery(request);
   }
   handleSelect(type) {
-    console.log(links[type]);
+    this.requestQuery(this.state.links[type]);
   }
 
   render() {
