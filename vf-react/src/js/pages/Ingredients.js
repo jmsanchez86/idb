@@ -5,13 +5,6 @@ import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
 import VFPagination from "../components/layout/VFPagination";
 
-const data = require('json!../../data/food.json');
-const ingredients = data.ingredients;
-const links = {
-  activePage: 0,
-  next: "http://api.vennfridge.appspot.com/ingredients?sort=alpha&page=1",
-  last: "http://api.vennfridge.appspot.com/ingredients?sort=alpha&page=100" // MOCK DATA
-}
 
 export default class Ingredients extends React.Component {
   constructor(props) {
@@ -20,10 +13,8 @@ export default class Ingredients extends React.Component {
       filters: this.initFilters(),
       sorters: this.initSorters(),
       links :  this.initLinks(),
-      response : {
-                    data: {},
-                    links: {}
-                 },
+      data : {},
+
       };
     this.requestQuery(this.query());
   }
@@ -73,9 +64,11 @@ export default class Ingredients extends React.Component {
           for (var id in responseData.links){
             _links[id] = responseData.links[id];
           }
+
+          _links['activePage'] = 0; // Mock Data
         
-          _this.state.response.data = _ingredients;
-          _this.state.response.links = _links;
+          _this.state.data = _ingredients;
+          _this.state.links = _links;
           _this.forceUpdate();
         
         });
@@ -86,7 +79,7 @@ export default class Ingredients extends React.Component {
   }
 
   initFilters() {
-    var tags = {};
+    var _filters = {};
     fetch('http://api.vennfridge.appspot.com/tags')
       .then(function(response) {
         if (response.status !== 200) {
@@ -95,18 +88,18 @@ export default class Ingredients extends React.Component {
         }
         response.json().then(function(responseData) {
           for (var id in responseData.data){
-            tags[responseData.data[id].id] = {
+            _filters[responseData.data[id].id] = {
                 name: responseData.data[id].name,
                 checked: false  
             }
           }
-          return tags;
+          return _filters;
         });
       })
     .catch(function(err) {
       console.log('Fetch Error :-S', err);
     });
-    return tags;
+    return _filters;
   }
 
   initSorters() {
@@ -160,9 +153,10 @@ export default class Ingredients extends React.Component {
   handleSelect(type) {
     console.log(links[type]);
   }
+  
   render() {
-    const data = this.state.response.data;
-    const links= this.state.response.links;
+    const data = this.state.data;
+    const links= this.state.links;
     return (
       <div class="contatiner">
         <Greeting />
@@ -174,7 +168,7 @@ export default class Ingredients extends React.Component {
           path="ingredients"
           data={data} />
         <VFPagination
-          activePage={links.activePage}
+          activePage={this.state.links.activePage}
           onSelect={this.handleSelect.bind(this)}
           links={links} />
       </div>
