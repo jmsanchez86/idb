@@ -211,7 +211,7 @@ class Import:
             if products:
                 products = products[0].get("products", [])[:5]
                 for product_data in products:
-                    self.product(ingredient_id, product_data)
+                    self.product(ingredient_id, product_data, products)
 
         verbal_quantity = ingredient_data.get("originalString", None)
         assert(verbal_quantity != None)
@@ -232,9 +232,19 @@ class Import:
         else:
             print("Ingredient {} product {} has multiple of tag {}.".format(ingredient_id, product_id, tag_name))
 
-    def product(self, ingredient_id, product_data):
+    def product(self, ingredient_id, product_data, other_products):
         product_id = product_data.get("id", None)
         assert(product_id != None)
+
+        for other in other_products:
+            other_id = other.get("id", None)
+            assert(other_id != None)
+
+            if other_id == product_id:
+                continue
+
+            self.similar_grocery_items.append(models.SimilarGroceryItem(ingredient_id, product_id, other_id))
+
 
         product_info = self.get_product_information[str(product_id)]
 
