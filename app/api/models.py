@@ -104,6 +104,7 @@ class GroceryItem(db.Model):
 
     def __init__(self, grocery_id, ingredient_id, name, image_url, upc):
         self.grocery_id = grocery_id
+        self.ingredient_id = ingredient_id
         self.name = name
         self.image_url = image_url
         self.upc = upc
@@ -231,16 +232,18 @@ class TagGroceryItem(db.Model):
 
     tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
                          primary_key=True)
-    grocery_id = db.Column(db.Integer,
-                           db.ForeignKey("grocery_item.grocery_id"),
-                           primary_key=True)
+    ingredient_id = db.Column(db.Integer, primary_key=True)
+    grocery_id = db.Column(db.Integer, primary_key=True)
+
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], [GroceryItem.ingredient_id, GroceryItem.grocery_id]), {})
 
     tag = db.relationship("Tag", back_populates="tag_grocery_item_assocs")
     grocery_item = db.relationship("GroceryItem",
                                    back_populates="tag_grocery_item_assocs")
 
-    def __init__(self, tag_name, grocery_id):
+    def __init__(self, tag_name, ingredient_id, grocery_id):
         self.tag_name = tag_name
+        self.ingredient_id = ingredient_id
         self.grocery_id = grocery_id
 
     def __repr__(self):
