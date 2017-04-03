@@ -12,8 +12,8 @@ export default class Ingredients extends React.Component {
     this.state = {
       filters: this.initFilters(),
       sorters: this.initSorters(),
-      links :  this.initLinks(),
-      data : {},
+      links:   this.initLinks(),
+      data:    {},
       };
     this.requestQuery(this.query());
   }
@@ -21,7 +21,7 @@ export default class Ingredients extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://api.vennfridge.appspot.com/ingredients?sort=";
+    var params = "http://api.vennfridge.appspot.com/ingredients?page_size=16&sort=";
 
     for (var id in sorters) {
       if (sorters[id].checked)
@@ -39,13 +39,13 @@ export default class Ingredients extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + this.state.links.activePage;
+    params += "&page=" + this.state.links.active;
     return params;
   }
 
   requestQuery(requestString) {
     var _this = this;
-    var _ingredients = {}
+    var _data = {}
     var _links = {}
 
     // call api with new query params
@@ -57,21 +57,20 @@ export default class Ingredients extends React.Component {
         }
         response.json().then(function(responseData) {
           for (var id in responseData.data){
-            _ingredients[id] = responseData.data[id];
+            _data[id] = responseData.data[id];
           }
           for (var id in responseData.links){
             _links[id] = responseData.links[id];
           }
 
-          _this.state.data = _ingredients;
+          _this.state.data = _data;
           _this.state.links = _links;
-          _this.state.links.activePage = 0;
           _this.forceUpdate();
 
         });
       })
     .catch(function(err) {
-        console.log('Fetch Error :-S', err);
+        console.log('Fetch Error: -S', err);
       });
   }
 
@@ -121,9 +120,7 @@ export default class Ingredients extends React.Component {
   initLinks() {
     return (
       {
-       activePage: 0,
-       next: "http://api/ingredients?sort=alpha&page=1",
-       last: "http://api/ingredients?sort=alpha&page=100" // MOCK DATA
+       active: 0,
       }
     )
   }
@@ -132,7 +129,7 @@ export default class Ingredients extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
-        activePage: 0
+        active: 0
       });
     const request = this.query();
     this.requestQuery(request);
@@ -156,7 +153,7 @@ export default class Ingredients extends React.Component {
           path="ingredients"
           data={data} />
         <VFPagination
-          activePage={this.state.links.activePage}
+          active={this.state.links.active}
           onSelect={this.handleSelect.bind(this)}
           links={links} />
       </div>

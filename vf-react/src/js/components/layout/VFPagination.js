@@ -25,7 +25,7 @@ export default class VFPagination extends React.Component {
             <Pager.Item disabled={!this.props.links['prev']} previous onSelect={this.onPrev.bind(this)}>&lt;</Pager.Item>
             <Pager.Item disabled={!this.props.links['last']} next onSelect={this.onLast.bind(this)}>&gt;&gt;</Pager.Item>
             <Pager.Item disabled={!this.props.links['next']} next onSelect={this.onNext.bind(this)}>&gt;</Pager.Item>
-            <Pager.Item disabled>{this.props.activePage}</Pager.Item>
+            <Pager.Item disabled>{this.props.active}</Pager.Item>
           </Pager>
 
     );
