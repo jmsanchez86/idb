@@ -49,6 +49,26 @@ class Import:
         self.database = database
         self.data_dir = Path(data_dir)
 
+        self.summary_data = self.read_json("summarize_recipe.json")
+        self.find_similar_recipes = self.read_json("find_similar_recipes.json")
+        self.get_ingredient_substitutes = \
+                self.read_json("get_ingredient_substitutes.json")
+        self.get_product_information = \
+                self.read_json("get_product_information.json")
+        self.get_product_map = self.read_json("get_product_map.json")
+        self.recipes = self.read_json("recipes.json")
+        self.summarize_recipe = self.read_json("summarize_recipe.json")
+
+        self.recipes = dict()
+        self.ingredients = dict()
+        self.grocery_items = dict()
+        self.tags = dict()
+        self.ingredient_subtitutes = dict()
+        self.recipe_ingredients = dict()
+        self.tag_recipes = dict()
+        self.tag_ingredients = dict()
+        self.tag_grocery_items = dict()
+
     def read_json(self, filename):
         path = self.data_dir / filename
         return json.loads(path.read_text())
@@ -63,8 +83,6 @@ class Import:
         Run the importation process.
         """
 
-        self.summary_data = self.read_json("summarize_recipe.json")
-
         recipes = self.read_json("recipes.json")
 
         for str_id in recipes:
@@ -72,14 +90,12 @@ class Import:
             self.recipe(int_id, recipes[str_id])
 
     def recipe_tag(self, recipe_id, tag_name):
-        query = self.session.query(models.Tag)
-        query = query.filter_by(tag_name=tag_name)
-        if not query.count():
+        if tag_name not in self.tags:
             image_url = self.tag_image_urls.get(tag_name, "")
             description = self.tag_descriptions.get(tag_name, "")
-            self.session.add(models.Tag(tag_name, image_url, description))
+            self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
-        self.session.add(models.TagRecipe(tag_name, recipe_id))
+        self.tag_recipes[tag_name] = models.TagRecipe(tag_name, recipe_id)
 
     def recipe(self, recipe_id, recipe_data):
 
@@ -95,7 +111,7 @@ class Import:
 
         recipe = models.Recipe(recipe_id, name, image_url, instructions,
                                summary, ready_time, servings)
-        self.session.add(recipe)
+        self.recipes[recipe_id] = recipe
 
         for flag in self.recipe_tag_flags:
             if recipe_data.get(flag, False):
@@ -115,10 +131,7 @@ class Import:
         if ingredient_id > 0:
             return
 
-
-        query = self.session.query(models.Ingredient)
-        query = query.filter_by(ingredient_id=ingredient_id)
-        if not query.count():
+        if ingredient_id not in self.ingredients:
 
             name = ingredient_data.get("name", None)
             assert(name != None)
@@ -126,8 +139,7 @@ class Import:
             aisle = ingredient_data.get("aisle", None)
             assert(aisle != None)
 
-            self.session.add(models.Ingredient(ingredient_id, name, "",
-                             aisle))
+            self.ingredients[ingredient_id] = (models.Ingredient(ingredient_id, name, "", aisle))
 
 
 
@@ -205,6 +217,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         query = self.database.session.query(models.Tag)
         query = query.filter_by(tag_name="glutenFree")
         tag = query.first()
+        self.assertIsNotNone(tag)
 
         recipes = tag.recipes
         recipe_ids = (recipe.recipe_id for recipe in recipes)
