@@ -27,20 +27,21 @@ export default class UnitTestButton extends React.Component {
         
           // Examine the text in the response
           response.json().then(function(data) {
-            console.log(data);
+            //console.log(data);
             _this.setState({isLoading: false, testData: data});
           });
         })
       .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
+      this.forceUpdate();
   }
 
   unitTestState() {
       if(this.state.testData)
         return (
-            <div>
-            <h4>{this.state.testData.errors.size == 0 ? "Success!\n" : "Failure.\n"}</h4>
+            <div class="container">
+            <h4>{this.state.testData.errors.length == 0 ? "Success!\n" : "Failure.\n"}</h4>
             <p>{this.state.testData.output}</p>
             </div>
             );
@@ -49,6 +50,7 @@ export default class UnitTestButton extends React.Component {
 
   render() {
     let isLoading = this.state.isLoading;
+    console.log(this.state.testData);
     return (
       <div class="container">
         <Button
@@ -57,7 +59,7 @@ export default class UnitTestButton extends React.Component {
             onClick={!isLoading ? this.handleClick.bind(this) : null}>
             <p>{isLoading ? 'Loading...' : 'Run Unit Tests'}</p>
         </Button>
-      {this.unitTestState.bind(this)} 
+      {this.unitTestState()} 
       </div>
     );
   }
