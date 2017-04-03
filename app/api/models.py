@@ -63,29 +63,29 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
 
-class IngredientSubstitutes(db.Model):
+class IngredientSubstitute(db.Model):
     """
     Table of ingredient substitutes.
     """
 
-    __tablename__ = "ingredient_substitutes"
+    __tablename__ = "ingredient_substitute"
 
     ingredient_id = db.Column(db.Integer,
                               db.ForeignKey("ingredient.ingredient_id"),
                               primary_key=True)
-    substitutions = db.Column(db.String(100))
+    substitute = db.Column(db.String(100), primary_key=True)
 
     ingredient = db.relationship("Ingredient", back_populates="substitutes")
 
-    def __init__(self, ingredient_id, substitutes):
+    def __init__(self, ingredient_id, substitute):
         self.ingredient_id = ingredient_id
-        self.substitutes = substitutes
+        self.substitute = substitute
 
     def __repr__(self):
         return "<Ingredient Substitute %d %s>" % (self.ingredient_id,
                                                   self.substitute)
 
-Ingredient.substitutes = db.relationship("IngredientSubstitutes",
+Ingredient.substitutes = db.relationship("IngredientSubstitute",
                                          back_populates="ingredient")
 
 
@@ -140,8 +140,8 @@ class RecipeIngredient(db.Model):
 
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
-    ingredient_id = db.Column(db.Integer, primary_key=True)
-    verbal_quantity = db.Column(db.String(100))
+    ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
+    verbal_quantity = db.Column(db.String(100), primary_key=True)
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
 
