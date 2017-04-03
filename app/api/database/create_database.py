@@ -5,9 +5,7 @@ Script to create a database
 
 from app.api.main import API_SERVICE
 
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app.api.database import simple_model
 
 def create_db(app):
     """
@@ -15,9 +13,9 @@ def create_db(app):
     """
     # init app
     app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
-    db.init_app(app)
+    simple_model.db.init_app(app)
     with app.app_context():
-        db.create_all()
+        simple_model.db.create_all()
     print("All tables created")
 
 if __name__ == "__main__":
