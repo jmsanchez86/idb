@@ -13,6 +13,33 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 db = SQLAlchemy()  # type: SQLAlchemy
 
+class Recipe(db.Model):
+    """
+    Table of recipes.
+    """
+
+    __tablename__ = "recipe"
+
+    recipe_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+    image_url = db.Column(db.String(100))
+    instructions = db.Column(db.String(1000))
+    description = db.Column(db.String(1000))
+    ready_time = db.Column(db.Integer)
+    servings = db.Column(db.Integer)
+
+    def __init__(self, recipe_id, name, image_url, instructions, description,
+                 ready_time, servings):
+        self.recipe_id = recipe_id
+        self.name = name
+        self.image_url = image_url
+        self.instructions = instructions
+        self.description = description
+        self.ready_time = ready_time
+        self.servings = servings
+
+    def __repr__(self):
+        return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
 class Ingredient(db.Model):
     """
@@ -22,39 +49,44 @@ class Ingredient(db.Model):
     __tablename__ = "ingredient"
 
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True)
+    name = db.Column(db.String(20))
     image_url = db.Column(db.String(100))
+    aisle = db.Column(db.String(20))
 
-    def __init__(self, ingredient_id, name, image_url):
+    def __init__(self, ingredient_id, name, image_url, aisle):
         self.ingredient_id = ingredient_id
         self.name = name
         self.image_url = image_url
+        self.aisle = aisle
 
     def __repr__(self):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
 
-class Recipe(db.Model):
+class IngredientSubstitute(db.Model):
     """
-    Table of recipes.
+    Table of ingredient substitutes.
     """
 
-    __tablename__ = "recipe"
+    __tablename__ = "ingredient_substitute"
 
-    recipe_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True)
-    image_url = db.Column(db.String(100))
-    instructions = db.Column(db.String(1000), primary_key=True)
+    ingredient_id = db.Column(db.Integer,
+                              db.ForeignKey("ingredient.ingredient_id"),
+                              primary_key=True)
+    substitute = db.Column(db.String(100), primary_key=True)
 
-    def __init__(self, recipe_id, name, image_url,
-                 instructions):
-        self.recipe_id = recipe_id
-        self.name = name
-        self.image_url = image_url
-        self.instructions = instructions
+    ingredient = db.relationship("Ingredient", back_populates="substitutes")
+
+    def __init__(self, ingredient_id, substitute):
+        self.ingredient_id = ingredient_id
+        self.substitute = substitute
 
     def __repr__(self):
-        return "<Recipe %d %s>" % (self.recipe_id, self.name)
+        return "<Ingredient Substitute %d %s>" % (self.ingredient_id,
+                                                  self.substitute)
+
+Ingredient.substitutes = db.relationship("IngredientSubstitute",
+                                         back_populates="ingredient")
 
 
 class GroceryItem(db.Model):
@@ -65,11 +97,12 @@ class GroceryItem(db.Model):
     __tablename__ = "grocery_item"
 
     grocery_id = db.Column(db.Integer, primary_key=True)
+    ingredient_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     image_url = db.Column(db.String(100))
     upc = db.Column(db.String(20))
 
-    def __init__(self, grocery_id, name, image_url, upc):
+    def __init__(self, grocery_id, ingredient_id, name, image_url, upc):
         self.grocery_id = grocery_id
         self.name = name
         self.image_url = image_url
@@ -98,67 +131,6 @@ class Tag(db.Model):
     def __repr__(self):
         return "<Tag %s>" % (self.tag_name)
 
-
-class IngredientNutrient(db.Model):
-    """
-    Describe nutrient quantities for ingredients.
-    """
-
-    __tablename__ = "ingredient_nutrient"
-
-    ingredient_id = db.Column(db.Integer,
-                              db.ForeignKey("ingredient.ingredient_id"),
-                              primary_key=True)
-    category = db.Column(db.String(10), primary_key=True)
-    unit = db.Column(db.String(10))
-    quantity = db.Column(db.Float)
-
-    ingredient = db.relationship("Ingredient", back_populates="nutrients")
-
-    def __init__(self, ingredient_id, category, unit, quantity):
-        self.ingredient_id = ingredient_id
-        self.category = category
-        self.unit = unit
-        self.quantity = quantity
-
-    def __repr__(self):
-        return "<IngredientNutrient %d %s>" % \
-            (self.ingredient_id, self.category)
-
-
-Ingredient.nutrients = db.relationship("IngredientNutrient",
-                                       back_populates="ingredient")
-
-
-class RecipeNutrient(db.Model):
-    """
-    Describe nutrient quantities for recipes.
-    """
-
-    __tablename__ = "recipe_nutrient"
-
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
-                          primary_key=True)
-    category = db.Column(db.String(10), primary_key=True)
-    unit = db.Column(db.String(10))
-    quantity = db.Column(db.Float)
-
-    recipe = db.relationship("Recipe", back_populates="nutrients")
-
-    def __init__(self, recipe_id, category, unit, quantity):
-        self.recipe_id = recipe_id
-        self.category = category
-        self.unit = unit
-        self.quantity = quantity
-
-    def __repr__(self):
-        return "<RecipeNutrient %d %s>" % (self.recipe_id, self.category)
-
-
-Recipe.nutrients = db.relationship("RecipeNutrient",
-                                   back_populates="recipe")
-
-
 class RecipeIngredient(db.Model):
     """
     Ingredients and quantities contained in a recipe.
@@ -168,20 +140,15 @@ class RecipeIngredient(db.Model):
 
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
-    ingredient_id = db.Column(db.Integer, primary_key=True)
-    unit = db.Column(db.String(20))
-    quantity = db.Column(db.Float)
-    quantity_verbal = db.Column(db.String(100))
+    ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
+    verbal_quantity = db.Column(db.String(100), primary_key=True)
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
 
-    def __init__(self, recipe_id, ingredient_id, unit, quantity,
-                 quantity_verbal):
+    def __init__(self, recipe_id, ingredient_id, verbal_quantity):
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
-        self.unit = unit
-        self.quantity = quantity
-        self.quantity_verbal = quantity_verbal
+        self.verbal_quantity = verbal_quantity
 
     def __repr__(self):
         return "<RecipeIngredient %d %d>" % (
@@ -191,41 +158,6 @@ class RecipeIngredient(db.Model):
 
 Recipe.ingredients = db.relationship("RecipeIngredient",
                                      back_populates="recipe")
-
-
-class GroceryItemIngredient(db.Model):
-    """
-    Ingredients and quantities contained in a grocery item.
-    """
-
-    __tablename__ = "grocery_item_ingredient"
-
-    grocery_id = db.Column(db.Integer,
-                           db.ForeignKey("grocery_item.grocery_id"),
-                           primary_key=True)
-    ingredient_id = db.Column(db.Integer, primary_key=True)
-    unit = db.Column(db.String(20))
-    quantity = db.Column(db.Float)
-    quantity_verbal = db.Column(db.String(100))
-
-    grocery_item = db.relationship("GroceryItem", back_populates="ingredients")
-
-    def __init__(self, grocery_id, ingredient_id, unit, quantity,
-                 quantity_verbal):
-        self.grocery_id = grocery_id
-        self.ingredient_id = ingredient_id
-        self.unit = unit
-        self.quantity = quantity
-        self.quantity_verbal = quantity_verbal
-
-    def __repr__(self):
-        return "<GroceryItemIngredient %d %d>" % \
-            (self.grocery_id, self.ingredient_id)
-
-
-GroceryItem.ingredients = db.relationship("GroceryItemIngredient",
-                                          back_populates="grocery_item")
-
 
 class TagIngredient(db.Model):
     """

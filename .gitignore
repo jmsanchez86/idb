@@ -8,3 +8,4 @@ Thumbs.db
 node_modules/
 npm-debug.log
 app/scraping/data
+cloud_sql_proxy
