@@ -258,6 +258,46 @@ GroceryItem.tags = association_proxy("tag_grocery_item_assocs", "tag")
 Tag.grocery_items = association_proxy(
     "tag_grocery_item_assocs", "grocery_item")
 
+class SimilarRecipe(db.Model):
+    """
+    Association table of recipes to similar recipes.
+    """
+
+    __tablename__ = "similar_recipe"
+
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
+    similar_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
+
+    recipe = db.relationship("Recipe", back_populates="similar_recipe_assocs", foreign_keys=[recipe_id])
+    similar = db.relationship("Recipe", foreign_keys=[similar_id])
+
+    def __init__(self, recipe_id, similar_id):
+        self.recipe_id = recipe_id
+        self.similar_id = similar_id
+
+Recipe.similar_recipe_assocs = db.relationship("SimilarRecipe", back_populates="recipe", foreign_keys=[SimilarRecipe.recipe_id])
+Recipe.similar_recipes = association_proxy("similar_recipe_assocs", "similar")
+
+class SimilarGroceryItem(db.Model):
+    """
+    Association table of grocery items to similar grocery items.
+    """
+
+    __tablename__ = "similar_grocery_item"
+
+    grocery_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
+    similar_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
+
+    grocery_item = db.relationship("GroceryItem", back_populates="similar_grocery_item_assocs", foreign_keys=[grocery_id])
+    similar = db.relationship("GroceryItem", foreign_keys=[similar_id])
+
+    def __init__(self, grocery_id, similar_id):
+        self.grocery_id = grocery_id 
+        self.similar_id = similar_id
+
+GroceryItem.similar_grocery_item_assocs = db.relationship("SimilarGroceryItem", back_populates="grocery_item", foreign_keys=[SimilarGroceryItem.grocery_id])
+GroceryItem.similar_grocery_items = association_proxy("similar_grocery_item_assocs", "similar")
+
 
 # Pylint Report
 #
