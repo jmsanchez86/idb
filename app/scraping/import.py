@@ -403,7 +403,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         recipe = query.first()
         self.assertIsNotNone(recipe)
 
-        exptected = {556891, 556749, 557212, 615561, 562151, 556672, 556970, 512186, 512186}
+        expected = {556891, 556749, 557212, 615561, 562151, 556672, 556970, 512186, 512186}
 
         recipes = recipe.similar_recipes
         actual = {recipe.recipe_id for recipe in recipes}
@@ -416,9 +416,9 @@ class TestDatabaseIntegrity(unittest.TestCase):
         grocery_item = query.first()
         self.assertIsNotNone(grocery_item)
 
-        exptected = {410889, 194508, 217511, 141916}
+        expected = {410889, 194508, 217511, 141916}
 
-        grocery_items = grocery_item.similar_recipes
+        grocery_items = grocery_item.similar_grocery_items
         actual = {grocery_item.grocery_id for grocery_item in grocery_items}
 
         self.assertEqual(actual, expected)
