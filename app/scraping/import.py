@@ -67,7 +67,7 @@ class Import:
         self.recipe_ingredients = list()
         self.tag_recipes = list()
         self.tag_ingredients = list()
-        self.tag_grocery_items = list()
+        self.tag_grocery_items = dict()
 
     def read_json(self, filename):
         path = self.data_dir / filename
@@ -85,12 +85,12 @@ class Import:
         iters.append(self.ingredients.values())
         iters.append(self.grocery_items.values())
         iters.append(self.tags.values())
+        iters.append(self.tag_grocery_items.values())
 
         iters.append(iter(self.ingredient_substitutes))
         iters.append(iter(self.recipe_ingredients))
         iters.append(iter(self.tag_recipes))
         iters.append(iter(self.tag_ingredients))
-        iters.append(iter(self.tag_grocery_items))
 
         for it in iters:
             for row in it:
@@ -178,6 +178,19 @@ class Import:
 
         self.recipe_ingredients.append(models.RecipeIngredient(recipe_id, ingredient_id, verbal_quantity))
 
+
+    def product_tag(self, ingredient_id, product_id, tag_name):
+        if tag_name not in self.tags:
+            image_url = self.tag_image_urls.get(tag_name, "")
+            description = self.tag_descriptions.get(tag_name, "")
+            self.tags[tag_name] = models.Tag(tag_name, image_url, description)
+
+        key = (ingredient_id, product_id, tag_name)
+        if key not in self.tag_grocery_items:
+            self.tag_grocery_items[key] = models.TagGroceryItem(tag_name, ingredient_id, product_id)
+        else:
+            print("Ingredient {} product {} has multiple of tag {}.".format(ingredient_id, product_id, tag_name))
+
     def product(self, ingredient_id, product_data):
         product_id = product_data.get("id", None)
         assert(product_id != None)
@@ -191,8 +204,12 @@ class Import:
         key = (ingredient_id, product_id)
         if key not in self.grocery_items:
             self.grocery_items[key] = models.GroceryItem(product_id, ingredient_id, name, image_url, upc)
+
+            for badge in product_info.get("badges", []):
+                self.product_tag(ingredient_id, product_id, badge)
         else:
-            print("WE COULD HAVE RUN OURSELVES OVER.", key)
+            print("Ingredient {} contains multiple grocery product {}.".format(ingredient_id, product_id))
+
 
 
 class TestDatabaseIntegrity(unittest.TestCase):
