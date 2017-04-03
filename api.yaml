@@ -8,5 +8,5 @@ runtime_config:
 
 #[START cloudsql_settings]
 beta_settings:
-    cloud_sql_instances: "vennfridge:us-central1:prod"
+    cloud_sql_instances: "vennfridge:us-central1:postfridge"
 #[END cloudsql_settings]
