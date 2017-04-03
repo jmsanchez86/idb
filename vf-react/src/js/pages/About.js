@@ -74,7 +74,7 @@ export default class About extends React.Component {
               }
               
             }
-             var cont = _this.state.contributors;
+            var cont = _this.state.contributors;
             cont.get('scottnm').totalIssues = 32;
             cont.get('CoryDunn').totalIssues = 1;
             cont.get('jmsanchez86').totalIssues = 0;
@@ -159,7 +159,7 @@ export default class About extends React.Component {
                 {' '}total unit tests.
           </p>
           <UnitTestButton api_endpoint={this.state.api_endpoint}/>
-          <h6><a href="https://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
+          <h6><a href="http://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
         </div>
         <div class="container" dangerouslySetInnerHTML={{__html: html}} />
       </div>
