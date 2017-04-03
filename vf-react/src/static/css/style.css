@@ -13,7 +13,6 @@ body {
   background-color: #FFFEFE;
   position: relative;
   margin: 0;
-  padding: 5%;
   padding-top: 8rem;
   padding-bottom: 8rem;
 
@@ -397,4 +396,10 @@ input[type="radio"] {
 
 .grocery-item-single {
   margin-top:40px;
+}
+
+
+#grid-page {
+  padding-left: 3%;
+  padding-right: 3%;
 }
