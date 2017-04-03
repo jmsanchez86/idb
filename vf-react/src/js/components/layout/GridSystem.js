@@ -25,7 +25,6 @@ export default class GridSystem extends React.Component {
             {this.getGridItems(this.props.data, this.props.path)}
         </div>
       </div>
-
     );
   }
 }

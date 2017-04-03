@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import Controller from "../components/layout/Controller";
@@ -15,14 +14,15 @@ export default class Ingredients extends React.Component {
       sorters: this.initSorters(),
       links :  this.initLinks(),
       data : {},
-
       };
     this.requestQuery(this.query());
   }
+
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
     var params = "http://api.vennfridge.appspot.com/ingredients?sort=";
+
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
@@ -40,16 +40,14 @@ export default class Ingredients extends React.Component {
     }
     params = firstTag ? params : params.substring(0, params.length-1);
     params += "&page=" + this.state.links.activePage;
-    console.log("Mock API Request:\n" + params);
-    // Query with state.filters and state.sorters
-    return params; //TODO
+    return params;
   }
 
   requestQuery(requestString) {
-
     var _this = this;
     var _ingredients = {}
     var _links = {}
+
     // call api with new query params
     fetch(requestString)
       .then(function(response) {
@@ -65,10 +63,9 @@ export default class Ingredients extends React.Component {
             _links[id] = responseData.links[id];
           }
 
-          _links['activePage'] = 0; // Mock Data
-
           _this.state.data = _ingredients;
           _this.state.links = _links;
+          _this.state.links.activePage = 0;
           _this.forceUpdate();
 
         });
