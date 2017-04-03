@@ -26,6 +26,9 @@ def create_db(app):
         simple_model.db.create_all()
     print("All tables created")
 
+def read_db(sid):
+    return simple_model.Simple.query.get(sid)
+
 def add_random_ingredient():
     from random import randint
     sid = randint(0, 10)
