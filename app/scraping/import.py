@@ -220,8 +220,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         ingredient = query.first()
 
         self.assertIsNotNone(ingredient)
-        self.assertEqual(ingredient.name, "cherries")
-        self.assertEqual(ingredient.image_url, "https://spoonacular.com/cdn/ingredients_100x100/cherries.jpg")
+        self.assertEqual(ingredient.image_url, "")
         self.assertEqual(ingredient.aisle, "Produce")
 
         # TODO: Test image_url
