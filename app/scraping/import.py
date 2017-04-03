@@ -146,9 +146,10 @@ class Import:
             self.recipe_tag(recipe_id, dish_type)
 
         for ingredient_data in recipe_data.get("extendedIngredients", list()):
-            self.ingredient(ingredient_data)
+            self.ingredient(recipe_id, ingredient_data)
 
-    def ingredient(self, ingredient_data):
+
+    def ingredient(self, recipe_id, ingredient_data):
         ingredient_id = ingredient_data.get("id", 0)
         if ingredient_id <= 0:
             return
@@ -166,6 +167,11 @@ class Import:
             for subst in self.get_ingredient_substitutes.get(str(ingredient_id), {}).get("substitutes", []):
                 self.ingredient_substitutes.append(models.IngredientSubstitute(ingredient_id, subst))
 
+        verbal_quantity = ingredient_data.get("originalString", None)
+        assert(verbal_quantity != None)
+
+        self.recipe_ingredients.append(models.RecipeIngredient(*t))
+        self.recipe_ingredients_set.add(t)
 
 
 class TestDatabaseIntegrity(unittest.TestCase):
