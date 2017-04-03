@@ -69,7 +69,6 @@ class Import:
         self.database = database
         self.data_dir = Path(data_dir)
 
-        self.summary_data = self.read_json("summarize_recipe.json")
         self.find_similar_recipes = self.read_json("find_similar_recipes.json")
         self.get_ingredient_substitutes = \
                 self.read_json("get_ingredient_substitutes.json")
@@ -88,6 +87,8 @@ class Import:
         self.tag_recipes = list()
         self.tag_ingredients = list()
         self.tag_grocery_items = dict()
+        self.similar_recipes = list()
+        self.similar_grocery_items = list()
 
 
     def read_json(self, filename):
@@ -112,6 +113,8 @@ class Import:
         iters.append(iter(self.recipe_ingredients))
         iters.append(iter(self.tag_recipes))
         iters.append(iter(self.tag_ingredients))
+        iters.append(iter(self.similar_recipes))
+        iters.append(iter(self.similar_grocery_items))
 
         for it in iters:
             for row in it:
@@ -129,6 +132,19 @@ class Import:
         for str_id in recipes:
             int_id = int(str_id)
             self.recipe(int_id, recipes[str_id])
+
+        # We need to have inserted all the recipes before going through similar
+        # recipes because there are many similar recipes that we do not have in
+        # our database and we don't want to include that relationship if it does
+        # not exist.
+        for str_id in recipes:
+            int_id = int(str_id)
+            similar_recipes = self.find_similar_recipes.get(str_id, [])
+            for similar in similar_recipes:
+                similar_id = similar["id"]
+                if similar_id not in self.recipes:
+                    continue
+                self.similar_recipes.append(models.SimilarRecipe(int_id, similar["id"]))
 
         self.commit()
 
@@ -149,7 +165,7 @@ class Import:
         ready_time = recipe_data.get("readyInMinutes", 0)
         servings = recipe_data.get("servings", 0)
 
-        summary_data = self.summary_data.get(str(recipe_id), None)
+        summary_data = self.summarize_recipe.get(str(recipe_id), None)
         summary = (summary_data and strip_html(summary_data.get("summary", ""))
                    or "")
 
@@ -169,6 +185,8 @@ class Import:
 
         for ingredient_data in recipe_data.get("extendedIngredients", list()):
             self.ingredient(recipe_id, ingredient_data)
+
+
 
 
     def ingredient(self, recipe_id, ingredient_data):
@@ -403,7 +421,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         recipe = query.first()
         self.assertIsNotNone(recipe)
 
-        expected = {556891, 556749, 557212, 615561, 562151, 556672, 556970, 512186, 512186}
+        expected = {556891, 556749, 557212, 615561, 556672, 512186, 512186}
 
         recipes = recipe.similar_recipes
         actual = {recipe.recipe_id for recipe in recipes}
