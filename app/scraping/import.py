@@ -397,6 +397,32 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
         self.assertEqual(actual, expected)
 
+    def test_similar_recipes(self):
+        query = self.database.session.query(models.Recipe)
+        query = query.filter_by(recipe_id=628541)
+        recipe = query.first()
+        self.assertIsNotNone(recipe)
+
+        exptected = {556891, 556749, 557212, 615561, 562151, 556672, 556970, 512186, 512186}
+
+        recipes = recipe.similar_recipes
+        actual = {recipe.recipe_id for recipe in recipes}
+
+        self.assertEqual(actual, expected)
+
+    def test_similar_grocery_items(self):
+        query = self.database.session.query(models.GroceryItem)
+        query = query.filter_by(grocery_id=199371)
+        grocery_item = query.first()
+        self.assertIsNotNone(grocery_item)
+
+        exptected = {410889, 194508, 217511, 141916}
+
+        grocery_items = grocery_item.similar_recipes
+        actual = {grocery_item.grocery_id for grocery_item in grocery_items}
+
+        self.assertEqual(actual, expected)
+
     def test_strip_html(self):
         actual = strip_html("<a href=\"google.com\">WOWOWWWOW</a>")
         expected = "WOWOWWWOW"
