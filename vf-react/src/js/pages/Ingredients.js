@@ -1,3 +1,4 @@
+
 import React from "react";
 
 import Controller from "../components/layout/Controller";
@@ -46,7 +47,7 @@ export default class Ingredients extends React.Component {
   }
 
   requestQuery(requestString) {
-
+    
     var _this = this;
     var _ingredients = {}
     var _links = {}
@@ -65,8 +66,10 @@ export default class Ingredients extends React.Component {
             _links[id] = responseData.links[id];
           }
 
-          _this.state.response.data = _ingredients;
-          _this.state.response.links = _links;
+          _links['activePage'] = 0; // Mock Data
+
+          _this.state.data = _ingredients;
+          _this.state.links = _links;
           _this.forceUpdate();
 
         });
@@ -82,14 +85,14 @@ export default class Ingredients extends React.Component {
     fetch('http://api.vennfridge.appspot.com/tags')
       .then(function(response) {
         if (response.status !== 200) {
-            console.log('Looks like there was a problem loading vennfridge tag info. Status Code: ' + 
+            console.log('Looks like there was a problem loading vennfridge tag info. Status Code: ' +
               response.status);
         }
         response.json().then(function(responseData) {
           for (var id in responseData.data){
             _filters[responseData.data[id].id] = {
                 name: responseData.data[id].name,
-                checked: false  
+                checked: false
             }
           }
 
@@ -159,7 +162,7 @@ export default class Ingredients extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div id="grid-page" class="contatiner">
+      <div class="contatiner">
         <Greeting />
         <Controller
           sorters={this.state.sorters}
