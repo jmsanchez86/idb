@@ -155,9 +155,6 @@ export default class About extends React.Component {
           <p><span class="badge active">{this.state.totalIssues}</span>
                 {' '}total issues.
           </p>
-          <p><span class="badge active">{this.state.totalUnitTests}</span>
-                {' '}total unit tests.
-          </p>
           <UnitTestButton api_endpoint={this.state.api_endpoint}/>
           <h6><a href="http://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
         </div>

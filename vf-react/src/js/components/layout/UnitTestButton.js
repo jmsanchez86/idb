@@ -37,12 +37,27 @@ export default class UnitTestButton extends React.Component {
       this.forceUpdate();
   }
 
+  listTestData(toList) {
+    const listItems = [];
+    for(var item in this.state.testData[toList]) {
+      listItems.push(<li key={item} class="list-group-item">{this.state.testData[toList][item]}</li>);
+    }
+    return listItems;
+  }
+
   unitTestState() {
       if(this.state.testData)
         return (
-            <div class="container">
-            <h4>{this.state.testData.errors.length == 0 ? "Success!\n" : "Failure.\n"}</h4>
+            <div class="container thumbnail">
+            <h4>{this.state.testData.successes.length == this.state.testData.total_tests ? "Success!" : "Failure."}</h4>
             <p>{this.state.testData.output}</p>
+            <h6>{this.state.testData.successes.length == 0 ? '' : 'Successes:'}</h6>
+            <ul class="successes list-group">{this.listTestData('successes')}</ul>
+            <h6>{this.state.testData.failures.length == 0 ? '' : 'Failures:'}</h6>
+            <ul class="failures list-group">{this.listTestData('failures')}</ul>
+            <p><span class="badge active">{this.state.testData.total_tests}</span>
+                {' '}total unit tests.
+            </p>
             </div>
             );
       return (<div/>);
@@ -52,7 +67,7 @@ export default class UnitTestButton extends React.Component {
     let isLoading = this.state.isLoading;
     console.log(this.state.testData);
     return (
-      <div class="container">
+      <div>
         <Button
             bsStyle="primary"
             disabled={isLoading}
