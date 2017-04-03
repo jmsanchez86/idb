@@ -167,11 +167,32 @@ class Import:
             for subst in self.get_ingredient_substitutes.get(str(ingredient_id), {}).get("substitutes", []):
                 self.ingredient_substitutes.append(models.IngredientSubstitute(ingredient_id, subst))
 
+            products = self.get_product_map.get(str(ingredient_id), None)
+            if products:
+                products = products[0].get("products", [])[:5]
+                for product_data in products:
+                    self.product(ingredient_id, product_data)
+
         verbal_quantity = ingredient_data.get("originalString", None)
         assert(verbal_quantity != None)
 
-        self.recipe_ingredients.append(models.RecipeIngredient(*t))
-        self.recipe_ingredients_set.add(t)
+        self.recipe_ingredients.append(models.RecipeIngredient(recipe_id, ingredient_id, verbal_quantity))
+
+    def product(self, ingredient_id, product_data):
+        product_id = product_data.get("id", None)
+        assert(product_id != None)
+
+        product_info = self.get_product_information[str(product_id)]
+
+        name = product_data["title"]
+        upc = product_data["upc"]
+        image_url = product_info["images"][1]
+
+        key = (ingredient_id, product_id)
+        if key not in self.grocery_items:
+            self.grocery_items[key] = models.GroceryItem(product_id, ingredient_id, name, image_url, upc)
+        else:
+            print("WE COULD HAVE RUN OURSELVES OVER.", key)
 
 
 class TestDatabaseIntegrity(unittest.TestCase):
