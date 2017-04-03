@@ -9,8 +9,8 @@ const data = require('json!../../data/food.json');
 const grocery_items = data.grocery_items;
 const links = {
   activePage: 0,
-  next: ".../api/grocery_items?sort=aplha&page=1",
-  last: ".../api/grocery_items?sort=aplha&page=100" // MOCK DATA
+  next: "http://api/grocery_items?sort=alpha&page=1",
+  last: "http://api/grocery_items?sort=alpha&page=100" // MOCK DATA
 }
 
 export default class GroceryItems extends React.Component {
@@ -30,7 +30,7 @@ export default class GroceryItems extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://api.vennfridge.appspot.com/grocery_items/?sort=";
+    var params = "http://api.vennfridge.appspot.com/grocery_items?sort=";
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
@@ -85,7 +85,7 @@ export default class GroceryItems extends React.Component {
 
     this.forceUpdate();
   }
-  
+
   initFilters() {
     const tags = {};
 
@@ -117,8 +117,8 @@ export default class GroceryItems extends React.Component {
     return (
       {
        activePage: 0,
-       next: ".../api/grocery_items?sort=aplha&page=1",
-       last: ".../api/grocery_items?sort=aplha&page=100" // MOCK DATA
+       next: "http://api/grocery_items?sort=alpha&page=1",
+       last: "http://api/grocery_items?sort=alpha&page=100" // MOCK DATA
       }
     )
   }

@@ -9,8 +9,8 @@ const data = require('json!../../data/food.json');
 const tags = data.tags;
 const links = {
   activePage: 0,
-  next: ".../api/tags?sort=aplha&page=1",
-  last: ".../api/tags?sort=aplha&page=100" // MOCK DATA
+  next: "http://api/tags?sort=alpha&page=1",
+  last: "http://api/tags?sort=alpha&page=100" // MOCK DATA
 }
 
 export default class Tags extends React.Component {
@@ -127,8 +127,8 @@ export default class Tags extends React.Component {
     return (
       {
        activePage: 0,
-       next: ".../api/tags?sort=aplha&page=1",
-       last: ".../api/tags?sort=aplha&page=100" // MOCK DATA
+       next: "http://api/tags?sort=alpha&page=1",
+       last: "http://api/tags?sort=alpha&page=100" // MOCK DATA
       }
     )
   }

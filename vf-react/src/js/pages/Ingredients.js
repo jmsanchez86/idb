@@ -9,8 +9,8 @@ const data = require('json!../../data/food.json');
 const ingredients = data.ingredients;
 const links = {
   activePage: 0,
-  next: ".../api/ingredients?sort=aplha&page=1",
-  last: ".../api/ingredients?sort=aplha&page=100" // MOCK DATA
+  next: "http://api.vennfridge.appspot.com/ingredients?sort=alpha&page=1",
+  last: "http://api.vennfridge.appspot.com/ingredients?sort=alpha&page=100" // MOCK DATA
 }
 
 export default class Ingredients extends React.Component {
@@ -117,8 +117,8 @@ export default class Ingredients extends React.Component {
     return (
       {
        activePage: 0,
-       next: ".../api/ingredients?sort=aplha&page=1",
-       last: ".../api/ingredients?sort=aplha&page=100" // MOCK DATA
+       next: "http://api/ingredients?sort=alpha&page=1",
+       last: "http://api/ingredients?sort=alpha&page=100" // MOCK DATA
       }
     )
   }
