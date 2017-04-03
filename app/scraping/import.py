@@ -14,6 +14,7 @@ import re
 from pathlib import Path
 from flask import Flask
 from app.api import models
+from app.scraping.tag_translations import tag_names, tag_image_urls, tag_descriptions
 
 def strip_html(html):
     """
@@ -28,6 +29,28 @@ def strip_html(html):
 
     return html
 
+"""
+
+Known tags
+
+'main course', 'free_range', 'snack', 'veryHealthy', 'pescetarian',
+'dairy_free', 'latin american', 'south american', 'french', 'morning meal',
+'american', 'asian', 'drink', 'primal', 'starter', 'grass_fed', 'sulfite_free',
+'southern', 'no_artificial_colors', 'wild_caught', 'grain_free', 'vegetarian',
+'sauce', 'breakfast', "hor d'oeuvre", 'glutenFree', 'condiment', 'indian',
+'no_additives', 'sugar_free', 'no_artificial_ingredients', 'egg_free',
+'kosher', 'pasture_raised', 'irish', 'ketogenic', 'hormone_free', 'vegan',
+'appetizer', 'mexican', 'middl eastern', 'wheat_free', 'nut_free',
+'veryPopular', 'salad', 'msg_free', 'whole30', 'antipasti', 'soup',
+'no_preservatives', 'paleo', 'no_artificial_flavors', 'side dish', 'dip',
+'lowFodmap', 'italian', 'fingerfood', 'gluten_free', 'peanut_free', 'brunch',
+'main dish', 'fair_trade', 'antipasto', 'mediterranean', 'beverage', 'lunch',
+'spread', 'european', 'dessert', 'organic', 'cage_free', 'sustainable',
+'gmo_free', 'dinner', 'no_added_sugar', 'soy_free', 'dairyFree', 'corn_free',
+'lactose_free'
+"""
+
+
 class Import:
     """
     Imports json data from a directory into a databse.
@@ -36,9 +59,6 @@ class Import:
     recipe_tag_flags = ["cheap", "dairyFree", "glutenFree", "ketogenic",
                         "lowFodmap", "sustainable", "vegan", "vegeterian",
                         "veryHealthy", "veryPopular", "whole30"]
-
-    tag_image_urls = dict()
-    tag_descriptions = dict()
 
     def __init__(self, data_dir: str, database):
         """
@@ -68,6 +88,7 @@ class Import:
         self.tag_recipes = list()
         self.tag_ingredients = list()
         self.tag_grocery_items = dict()
+
 
     def read_json(self, filename):
         path = self.data_dir / filename
@@ -111,10 +132,11 @@ class Import:
 
         self.commit()
 
-    def recipe_tag(self, recipe_id, tag_name):
+    def recipe_tag(self, recipe_id, spoon_name):
+        tag_name = tag_names[spoon_name]
         if tag_name not in self.tags:
-            image_url = self.tag_image_urls.get(tag_name, "")
-            description = self.tag_descriptions.get(tag_name, "")
+            image_url = tag_image_urls[spoon_name]
+            description = tag_descriptions[spoon_name]
             self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
         self.tag_recipes.append(models.TagRecipe(tag_name, recipe_id))
@@ -179,10 +201,11 @@ class Import:
         self.recipe_ingredients.append(models.RecipeIngredient(recipe_id, ingredient_id, verbal_quantity))
 
 
-    def product_tag(self, ingredient_id, product_id, tag_name):
+    def product_tag(self, ingredient_id, product_id, spoon_name):
+        tag_name = tag_names[spoon_name]
         if tag_name not in self.tags:
-            image_url = self.tag_image_urls.get(tag_name, "")
-            description = self.tag_descriptions.get(tag_name, "")
+            image_url = tag_image_urls.get(spoon_name, "")
+            description = tag_descriptions.get(spoon_name, "")
             self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
         key = (ingredient_id, product_id, tag_name)
@@ -283,7 +306,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
     def test_tag_flag(self):
         query = self.database.session.query(models.Tag)
-        query = query.filter_by(tag_name="glutenFree")
+        query = query.filter_by(tag_name="Gluten-free")
         tag = query.first()
         self.assertIsNotNone(tag)
 
@@ -295,7 +318,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
     def test_tag_cuisine(self):
         query = self.database.session.query(models.Tag)
-        query = query.filter_by(tag_name="american")
+        query = query.filter_by(tag_name="American")
         tag = query.first()
         self.assertIsNotNone(tag)
 
@@ -307,7 +330,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
     def test_tag_dishtype(self):
         query = self.database.session.query(models.Tag)
-        query = query.filter_by(tag_name="lunch")
+        query = query.filter_by(tag_name="Lunch")
         tag = query.first()
         self.assertIsNotNone(tag)
 
@@ -319,7 +342,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
 
     def test_tag_badge(self):
         query = self.database.session.query(models.Tag)
-        query = query.filter_by(tag_name="no_artificial_colors")
+        query = query.filter_by(tag_name="No artificial colors")
         tag = query.first()
         self.assertIsNotNone(tag)
 
