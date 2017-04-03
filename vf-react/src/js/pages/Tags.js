@@ -164,6 +164,7 @@ export default class Tags extends React.Component {
             filters={this.state.filters}
             handleApply={this.handleApply.bind(this)} />
           <GridSystem
+            width={4}
             path="tags"
             data={data} />
       </div>

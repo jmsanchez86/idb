@@ -19,7 +19,6 @@ export default class Ingredients extends React.Component {
       };
     this.requestQuery(this.query());
   }
-
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
@@ -47,7 +46,7 @@ export default class Ingredients extends React.Component {
   }
 
   requestQuery(requestString) {
-    
+
     var _this = this;
     var _ingredients = {}
     var _links = {}
@@ -162,13 +161,14 @@ export default class Ingredients extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div class="contatiner">
+      <div id="grid-page" class="contatiner">
         <Greeting />
         <Controller
           sorters={this.state.sorters}
           filters={this.state.filters}
           handleApply={this.handleApply.bind(this)} />
         <GridSystem
+          width={4}
           path="ingredients"
           data={data} />
         <VFPagination

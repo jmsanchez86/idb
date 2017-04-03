@@ -40,10 +40,10 @@ export default class About extends React.Component {
             totalUnitTests: teamData[i].numberOfUnitTests,
             totalIssues:0
       });
-          
+
     }
     var _this = this;
-    
+
     fetch(this.state.gitDataUrl)
       .then(
         function(response) {
@@ -52,7 +52,7 @@ export default class About extends React.Component {
               response.status);
             return;
           }
-        
+
           // Examine the text in the response
           response.json().then(function(data) {
             for(var i=0; i<data.length; ++i) {
@@ -65,11 +65,11 @@ export default class About extends React.Component {
                     totalCommits: data[i].total,
                     profUrl: data[i].author.html_url
                   };
-                  
+
                   for (var attrname in gitContr)
                     { contributor[attrname] = gitContr[attrname]; }
               }
-              
+
             }
              var cont = _this.state.contributors;
             cont.get('scottnm').totalIssues = 32;
@@ -81,14 +81,14 @@ export default class About extends React.Component {
             _this.getTotals("totalIssues");
             _this.getTotals("totalCommits");
             _this.getTotals("totalUnitTests");
-            
+
             _this.forceUpdate();
           });
         })
       .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
-      
+
     // this will force an update before rendering
     this.forceUpdate();
   }
@@ -138,7 +138,7 @@ export default class About extends React.Component {
             <img class="venn" src="../static/images/diagram.png" />
           </div>
         </div>
-        
+
         <div id="contributor-list" class="list-group container">
           {contrList}
         </div>

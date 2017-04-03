@@ -153,6 +153,7 @@ export default class Recipes extends React.Component {
             filters={this.state.filters}
             handleApply={this.handleApply.bind(this)} />
           <GridSystem
+            width={4}
             path="recipes"
             data={data} />
       </div>

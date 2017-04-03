@@ -154,6 +154,7 @@ export default class GroceryItems extends React.Component {
             filters={this.state.filters}
             handleApply={this.handleApply.bind(this)} />
           <GridSystem
+            width={4}
             path="grocery_items"
             data={data} />
       </div>
