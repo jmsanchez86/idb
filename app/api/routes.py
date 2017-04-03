@@ -113,18 +113,21 @@ def get_continuation_links(base_url: str, maxsize: int,
     if page == 0:
         return {
             "next": next_link,
-            "last": last_link}
+            "last": last_link,
+            "active": page}
     # last page
     elif page == last_page:
         return {
             "first": first_link,
-            "prev": prev_link}
+            "prev": prev_link,
+            "active": page}
     else:
         return {
             "first": first_link,
             "prev": prev_link,
             "next": next_link,
-            "last": last_link}
+            "last": last_link,
+            "active": page}
 
 
 def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
