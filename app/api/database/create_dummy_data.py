@@ -5,11 +5,7 @@ Script to create a database
 # pylint: disable=missing-docstring
 
 from app.api.main import API_SERVICE
-from app.api.database.simple_model import Simple
-
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app.api.database.simple_model import Simple, db
 
 def init_db(app):
     """
