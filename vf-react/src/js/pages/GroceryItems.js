@@ -25,6 +25,7 @@ export default class GroceryItems extends React.Component {
                     links: links
                 },
       };
+    this.requestQuery(this.query());
   }
 
   query() {
@@ -82,8 +83,6 @@ export default class GroceryItems extends React.Component {
     .catch(function(err) {
         console.log('Fetch Error : -S', err);
       });
-
-    this.forceUpdate();
   }
 
   initFilters() {
