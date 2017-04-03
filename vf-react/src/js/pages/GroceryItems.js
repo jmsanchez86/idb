@@ -7,20 +7,31 @@ import GridSystem from "../components/layout/GridSystem";
 
 const data = require('json!../../data/food.json');
 const grocery_items = data.grocery_items;
-
+const links = {
+  activePage: 0,
+  next: "http://api/grocery_items?sort=alpha&page=1",
+  last: "http://api/grocery_items?sort=alpha&page=100" // MOCK DATA
+}
 
 export default class GroceryItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: this.initFilters(),
-      sorters: this.initSorters()
+      sorters: this.initSorters(),
+      links:   this.initLinks(),
+      response: {
+                    data: grocery_items,
+                    links: links
+                },
       };
+    this.requestQuery(this.query());
   }
+
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = ".../api/grocery_items?sort=";
+    var params = "http://api.vennfridge.appspot.com/grocery_items?sort=";
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
@@ -38,10 +49,42 @@ export default class GroceryItems extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
+    params += "&page=" + this.state.links.activePage;
     console.log("Mock API Request:\n" + params);
     // Query with state.filters and state.sorters
-    return grocery_items; //TODO
+    return params; //TODO
   }
+  requestQuery(requestString) {
+    var _this = this;
+    var _grocery_items = {}
+    var _links = {}
+
+    //call api with new query params
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+          for (var id in responseData.data){
+            _grocery_items[id] = responseData.data[id];
+          }
+          for (var id in responseData.links){
+            _links[id] = responseData.links[id];
+          }
+
+          _this.state.response.data = _grocery_items;
+          _this.state.response.links = _links;
+          _this.forceUpdate();
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error : -S', err);
+      });
+  }
+
   initFilters() {
     const tags = {};
 
@@ -61,7 +104,7 @@ export default class GroceryItems extends React.Component {
             name: "A - Z",
             checked: true
           },
-        alpha_reversed:
+        alpha_reverse:
           {
              name: "Z - A",
              checked: false
@@ -69,6 +112,16 @@ export default class GroceryItems extends React.Component {
       }
     )
   }
+  initLinks() {
+    return (
+      {
+       activePage: 0,
+       next: "http://api/grocery_items?sort=alpha&page=1",
+       last: "http://api/grocery_items?sort=alpha&page=100" // MOCK DATA
+      }
+    )
+  }
+
   updateFilters(updatedList) {
     const filters = this.state.filters;
     for (var id in updatedList) {
@@ -86,10 +139,13 @@ export default class GroceryItems extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
+        activePage: 0
       });
+    const request = this.query();
+    this.requestQuery(request);
   }
   render() {
-
+    const data = this.state.response.data;
     return (
       <div>
           <Greeting />
@@ -99,7 +155,7 @@ export default class GroceryItems extends React.Component {
             handleApply={this.handleApply.bind(this)} />
           <GridSystem
             path="grocery_items"
-            data={this.query()} />
+            data={data} />
       </div>
 
     );
