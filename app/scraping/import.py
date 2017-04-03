@@ -37,8 +37,8 @@ class Import:
                         "lowFodmap", "sustainable", "vegan", "vegeterian",
                         "veryHealthy", "veryPopular", "whole30"]
 
-    tag_image_urls = {}
-    tag_descriptions = {}
+    tag_image_urls = dict()
+    tag_descriptions = dict()
 
     def __init__(self, data_dir: str, database):
         """
@@ -63,11 +63,11 @@ class Import:
         self.ingredients = dict()
         self.grocery_items = dict()
         self.tags = dict()
-        self.ingredient_subtitutes = dict()
-        self.recipe_ingredients = dict()
-        self.tag_recipes = dict()
-        self.tag_ingredients = dict()
-        self.tag_grocery_items = dict()
+        self.ingredient_substitutes = list()
+        self.recipe_ingredients = list()
+        self.tag_recipes = list()
+        self.tag_ingredients = list()
+        self.tag_grocery_items = list()
 
     def read_json(self, filename):
         path = self.data_dir / filename
@@ -77,6 +77,26 @@ class Import:
     @property
     def session(self):
         return self.database.session
+
+    def commit(self):
+
+        iters = list()
+        iters.append(self.recipes.values())
+        iters.append(self.ingredients.values())
+        iters.append(self.grocery_items.values())
+        iters.append(self.tags.values())
+
+        iters.append(iter(self.ingredient_substitutes))
+        iters.append(iter(self.recipe_ingredients))
+        iters.append(iter(self.tag_recipes))
+        iters.append(iter(self.tag_ingredients))
+        iters.append(iter(self.tag_grocery_items))
+
+        for it in iters:
+            for row in it:
+                self.session.add(row)
+
+        self.session.commit()
 
     def run(self):
         """
@@ -89,13 +109,15 @@ class Import:
             int_id = int(str_id)
             self.recipe(int_id, recipes[str_id])
 
+        self.commit()
+
     def recipe_tag(self, recipe_id, tag_name):
         if tag_name not in self.tags:
             image_url = self.tag_image_urls.get(tag_name, "")
             description = self.tag_descriptions.get(tag_name, "")
             self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
-        self.tag_recipes[tag_name] = models.TagRecipe(tag_name, recipe_id)
+        self.tag_recipes.append(models.TagRecipe(tag_name, recipe_id))
 
     def recipe(self, recipe_id, recipe_data):
 
@@ -123,12 +145,12 @@ class Import:
         for dish_type in recipe_data.get("dishTypes", {}):
             self.recipe_tag(recipe_id, dish_type)
 
-        for ingredient_data in recipe_data.get("extendedIngredients", []):
+        for ingredient_data in recipe_data.get("extendedIngredients", list()):
             self.ingredient(ingredient_data)
 
     def ingredient(self, ingredient_data):
         ingredient_id = ingredient_data.get("id", 0)
-        if ingredient_id > 0:
+        if ingredient_id <= 0:
             return
 
         if ingredient_id not in self.ingredients:
@@ -140,6 +162,9 @@ class Import:
             assert(aisle != None)
 
             self.ingredients[ingredient_id] = (models.Ingredient(ingredient_id, name, "", aisle))
+
+            for subst in self.get_ingredient_substitutes.get(str(ingredient_id), {}).get("substitutes", []):
+                self.ingredient_substitutes.append(models.IngredientSubstitute(ingredient_id, subst))
 
 
 
