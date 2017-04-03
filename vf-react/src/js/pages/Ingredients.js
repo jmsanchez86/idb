@@ -21,8 +21,8 @@ export default class Ingredients extends React.Component {
       sorters: this.initSorters(),
       links :  this.initLinks(),
       response : {
-                    data: ingredients,
-                    links: links
+                    data: {},
+                    links: {}
                  },
       };
     this.requestQuery(this.query());
@@ -86,6 +86,29 @@ export default class Ingredients extends React.Component {
   }
 
   initFilters() {
+    var tags = {};
+    fetch('http://api.vennfridge.appspot.com/tags')
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge tag info. Status Code: ' + 
+              response.status);
+        }
+        response.json().then(function(responseData) {
+          for (var id in responseData.data){
+            tags[responseData.data[id].id] = {
+                name: responseData.data[id].name,
+                checked: false  
+            }
+          }
+          return tags;
+        });
+      })
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
+    return tags;
+  }
+  /*initFilters() {
     const tags = {};
 
     for (var id in data.tags) {
@@ -95,7 +118,7 @@ export default class Ingredients extends React.Component {
         }
     }
     return tags; // {id, name, checked}
-  }
+  }*/
   initSorters() {
     return (
       {
