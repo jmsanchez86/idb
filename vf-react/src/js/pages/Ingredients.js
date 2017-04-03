@@ -80,6 +80,7 @@ export default class Ingredients extends React.Component {
 
   initFilters() {
     var _filters = {};
+    var _this = this;
     fetch('http://api.vennfridge.appspot.com/tags')
       .then(function(response) {
         if (response.status !== 200) {
@@ -93,7 +94,9 @@ export default class Ingredients extends React.Component {
                 checked: false  
             }
           }
-          return _filters;
+
+        _this.setState({filters : _filters});
+        return _filters;
         });
       })
     .catch(function(err) {
@@ -153,7 +156,7 @@ export default class Ingredients extends React.Component {
   handleSelect(type) {
     console.log(links[type]);
   }
-  
+
   render() {
     const data = this.state.data;
     const links= this.state.links;
