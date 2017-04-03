@@ -108,17 +108,7 @@ export default class Ingredients extends React.Component {
     });
     return tags;
   }
-  /*initFilters() {
-    const tags = {};
 
-    for (var id in data.tags) {
-      tags[id] = {
-          name: data.tags[id].name,
-          checked: false,
-        }
-    }
-    return tags; // {id, name, checked}
-  }*/
   initSorters() {
     return (
       {
