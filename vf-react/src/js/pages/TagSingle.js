@@ -1,42 +1,107 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
-var data = require('json!../../data/food.json');
-const recipes = data.recipes;
-const grocery_items = data.grocery_items;
-const ingredients = data.ingredients;
-const tags = data.tags;
-
 
 export default class TagSingle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredients  : [],
+      grocery_items: [],
+      recipes : [],
+
+      blurb : '',
+      image : '',
+      name : '',
+      id : this.props.params.id,
+
+    };
+    this.requestData();
+  }
+
+  requestData() {
+
+    var _this = this;
+
+    var _ingredients = [];
+    var _grocery_items = [];
+    var _recipes = [];
+  
+    var _blurb = '';
+    var _image = '';
+    var _name = '';
+
+    const requestString = 'http://api.vennfridge.appspot.com/tags/' + _this.state.id;
+    console.log(requestString);
+    // call api with new query params
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+            const temp_recipes = responseData.recipes;
+            const temp_grocery_items = responseData.grocery_items;
+            const temp_ingredients = responseData.ingredients;
+
+            for (var id in temp_recipes) {
+              _recipes.push(temp_recipes[id]);
+            }
+            for (var id in temp_grocery_items) {
+              _grocery_items.push(temp_grocery_items[id]);
+            }
+         
+            for (var id in temp_ingredients) {
+              _ingredients.push(temp_ingredients[id]);
+            }
+
+            _blurb = responseData.blurb;
+            _image = responseData.image;
+            _name = responseData.name;
+
+            _this.setState({
+                ingredients : _ingredients,
+                grocery_items : _grocery_items,
+                recipes : _recipes,
+
+                blurb : _blurb,
+                image : _image,
+                name : _name,
+            });
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+  }
+
   render() {
-    console.log(ingredients);
-    const id = this.props.params.id;
-    var tag = tags[id];
-
-    const name = tag.name;
-    const blurb = tag.blurb;
-    const image = tag.image;
+    
+    const name = this.state.name;
+    const blurb = this.state.blurb;
+    const image = this.state.image;
 
 
-    var ingredients = tag.ingredients.map(function(ingredient_id){
+    var ingredients = this.state.ingredients.map(function(ingredient){
       return(
-        <div key={ingredient_id} class="list-group-item">
-          <p><Link to={"ingredients/" + ingredient_id}>{data.ingredients[ingredient_id].name}</Link></p>
+        <div key={ingredient.id} class="list-group-item">
+          <p><Link to={"ingredients/" + ingredient.id}>{ingredient.name}</Link></p>
         </div>);
     });
 
-    var recipes = tag.recipes.map(function(recipe_id){
+    var recipes = this.state.recipes.map(function(recipe){
       return(
-        <div key={recipe_id} class="list-group-item">
-          <p><Link to={"recipes/" + recipe_id}>{data.recipes[recipe_id].name}</Link></p>
+        <div key={recipe.id} class="list-group-item">
+          <p><Link to={"recipes/" + recipe.id}>{recipe.name}</Link></p>
         </div>);
     });
 
-    var grocery_items = tag.grocery_items.map(function(gi_id){
+    var grocery_items = this.state.grocery_items.map(function(gi){
       return(
-        <div key={gi_id} class="list-group-item">
-          <p><Link to={"grocery_items/" + gi_id}>{data.grocery_items[gi_id].name}</Link></p>
+        <div key={gi.id} class="list-group-item">
+          <p><Link to={"grocery_items/" + gi.id}>{gi.name}</Link></p>
         </div>);
     });
 
