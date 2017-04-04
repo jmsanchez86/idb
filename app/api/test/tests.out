@@ -1,19 +1,19 @@
 .............
 ----------------------------------------------------------------------
-Ran 13 tests in 12.467s
+Ran 13 tests in 12.633s
 
 OK
 Name                               Stmts   Miss  Cover   Missing
 ----------------------------------------------------------------
 app/__init__.py                        0      0   100%
 app/api/__init__.py                    0      0   100%
-app/api/models.py                    157      9    94%   42, 63, 85, 113, 133, 155, 185, 216, 250
+app/api/models.py                    157      9    94%   42, 63, 85, 113, 133, 157, 187, 218, 254
 app/api/test/__init__.py               0      0   100%
 app/api/test/test_data.py              2      0   100%
 app/api/test/tests.py                140      0   100%
 app/project_root.py                    2      0   100%
 app/scraping/__init__.py               0      0   100%
-app/scraping/importer.py             165      3    98%   213, 265, 294
+app/scraping/importer.py             165      3    98%   207, 259, 288
 app/scraping/tag_translations.py      80      0   100%
 ----------------------------------------------------------------
 TOTAL                                546     12    98%
