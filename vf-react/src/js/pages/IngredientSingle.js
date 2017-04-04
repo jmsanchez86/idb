@@ -4,19 +4,31 @@ import { IndexLink, Link } from "react-router";
 import OptionalList from "../components/layout/OptionalList";
 
 
-const data = require('json!../../data/food.json');
-const ingredients = data.ingredients;
-const recipes = data.recipes;
-const grocery_items = data.grocery_items;
-const tags = data.tags;
-
 export default class IngredientSingle extends React.Component {
-  requestQuery(requestString) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sub_ingredients : [],
+      grocery_items: [],
+      recipes : [],
+      tags : [],
+
+      image : '',
+      name : '',
+      id : this.props.params.id,
+
+    };
+    this.requestData();
+  }
+
+  requestData() {
 
     var _this = this;
-    var _ingredients = {}
-    var _links = {}
-    // call api with new query params
+
+    const requestString = 'http://api.vennfridge.appspot.com/ingredients/' + _this.state.id;
+    console.log(requestString);
+
+    // Fetch singleton's required data.
     fetch(requestString)
       .then(function(response) {
         if (response.status !== 200) {
@@ -24,50 +36,44 @@ export default class IngredientSingle extends React.Component {
               response.status);
         }
         response.json().then(function(responseData) {
-          for (var id in responseData.data){
-            _ingredients[id] = responseData.data[id];
-          }
-          for (var id in responseData.links){
-            _links[id] = responseData.links[id];
-          }
 
-          _this.state.response.data = _ingredients;
-          _this.state.response.links = _links;
-          _this.forceUpdate();
+            _this.setState({
+                sub_ingredients : responseData.substitute_ingredients,
+                grocery_items : responseData.related_grocery_items,
+                recipes : responseData.related_recipes,
+                tags : responseData.tags,
+
+                image : responseData.image,
+                name : responseData.name,
+            });
 
         });
       })
     .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
-
-    this.forceUpdate();
   }
+
   render() {
-    console.log(data.recipes);
-    const id = this.props.params.id;
-    const ingredient = ingredients[id];
-    const name = ingredient.name;
-    const image = ingredient.image;
-    const recipes = ingredient.recipes.map(function(recipe){
-      const recp = data.recipes[recipe];
+    const image = this.state.image;
+    const name = this.state.name;
+
+    const recipes = this.state.recipes.map(function(recipe){
       return (
-        <div key={recipe} class="list-group-item">
-          <p><Link to={"recipes/" + recipe}>{recp.name}</Link></p>
+        <div key={recipe.id} class="list-group-item">
+          <p><Link to={"recipes/" + recipe.id}>{recipe.name}</Link></p>
         </div>);
     });
-    const grocery_items = ingredient.grocery_items.map(function(item){
-      const groceryItem = data.grocery_items[item];
+    const grocery_items = this.state.grocery_items.map(function(item){
       return (
-        <div key={item} class="list-group-item">
-          <p><Link to={"grocery_items/" + item}>{groceryItem.name}</Link></p>
+        <div key={item.id} class="list-group-item">
+          <p><Link to={"grocery_items/" + item.id}>{item.name}</Link></p>
         </div>);
     });
-    const tags = ingredient.tags.map(function(tag){
-      const tagItem = data.tags[tag];
+    const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
-          <Link to={"tags/" + tag}><img class="img-responsive" src={tagItem.image} /></Link>
+        <div key={tag.id} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+          <Link to={"tags/" + tag.id}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });
 

@@ -3,7 +3,7 @@ import { IndexLink, Link } from "react-router";
 
 
 export default class GroceryItemSingle extends React.Component {
-   constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       ingredient : {},
