@@ -3,10 +3,6 @@ tag_names = dict()
 tag_image_urls = dict()
 tag_descriptions = dict()
 
-tag_names["main course"] = "Main course"
-tag_image_urls["main course"] = ""
-tag_descriptions["main course"] = "Dish for the most substantial portion of a meal."
-
 tag_names["free_range"] = "Free range"
 tag_image_urls["free_range"] = ""
 tag_descriptions["free_range"] = "Product animals who were allowed to roam about an open field for a portion of the day."
@@ -39,10 +35,6 @@ tag_names["french"] = "French"
 tag_image_urls["french"] = ""
 tag_descriptions["french"] = "Dish from or based on French culture."
 
-tag_names["morning meal"] = "Morning meal"
-tag_image_urls["morning meal"] = ""
-tag_descriptions["morning meal"] = "Can be consumed in the morning."
-
 tag_names["american"] = "American"
 tag_image_urls["american"] = ""
 tag_descriptions["american"] = "Dish from or based on American culture."
@@ -51,17 +43,9 @@ tag_names["asian"] = "Asian"
 tag_image_urls["asian"] = ""
 tag_descriptions["asian"] = "Dish from or based on Asian culture."
 
-tag_names["drink"] = "Drink"
-tag_image_urls["drink"] = ""
-tag_descriptions["drink"] = "A beverage meant to satisfy thirst."
-
 tag_names["primal"] = "Primal"
 tag_image_urls["primal"] = ""
 tag_descriptions["primal"] = "Food for pets."
-
-tag_names["starter"] = "Starter"
-tag_image_urls["starter"] = ""
-tag_descriptions["starter"] = "Food to start off your party or gathering."
 
 tag_names["grass_fed"] = "Grass-fed"
 tag_image_urls["grass_fed"] = ""
@@ -95,17 +79,9 @@ tag_names["sauce"] = "Sauce"
 tag_image_urls["sauce"] = ""
 tag_descriptions["sauce"] = "A flavoring ingredient of liquid-like consistency."
 
-tag_names["breakfast"] = "Breakfeast"
-tag_image_urls["breakfast"] = ""
-tag_descriptions["breakfast"] = "Food that goes well in the morning."
-
 tag_names["hor d'oeuvre"] = "Hor d'oeuvre"
 tag_image_urls["hor d'oeuvre"] = ""
 tag_descriptions["hor d'oeuvre"] = "Small portion of food served before a meal."
-
-tag_names["glutenFree"] = "Gluten-free"
-tag_image_urls["glutenFree"] = ""
-tag_descriptions["glutenFree"] = "Contains no gluten."
 
 tag_names["condiment"] = "Condiment"
 tag_image_urls["condiment"] = ""
@@ -155,10 +131,6 @@ tag_names["vegan"] = "Vegan"
 tag_image_urls["vegan"] = ""
 tag_descriptions["vegan"] = "Food that contains no animal products."
 
-tag_names["appetizer"] = "Appetizer"
-tag_image_urls["appetizer"] = ""
-tag_descriptions["appetizer"] = "Small portion of food before a meal."
-
 tag_names["mexican"] = "Mexican"
 tag_image_urls["mexican"] = ""
 tag_descriptions["mexican"] = "Dish from or based on Mexican culture."
@@ -190,10 +162,6 @@ tag_descriptions["msg_free"] = "Contains no monosodium glutamate."
 tag_names["whole30"] = "Whole30"
 tag_image_urls["whole30"] = ""
 tag_descriptions["whole30"] = "A dietary program aimed at noticably improving people's lifes in only 30 days."
-
-tag_names["antipasti"] = "Antipasti"
-tag_image_urls["antipasti"] = ""
-tag_descriptions["antipasti"] = "The first course of a traditional Italian meal."
 
 tag_names["soup"] = "Soup"
 tag_image_urls["soup"] = ""
@@ -231,10 +199,6 @@ tag_names["fingerfood"] = "Finger food"
 tag_image_urls["fingerfood"] = ""
 tag_descriptions["fingerfood"] = "Food meant to be consumed by hand without eating utensils."
 
-tag_names["gluten_free"] = "Gluten-free"
-tag_image_urls["gluten_free"] = ""
-tag_descriptions["gluten_free"] = "Contains no gluten."
-
 tag_names["peanut_free"] = "Peanut-free"
 tag_image_urls["peanut_free"] = ""
 tag_descriptions["peanut_free"] = "Contains no peanuts."
@@ -243,25 +207,13 @@ tag_names["brunch"] = "Brunch"
 tag_image_urls["brunch"] = ""
 tag_descriptions["brunch"] = "A large breakfeast like meal consume around lunch time."
 
-tag_names["main dish"] = "Main dish"
-tag_image_urls["main dish"] = ""
-tag_descriptions["main dish"] = "The most substantial dish of a meal."
-
 tag_names["fair_trade"] = "Fair trade"
 tag_image_urls["fair_trade"] = ""
 tag_descriptions["fair_trade"] = "Product has a ballanced price between consumers and producers."
 
-tag_names["antipasto"] = "Antipasto"
-tag_image_urls["antipasto"] = ""
-tag_descriptions["antipasto"] = "The first course of a traditional Italian meal."
-
 tag_names["mediterranean"] = "Mediterranean"
 tag_image_urls["mediterranean"] = ""
 tag_descriptions["mediterranean"] = "Dish from or based on Mediterranean culture."
-
-tag_names["beverage"] = "Beverage"
-tag_image_urls["beverage"] = ""
-tag_descriptions["beverage"] = "A drink meant to satisfy thirst."
 
 tag_names["lunch"] = "Lunch"
 tag_image_urls["lunch"] = ""
@@ -318,3 +270,52 @@ tag_descriptions["corn_free"] = "Contains no corn-based foods."
 tag_names["lactose_free"] = "Lactose-free"
 tag_image_urls["lactose_free"] = ""
 tag_descriptions["lactose_free"] = "Can be consumed by the lactose-intolerant."
+
+tag_names["antipasto"] = "Antipasto"
+tag_image_urls["antipasto"] = ""
+tag_descriptions["antipasto"] = "The first course of a traditional Italian meal."
+
+tag_names["antipasti"] = "Antipasto"
+tag_image_urls["antipasti"] = ""
+tag_descriptions["antipasti"] = "The first course of a traditional Italian meal."
+
+tag_names["breakfast"] = "Breakfast"
+tag_image_urls["breakfast"] = ""
+tag_descriptions["breakfast"] = "Food that goes well in the morning."
+
+tag_names["morning meal"] = "Breakfast"
+tag_image_urls["morning meal"] = ""
+tag_descriptions["morning meal"] = "Can be consumed in the morning."
+
+tag_names["beverage"] = "Beverage"
+tag_image_urls["beverage"] = ""
+tag_descriptions["beverage"] = "A drink meant to satisfy thirst."
+
+tag_names["drink"] = "Beverage"
+tag_image_urls["drink"] = ""
+tag_descriptions["drink"] = "A beverage meant to satisfy thirst."
+
+tag_names["starter"] = "Appetizer"
+tag_image_urls["starter"] = ""
+tag_descriptions["starter"] = "Food to start off your party or gathering."
+
+tag_names["appetizer"] = "Appetizer"
+tag_image_urls["appetizer"] = ""
+tag_descriptions["appetizer"] = "Small portion of food before a meal."
+
+tag_names["gluten_free"] = "Gluten-free"
+tag_image_urls["gluten_free"] = ""
+tag_descriptions["gluten_free"] = "Contains no gluten."
+
+tag_names["glutenFree"] = "Gluten-free"
+tag_image_urls["glutenFree"] = ""
+tag_descriptions["glutenFree"] = "Contains no gluten."
+
+tag_names["main course"] = "Main course"
+tag_image_urls["main course"] = ""
+tag_descriptions["main course"] = "Dish for the most substantial portion of a meal."
+
+tag_names["main dish"] = "Main course"
+tag_image_urls["main dish"] = ""
+tag_descriptions["main dish"] = "The most substantial dish of a meal."
+

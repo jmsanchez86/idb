@@ -84,7 +84,7 @@ class Import:
         self.tags = dict()
         self.ingredient_substitutes = list()
         self.recipe_ingredients = list()
-        self.tag_recipes = list()
+        self.tag_recipes = dict()
         self.tag_ingredients = list()
         self.tag_grocery_items = dict()
         self.similar_recipes = list()
@@ -108,13 +108,17 @@ class Import:
         iters.append(self.grocery_items.values())
         iters.append(self.tags.values())
         iters.append(self.tag_grocery_items.values())
+        iters.append(self.tag_recipes.values())
 
         iters.append(iter(self.ingredient_substitutes))
         iters.append(iter(self.recipe_ingredients))
-        iters.append(iter(self.tag_recipes))
         iters.append(iter(self.tag_ingredients))
         iters.append(iter(self.similar_recipes))
         iters.append(iter(self.similar_grocery_items))
+
+        # Show tags names
+        # print({assoc.tag_name: True for assoc in self.tag_recipes.values()})
+        # print({assoc.tag_name: True for assoc in self.tag_grocery_items.values()})
 
         for it in iters:
             for row in it:
@@ -155,7 +159,9 @@ class Import:
             description = tag_descriptions[spoon_name]
             self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
-        self.tag_recipes.append(models.TagRecipe(tag_name, recipe_id))
+        key = (tag_name, recipe_id)
+        if key not in self.tag_recipes:
+            self.tag_recipes[key] = models.TagRecipe(tag_name, recipe_id)
 
     def recipe(self, recipe_id, recipe_data):
 
