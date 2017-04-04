@@ -43,10 +43,20 @@ const recipe = {
 
 
 export default class RecipeSingle extends React.Component {
+  getInstructions(instructions) {
+    if (instructions.length) {
+      return (
+        <p id="instructions">{instructions}</p>
+      )
+    } else {
+      return (
+        <p disabled>Sorry, we don't have instructions.</p>
+      )
+    }
+  }
+
   render() {
     const id = this.props.params.id;
-
-
     const name = recipe.name;
     const blurb = recipe.blurb;
     const image = recipe.image;
@@ -117,7 +127,7 @@ export default class RecipeSingle extends React.Component {
             </div>
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <p id="instructions">{instructions}</p>
+                {this.getInstructions(instructions)}
               </div>
             </div>
 
