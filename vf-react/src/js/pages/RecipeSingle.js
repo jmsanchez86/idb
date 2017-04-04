@@ -3,46 +3,60 @@ import { IndexLink, Link } from "react-router";
 
 import OptionalList from "../components/layout/OptionalList";
 
-const data = require('json!../../data/food.json');
-const recipes = data.recipes;
-const ingredients = data.ingredients;
-const tags = data.tags;
-const recipe = {
-  "blurb": "A cheese and tomato sandwich makes a healthy lunch option, especially when paired with a side salad.",
-  "id": 1,
-  "image": "http://akns-images.eonline.com/eol_images/Entire_Site/2013424/rs_1024x759-130524141502-1024.GrilledCheeseTomato.ms.052413.jpg",
-  "ingredient_ams": [
-    {
-      "amount": 1.0,
-      "ingredient_id": "3",
-      "original_string": "1 stick plus 2 tablespoons butter",
-      "unit": "stick"
-    },
-    {
-      "amount": 2.0,
-      "ingredient_id": "1",
-      "original_string": "2 slices of tomatoes",
-      "unit": "slice"
-    },
-    {
-      "amount": 2.0,
-      "ingredient_id": "9",
-      "original_string": "2 slices of bread",
-      "unit": "slice"
-    }
-  ],
-
-  "name": "Grilled Cheese with Tomato",
-  "ready_time": 10,
-  "tags": [
-    1,
-    2,
-    4
-  ]
-};
-
 
 export default class RecipeSingle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredient_list : [],
+      tags : [],
+
+
+      instructions : '',
+      ready_time : '',
+      blurb : '',
+      image : '',
+      name : '',
+      id : this.props.params.id,
+
+    };
+    this.requestData();
+  }
+
+  requestData() {
+
+    var _this = this;
+
+    const requestString = 'http://api.vennfridge.appspot.com/recipes/' + _this.state.id;
+    console.log(requestString);
+
+    // Fetch singleton's required data.
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+
+            _this.setState({
+                ingredient_list : responseData.ingredient_list,
+                tags : responseData.tags,
+
+                instructions : responseData.instructions,
+                ready_time : responseData.ready_time,
+                blurb : responseData.blurb,
+                image : responseData.image,
+                name : responseData.name,
+            });
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+  }
+
   getInstructions(instructions) {
     if (instructions && instructions.length) {
       return (
@@ -56,23 +70,22 @@ export default class RecipeSingle extends React.Component {
   }
 
   render() {
-    const id = this.props.params.id;
-    const name = recipe.name;
-    const blurb = recipe.blurb;
-    const image = recipe.image;
-    const ready_time = recipe.ready_time;
-    const instructions = recipe.instructions;
-    const ingredients = recipe.ingredient_ams.map(function(ingredient){
+    const name = this.state.name;
+    const blurb = this.state.blurb;
+    const image = this.state.image;
+    const ready_time = this.state.ready_time;
+    const instructions = this.state.instructions;
+
+    const ingredients = this.state.ingredient_list.map(function(ingredient){
       return(
-        <div key={ingredient.ingredient_id} class="list-group-item">
-          <p><Link to={"ingredients/" + ingredient.ingredient_id}>{ingredient.original_string}</Link></p>
+        <div key={ingredient.id} class="list-group-item">
+          <p><Link to={"ingredients/" + ingredient.id}>{ingredient.original_string}</Link></p>
         </div>);
     });
-    const tags = recipe.tags.map(function(tag){
-      const tagItem = data.tags[tag];
+    const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
-          <Link to={"tags/" + tag}><img class="img-responsive" src={tagItem.image} /></Link>
+        <div key={tag.id} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+          <Link to={"tags/" + tag.id}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });
 
