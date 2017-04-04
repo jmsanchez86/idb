@@ -23,17 +23,10 @@ export default class TagSingle extends React.Component {
 
     var _this = this;
 
-    var _ingredients = [];
-    var _grocery_items = [];
-    var _recipes = [];
-  
-    var _blurb = '';
-    var _image = '';
-    var _name = '';
-
     const requestString = 'http://api.vennfridge.appspot.com/tags/' + _this.state.id;
     console.log(requestString);
-    // call api with new query params
+    
+    // Fetch singeton's required data.
     fetch(requestString)
       .then(function(response) {
         if (response.status !== 200) {
@@ -41,24 +34,14 @@ export default class TagSingle extends React.Component {
               response.status);
         }
         response.json().then(function(responseData) {
-            const temp_recipes = responseData.recipes;
-            const temp_grocery_items = responseData.grocery_items;
-            const temp_ingredients = responseData.ingredients;
+            
+           const _recipes = responseData.recipes;
+           const _grocery_items = responseData.grocery_items;
+           const _ingredients = responseData.ingredients;
 
-            for (var id in temp_recipes) {
-              _recipes.push(temp_recipes[id]);
-            }
-            for (var id in temp_grocery_items) {
-              _grocery_items.push(temp_grocery_items[id]);
-            }
-         
-            for (var id in temp_ingredients) {
-              _ingredients.push(temp_ingredients[id]);
-            }
-
-            _blurb = responseData.blurb;
-            _image = responseData.image;
-            _name = responseData.name;
+           const _blurb = responseData.blurb;
+           const _image = responseData.image;
+           const _name = responseData.name;
 
             _this.setState({
                 ingredients : _ingredients,
@@ -78,7 +61,7 @@ export default class TagSingle extends React.Component {
   }
 
   render() {
-    
+
     const name = this.state.name;
     const blurb = this.state.blurb;
     const image = this.state.image;
