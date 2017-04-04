@@ -1,67 +1,7 @@
 # pylint: disable=missing-docstring
+# pylint: disable=line-too-long
 # pylint: disable=invalid-name
 
-from app.api.models import Ingredient, Recipe, RecipeNutrient, GroceryItem,\
-    GroceryItemIngredient, Tag, TagIngredient, TagRecipe,\
-    TagGroceryItem, IngredientNutrient, RecipeIngredient
+test_recipe_description = "Bittersweet Chocolate Marquise with Cherry Sauce takes approximately <b>45 minutes</b> from beginning to end. This recipe makes 12 servings with <b>371 calories</b>, <b>3g of protein</b>, and <b>30g of fat</b> each. For <b>$1.22 per serving</b>, this recipe <b>covers 7%</b> of your daily requirements of vitamins and minerals. A mixture of sugar, cornstarch, semisweet chocolate, and a handful of other ingredients are all it takes to make this recipe so tasty. 1 person found this recipe to be scrumptious and satisfying. Only a few people really liked this side dish. It is a good option if you're following a <b>gluten free</b> diet. It is brought to you by Epicurious. With a spoonacular <b>score of 11%</b>, this dish is rather bad. If you like this recipe, you might also like recipes such as Bittersweet Chocolate Marquise with Orange Creme Anglaise, Bittersweet Chocolate-Cherry Sorbet with Fresh Cherry Compote, and Bittersweet Chocolate-Cherry Brownies."
 
-
-def mock_data(db):
-    db.session.add(Ingredient(1, "licorice", "licorice.jpg"))
-    db.session.add(Ingredient(2, "lettuce", "lettuce.jpg"))
-    db.session.add(Ingredient(3, "bread", "bread.jpg"))
-
-    db.session.add(IngredientNutrient(1, "sugar", "kilograms", 100))
-    db.session.add(IngredientNutrient(1, "calories", "calories", 9001))
-    db.session.add(IngredientNutrient(1, "iron", "grams", 123))
-
-    db.session.add(IngredientNutrient(2, "sugar", "grams", 50))
-    db.session.add(IngredientNutrient(2, "calories", "joules", 1001))
-    db.session.add(IngredientNutrient(2, "iron", "miligrams", 150))
-
-    db.session.add(Recipe(1, "licorlettuce", "licorlettuce.jpg",
-                          "Blend licorice and lettuce. Serve."))
-    db.session.add(Recipe(2, "sandwich", "sandwich.jpg",
-                          "Insert lettuce between two slices of bread."))
-
-    db.session.add(RecipeNutrient(1, "sugar", "kilograms", 1))
-    db.session.add(RecipeNutrient(1, "calories", "calories", 2))
-    db.session.add(RecipeNutrient(1, "iron", "grams", 3))
-
-    db.session.add(RecipeIngredient(1, 1, "grams", 50,
-                                    "50 grams of licorice"))
-    db.session.add(RecipeIngredient(1, 2, "grams", 100,
-                                    "100 grams of lettuce"))
-
-    db.session.add(RecipeNutrient(2, "sugar", "meters", 82))
-    db.session.add(RecipeNutrient(2, "calories", "calories", 23))
-    db.session.add(RecipeNutrient(2, "iron", "micrograms", 166))
-
-    db.session.add(RecipeIngredient(2, 2, "grams", 50, "1 leaf of lettuce"))
-    db.session.add(RecipeIngredient(2, 3, "grams", 100, "2 slices of bread"))
-
-    db.session.add(GroceryItem(1, "Tom's lettuce", "toms_lettuce.jpg",
-                               141645278962))
-    db.session.add(GroceryItem(2, "Jake's bread", "jakes_bread.jpg",
-                               1234567890))
-
-    db.session.add(GroceryItemIngredient(1, 2, "kilograms", 2,
-                                         "2 kilograms of lettuce"))
-    db.session.add(GroceryItemIngredient(2, 3, "slices", 12,
-                                         "a dozen slices of bread"))
-
-    db.session.add(Tag("candy", "caramel_apple.jpg",
-                       "Candy foods and snacks."))
-    db.session.add(Tag("natural", "industrial.jpg", "Non-artificial."))
-
-    db.session.add(TagIngredient("candy", 1))
-    db.session.add(TagIngredient("natural", 2))
-    db.session.add(TagIngredient("natural", 3))
-
-    db.session.add(TagRecipe("candy", 1))
-    db.session.add(TagRecipe("natural", 2))
-
-    db.session.add(TagGroceryItem("natural", 1))
-    db.session.add(TagGroceryItem("natural", 2))
-
-    db.session.commit()
+test_recipe_instructions = "Preparation                                        For marquise:                Butter 8 1/2x5 1/2x3-inch glass loaf dish. Line dish smoothly with foil. Stir chocolate in top of double boiler over barely simmering water until smooth. Turn off heat. Using electric mixer, beat 1/2 cup butter in large bowl until fluffy. Beat in 1/4 cup sugar, then cocoa powder.                                                                Whisk yolks, 1/4 cup water, 1/4 cup butter, and 1/4 cup sugar in metal bowl. Set over saucepan of simmering water (do not let bowl touch water). Whisk constantly until candy thermometer registers 160°F, about 6 minutes. Remove from over water. Using electric mixer, beat yolk mixture until thick and cool, about 5 minutes. Beat into cocoa mixture. Fold in warm chocolate and vanilla. Beat cream in another bowl until soft peaks form. Fold into chocolate mixture; spread in prepared dish. Cover and chill until firm, at least 4 hours. (Can be made 4 days ahead. Keep chilled.)                                                            For sauce:                Stir all ingredients in medium saucepan over medium heat until sauce boils and thickens, about 5 minutes. Cool slightly. (Can be made 2 days ahead. Cover and refrigerate. Rewarm before serving.)                                                                            Turn marquise out onto platter; peel off foil. Cut into 3/4-inch-thick slices. Place 1 slice on each plate. Spoon warm cherry sauce over and serve immediately."

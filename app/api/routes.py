@@ -8,6 +8,7 @@ import math
 
 import flask
 
+from app.api.database import crud
 from app.api import food_data
 from typing import Any, Callable, List, Tuple
 
@@ -267,3 +268,8 @@ def get_tag(tag_id: int):
         {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
         for i in tag["recipes"]]  # type: ignore
     return flask.json.jsonify(tag)
+
+@API_BP.route('/test_sql_query/<int:sid>')
+def test_sql_query(sid: int):
+    result = crud.read_db(sid)
+    return flask.json.jsonify({'result': repr(result)})
