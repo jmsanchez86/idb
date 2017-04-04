@@ -62,7 +62,7 @@ class Import:
                         "veryHealthy", "veryPopular", "whole30"]
 
     # Recipe tags that make sense to propogate down to ingredients.
-    propogate_tags = ["Low FODMAP", "Ketogenic", "Very healthy", "Vegan", "Whole30", "Dairy-free", "Sustainable"]
+    propogate_flags = ["lowFodmap", "ketogenic", "veryHealthy", "vegan", "whole30", "dairyFree"]
 
     def __init__(self, data_dir: str, database):
         """
@@ -89,7 +89,7 @@ class Import:
         self.ingredient_substitutes = list()
         self.recipe_ingredients = list()
         self.tag_recipes = dict()
-        self.tag_ingredients = list()
+        self.tag_ingredients = dict()
         self.tag_grocery_items = dict()
         self.similar_recipes = list()
         self.similar_grocery_items = list()
@@ -113,10 +113,10 @@ class Import:
         iters.append(self.tags.values())
         iters.append(self.tag_grocery_items.values())
         iters.append(self.tag_recipes.values())
+        iters.append(self.tag_ingredients.values())
 
         iters.append(iter(self.ingredient_substitutes))
         iters.append(iter(self.recipe_ingredients))
-        iters.append(iter(self.tag_ingredients))
         iters.append(iter(self.similar_recipes))
         iters.append(iter(self.similar_grocery_items))
 
@@ -185,9 +185,13 @@ class Import:
                                summary, ready_time, servings)
         self.recipes[recipe_id] = recipe
 
+        ingredient_flags = []
         for flag in self.recipe_tag_flags:
             if recipe_data.get(flag, False):
                 self.recipe_tag(recipe_id, flag)
+
+                if flag in self.propogate_flags:
+                    ingredient_flags.append(flag)
 
         for cuisine in recipe_data.get("cuisines", {}):
             self.recipe_tag(recipe_id, cuisine)
@@ -196,12 +200,31 @@ class Import:
             self.recipe_tag(recipe_id, dish_type)
 
         for ingredient_data in recipe_data.get("extendedIngredients", list()):
-            self.ingredient(recipe_id, ingredient_data)
+            self.ingredient(recipe_id, ingredient_data, ingredient_flags)
 
-    def ingredient(self, recipe_id, ingredient_data):
+    def ingredient_tag(self, ingredient_id, spoon_name):
+        tag_info = tags[spoon_name]
+        tag_name = tag_info["name"]
+        image_url = tag_info["image_url"]
+        description = tag_info["description"]
+
+        # TODO: Just thinking about it, we don't need to add tags here since
+        # we have all the tags in tag_translations.py. This exact code is
+        # in recipe_tag and grocery_tag.
+        if tag_name not in self.tags:
+            self.tags[tag_name] = models.Tag(tag_name, image_url, description)
+
+        key = (tag_name, ingredient_id)
+        if key not in self.tag_ingredients:
+            self.tag_ingredients[key] = models.TagIngredient(tag_name, ingredient_id)
+
+    def ingredient(self, recipe_id, ingredient_data, flags):
         ingredient_id = ingredient_data.get("id", 0)
         if ingredient_id <= 0:
             return
+
+        for flag in flags:
+            self.ingredient_tag(ingredient_id, flag)
 
         if ingredient_id not in self.ingredients:
 
@@ -350,7 +373,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         self.assertIsNotNone(tag)
 
         recipes = tag.recipes
-        recipe_ids = (recipe.recipe_id for recipe in recipes)
+        recipe_ids = [recipe.recipe_id for recipe in recipes]
         self.assertIn(101323, recipe_ids)
         self.assertIn(119007, recipe_ids)
         self.assertIn(125858, recipe_ids)
@@ -362,7 +385,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         self.assertIsNotNone(tag)
 
         recipes = tag.recipes
-        recipe_ids = (recipe.recipe_id for recipe in recipes)
+        recipe_ids = [recipe.recipe_id for recipe in recipes]
         self.assertIn(119007, recipe_ids)
         self.assertIn(165522, recipe_ids)
         self.assertIn(176208, recipe_ids)
@@ -374,9 +397,9 @@ class TestDatabaseIntegrity(unittest.TestCase):
         self.assertIsNotNone(tag)
 
         recipes = tag.recipes
-        recipe_ids = (recipe.recipe_id for recipe in recipes)
-        self.assertIn(204569, recipe_ids)
+        recipe_ids = [recipe.recipe_id for recipe in recipes]
         self.assertIn(229298, recipe_ids)
+        self.assertIn(204569, recipe_ids)
         self.assertIn(270874, recipe_ids)
 
     def test_tag_ingredient(self):
@@ -386,7 +409,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         self.assertIsNotNone(tag)
 
         ingredients = tag.ingredients
-        ingredient_ids = (ingredient.ingredient_id for ingredient in ingredients)
+        ingredient_ids = [ingredient.ingredient_id for ingredient in ingredients]
         self.assertIn(10011282, ingredient_ids)
         self.assertIn(1034053, ingredient_ids)
         self.assertIn(12698, ingredient_ids)
@@ -398,7 +421,7 @@ class TestDatabaseIntegrity(unittest.TestCase):
         self.assertIsNotNone(tag)
 
         grocery_items = tag.grocery_items
-        grocery_ids = (item.grocery_id for item in grocery_items)
+        grocery_ids = [item.grocery_id for item in grocery_items]
         self.assertIn(101017, grocery_ids)
         self.assertIn(101280, grocery_ids)
         self.assertIn(102111, grocery_ids)
