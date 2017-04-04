@@ -51,6 +51,7 @@ Known tags
 """
 
 
+
 class Import:
     """
     Imports json data from a directory into a databse.
@@ -59,6 +60,9 @@ class Import:
     recipe_tag_flags = ["cheap", "dairyFree", "glutenFree", "ketogenic",
                         "lowFodmap", "sustainable", "vegan", "vegeterian",
                         "veryHealthy", "veryPopular", "whole30"]
+
+    # Recipe tags that make sense to propogate down to ingredients.
+    propogate_tags = ["Low FODMAP", "Ketogenic", "Very healthy", "Vegan", "Whole30", "Dairy-free", "Sustainable"]
 
     def __init__(self, data_dir: str, database):
         """
@@ -193,9 +197,6 @@ class Import:
 
         for ingredient_data in recipe_data.get("extendedIngredients", list()):
             self.ingredient(recipe_id, ingredient_data)
-
-
-
 
     def ingredient(self, recipe_id, ingredient_data):
         ingredient_id = ingredient_data.get("id", 0)
@@ -377,6 +378,18 @@ class TestDatabaseIntegrity(unittest.TestCase):
         self.assertIn(204569, recipe_ids)
         self.assertIn(229298, recipe_ids)
         self.assertIn(270874, recipe_ids)
+
+    def test_tag_ingredient(self):
+        query = self.database.session.query(models.Tag)
+        query = query.filter_by(tag_name="Vegan")
+        tag = query.first()
+        self.assertIsNotNone(tag)
+
+        ingredients = tag.ingredients
+        ingredient_ids = (ingredient.ingredient_id for ingredient in ingredients)
+        self.assertIn(10011282, ingredient_ids)
+        self.assertIn(1034053, ingredient_ids)
+        self.assertIn(12698, ingredient_ids)
 
     def test_tag_badge(self):
         query = self.database.session.query(models.Tag)
