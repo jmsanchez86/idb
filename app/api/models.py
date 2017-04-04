@@ -285,13 +285,15 @@ class SimilarGroceryItem(db.Model):
 
     __tablename__ = "similar_grocery_item"
 
+    ingredient_id = db.Column(db.Integer, primary_key=True)
     grocery_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
     similar_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
 
     grocery_item = db.relationship("GroceryItem", back_populates="similar_grocery_item_assocs", foreign_keys=[grocery_id])
     similar = db.relationship("GroceryItem", foreign_keys=[similar_id])
 
-    def __init__(self, grocery_id, similar_id):
+    def __init__(self, ingredient_id, grocery_id, similar_id):
+        self.ingredient_id = ingredient_id
         self.grocery_id = grocery_id 
         self.similar_id = similar_id
 
