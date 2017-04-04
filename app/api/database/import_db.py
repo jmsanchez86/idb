@@ -13,6 +13,7 @@ def run_import():
     imports the json data into real postgres database
     """
     with API_SERVICE.app_context():
+        API_SERVICE.config["SQLALCHEMY_ECHO"] = True
         imp = Importer(os.path.join(APP_ROOT, "scraping", "data"), models.db)
         imp.run()
 
