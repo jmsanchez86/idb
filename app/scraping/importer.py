@@ -103,7 +103,6 @@ class Importer:
         return self.database.session
 
     def commit(self):
-
         iters = list()
         iters.append(self.recipes.values())
         iters.append(self.ingredients.values())
