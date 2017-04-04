@@ -21,10 +21,10 @@ class Recipe(db.Model):
     __tablename__ = "recipe"
 
     recipe_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    image_url = db.Column(db.String(100))
-    instructions = db.Column(db.String(1000))
-    description = db.Column(db.String(1000))
+    name = db.Column(db.Text)
+    image_url = db.Column(db.Text)
+    instructions = db.Column(db.Text)
+    description = db.Column(db.Text)
     ready_time = db.Column(db.Integer)
     servings = db.Column(db.Integer)
 
@@ -49,9 +49,9 @@ class Ingredient(db.Model):
     __tablename__ = "ingredient"
 
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    image_url = db.Column(db.String(100))
-    aisle = db.Column(db.String(20))
+    name = db.Column(db.String(50))
+    image_url = db.Column(db.Text)
+    aisle = db.Column(db.String(100))
 
     def __init__(self, ingredient_id, name, image_url, aisle):
         self.ingredient_id = ingredient_id
@@ -73,7 +73,7 @@ class IngredientSubstitute(db.Model):
     ingredient_id = db.Column(db.Integer,
                               db.ForeignKey("ingredient.ingredient_id"),
                               primary_key=True)
-    substitute = db.Column(db.String(100), primary_key=True)
+    substitute = db.Column(db.Text, primary_key=True)
 
     ingredient = db.relationship("Ingredient", back_populates="substitutes")
 
@@ -98,8 +98,8 @@ class GroceryItem(db.Model):
 
     grocery_id = db.Column(db.Integer, primary_key=True)
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    image_url = db.Column(db.String(100))
+    name = db.Column(db.Text)
+    image_url = db.Column(db.Text)
     upc = db.Column(db.String(20))
 
     def __init__(self, grocery_id, ingredient_id, name, image_url, upc):
@@ -120,9 +120,9 @@ class Tag(db.Model):
 
     __tablename__ = "tag"
 
-    tag_name = db.Column(db.String(20), primary_key=True)
-    image_url = db.Column(db.String(100))
-    description = db.Column(db.String(100))
+    tag_name = db.Column(db.String(50), primary_key=True)
+    image_url = db.Column(db.Text)
+    description = db.Column(db.Text)
 
     def __init__(self, tag_name, image_url, description):
         self.tag_name = tag_name
@@ -142,7 +142,7 @@ class RecipeIngredient(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
-    verbal_quantity = db.Column(db.String(100), primary_key=True)
+    verbal_quantity = db.Column(db.Text, primary_key=True)
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
 
@@ -167,7 +167,7 @@ class TagIngredient(db.Model):
 
     __tablename__ = "tag_ingredient"
 
-    tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+    tag_name = db.Column(db.String(50), db.ForeignKey("tag.tag_name"),
                          primary_key=True)
     ingredient_id = db.Column(db.Integer,
                               db.ForeignKey("ingredient.ingredient_id"),
@@ -200,7 +200,7 @@ class TagRecipe(db.Model):
 
     __tablename__ = "tag_recipe"
 
-    tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+    tag_name = db.Column(db.String(50), db.ForeignKey("tag.tag_name"),
                          primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
@@ -230,7 +230,7 @@ class TagGroceryItem(db.Model):
 
     __tablename__ = "tag_grocery_item"
 
-    tag_name = db.Column(db.String(20), db.ForeignKey("tag.tag_name"),
+    tag_name = db.Column(db.String(50), db.ForeignKey("tag.tag_name"),
                          primary_key=True)
     ingredient_id = db.Column(db.Integer, primary_key=True)
     grocery_id = db.Column(db.Integer, primary_key=True)
@@ -286,11 +286,13 @@ class SimilarGroceryItem(db.Model):
     __tablename__ = "similar_grocery_item"
 
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    grocery_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
-    similar_id = db.Column(db.Integer, db.ForeignKey("grocery_item.grocery_id"), primary_key=True)
+    grocery_id = db.Column(db.Integer, primary_key=True)
+    similar_id = db.Column(db.Integer, primary_key=True)
 
-    grocery_item = db.relationship("GroceryItem", back_populates="similar_grocery_item_assocs", foreign_keys=[grocery_id])
-    similar = db.relationship("GroceryItem", foreign_keys=[similar_id])
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], [GroceryItem.ingredient_id, GroceryItem.grocery_id]), db.ForeignKeyConstraint([ingredient_id, similar_id], [GroceryItem.ingredient_id, GroceryItem.grocery_id]), {})
+
+    grocery_item = db.relationship("GroceryItem", back_populates="similar_grocery_item_assocs", foreign_keys=[ingredient_id, grocery_id])
+    similar = db.relationship("GroceryItem", foreign_keys=[ingredient_id, similar_id])
 
     def __init__(self, ingredient_id, grocery_id, similar_id):
         self.ingredient_id = ingredient_id
