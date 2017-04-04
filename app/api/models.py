@@ -7,6 +7,7 @@ Database models described with SQLAlchemy.
 # pylint: disable=too-few-public-methods
 # pylint: disable=bad-whitespace
 # pylint: disable=too-many-arguments
+# pylint: disable=too-many-instance-attributes
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -27,9 +28,10 @@ class Recipe(db.Model):
     description = db.Column(db.String(1000))
     ready_time = db.Column(db.Integer)
     servings = db.Column(db.Integer)
+    source_url = db.Column(db.String(100))
 
     def __init__(self, recipe_id, name, image_url, instructions, description,
-                 ready_time, servings):
+                 ready_time, servings, source_url):
         self.recipe_id = recipe_id
         self.name = name
         self.image_url = image_url
@@ -37,6 +39,7 @@ class Recipe(db.Model):
         self.description = description
         self.ready_time = ready_time
         self.servings = servings
+        self.source_url = source_url
 
     def __repr__(self):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)

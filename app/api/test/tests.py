@@ -45,9 +45,12 @@ class DatabaseIntegrityTests(unittest.TestCase):
         self.assertEqual(recipe.image_url, "https://spoonacular.com/" +
                          "recipeImages/bittersweet-chocolate-marquise-with-" +
                          "cherry-sauce-151512.jpg")
-
         self.assertEqual(recipe.description, test_data.test_recipe_description)
         self.assertEqual(recipe.instructions, test_data.test_recipe_instructions)
+        self.assertEqual(recipe.source_url,
+                         "http://www.epicurious.com/recipes/food/views/" +
+                         "Bittersweet-Chocolate-Marquise-with-Cherry-Sauce-" +
+                         "108254")
 
 
     def test_ingredient(self):

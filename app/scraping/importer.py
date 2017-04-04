@@ -174,7 +174,8 @@ class Importer:
                    or "")
 
         recipe = models.Recipe(recipe_id, name, image_url, instructions,
-                               summary, ready_time, servings)
+                               summary, ready_time, servings,
+                               recipe_data["sourceUrl"])
         self.recipes[recipe_id] = recipe
 
         ingredient_flags = []
