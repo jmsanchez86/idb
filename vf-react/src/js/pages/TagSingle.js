@@ -26,7 +26,7 @@ export default class TagSingle extends React.Component {
     const requestString = 'http://api.vennfridge.appspot.com/tags/' + _this.state.id;
     console.log(requestString);
     
-    // Fetch singeton's required data.
+    // Fetch singleton's required data.
     fetch(requestString)
       .then(function(response) {
         if (response.status !== 200) {
@@ -34,23 +34,15 @@ export default class TagSingle extends React.Component {
               response.status);
         }
         response.json().then(function(responseData) {
-            
-           const _recipes = responseData.recipes;
-           const _grocery_items = responseData.grocery_items;
-           const _ingredients = responseData.ingredients;
-
-           const _blurb = responseData.blurb;
-           const _image = responseData.image;
-           const _name = responseData.name;
 
             _this.setState({
-                ingredients : _ingredients,
-                grocery_items : _grocery_items,
-                recipes : _recipes,
+                ingredients : responseData.ingredients,
+                grocery_items : responseData.grocery_items,
+                recipes : responseData.recipes,
 
-                blurb : _blurb,
-                image : _image,
-                name : _name,
+                blurb : responseData.blurb,
+                image : responseData.image,
+                name : responseData.name,
             });
 
         });

@@ -22,16 +22,10 @@ export default class GroceryItemSingle extends React.Component {
 
     var _this = this;
 
-    var _ingredient = '';
-    var _tags = [];
-  
-    var _image = '';
-    var _name = '';
-    var _upc = '';
-
     const requestString = 'http://api.vennfridge.appspot.com/grocery_items/' + _this.state.id;
     console.log(requestString);
-    // call api with new query params
+
+    // Fetch singleton's required data.
     fetch(requestString)
       .then(function(response) {
         if (response.status !== 200) {
@@ -39,25 +33,14 @@ export default class GroceryItemSingle extends React.Component {
               response.status);
         }
         response.json().then(function(responseData) {
-            const temp_ingredient = responseData.ingredient;
-            const temp_tags = responseData.tags;
-
-            for (var id in temp_tags) {
-              _tags.push(temp_tags[id]);
-            }
-
-            _ingredient = responseData.ingredient;
-            _image = responseData.image;
-            _name = responseData.name;
-            _upc = responseData.upc;
 
             _this.setState({
-                ingredient : _ingredient,
-                tags : _tags,
+                ingredient : responseData.ingredient,
+                tags : responseData.tags,
 
-                image : _image,
-                name : _name,
-                upc : _upc,
+                image : responseData.image,
+                name : responseData.name,
+                upc : responseData.upc,
             });
 
         });
