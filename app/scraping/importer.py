@@ -118,10 +118,6 @@ class Importer:
         iters.append(iter(self.similar_recipes))
         iters.append(iter(self.similar_grocery_items))
 
-        # Show tags names
-        # print({assoc.tag_name: True for assoc in self.tag_recipes.values()})
-        # print({assoc.tag_name: True for assoc in self.tag_grocery_items.values()})
-
         for itr in iters:
             for row in itr:
                 self.session.add(row)
@@ -168,7 +164,6 @@ class Importer:
             self.tag_recipes[key] = models.TagRecipe(tag_name, recipe_id)
 
     def recipe(self, recipe_id, recipe_data):
-
         name = recipe_data.get("title", "")
         image_url = recipe_data.get("image", "")
         instructions = strip_html(recipe_data.get("instructions", "") or "")
@@ -227,10 +222,10 @@ class Importer:
         if ingredient_id not in self.ingredients:
 
             name = ingredient_data.get("name", None)
-            assert(name != None)
+            assert name != None
 
             aisle = ingredient_data.get("aisle", None)
-            assert(aisle != None)
+            assert aisle != None
 
             self.ingredients[ingredient_id] = (models.Ingredient(ingredient_id, name, "", aisle))
 
@@ -244,7 +239,7 @@ class Importer:
                     self.product(ingredient_id, product_data, products)
 
         verbal_quantity = ingredient_data.get("originalString", None)
-        assert(verbal_quantity != None)
+        assert verbal_quantity != None
 
         self.recipe_ingredients.append(models.RecipeIngredient(recipe_id, ingredient_id, verbal_quantity))
 
@@ -266,11 +261,11 @@ class Importer:
 
     def product(self, ingredient_id, product_data, other_products):
         product_id = product_data.get("id", None)
-        assert(product_id != None)
+        assert product_id != None
 
         for other in other_products:
             other_id = other.get("id", None)
-            assert(other_id != None)
+            assert other_id != None
 
             if other_id == product_id:
                 continue
