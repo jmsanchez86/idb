@@ -31,7 +31,7 @@ const recipe = {
       "unit": "slice"
     }
   ],
-  "instructions": "Directions: Spread both slices of bread with a light layer of mayo. Put slice of cheese on one piece of bread. Add tomato slices. Cover tomato slices with other slice of cheese, then cover with other piece of bread. In the meantime, heat griddle or pan with butter. Also spread butter on top of each side of bread. Grill until sandwich is brown on both sides and cheese is melted.",
+
   "name": "Grilled Cheese with Tomato",
   "ready_time": 10,
   "tags": [
@@ -44,7 +44,7 @@ const recipe = {
 
 export default class RecipeSingle extends React.Component {
   getInstructions(instructions) {
-    if (instructions.length) {
+    if (instructions && instructions.length) {
       return (
         <p id="instructions">{instructions}</p>
       )
@@ -122,7 +122,7 @@ export default class RecipeSingle extends React.Component {
               />
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3 disabled={!instructions.length}>Instructions</h3>
+                <h3 disabled={!instructions || !instructions.length}>Instructions</h3>
               </div>
             </div>
             <div class="row">
