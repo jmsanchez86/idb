@@ -1,20 +1,22 @@
-...........
+.............
 ----------------------------------------------------------------------
-Ran 11 tests in 0.123s
+Ran 13 tests in 12.426s
 
 OK
-sqlalchemy version: 1.1.7
-flask_sqlalchemy version: 2.2
 Name                                    Stmts   Miss  Cover   Missing
 ---------------------------------------------------------------------
 app/__init__.py                             0      0   100%
 app/api/__init__.py                         0      0   100%
-app/api/models.py                         160      0   100%
+app/api/models.py                         157      9    94%   42, 63, 85, 113, 133, 155, 185, 216, 250
 app/api/test/TestResultWithSuccess.py       8      4    50%   8-9, 12-13
 app/api/test/__init__.py                    1      0   100%
 app/api/test/routes.py                      9      5    44%   12-16
 app/api/test/run_tests.py                  10      4    60%   12-16
-app/api/test/test_data.py                  37      0   100%
-app/api/test/tests.py                      79      0   100%
+app/api/test/test_data.py                   2      0   100%
+app/api/test/tests.py                     140      0   100%
+app/project_root.py                         2      0   100%
+app/scraping/__init__.py                    0      0   100%
+app/scraping/importer.py                  165      3    98%   213, 265, 294
+app/scraping/tag_translations.py           80      0   100%
 ---------------------------------------------------------------------
-TOTAL                                     304     13    96%
+TOTAL                                     574     25    96%
