@@ -1,28 +1,85 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
-var data = require('json!../../data/food.json');
-const recipes = data.recipes;
-const ingredients = data.ingredients;
-const grocery_items = data.grocery_items;
-const tags = data.tags;
 
 export default class GroceryItemSingle extends React.Component {
-  render() {
-    const id = this.props.params.id;
-    const grocery_item = data.grocery_items[id];
-    console.log(grocery_item);
-    const name = grocery_item.name;
-    const image = grocery_item.image;
-    const ing_id = grocery_item.ingredient;
-    const ingredient = data.ingredients[ing_id];
-    const upc = grocery_item.upc;
+   constructor(props) {
+    super(props);
+    this.state = {
+      ingredient : {},
+      tags : [],
 
-    const tags = grocery_item.tags.map(function(tag){
-      const tagItem = data.tags[tag];
+      image : '',
+      name : '',
+      upc : '',
+      id : this.props.params.id,
+
+    };
+    this.requestData(); 
+  }
+
+  requestData() {
+
+    var _this = this;
+
+    var _ingredient = '';
+    var _tags = [];
+  
+    var _image = '';
+    var _name = '';
+    var _upc = '';
+
+    const requestString = 'http://api.vennfridge.appspot.com/grocery_items/' + _this.state.id;
+    console.log(requestString);
+    // call api with new query params
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+            const temp_ingredient = responseData.ingredient;
+            const temp_tags = responseData.tags;
+
+            for (var id in temp_tags) {
+              _tags.push(temp_tags[id]);
+            }
+
+            _ingredient = responseData.ingredient;
+            _image = responseData.image;
+            _name = responseData.name;
+            _upc = responseData.upc;
+
+            _this.setState({
+                ingredient : _ingredient,
+                tags : _tags,
+
+                image : _image,
+                name : _name,
+                upc : _upc,
+            });
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+  }
+
+  render() {
+    
+    const name = this.state.name;
+    const image = this.state.image;
+    const ing_id = this.state.ingredient.id;
+    const ingredient = this.state.ingredient;
+    const upc = this.state.upc;
+    
+    const tags = this.state.tags.map(function(tag){
+      const tagItem = tag;
       return (
         <div key={tag} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
-        <Link to={"tags/" + tag}><img class="img-responsive" src={tagItem.image} /></Link>
+        <Link to={"tags/" + tag.id}><img class="img-responsive" src={tagItem.image} /></Link>
         </div>);
       });
     return (
