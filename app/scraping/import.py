@@ -14,7 +14,7 @@ import re
 from pathlib import Path
 from flask import Flask
 from app.api import models
-from app.scraping.tag_translations import tag_names, tag_image_urls, tag_descriptions
+from app.scraping.tag_translations import tags
 
 def strip_html(html):
     """
@@ -153,10 +153,12 @@ class Import:
         self.commit()
 
     def recipe_tag(self, recipe_id, spoon_name):
-        tag_name = tag_names[spoon_name]
+        tag_info = tags[spoon_name]
+        tag_name = tag_info["name"]
+        image_url = tag_info["image_url"]
+        description = tag_info["description"]
+
         if tag_name not in self.tags:
-            image_url = tag_image_urls[spoon_name]
-            description = tag_descriptions[spoon_name]
             self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
         key = (tag_name, recipe_id)
@@ -226,10 +228,12 @@ class Import:
 
 
     def product_tag(self, ingredient_id, product_id, spoon_name):
-        tag_name = tag_names[spoon_name]
+        tag_info = tags[spoon_name]
+        tag_name = tag_info["name"]
+        image_url = tag_info["image_url"]
+        description = tag_info["description"]
+
         if tag_name not in self.tags:
-            image_url = tag_image_urls.get(spoon_name, "")
-            description = tag_descriptions.get(spoon_name, "")
             self.tags[tag_name] = models.Tag(tag_name, image_url, description)
 
         key = (ingredient_id, product_id, tag_name)
