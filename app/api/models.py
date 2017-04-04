@@ -28,7 +28,7 @@ class Recipe(db.Model):
     description = db.Column(db.Text)
     ready_time = db.Column(db.Integer)
     servings = db.Column(db.Integer)
-    source_url = db.Column(db.String(100))
+    source_url = db.Column(db.Text)
 
     def __init__(self, recipe_id, name, image_url, instructions, description,
                  ready_time, servings, source_url):
@@ -52,9 +52,9 @@ class Ingredient(db.Model):
     __tablename__ = "ingredient"
 
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.Text)
     image_url = db.Column(db.Text)
-    aisle = db.Column(db.String(100))
+    aisle = db.Column(db.Text)
 
     def __init__(self, ingredient_id, name, image_url, aisle):
         self.ingredient_id = ingredient_id
@@ -306,7 +306,8 @@ class SimilarGroceryItem(db.Model):
                                               [GroceryItem.ingredient_id,
                                                GroceryItem.grocery_id]),
                       db.ForeignKeyConstraint([ingredient_id, similar_id],
-                      [GroceryItem.ingredient_id, GroceryItem.grocery_id]), {})
+                                              [GroceryItem.ingredient_id,
+                                               GroceryItem.grocery_id]), {})
 
     grocery_item = db.relationship("GroceryItem",
                                    back_populates="similar_grocery_item_assocs",
