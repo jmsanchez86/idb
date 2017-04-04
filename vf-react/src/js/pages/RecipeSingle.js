@@ -1,6 +1,8 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
+import OptionalList from "../components/layout/OptionalList";
+
 const data = require('json!../../data/food.json');
 const recipes = data.recipes;
 const ingredients = data.ingredients;
@@ -104,16 +106,10 @@ export default class RecipeSingle extends React.Component {
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3 disabled={!ingredients.length}>Ingredients</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                {ingredients}
-              </div>
-            </div>
+            <OptionalList
+              title="Ingredients"
+              list={ingredients}
+              />
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                 <h3 disabled={!instructions.length}>Instructions</h3>

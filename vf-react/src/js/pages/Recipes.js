@@ -44,6 +44,7 @@ export default class Recipes extends React.Component {
   }
 
   requestQuery(requestString) {
+    console.log(requestString);
     var _this = this;
     var _data = {}
     var _links = {}

@@ -1,6 +1,9 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
+import OptionalList from "../components/layout/OptionalList";
+
+
 const data = require('json!../../data/food.json');
 const ingredients = data.ingredients;
 const recipes = data.recipes;
@@ -89,36 +92,18 @@ export default class IngredientSingle extends React.Component {
             </div>
           </div>
           <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3 disabled={!ingredient.recipes.length}>Related Recipes</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                {recipes}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3  disabled={!ingredient.grocery_items.length}>Grocery Items</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <p>{grocery_items}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                <h3 disabled={!tags.length}>Tags</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="panel-body">
-                {tags}
-              </div>
-            </div>
+            <OptionalList
+              title="Related Recipes"
+              list={recipes}
+              />
+            <OptionalList
+              title="Grocery Items"
+              list={grocery_items}
+              />
+            <OptionalList
+              title="Tags"
+              list={tags}
+              />
           </div>
         </div>
 
