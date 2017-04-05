@@ -46,8 +46,8 @@ export default class Ingredients extends React.Component {
 
   requestQuery(requestString) {
     var _this = this;
-    var _data = {}
-    var _links = {}
+    var _data = {};
+    var _links = {};
 
     // call api with new query params
     fetch(requestString)
@@ -58,7 +58,7 @@ export default class Ingredients extends React.Component {
         }
         response.json().then(function(responseData) {
           for (var id in responseData.data){
-            _data[id] = responseData.data[id];
+            _data[responseData.data[id].name] = responseData.data[id];
           }
           for (var id in responseData.links){
             _links[id] = responseData.links[id];
@@ -137,6 +137,7 @@ export default class Ingredients extends React.Component {
 
   render() {
     const data = this.state.data;
+    console.log(data);
     const links= this.state.links;
     return (
       <div id="grid-page" class="contatiner">
