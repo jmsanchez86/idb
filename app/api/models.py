@@ -65,6 +65,36 @@ class Ingredient(db.Model):
     def __repr__(self):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
+    @staticmethod
+    def get_all_sorted_filtered_paged(filters, order, page, page_size):
+        orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
+        order_param, asc = orders[order]
+        counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
+        sort_clause = (" ORDER BY {order_param} {asc} ").format(
+                order_param=order_param, asc="ASC" if asc else "DESC")
+        page_clause = (" LIMIT {size} OFFSET {start}").format(
+                start=page_size*page, size=page_size)
+        if len(filters) > 0:
+            tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
+            filter_clause = (" SELECT ingredient_id, name, image_url FROM "
+                             "(SELECT ingredient_id, name, image_url, "
+                             "COUNT(ingredient_id) AS cnt FROM "
+                             "(SELECT i.ingredient_id, i.name, i.image_url, "
+                             "t.tag_name FROM ingredient i JOIN tag_ingredient"
+                             " t ON i.ingredient_id = t.ingredient_id WHERE "
+                             "{tags} ) AS fst GROUP BY ingredient_id, name, "
+                             "image_url) AS scnd WHERE cnt = {tag_count} ")\
+                            .format(tags=tagclause, tag_count=len(filters)) +\
+                            sort_clause
+            count_clause = counter.format(subquery=filter_clause)
+            return (db.engine.execute(filter_clause + page_clause + ";"),
+                    db.engine.execute(count_clause))
+        else:
+            no_filter_clause = ("SELECT ingredient_id, name, image_url FROM "
+                                "ingredient " + sort_clause)
+            count_clause = counter.format(subquery=no_filter_clause)
+            return (db.engine.execute(no_filter_clause + page_clause + ";"),
+                    db.engine.execute(count_clause))
 
 class IngredientSubstitute(db.Model):
     """
