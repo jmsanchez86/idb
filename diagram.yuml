@@ -1,10 +1,10 @@
 //Venn Fridge yUML
 
 //Main classes
-[GroceryItem|name:string;image:string;upc:string;|get_all_sorted_filtered_paged();],
-[Ingredient|name:string;image:string;aisle:string;|get_all_sorted_filtered_paged();],
-[Recipe|name:string;image:string;blurb:string;instructions:string;serving:int;source_url:string;ready_time:int|get_all_sorted_filtered_paged();],
-[Tag|name:string;image:string;blurb:string|get_all_sorted_filtered_paged();],
+[GroceryItem|name:string;image:string;upc:string;|get_all();],
+[Ingredient|name:string;image:string;aisle:string;|get_all();],
+[Recipe|name:string;image:string;description:string;instructions:string;serving:int;source_url:string;ready_time:int|get_all();],
+[Tag|name:string;image:string;description:string|get_all();],
 
 // Supporting classes
 [RecipeIngredient|verbal_quantity:string;],
