@@ -14,6 +14,7 @@ export default class RecipeSingle extends React.Component {
 
       instructions : '',
       ready_time : '',
+      source : '',
       blurb : '',
       image : '',
       name : '',
@@ -45,6 +46,7 @@ export default class RecipeSingle extends React.Component {
 
                 instructions : responseData.instructions,
                 ready_time : responseData.ready_time,
+                source : responseData.source,
                 blurb : responseData.blurb,
                 image : responseData.image,
                 name : responseData.name,
@@ -57,14 +59,17 @@ export default class RecipeSingle extends React.Component {
       });
   }
 
-  getInstructions(instructions) {
+  getInstructions(instructions, source) {
     if (instructions && instructions.length) {
       return (
         <p id="instructions">{instructions}</p>
       )
     } else {
       return (
-        <p disabled>Sorry, we don't have instructions.</p>
+        <div>
+        <p disabled>Sorry, we don't have instructions. Click the following to visit the recipe source. </p>
+        <p><a href={source}> Recipe Source. </a></p>
+        </div>
       )
     }
   }
@@ -73,6 +78,7 @@ export default class RecipeSingle extends React.Component {
     const name = this.state.name;
     const blurb = this.state.blurb;
     const image = this.state.image;
+    const source = this.state.source;
     const ready_time = this.state.ready_time;
     const instructions = this.state.instructions;
 
@@ -140,7 +146,7 @@ export default class RecipeSingle extends React.Component {
             </div>
             <div class="row">
               <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                {this.getInstructions(instructions)}
+                {this.getInstructions(instructions, source)}
               </div>
             </div>
 
