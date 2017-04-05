@@ -1,5 +1,7 @@
 import React from "react";
 
+import UnitTestButton from "../components/layout/UnitTestButton";
+
 var teamData = require('json!../../../../app/static/data/team-info.json');
 var tech_doc = '' + require('../scripts/tech-doc.js'); // pulls in tech doc as md string
 
@@ -13,6 +15,7 @@ export default class About extends React.Component {
     this.state = {
       gitDataUrl: 'https://api.github.com/repos/jmsanchez86/idb/stats/contributors',
       gitIssuesUrl: 'https://api.github.com/repos/jmsanchez86/idb/issues',
+      api_endpoint: 'http://api.vennfridge.appspot.com/',
       contributors: new Map(),
       totalIssues: 0,
       totalCommits: 0,
@@ -56,7 +59,7 @@ export default class About extends React.Component {
           // Examine the text in the response
           response.json().then(function(data) {
             for(var i=0; i<data.length; ++i) {
-              // update our state for each contributor
+              // update our github state for each contributor
               const contributor = _this.state.contributors.get(data[i].author.login);
               if(contributor){
                   var gitContr = {
@@ -71,7 +74,7 @@ export default class About extends React.Component {
               }
               
             }
-             var cont = _this.state.contributors;
+            var cont = _this.state.contributors;
             cont.get('scottnm').totalIssues = 32;
             cont.get('CoryDunn').totalIssues = 1;
             cont.get('jmsanchez86').totalIssues = 0;
@@ -152,10 +155,8 @@ export default class About extends React.Component {
           <p><span class="badge active">{this.state.totalIssues}</span>
                 {' '}total issues.
           </p>
-          <p><span class="badge active">{this.state.totalUnitTests}</span>
-                {' '}total unit tests.
-          </p>
-          <h6><a href="https://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
+          <UnitTestButton api_endpoint={this.state.api_endpoint}/>
+          <h6><a href="http://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
         </div>
         <div class="container" dangerouslySetInnerHTML={{__html: html}} />
       </div>

@@ -7,6 +7,7 @@ Database models described with SQLAlchemy.
 # pylint: disable=too-few-public-methods
 # pylint: disable=bad-whitespace
 # pylint: disable=too-many-arguments
+# pylint: disable=too-many-instance-attributes
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -27,9 +28,10 @@ class Recipe(db.Model):
     description = db.Column(db.Text)
     ready_time = db.Column(db.Integer)
     servings = db.Column(db.Integer)
+    source_url = db.Column(db.Text)
 
     def __init__(self, recipe_id, name, image_url, instructions, description,
-                 ready_time, servings):
+                 ready_time, servings, source_url):
         self.recipe_id = recipe_id
         self.name = name
         self.image_url = image_url
@@ -37,6 +39,7 @@ class Recipe(db.Model):
         self.description = description
         self.ready_time = ready_time
         self.servings = servings
+        self.source_url = source_url
 
     def __repr__(self):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
@@ -49,9 +52,9 @@ class Ingredient(db.Model):
     __tablename__ = "ingredient"
 
     ingredient_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.Text)
     image_url = db.Column(db.Text)
-    aisle = db.Column(db.String(100))
+    aisle = db.Column(db.Text)
 
     def __init__(self, ingredient_id, name, image_url, aisle):
         self.ingredient_id = ingredient_id
@@ -141,7 +144,9 @@ class RecipeIngredient(db.Model):
 
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
                           primary_key=True)
-    ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredient.ingredient_id"), primary_key=True)
+    ingredient_id = db.Column(db.Integer,
+                              db.ForeignKey("ingredient.ingredient_id"),
+                              primary_key=True)
     verbal_quantity = db.Column(db.Text, primary_key=True)
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
@@ -235,7 +240,9 @@ class TagGroceryItem(db.Model):
     ingredient_id = db.Column(db.Integer, primary_key=True)
     grocery_id = db.Column(db.Integer, primary_key=True)
 
-    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], [GroceryItem.ingredient_id, GroceryItem.grocery_id]), {})
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id],
+                                              [GroceryItem.ingredient_id,
+                                               GroceryItem.grocery_id]), {})
 
     tag = db.relationship("Tag", back_populates="tag_grocery_item_assocs")
     grocery_item = db.relationship("GroceryItem",
@@ -265,17 +272,23 @@ class SimilarRecipe(db.Model):
 
     __tablename__ = "similar_recipe"
 
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
-    similar_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"), primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
+                          primary_key=True)
+    similar_id = db.Column(db.Integer, db.ForeignKey("recipe.recipe_id"),
+                           primary_key=True)
 
-    recipe = db.relationship("Recipe", back_populates="similar_recipe_assocs", foreign_keys=[recipe_id])
+    recipe = db.relationship("Recipe", back_populates="similar_recipe_assocs",
+                             foreign_keys=[recipe_id])
     similar = db.relationship("Recipe", foreign_keys=[similar_id])
 
     def __init__(self, recipe_id, similar_id):
         self.recipe_id = recipe_id
         self.similar_id = similar_id
 
-Recipe.similar_recipe_assocs = db.relationship("SimilarRecipe", back_populates="recipe", foreign_keys=[SimilarRecipe.recipe_id])
+Recipe.similar_recipe_assocs =\
+        db.relationship("SimilarRecipe",
+                        back_populates="recipe",
+                        foreign_keys=[SimilarRecipe.recipe_id])
 Recipe.similar_recipes = association_proxy("similar_recipe_assocs", "similar")
 
 class SimilarGroceryItem(db.Model):
@@ -289,18 +302,29 @@ class SimilarGroceryItem(db.Model):
     grocery_id = db.Column(db.Integer, primary_key=True)
     similar_id = db.Column(db.Integer, primary_key=True)
 
-    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], [GroceryItem.ingredient_id, GroceryItem.grocery_id]), db.ForeignKeyConstraint([ingredient_id, similar_id], [GroceryItem.ingredient_id, GroceryItem.grocery_id]), {})
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id],
+                                              [GroceryItem.ingredient_id,
+                                               GroceryItem.grocery_id]),
+                      db.ForeignKeyConstraint([ingredient_id, similar_id],
+                                              [GroceryItem.ingredient_id,
+                                               GroceryItem.grocery_id]), {})
 
-    grocery_item = db.relationship("GroceryItem", back_populates="similar_grocery_item_assocs", foreign_keys=[ingredient_id, grocery_id])
-    similar = db.relationship("GroceryItem", foreign_keys=[ingredient_id, similar_id])
+    grocery_item = db.relationship("GroceryItem",
+                                   back_populates="similar_grocery_item_assocs",
+                                   foreign_keys=[ingredient_id, grocery_id])
+    similar = db.relationship("GroceryItem",
+                              foreign_keys=[ingredient_id, similar_id])
 
     def __init__(self, ingredient_id, grocery_id, similar_id):
         self.ingredient_id = ingredient_id
-        self.grocery_id = grocery_id 
+        self.grocery_id = grocery_id
         self.similar_id = similar_id
 
-GroceryItem.similar_grocery_item_assocs = db.relationship("SimilarGroceryItem", back_populates="grocery_item", foreign_keys=[SimilarGroceryItem.grocery_id])
-GroceryItem.similar_grocery_items = association_proxy("similar_grocery_item_assocs", "similar")
+GroceryItem.similar_grocery_item_assocs =\
+        db.relationship("SimilarGroceryItem", back_populates="grocery_item",
+                        foreign_keys=[SimilarGroceryItem.grocery_id])
+GroceryItem.similar_grocery_items =\
+        association_proxy("similar_grocery_item_assocs", "similar")
 
 
 # Pylint Report

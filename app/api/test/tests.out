@@ -1,22 +1,19 @@
 .............
 ----------------------------------------------------------------------
-Ran 13 tests in 12.426s
+Ran 13 tests in 12.850s
 
 OK
-Name                                    Stmts   Miss  Cover   Missing
----------------------------------------------------------------------
-app/__init__.py                             0      0   100%
-app/api/__init__.py                         0      0   100%
-app/api/models.py                         157      9    94%   42, 63, 85, 113, 133, 155, 185, 216, 250
-app/api/test/TestResultWithSuccess.py       8      4    50%   8-9, 12-13
-app/api/test/__init__.py                    1      0   100%
-app/api/test/routes.py                      9      5    44%   12-16
-app/api/test/run_tests.py                  10      4    60%   12-16
-app/api/test/test_data.py                   2      0   100%
-app/api/test/tests.py                     140      0   100%
-app/project_root.py                         2      0   100%
-app/scraping/__init__.py                    0      0   100%
-app/scraping/importer.py                  165      3    98%   213, 265, 294
-app/scraping/tag_translations.py           80      0   100%
----------------------------------------------------------------------
-TOTAL                                     574     25    96%
+Name                               Stmts   Miss  Cover   Missing
+----------------------------------------------------------------
+app/__init__.py                        0      0   100%
+app/api/__init__.py                    0      0   100%
+app/api/models.py                    159      9    94%   45, 66, 88, 116, 136, 160, 190, 221, 257
+app/api/test/__init__.py               0      0   100%
+app/api/test/test_data.py              2      0   100%
+app/api/test/tests.py                141      0   100%
+app/project_root.py                    2      0   100%
+app/scraping/__init__.py               0      0   100%
+app/scraping/importer.py             165      3    98%   208, 260, 289
+app/scraping/tag_translations.py      80      0   100%
+----------------------------------------------------------------
+TOTAL                                549     12    98%
