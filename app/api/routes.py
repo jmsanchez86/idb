@@ -2,17 +2,13 @@
 # pylint: disable=invalid-sequence-index
 
 
-from copy import deepcopy
 from functools import wraps
 import math
 
 import flask
 
-from app.api.models import db, Ingredient, TagIngredient, Tag, Recipe,\
-                           GroceryItem, get_table_size
-from app.api import food_data, models
-from typing import Any, Callable, List, Tuple
-from sqlalchemy import and_, or_
+from app.api.models import Ingredient
+from typing import Callable, List
 
 API_BP = flask.Blueprint('api', __name__)
 
