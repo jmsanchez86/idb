@@ -59,10 +59,9 @@ export default class GroceryItemSingle extends React.Component {
     const upc = this.state.upc;
     
     const tags = this.state.tags.map(function(tag){
-      const tagItem = tag;
       return (
-        <div key={tag} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
-        <Link to={"tags/" + tag.id}><img class="img-responsive" src={tagItem.image} /></Link>
+        <div key={tag.name} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
       });
     return (
