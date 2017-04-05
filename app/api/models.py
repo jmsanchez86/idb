@@ -180,6 +180,43 @@ class GroceryItem(db.Model):
     def __repr__(self):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
+    @staticmethod
+    def get_all(filters, order, page, page_size):
+        orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
+        order_param, asc = orders[order]
+        counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
+        sort_clause = (" ORDER BY {order_param} {asc} ").format(
+            order_param=order_param, asc="ASC" if asc else "DESC")
+        page_clause = (" LIMIT {size} OFFSET {start}").format(
+            start=page_size*page, size=page_size)
+        if len(filters) > 0:
+            tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
+            filter_clause = (" SELECT distinct grocery_id, name, image_url FROM "
+                             "(SELECT grocery_id, ingredient_id, name, image_url, "
+                             "COUNT(grocery_id) AS cnt FROM "
+                             "(SELECT g.grocery_id, g.ingredient_id, g.name, "
+                             "g.image_url, "
+                             "t.tag_name FROM grocery_item g JOIN tag_grocery_item "
+                             "t ON (g.ingredient_id = t.ingredient_id and "
+                             "g.grocery_id = t.grocery_id and g.name IS NOT NULL) WHERE "
+                             "{tags} ) AS fst GROUP BY grocery_id, "
+                             "ingredient_id, name, "
+                             "image_url) AS scnd WHERE cnt = {tag_count} ")\
+                            .format(tags=tagclause, tag_count=len(filters)) +\
+                            sort_clause
+            count_clause = counter.format(subquery=filter_clause)
+            return (db.engine.execute(filter_clause + page_clause + ";"),
+                    db.engine.execute(count_clause))
+        else:
+            no_filter_clause = ("SELECT distinct grocery_id, name, "
+                                "image_url FROM "
+                                "( SELECT grocery_id, name, image_url "
+                                "FROM grocery_item WHERE name IS NOT NULL) "
+                                "as fst " + sort_clause)
+            count_clause = counter.format(subquery=no_filter_clause)
+            return (db.engine.execute(no_filter_clause + page_clause + ";"),
+                    db.engine.execute(count_clause))
+
 
 class Tag(db.Model):
     """

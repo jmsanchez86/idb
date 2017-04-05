@@ -7,7 +7,7 @@ import math
 
 import flask
 
-from app.api.models import Ingredient, Recipe, Tag
+from app.api.models import Ingredient, Recipe, Tag, GroceryItem
 from typing import Callable, List
 
 API_BP = flask.Blueprint('api', __name__)
@@ -126,8 +126,15 @@ def get_all_recipes(query_params: QueryParams):
 @API_BP.route('/grocery_items')
 @continuation_route
 def get_all_grocery_items(query_params: QueryParams):
-    mock_data = []
-    return flask.json.jsonify(mock_data)
+    query, table_size_query = GroceryItem.get_all(query_params.tag_filters,
+                                                  query_params.sort_key,
+                                                  query_params.page,
+                                                  query_params.page_size)
+    return flask.json.jsonify({"data": [{"id": gq.grocery_id,
+                                         "name": gq.name,
+                                         "image": gq.image_url}
+                                        for gq in query],
+                               "table_size": table_size_query.fetchone()[0]})
 
 
 @API_BP.route('/tags')
