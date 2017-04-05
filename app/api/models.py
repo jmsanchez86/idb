@@ -44,6 +44,41 @@ class Recipe(db.Model):
     def __repr__(self):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
+    @staticmethod
+    def get_all(filters, order, page, page_size):
+        orders = {"alpha": ("name", True), "alpha_reverse": ("name", False),
+                  "ready_time_asc": ("ready_time", True),
+                  "ready_time_desc": ("ready_time", False)}
+        order_param, asc = orders[order]
+        counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
+        sort_clause = (" ORDER BY {order_param} {asc} ").format(
+            order_param=order_param, asc="ASC" if asc else "DESC")
+        page_clause = (" LIMIT {size} OFFSET {start}").format(
+            start=page_size*page, size=page_size)
+        if len(filters) > 0:
+            tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
+            filter_clause = (" SELECT recipe_id, name, image_url, description, "
+                             "ready_time FROM (SELECT recipe_id, name, image_url, "
+                             " description, ready_time, COUNT(recipe_id) AS cnt "
+                             "FROM (SELECT r.recipe_id, r.name, r.image_url, "
+                             "r.description, r.ready_time, "
+                             "t.tag_name FROM recipe r JOIN tag_recipe"
+                             " t ON r.recipe_id = t.recipe_id WHERE "
+                             "{tags} ) AS fst GROUP BY recipe_id, name, "
+                             "image_url, description, ready_time) AS scnd WHERE cnt = "
+                             "{tag_count} ")\
+                            .format(tags=tagclause, tag_count=len(filters)) +\
+                            sort_clause
+            count_clause = counter.format(subquery=filter_clause)
+            return (db.engine.execute(filter_clause + page_clause + ";"),
+                    db.engine.execute(count_clause))
+        else:
+            no_filter_clause = ("SELECT recipe_id, name, image_url, description"
+                                ", ready_time FROM recipe " + sort_clause)
+            count_clause = counter.format(subquery=no_filter_clause)
+            return (db.engine.execute(no_filter_clause + page_clause + ";"),
+                    db.engine.execute(count_clause))
+
 class Ingredient(db.Model):
     """
     Table of ingredients.
@@ -66,14 +101,14 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
     @staticmethod
-    def get_all_sorted_filtered_paged(filters, order, page, page_size):
+    def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
         order_param, asc = orders[order]
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
-                order_param=order_param, asc="ASC" if asc else "DESC")
+            order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
-                start=page_size*page, size=page_size)
+            start=page_size*page, size=page_size)
         if len(filters) > 0:
             tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
             filter_clause = (" SELECT ingredient_id, name, image_url FROM "

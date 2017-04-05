@@ -7,7 +7,7 @@ import math
 
 import flask
 
-from app.api.models import Ingredient
+from app.api.models import Ingredient, Recipe
 from typing import Callable, List
 
 API_BP = flask.Blueprint('api', __name__)
@@ -29,7 +29,6 @@ class QueryParams:
 
 def get_continuation_links(base_url: str, maxsize: int,
                            query_params: QueryParams):
-    # pylint: disable=too-many-arguments
     page = query_params.page
     psize = query_params.page_size
     tag_filters = query_params.tag_filters
@@ -37,12 +36,12 @@ def get_continuation_links(base_url: str, maxsize: int,
 
     total_pages = int(math.ceil(maxsize / psize))
     last_page = max(0, total_pages - 1)
-    prev_page = min(last_page, max(0, page - 1))
-    next_page = min(last_page, max(0, page + 1))
     url_template = base_url + "?page={p}&page_size={ps}&sort={s}"
     first_link = url_template.format(p=0, ps=psize, s=sort_param)
-    prev_link = url_template.format(p=prev_page, ps=psize, s=sort_param)
-    next_link = url_template.format(p=next_page, ps=psize, s=sort_param)
+    prev_link = url_template.format(p=min(last_page, max(0, page - 1)),
+                                    ps=psize, s=sort_param)
+    next_link = url_template.format(p=min(last_page, max(0, page + 1)),
+                                    ps=psize, s=sort_param)
     last_link = url_template.format(p=last_page, ps=psize, s=sort_param)
 
     if len(tag_filters) > 0:
@@ -98,22 +97,32 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
 @API_BP.route('/ingredients')
 @continuation_route
 def get_all_ingredients(query_params: QueryParams):
-    query, table_size_query = Ingredient.get_all_sorted_filtered_paged(query_params.tag_filters,
-                                                     query_params.sort_key,
-                                                     query_params.page,
-                                                     query_params.page_size)
+    query, table_size_query = Ingredient.get_all(query_params.tag_filters,
+                                                 query_params.sort_key,
+                                                 query_params.page,
+                                                 query_params.page_size)
     return flask.json.jsonify({"data": [{"id": iq.ingredient_id,
-                                "name": iq.name,
-                                "image": iq.image_url}
-                               for iq in query],
+                                         "name": iq.name,
+                                         "image": iq.image_url}
+                                        for iq in query],
                                "table_size": table_size_query.fetchone()[0]})
 
 
 @API_BP.route('/recipes')
 @continuation_route
 def get_all_recipes(query_params: QueryParams):
-    mock_data = []
-    return flask.json.jsonify(mock_data)
+    query, table_size_query = Recipe.get_all(query_params.tag_filters,
+                                             query_params.sort_key,
+                                             query_params.page,
+                                             query_params.page_size)
+    return flask.json.jsonify({"data": [{"id": rq.recipe_id,
+                                         "name": rq.name,
+                                         "image": rq.image_url,
+                                         "blurb": rq.description,
+                                         "ready_time": rq.ready_time}
+                                        for rq in query],
+                               "table_size": table_size_query.fetchone()[0]})
+
 
 
 @API_BP.route('/grocery_items')
