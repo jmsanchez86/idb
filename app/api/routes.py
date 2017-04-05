@@ -7,7 +7,7 @@ import math
 
 import flask
 
-from app.api.models import Ingredient, Recipe
+from app.api.models import Ingredient, Recipe, Tag
 from typing import Callable, List
 
 API_BP = flask.Blueprint('api', __name__)
@@ -77,11 +77,9 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
 
     @wraps(route_fn)
     def wrapped_route_function():
-        page = int(req.args.get("page")) if "page" in req.args else 0
-        psize = int(req.args.get("page_size")) if "page_size" in req.args \
-            else 16
-        sort_param = req.args.get("sort") if "sort" in req.args \
-            else "alpha"
+        page = int(req.args.get("page", 0))
+        psize = int(req.args.get("page_size", 16))
+        sort_param = req.args.get("sort", "alpha")
         tags = req.args.get("tags").split(
             ",") if "tags" in req.args else []
         query_params = QueryParams(page=page, page_size=psize,
@@ -135,8 +133,10 @@ def get_all_grocery_items(query_params: QueryParams):
 @API_BP.route('/tags')
 @continuation_route
 def get_all_tags(query_params: QueryParams):
-    mock_data = []
-    return flask.json.jsonify(mock_data)
+    min_occurences = int(flask.request.args.get("min", 0))
+    resp = Tag.get_all(min_occurences, query_params.sort_key, query_params.page,
+                       query_params.page_size)
+    return flask.json.jsonify({"data": resp[0], "table_size": resp[1]})
 
 
 ################

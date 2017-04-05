@@ -200,6 +200,38 @@ class Tag(db.Model):
     def __repr__(self):
         return "<Tag %s>" % (self.tag_name)
 
+    @staticmethod
+    def get_all(min_occurences, order, page, page_size):
+        def occurence_count(tag_name):
+            return (db.session.query(Recipe)
+                    .join(TagRecipe)
+                    .filter_by(tag_name=tag_name)
+                    .count()# +
+
+            )
+        """
+        db.session.query(Ingredient)
+        .join(TagIngredient)
+        .filter_by(tag_name=tag_name)
+        .count() +
+
+        db.session.query(GroceryItem)
+        .join(TagGroceryItem)
+        .filter_by(tag_name=tag_name)
+        .count())
+        """
+
+        orders = {"alpha": Tag.tag_name, "alpha_reverse": Tag.tag_name.desc()}
+        tag_map = [{"name": t.tag_name,
+                    "blurb": t.description,
+                    "image": t.image_url,
+                   }
+                   for t in db.session.query(Tag).order_by(orders[order]).all()\
+                           if occurence_count(t.tag_name) > min_occurences
+                  ]
+        return (tag_map[page * page_size : page * page_size + page_size],
+                len(tag_map))
+
 class RecipeIngredient(db.Model):
     """
     Ingredients and quantities contained in a recipe.
