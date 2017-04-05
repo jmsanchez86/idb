@@ -202,35 +202,22 @@ class Tag(db.Model):
 
     @staticmethod
     def get_all(min_occurences, order, page, page_size):
-        def occurence_count(tag_name):
-            return (db.session.query(Recipe)
-                    .join(TagRecipe)
-                    .filter_by(tag_name=tag_name)
-                    .count()# +
+        count_recipe_query = db.engine.execute\
+                             ("SELECT tag.tag_name, tag.description, "
+                              "tag.image_url, COUNT(tag_recipe.recipe_id) "
+                              "AS cnt FROM tag LEFT JOIN tag_recipe ON "
+                              "(tag.tag_name = tag_recipe.tag_name) GROUP BY "
+                              "tag.tag_name;")
+        orders = {"alpha": False,
+                  "alpha_reverse": True}
+        filtered_tags = [pair for pair in count_recipe_query\
+                         if pair.cnt >= min_occurences]
+        sorted_tags = sorted(filtered_tags,
+                             key=lambda e: e.tag_name,
+                             reverse=orders[order])
 
-            )
-        """
-        db.session.query(Ingredient)
-        .join(TagIngredient)
-        .filter_by(tag_name=tag_name)
-        .count() +
-
-        db.session.query(GroceryItem)
-        .join(TagGroceryItem)
-        .filter_by(tag_name=tag_name)
-        .count())
-        """
-
-        orders = {"alpha": Tag.tag_name, "alpha_reverse": Tag.tag_name.desc()}
-        tag_map = [{"name": t.tag_name,
-                    "blurb": t.description,
-                    "image": t.image_url,
-                   }
-                   for t in db.session.query(Tag).order_by(orders[order]).all()\
-                           if occurence_count(t.tag_name) > min_occurences
-                  ]
-        return (tag_map[page * page_size : page * page_size + page_size],
-                len(tag_map))
+        return (sorted_tags[page * page_size: page * page_size + page_size],
+                len(sorted_tags))
 
 class RecipeIngredient(db.Model):
     """

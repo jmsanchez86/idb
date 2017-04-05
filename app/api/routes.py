@@ -136,7 +136,11 @@ def get_all_tags(query_params: QueryParams):
     min_occurences = int(flask.request.args.get("min", 0))
     resp = Tag.get_all(min_occurences, query_params.sort_key, query_params.page,
                        query_params.page_size)
-    return flask.json.jsonify({"data": resp[0], "table_size": resp[1]})
+    return flask.json.jsonify({"data": [{"name": tq.tag_name,
+                                         "blurb": tq.description,
+                                         "image": tq.image_url,}
+                                        for tq in resp[0]],
+                               "table_size": resp[1]})
 
 
 ################
