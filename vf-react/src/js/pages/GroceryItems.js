@@ -35,7 +35,7 @@ export default class Ingredients extends React.Component {
           firstTag = false;
           params += "&tags="
         }
-        params += id + ",";
+        params += filters[id].name + ",";
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
@@ -45,8 +45,8 @@ export default class Ingredients extends React.Component {
 
   requestQuery(requestString) {
     var _this = this;
-    var _data = {}
-    var _links = {}
+    var _data = {};
+    var _links = {};
 
     // call api with new query params
     fetch(requestString)
@@ -75,29 +75,48 @@ export default class Ingredients extends React.Component {
   }
 
   initFilters() {
-    var _filters = {};
-    var _this = this;
-    fetch('http://api.vennfridge.appspot.com/tags')
-      .then(function(response) {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem loading vennfridge tag info. Status Code: ' +
-              response.status);
-        }
-        response.json().then(function(responseData) {
-          for (var id in responseData.data){
-            _filters[responseData.data[id].id] = {
-                name: responseData.data[id].name,
-                checked: false
-            }
-          }
-
-        _this.setState({filters : _filters});
-        return _filters;
-        });
-      })
-    .catch(function(err) {
-      console.log('Fetch Error :-S', err);
-    });
+    const _filters = {
+      1 : {
+             name : 'Soy-free',
+             checked : false
+          },
+      2 : {
+             name : 'No additives',
+             checked : false
+          },
+      3 : {
+             name : 'Gluten-free',
+             checked : false
+          },
+      4 : {
+             name : 'Hormone-free',
+             checked : false
+          },
+      5 : {
+             name : 'Non-GMO',
+             checked : false
+          },
+      6 : {
+             name : 'Wild-caught',
+             checked : false
+          },
+      7 : {
+             name : 'Kosher',
+             checked : false
+          },
+      8 : {
+             name : 'Vegan',
+             checked : false
+          },
+      9 : {
+             name : 'Vegetarian',
+             checked : false
+          },
+      10 : {
+             name : 'Organic',
+             checked : false
+          },
+    };
     return _filters;
   }
 

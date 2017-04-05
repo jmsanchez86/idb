@@ -35,7 +35,7 @@ export default class Recipes extends React.Component {
           firstTag = false;
           params += "&tags="
         }
-        params += id + ",";
+        params += filters[id].name + ",";
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
@@ -46,8 +46,8 @@ export default class Recipes extends React.Component {
   requestQuery(requestString) {
     console.log(requestString);
     var _this = this;
-    var _data = {}
-    var _links = {}
+    var _data = {};
+    var _links = {};
 
     //call api with new query params
     fetch(requestString)
@@ -76,29 +76,48 @@ export default class Recipes extends React.Component {
   }
 
   initFilters() {
-    var _filters = {};
-    var _this = this;
-    fetch('http://api.vennfridge.appspot.com/tags')
-      .then(function(response) {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem loading vennfridge tag info. Status Code: ' +
-              response.status);
-        }
-        response.json().then(function(responseData) {
-          for (var id in responseData.data){
-            _filters[responseData.data[id].id] = {
-                name: responseData.data[id].name,
-                checked: false
-            }
-          }
-
-        _this.setState({filters : _filters});
-        return _filters;
-        });
-      })
-    .catch(function(err) {
-      console.log('Fetch Error :-S', err);
-    });
+    const _filters = {
+      1 : {
+             name : 'Starter',
+             checked : false
+          },
+      2 : {
+             name : 'Morning Meal',
+             checked : false
+          },
+      3 : {
+             name : 'Dessert',
+             checked : false
+          },
+      4 : {
+             name : 'Snack',
+             checked : false
+          },
+      5 : {
+             name : 'Salad',
+             checked : false
+          },
+      6 : {
+             name : 'Sauce',
+             checked : false
+          },
+      7 : {
+             name : 'Dip',
+             checked : false
+          },
+      8 : {
+             name : 'Soup',
+             checked : false
+          },
+      9 : {
+             name : 'Vegan',
+             checked : false
+          },
+      10 : {
+             name : 'Gluten-free',
+             checked : false
+          },
+    };
     return _filters;
   }
 
