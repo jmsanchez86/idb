@@ -85,13 +85,18 @@ export default class Ingredients extends React.Component {
           },
         10:
           {
-             name: "> 10",
+             name: "Lukewarm Popularity",
              checked: false
           },
-        20:
+        30:
           {
-             name: "> 20",
+             name: "Medium-heat Popularity",
              checked: false
+          },
+        100:
+          {
+            name: "On-Fire Popularity",
+            checked: false
           }
       }
     )
@@ -140,7 +145,7 @@ export default class Ingredients extends React.Component {
     console.log(data);
     const links= this.state.links;
     return (
-      <div id="grid-page" class="contatiner">
+      <div id="grid-page" class="container">
         <Greeting />
         <Controller
           sorters={this.state.sorters}
