@@ -1,41 +1,78 @@
 FORMAT: 1A
+HOST: https://api.vennfridge.appspot.com/
 
 # VennFridge
 VennFridge provides information on and relationships between ingredients, recipes, grocery items, and tags.
 
 ## Ingredients Collection [/api/ingredients]
   
-### List All Ingredients [GET /api/ingredients]
-Retrieve a list of all ingredients.
+### List Ingredients [GET /api/ingredients{?page_size}{?page}{?tags}{?sort}]
+Retrieve a subset of ingredients based on given parameters.
+Each of the links fields is optional.
+
++ Parameters
+    + page_size (number, optional) - the number of results to return. Defaults to 12.REh
+    + page (number, optional) - the page of results to return. Defaults to 1.
+    + tags (array[String], optional) - array of filtering parameters to apply to results. Defaults to none.
+    + sort (String, optional) - sorting parameter to apply to results. Options are alphabetical (alpha) and reverse alphabetical (alpha_reverse). Defaults to alphabetical.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "id": 1,
-                "title": "linguine",
-                "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
-                "image": "http://placehold.it/500x500",
+        
+        {
+            "data":   [
+                {
+                    "id": 1012002,
+                    "name": "whole star anise",
+                    "image": "https://cdn.pixabay.com/photo/2016/12/06/18/26/anise-1887231_150.jpg"
+                }
+            ],
+            "links":  {
+                "first":  "optionallink",
+                "last":   "optionallink",
+                "next":   "optionallink",
+                "prev":   "optionallink"
             }
-        ]
+        }
+
         
 ### View Ingredient Details [GET /api/ingredients/{id}]
 Retrieve details of a single ingredient.
+Aisle is optional.
 
 + Parameters
     + id (number, required) - the unique id of the ingredient as an integer
   
 + Response 200 (application/json)
  
+
         {
-            "id": 1,
-            "title": "linguine",
-            "nutrition": [],
-            "recipesIDs": [2, 3],
-            "tags": ["italian", "mediterranean", "pescetarian", "vegetarian"],
-            "substitutes": ["spaghetti"],
-            "related ingredients": ["bread", "halibut", "spaghetti"]
-            "image": "http://placehold.it/500x500"
+            "id": 1012002,
+            "name": "whole star anise",
+            "image": "https://spoonacular.com/cdn/ingredients_100x100/star-anise.jpg",
+            "aisle": "Spices and Seasonings",
+            "substitute_ingredients": [
+                "1 tsp = 1 tsp ground anise seed",
+                "1 tsp = 1 tsp ground fennel seed"
+            ],
+            "related_grocery_items": [
+                {
+                    "id": 190631,
+                    "title": "Spice World Organic Shallots"
+                }
+            ],
+            "related_recipes": [
+                {
+                    "id": 112962,
+                    "name": "Gordon Ramsay's Malaysian Chicken Curry"
+                }
+            ],
+            "tags":   [
+                {
+                    "name": "vegan",
+                    "image": "http://placehold.it/500x500"
+                }
+            ]
         }
          
 + Response 404 (text/plain)
@@ -43,21 +80,36 @@ Retrieve details of a single ingredient.
         No ingredient with that id exists.
 
 ## Recipes Collection [/api/recipes]
-  
-### List All Recipes [GET /api/recipes]
-Retrieve a list of all recipes.
+
+### List Recipes [GET /api/recipes{?page_size}{?page}{?tags}{?sort}]
+Retrieve a subset of recipes based on given parameters.
+Each of the links fields is optional.
+
++ Parameters
+    + page_size (number, optional) - the number of results to return. Defaults to 12.
+    + page (number, optional) - the page of results to return. Defaults to 1.
+    + tags (array[String], optional) - array of filtering parameters to apply to results. Defaults to none.
+    + sort (String, optional) - sorting parameter to apply to results. Options are are alphabetical (alpha), reverse alphabetical (alpha_reverse), increasing preparation time (ready_time_asc) and decrasing preparation time (ready_time_desc). Defaults to alphabetical.
 
 + Response 200 (application/json)
+        
 
-        [
-            {
-                "id": 1,
-                "title": "Halibut with Lemon, Capers, and Croutons",
-                "tags": ["vegan", "vegetarian", "pescetarian"],
-                "image": "https://spoonacular.com/recipeImages/halibut-with-lemon-capers-and-croutons-333606.jpeg",
-                "description": "The recipe Halibut with Lemon, Capers, and Croutons can be made in about 30 minutes. This recipe serves 4 and costs $6.18 per serving."
+        {
+            "data": [
+                {
+                    "id": 733130,
+                    "name": "Asian Spicy Barbecue Chicken",
+                    "image": "https://spoonacular.com/recipeImages/asian-spicy-barbecue-chicken-733130.jpeg",
+                    "blurb": "If you have about <b>1 hour and 3 minutes</b> to spend in the kitchen, Asian Spicy Barbecue Chicken might be an excellent <b>gluten free and dairy free</b> recipe to try. This recipe makes 6 servings with <b>333 calories</b>, <b>21g of protein</b>, and <b>21g of fat</b> each. For <b>$1.31 per serving</b>, this recipe <b>covers 10%</b> of your daily requirements of vitamins and minerals. It works well as a rather inexpensive main course. It will be a hit at your <b>Father's Day</b> event. If you have plum sauce, dry mustard, onion, and a few other ingredients on hand, you can make it. To use up the ginger you could follow this main course with the <a href=\"https://spoonacular.com/recipes/ginger-cake-with-crystallized-ginger-frosting-189279\">Ginger Cake with Crystallized Ginger Frosting</a> as a dessert. A few people made this recipe, and 26 would say it hit the spot. This recipe is typical of American cuisine. It is brought to you by Foodnetwork. Taking all factors into account, this recipe <b>earns a spoonacular score of 33%</b>, which is not so spectacular. If you like this recipe, you might also like recipes such as Spicy Korean Barbecue Chicken Sliders with Asian Slaw and Kimchi Sauce, Sweet and Spicy Barbecue Pork with Asian Slaw, and Asian Chicken Burger with Spicy Lemongrass Mayo and Pickled Asian Slaw.",
+                }
+            ],
+            "links":  {
+                "first":  "optionallink",
+                "last":   "optionallink",
+                "prev":   "optionallink",
+                "next":   "optionallink"
             }
-        ]
+        }
         
 ### View Recipe Details [GET /api/recipes/{id}]
 Retrieve details of a single recipe.
@@ -66,292 +118,133 @@ Retrieve details of a single recipe.
     + id (number, required) - the unique id of the recipe as an integer
   
 + Response 200 (application/json)
- 
+        
+
         {
-        "id": 1,
-        "title": "Halibut with Lemon, Capers, and Croutons",
-        "image": "https://spoonacular.com/recipeImages/halibut-with-lemon-capers-and-croutons-333606.jpeg",
-        "ingredients": [
-            {
-                "amount": 1.0,
-                "id": 5,
-                "name": "butter",
-                "originalString": "1 stick plus 2 tablespoons butter",
-                "unit": "stick",
-                "unitLong": "stick",
-                "unitShort": "stick"
-            },
-            {
-                "amount": 1.0,
-                "id": 6,
-                "name": "capers",
-                "originalString": "1 to 2 tablespoons capers (depending on taste)",
-                "unit": "tablespoons",
-                "unitLong": "tablespoon",
-                "unitShort": "T"
-            },
-            {
-                "amount": 0.5,
-                "id": 7,
-                "name": "flour",
-                "originalString": "1/2 cup all-purpose flour",
-                "unit": "cup",
-                "unitLong": "cups",
-                "unitShort": "c"
-            },
-            {
-                "amount": 1.0,
-                "id": 8,
-                "name": "fresh parsley leaves",
-                "originalString": "1 tablespoon finely chopped fresh parsley leaves",
-                "unit": "tablespoon",
-                "unitLong": "tablespoon",
-                "unitShort": "T"
-            },
-            {
-                "amount": 24.0,
-                "id": 2,
-                "name": "halibut",
-                "originalString": "4 (6-ounce) pieces halibut (preferably Pacific)",
-                "unit": "ounce",
-                "unitLong": "ounces",
-                "unitShort": "oz"
-            },
-            {
-                "amount": 1.0,
-                "id": 12,
-                "name": "juice of lemon",
-                "originalString": "1 large lemon, juiced",
-                "unit": "",
-                "unitLong": "",
-                "unitShort": ""
-            },
-            {
-                "amount": 4.0,
-                "id": 9,
-                "name": "salt and pepper",
-                "originalString": "Salt and freshly ground black pepper",
-                "unit": "servings",
-                "unitLong": "servings",
-                "unitShort": "servings"
-            },
-            {
-                "amount": 6.0,
-                "id": 3,
-                "name": "white sandwich bread",
-                "originalString": "6 slices stale white sandwich bread, crusts removed and cut into 1/2-inch cubes",
-                "unit": "slices",
-                "unitLong": "slices",
-                "unitShort": "slices"
-            }
-        ],
-        "tags": ["vegan", "vegetarian", "pescetarian"],
-        "instructions": "Directions: In a medium saute pan over medium-high heat, melt 4 tablespoons of the butter. When the foam subsides, fry the cubes of bread until golden and crusty, about 4 to 7 minutes. Remove the croutons from the pan with a slotted spatula and set aside on paper towels to drain. Wipe out the pan.Place the flour on a plate and season well with salt and pepper. Dredge the halibut in the flour and shake off excess.Return the saute pan to the heat and melt 4 more tablespoons of butter. When the foam has subsided add the fish to the pan. Cook, turning once, until the fish is no longer translucent in the center, flakes easily, and is golden brown on both sides, about 4 to 7 minutes per side. Transfer the fish to a serving platter and wipe out the pan.Melt the additional 2 tablespoons of butter, and when the foam subsides add the capers and croutons. Saute briefly, then add the lemon juice and parsley and swirl to combine. Pour over the fish on the serving dish and serve immediately.",
-        "nutrition": [
-            {
-                "amount": 514.47,
-                "percentOfDailyNeeds": 25.72,
-                "title": "Calories",
-                "unit": "cal"
-            },
-            {
-                "amount": 26.55,
-                "percentOfDailyNeeds": 40.85,
-                "title": "Fat",
-                "unit": "g"
-            },
-            {
-                "amount": 15.3,
-                "percentOfDailyNeeds": 95.63,
-                "title": "Saturated Fat",
-                "unit": "g"
-            },
-            {
-                "amount": 30.52,
-                "percentOfDailyNeeds": 10.17,
-                "title": "Carbohydrates",
-                "unit": "g"
-            },
-            {
-                "amount": 1.98,
-                "percentOfDailyNeeds": 2.2,
-                "title": "Sugar",
-                "unit": "g"
-            },
-            {
-                "amount": 144.09,
-                "percentOfDailyNeeds": 48.03,
-                "title": "Cholesterol",
-                "unit": "mg"
-            },
-            {
-                "amount": 751.54,
-                "percentOfDailyNeeds": 32.68,
-                "title": "Sodium",
-                "unit": "mg"
-            },
-            {
-                "amount": 36.93,
-                "percentOfDailyNeeds": 73.87,
-                "title": "Protein",
-                "unit": "g"
-            },
-            {
-                "amount": 91.42,
-                "percentOfDailyNeeds": 130.6,
-                "title": "Selenium",
-                "unit": "\u00b5g"
-            },
-            {
-                "amount": 13.83,
-                "percentOfDailyNeeds": 69.16,
-                "title": "Vitamin B3",
-                "unit": "mg"
-            },
-            {
-                "amount": 8.42,
-                "percentOfDailyNeeds": 56.12,
-                "title": "Vitamin D",
-                "unit": "\u00b5g"
-            },
-            {
-                "amount": 0.97,
-                "percentOfDailyNeeds": 48.7,
-                "title": "Vitamin B6",
-                "unit": "mg"
-            },
-            {
-                "amount": 464.51,
-                "percentOfDailyNeeds": 46.45,
-                "title": "Phosphorus",
-                "unit": "mg"
-            },
-            {
-                "amount": 1.92,
-                "percentOfDailyNeeds": 31.98,
-                "title": "Vitamin B12",
-                "unit": "\u00b5g"
-            },
-            {
-                "amount": 0.41,
-                "percentOfDailyNeeds": 27.35,
-                "title": "Vitamin B1",
-                "unit": "mg"
-            },
-            {
-                "amount": 93.51,
-                "percentOfDailyNeeds": 23.38,
-                "title": "Folate",
-                "unit": "\u00b5g"
-            },
-            {
-                "amount": 813.18,
-                "percentOfDailyNeeds": 23.23,
-                "title": "Potassium",
-                "unit": "mg"
-            },
-            {
-                "amount": 907.32,
-                "percentOfDailyNeeds": 18.15,
-                "title": "Vitamin A",
-                "unit": "IU"
-            },
-            {
-                "amount": 18.99,
-                "percentOfDailyNeeds": 18.09,
-                "title": "Vitamin K",
-                "unit": "\u00b5g"
-            },
-            {
-                "amount": 0.35,
-                "percentOfDailyNeeds": 17.55,
-                "title": "Manganese",
-                "unit": "mg"
-            },
-            {
-                "amount": 0.23,
-                "percentOfDailyNeeds": 13.69,
-                "title": "Vitamin B2",
-                "unit": "mg"
-            },
-            {
-                "amount": 2.45,
-                "percentOfDailyNeeds": 13.59,
-                "title": "Iron",
-                "unit": "mg"
-            },
-            {
-                "amount": 53.68,
-                "percentOfDailyNeeds": 13.42,
-                "title": "Magnesium",
-                "unit": "mg"
-            },
-            {
-                "amount": 120.85,
-                "percentOfDailyNeeds": 12.08,
-                "title": "Calcium",
-                "unit": "mg"
-            },
-            {
-                "amount": 1.81,
-                "percentOfDailyNeeds": 12.07,
-                "title": "Vitamin E",
-                "unit": "mg"
-            },
-            {
-                "amount": 0.89,
-                "percentOfDailyNeeds": 8.89,
-                "title": "Vitamin B5",
-                "unit": "mg"
-            },
-            {
-                "amount": 1.08,
-                "percentOfDailyNeeds": 7.2,
-                "title": "Zinc",
-                "unit": "mg"
-            },
-            {
-                "amount": 1.53,
-                "percentOfDailyNeeds": 6.13,
-                "title": "Fiber",
-                "unit": "g"
-            },
-            {
-                "amount": 0.12,
-                "percentOfDailyNeeds": 5.86,
-                "title": "Copper",
-                "unit": "mg"
-            },
-            {
-                "amount": 1.51,
-                "percentOfDailyNeeds": 1.83,
-                "title": "Vitamin C",
-                "unit": "mg"
-            }
-        ],
-        "related recipes": [77261, 187051]
+            "id": 733130,
+            "name": "Asian Spicy Barbecue Chicken",
+            "image": "https://spoonacular.com/recipeImages/asian-spicy-barbecue-chicken-733130.jpeg",
+            "servings": 6,
+            "blurb": "If you have about <b>1 hour and 3 minutes</b> to spend in the kitchen, Asian Spicy Barbecue Chicken might be an excellent <b>gluten free and dairy free</b> recipe to try. This recipe makes 6 servings with <b>333 calories</b>, <b>21g of protein</b>, and <b>21g of fat</b> each. For <b>$1.31 per serving</b>, this recipe <b>covers 10%</b> of your daily requirements of vitamins and minerals. It works well as a rather inexpensive main course. It will be a hit at your <b>Father's Day</b> event. If you have plum sauce, dry mustard, onion, and a few other ingredients on hand, you can make it. To use up the ginger you could follow this main course with the <a href=\"https://spoonacular.com/recipes/ginger-cake-with-crystallized-ginger-frosting-189279\">Ginger Cake with Crystallized Ginger Frosting</a> as a dessert. A few people made this recipe, and 26 would say it hit the spot. This recipe is typical of American cuisine. It is brought to you by Foodnetwork. Taking all factors into account, this recipe <b>earns a spoonacular score of 33%</b>, which is not so spectacular. If you like this recipe, you might also like recipes such as Spicy Korean Barbecue Chicken Sliders with Asian Slaw and Kimchi Sauce, Sweet and Spicy Barbecue Pork with Asian Slaw, and Asian Chicken Burger with Spicy Lemongrass Mayo and Pickled Asian Slaw.",
+            "ingredient_list": [
+                {                
+                    "id": 2010,                
+                    "original_string": "1/4 stick cinnamon"                
+                },
+                {
+                    "id": 1002024,
+                    "original_string": "1 teaspoon dry mustard"
+                },
+                {
+                    "id": 1002002,
+                    "original_string": "1/2 teaspoon Chinese five spice powder"
+                },
+                {
+                    "id": 11215,
+                    "original_string": "1 teaspoon minced garlic"
+                },
+                {
+                    "id": 11216,
+                    "original_string": "1 teaspoon minced ginger"
+                },
+                {
+                    "id": 9160,
+                    "original_string": "1/2 lime, juiced"
+                },
+                {
+                    "id": 1082047,
+                    "original_string": "2 teaspoons kosher salt"
+                },
+                {
+                    "id": 9160,
+                    "original_string": "1/4 cup lime juice"
+                },
+                {
+                    "id": 11282,
+                    "original_string": "1/2 cup minced onion"
+                },
+                {
+                    "id": 4042,
+                    "original_string": "1 tablespoon peanut oil"
+                },
+                {
+                    "id": 6151,
+                    "original_string": "1/2 cup plum sauce"
+                },
+                {
+                    "id": 1032009,
+                    "original_string": "1/2 teaspoon crushed red pepper flakes"
+                },
+                {
+                    "id": 4058,
+                    "original_string": "1 tablespoon sesame oil"
+                },
+                {
+                    "id": 16124,
+                    "original_string": "2 tablespoons soy sauce"
+                },
+                {
+                    "id": 1012002,
+                    "original_string": "1/2 star anise"
+                },
+                {
+                    "id": 14412,
+                    "original_string": "1/4 cup water"
+                },
+                {
+                    "id": 5006,
+                    "original_string": "1 whole chicken, cut into 8 pieces"
+                }
+            ],
+            "instructions": "Directions                                                        Preheat the oven to 400 degrees F. In a small saucepan set over medium-high heat, add the sesame and peanut oils. Once the oils are hot, about 30 seconds, add the onions to the pan and cook, stirring often until the onions are soft and slightly translucent, about 3 to 4 minutes. Add the garlic, ginger, cinnamon and star anise to the pan and cook for 30 seconds. Deglaze the pan with the lime juice and soy sauce. Once the juice has reduced by half, add plum sauce, crushed red pepper flakes, water and mustard. Reduce the heat to a gentle simmer and cook the sauce for 5 minutes. Remove the sauce from the heat and discard the cinnamon stick and star anise. Reserve the sauce until ready to use.Combine the kosher salt and Chinese five spice in a small bowl and stir to mix well. Season the chicken with the salt mixture and set aside for 20 minutes.Cook the chicken on a medium hot grill for 4 minutes then turn 45 degrees and cook for an additional 4 minutes. Turn the chicken over and cook for 4 minutes before rotating it 45 degrees to cook for a final 5 minutes. Remove the chicken from the grill and place on a sheet pan that has been lined with aluminum foil. Squeeze lime juice over chicken, brush the chicken with the barbecue sauce, and place the sheet pan in the oven. Cook the chicken for 10 minutes, remove from the oven and serve while warm.                                                    Recipe courtesy of Emeril Lagasse, 2004                         CATEGORIES:                                                                                                                                                                                                                                     Chicken                                                                                                                                                                                                                                                                                                                                                Lunch                                                                                                                                                                                                                                                                                                                                                                                    Grilling                                                                                                                                                                                                                                                                    View All         <div class=\"popover-content categories\">                        <ul>                    <li>Main Ingredient</li>                                                                                                                                                                                                                                                                    <li class=\"last\"><a href=\"/content/food/topics/j/jerk-chicken-recipes.html\">Chicken</a></li>                                 </ul>                <ul>                    <li>Course</li>                                                                                                                                                                                                                                                                    <li ><a href=\"/content/food/topics/e/easy-lunch.html\">Lunch</a></li>                                                                                                                                                                                                                                                                                 <li class=\"last\"><a href=\"/content/food/topics/m/main-dish.html\">Main Dish</a></li>                                 </ul>                <ul>                    <li>Technique</li>                                                                                                                                                                                                                                                                    <li class=\"last\"><a href=\"/content/food/topics/g/grilling.html\">Grilling</a></li>                                 </ul>                <ul>                    <li>Cuisine</li>                                                                                                                                                                                                                                                                    <li class=\"last\"><a href=\"/content/food/topics/a/asian-appetizer-recipes.html\">Asian</a></li>                                 </ul>                <ul>                    <li>Season</li>                                                                                                                                                                                                                                                                    <li class=\"last\"><a href=\"/content/food/topics/f/fall.html\">Fall</a></li>                                 </ul></div>",
+            "source_url": "http://www.foodnetwork.com/recipes/emeril-lagasse/asian-spicy-barbecue-chicken-recipe.html"
+            "ready_time": 27,
+            "related recipes": [473842, 529873, 295430, 112678, 517184, 205015, 98346, 632795, 812042],
+            "tags":   [
+                {
+                    "name": "dairyFree",
+                    "img": "http://placehold.it/500x500"
+                },
+                {
+                    "name": "main course",
+                    "img": "http://placehold.it/500x500"
+                }
+            ]
         }
          
 + Response 404 (text/plain)
         
         No recipe with that id exists.
-        
+
 ## Grocery Items Collection [/api/grocery_items]
   
-### List All Grocery items [GET /api/grocery_items]
-Retrieve a list of all grocery items.
+### List Grocery items [GET /api/grocery_items{?page_size}{?page}{?tags}{?sort}]
+Retrieve a subset of grocery items based on given parameters.
+Each of the links fields is optional.
+
++ Parameters
+    + page_size (number, optional) - the number of results to return. Defaults to 12.
+    + page (number, optional) - the page of results to return. Defaults to 1.
+    + tags (array[String], optional) - array of filtering parameters to apply to results. Defaults to none.
+    + sort (String, optional) - sorting parameter to apply to results. Options are alphabetical (alpha) and reverse alphabetical (alpha_reverse). Defaults to alphabetical.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "id": 1,
-                "title": "Nature's Promise Wild Caught Halibut",
-                "upc": "688267152580", 
-                "tags": ["egg_free","wild_caught","wheat_free","hormone_free","peanut_free","nut_free","soy_free","msg_free","grain_free","no_artificial_colors","sugar_free","no_artificial_flavors","no_artificial_ingredients","pescetarian","corn_free","dairy_free","gluten_free"],
-                "images": ["https://spoonacular.com/productImages/222240-312x231.jpg", "https://spoonacular.com/productImages/222240-636x393.jpg", "https://spoonacular.com/productImages/222240-90x90.jpg"]
+        {
+            "data": [
+                {
+                    "id": 212652,
+                    "name": "Hormel Breast of Chicken - Premium Chunk In Water 98% Fat Free",
+                    "image": "https://spoonacular.com/productImages/212652-636x393.jpg"
+                }
+            ],
+           "links":  {
+                    "first":  "optionallink",
+                    "last":   "optionallink",
+                    "prev":   "optionallink",
+                    "next":   "optionallink"
             }
-        ]
+        }
         
 ### View Grocery Item Details [GET /api/grocery_items/{id}]
 Retrieve details of a single grocery item.
@@ -360,15 +253,15 @@ Retrieve details of a single grocery item.
     + id (number, required) - the unique id of the grocery item as an integer
   
 + Response 200 (application/json)
- 
+        
+
         {
-            "id": 1,
-            "title": "Nature's Promise Wild Caught Halibut",
-            "upc": "688267152580", 
-            "tags": ["egg_free","wild_caught","wheat_free","hormone_free","peanut_free","nut_free","soy_free","msg_free","grain_free","no_artificial_colors","sugar_free","no_artificial_flavors","no_artificial_ingredients","pescetarian","corn_free","dairy_free","gluten_free"],
-            "ingredientID": 1,
-            "related grocery items": [],
-            "images": ["https://spoonacular.com/productImages/222240-312x231.jpg", "https://spoonacular.com/productImages/222240-636x393.jpg", "https://spoonacular.com/productImages/222240-90x90.jpg"]
+            "id": 212652,
+            "name": "Hormel Breast of Chicken - Premium Chunk In Water 98% Fat Free",
+            "image": "https://spoonacular.com/productImages/212652-636x393.jpg",
+            "tags": [],
+            "upc": "037600366809", 
+            "related grocery items": [180619, 221767, 222136, 79672]
         }
          
 + Response 404 (text/plain)
@@ -377,36 +270,68 @@ Retrieve details of a single grocery item.
 
 ## Tags Collection [/api/tags]
   
-### List All Tags [GET /api/tags]
-Retrieve a list of all tags.
+### List Tags [GET /api/tags{?page_size}{?page}{?min}{?sort}]
+Retrieve a subset of tags based on given parameters.
+Each of the links fields is optional.
+
++ Parameters
+    + page_size (number, optional) - the number of results to return. Defaults to 12.
+    + page (number, optional) - the page of results to return. Defaults to 1.
+    + min (number, optional) - Minimum number of elements to which the tags must apply. Defaults to 0.
+    + sort (String, optional) - sorting parameter to apply to results. Options are alphabetical (alpha) and reverse alphabetical (alpha_reverse). Defaults to alphabetical.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "id": 1,
-                "title": "gluten_free",
-                "description": "These products are free of gluten which can cause health problems for people with gluten related disorders including Celiac Disease, Non-celiac Gluten Sensitivity, and Gluten Ataxia.",
-                "related tags": ["pescatarian", "vegetarian"],
+        {
+            "data": [
+                {
+                    "name": "gluten_free",
+                    "blurb": "These products are free of gluten which can cause health problems for people with gluten related disorders including Celiac Disease, Non-celiac Gluten Sensitivity, and Gluten Ataxia.",
+                    "image": "http://placehold.it/500x500"
+                }
+            ],
+            "links":  {
+                    "first":  "optionallink",
+                    "last":   "optionallink",
+                    "prev":   "optionallink",
+                    "next":   "optionallink"
             }
-        ]
+        }
         
-### View Tag Details [GET /api/tags/{id}]
+### View Tag Details [GET /api/tags/{tag_name}]
 Retrieve details of a single tag.
 
 + Parameters
-    + id (number, required) - the unique id of the tag as an integer
+    + tag_name (String, required) - the unique name of the tag as a string
   
 + Response 200 (application/json)
- 
+    
+
         {
-            "id": 1,
-            "title": "gluten_free",
-            "description": "These products are free of gluten which can cause health problems for people with gluten related disorders including Celiac Disease, Non-celiac Gluten Sensitivity, and Gluten Ataxia.",
-            "related tags": ["pescatarian", "vegetarian"],
-            "related recipes": [],
-            "related ingredients": ["halibut"],
-            "related grocery items": [1]
+            "name": "gluten_free",
+            "blurb": "These products are free of gluten which can cause health problems for people with gluten related disorders including Celiac Disease, Non-celiac Gluten Sensitivity, and Gluten Ataxia.",
+            "image": "http://placehold.it/500x500",
+            "related_recipes": [
+                {
+                    "id":       1000,
+                    "name":     "Hearty Vegetable Soup",
+                    "image":    "http://placehold.it/500x500"
+                }
+            ],
+            "related_ingredients": [
+                {
+                    "id":       3000,
+                    "name":     "Carrot",
+                    "image":    "http://placehold.it/500x500"
+                }
+            ],
+            "related_grocery_items": [
+                {
+                    "id":       2000,
+                    "name":     "Great Value: Sliced Carrots, 8.25 Oz",
+                    "image":    "http://placehold.it/500x500"
+                }
+            ]
         }
          
 + Response 404 (text/plain)
