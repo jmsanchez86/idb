@@ -46,7 +46,7 @@ export default class RecipeSingle extends React.Component {
 
                 instructions : responseData.instructions,
                 ready_time : responseData.ready_time,
-                source : responseData.source,
+                source : responseData.source_url,
                 blurb : responseData.blurb,
                 image : responseData.image,
                 name : responseData.name,
