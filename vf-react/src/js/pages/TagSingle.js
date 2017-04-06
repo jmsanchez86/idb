@@ -25,7 +25,7 @@ export default class TagSingle extends React.Component {
     var _this = this;
 
     const requestString = 'http://' + apiRoot + '/tags/' + _this.state.id;
-    
+
     // Fetch singleton's required data.
     fetch(requestString)
       .then(function(response) {
@@ -60,21 +60,21 @@ export default class TagSingle extends React.Component {
 
     var ingredients = this.state.ingredients.map(function(ingredient){
       return(
-        <div key={ingredient.id} class="list-group-item">
+        <div key={ingredient.id+"_"+ingredient.name} class="list-group-item">
           <p><Link to={"ingredients/" + ingredient.id}>{ingredient.name}</Link></p>
         </div>);
     });
 
     var recipes = this.state.recipes.map(function(recipe){
       return(
-        <div key={recipe.id} class="list-group-item">
+        <div key={recipe.id+"_"+recipe.name} class="list-group-item">
           <p><Link to={"recipes/" + recipe.id}>{recipe.name}</Link></p>
         </div>);
     });
 
     var grocery_items = this.state.grocery_items.map(function(gi){
       return(
-        <div key={gi.id} class="list-group-item">
+        <div key={gi.id+"_"+gi.name} class="list-group-item">
           <p><Link to={"grocery_items/" + gi.id}>{gi.name}</Link></p>
         </div>);
     });

@@ -60,19 +60,19 @@ export default class IngredientSingle extends React.Component {
 
     const recipes = this.state.recipes.map(function(recipe){
       return (
-        <div key={recipe.id} class="list-group-item">
+        <div key={recipe.id+"_"+recipe.name} class="list-group-item">
           <p><Link to={"recipes/" + recipe.id}>{recipe.name}</Link></p>
         </div>);
     });
     const grocery_items = this.state.grocery_items.map(function(item){
       return (
-        <div key={item.id} class="list-group-item">
+        <div key={item.id+"_"+item.name} class="list-group-item">
           <p><Link to={"grocery_items/" + item.id}>{item.name}</Link></p>
         </div>);
     });
     const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag.name} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div key={tag.name+"_"+tag.image} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
           <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });

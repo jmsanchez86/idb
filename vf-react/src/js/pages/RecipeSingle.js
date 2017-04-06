@@ -84,13 +84,13 @@ export default class RecipeSingle extends React.Component {
 
     const ingredients = this.state.ingredient_list.map(function(ingredient){
       return(
-        <div key={ingredient.id} class="list-group-item">
+        <div key={ingredient.id+"_"+ingredient.original_string} class="list-group-item">
           <p><Link to={"ingredients/" + ingredient.id}>{ingredient.original_string}</Link></p>
         </div>);
     });
     const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag.name} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div key={tag.name+"_"+tag.image} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
           <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });
