@@ -168,24 +168,28 @@ def filter_nulls(field, limit):
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
-    (ing, subs, items, tags, recipe_ing) = Ingredient.get(ingredient_id)
-    if ing is None:
-        return flask.json.jsonify({})
-    else:
-        return flask.json.jsonify({
-            "id": ing.ingredient_id,
-            "name": ing.name,
-            "image": ing.image_url,
-            "aisle": ing.aisle,
-            "related_recipes": [{"id": ri.recipe_id, "name": ri.recipe.name}
-                                for ri in recipe_ing[:5]],
-            "subsitute_ingredients": [s.substitute for s in subs],
-            "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
-                                      for g in items],
-            "tags": [{"name": t.tag_name,
-                      "image": tag_image_prefix + t.image_url,} for t in tags]
-            })
+    ing = Ingredient.get(ingredient_id)
+    if not ing:
+        return flask.abort(404)
 
+    recipe_ing = ing.recipes
+    subs = ing.substitutes
+    items = ing.get_grocery_items()
+    tags = ing.tags
+
+    return flask.json.jsonify({
+        "id": ing.ingredient_id,
+        "name": ing.name,
+        "image": ing.image_url,
+        "aisle": ing.aisle,
+        "related_recipes": [{"id": ri.recipe_id, "name": ri.recipe.name}
+                            for ri in recipe_ing[:5]],
+        "subsitute_ingredients": [s.substitute for s in subs],
+        "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
+                                  for g in items],
+        "tags": [{"name": t.tag_name,
+                 "image": tag_image_prefix + t.image_url,} for t in tags]
+        })
 
 @API_BP.route('/recipes/<int:recipe_id>')
 def get_recipe(recipe_id: int):
