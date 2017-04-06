@@ -72,7 +72,7 @@ export default class IngredientSingle extends React.Component {
     });
     const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag.name+"_"+tag,image} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div key={tag.name+"_"+tag.image} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
           <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });
