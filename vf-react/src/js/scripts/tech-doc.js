@@ -71,25 +71,25 @@ The four pillars of our model are ingredients, recipes, grocery items, and tags.
 
 **List** all members of a group:
 
-* **[GET] /api/ingredients{?page_size}{?page}{?tags}{?sort}** all the Ingredients, sorted and filtered
+* **[GET] /ingredients{?page_size}{?page}{?tags}{?sort}** all the Ingredients, sorted and filtered
 
-* **[GET] /api/recipes{?page_size}{?page}{?tags}{?sort}** all the Recipes, sorted and filtered
+* **[GET] /recipes{?page_size}{?page}{?tags}{?sort}** all the Recipes, sorted and filtered
 
-* **[GET] /api/grocery_items{?page_size}{?page}{?tags}{?sort}** all the Grocery Items, sorted and filtered
+* **[GET] /grocery_items{?page_size}{?page}{?tags}{?sort}** all the Grocery Items, sorted and filtered
 
-* **[GET] /api/tags{?page_size}{?page}{?min}{?sort}** all the Tags, sorted and filtered
+* **[GET] /tags{?page_size}{?page}{?min}{?sort}** all the Tags, sorted and filtered
 
 
 
 **Details** of a member of a group:
 
-* **[GET] /api/recipes/{id}** info for a specific recipe
+* **[GET] /recipes/{id}** info for a specific recipe
 
-* **[GET] /api/ingredients/{id}** info for a specific ingredient
+* **[GET] /ingredients/{id}** info for a specific ingredient
 
-* **[GET] /api/grocery_items/{id}** info for a specific grocery item
+* **[GET] /grocery_items/{id}** info for a specific grocery item
 
-* **[GET] /api/tags/{id}** info for a specific tag
+* **[GET] /tags/{id}** info for a specific tag
 
 ## Data
 
