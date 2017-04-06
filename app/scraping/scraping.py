@@ -10,7 +10,7 @@ import json
 import os
 from collections import deque
 import requests
-from config import api_key
+from app.scraping.scrape_config import api_key
 
 spoonacular_domain = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com"
 spoonacular_headers = {
