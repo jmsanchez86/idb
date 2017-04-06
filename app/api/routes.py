@@ -205,7 +205,7 @@ def get_recipe(recipe_id: int):
                                     for r in recipe.similar_recipes],
                 "tags": [{"name": t.tag_name, "img": t.image_url}
                          for t in recipe.tags],
-                "ingredient_list": [{"id": i.recipe_id,
+                "ingredient_list": [{"id": i.ingredient_id,
                                      "original_string": i.verbal_quantity}
                                     for i in recipe.ingredients]
             })
