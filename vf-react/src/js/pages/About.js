@@ -50,7 +50,7 @@ export default class About extends React.Component {
     fetch(this.state.gitDataUrl)
       .then(
         function(response) {
-          if (response.status !== 200) {
+          if (response.status !== 200 && response.status !== 202) {
             console.log('Looks like there was a problem loading github info. Status Code: ' +
               response.status);
             return;
@@ -75,12 +75,12 @@ export default class About extends React.Component {
 
             }
             var cont = _this.state.contributors;
-            cont.get('scottnm').totalIssues = 32;
-            cont.get('CoryDunn').totalIssues = 1;
-            cont.get('jmsanchez86').totalIssues = 0;
-            cont.get('ndbenzinger').totalIssues = 1;
-            cont.get('scott-hornberger').totalIssues = 5;
-            cont.get('thomascardwell7').totalIssues = 21;
+            cont.get('scottnm').totalIssues = 44;
+            cont.get('CoryDunn').totalIssues = 17;
+            cont.get('jmsanchez86').totalIssues = 7;
+            cont.get('ndbenzinger').totalIssues = 8;
+            cont.get('scott-hornberger').totalIssues = 15;
+            cont.get('thomascardwell7').totalIssues = 31;
             _this.getTotals("totalIssues");
             _this.getTotals("totalCommits");
             _this.getTotals("totalUnitTests");
