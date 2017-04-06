@@ -6,7 +6,6 @@ export default class GridSystem extends React.Component {
 
   getGridItems(data, path) {
     const gridItems=[];
-    console.log(this.props.width);
     var i = 0;
     const w = this.props.width;
     for (var id in data) {
@@ -20,7 +19,7 @@ export default class GridSystem extends React.Component {
 
   render() {
     return (
-      <div class="contatiner-fluid">
+      <div class="container-fluid">
         <div class="row">
             {this.getGridItems(this.props.data, this.props.path)}
         </div>
