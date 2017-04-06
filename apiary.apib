@@ -11,8 +11,8 @@ Retrieve a subset of ingredients based on given parameters.
 Each of the links fields is optional.
 
 + Parameters
-    + page_size (number, optional) - the number of results to return. Defaults to 12.REh
-    + page (number, optional) - the page of results to return. Defaults to 1.
+    + page_size (number, optional) - the number of results to return. Defaults to 16.
+    + page (number, optional) - the page of results to return. Uses 0-based indexing. Defaults to 0.
     + tags (array[String], optional) - array of filtering parameters to apply to results. Defaults to none.
     + sort (String, optional) - sorting parameter to apply to results. Options are alphabetical (alpha) and reverse alphabetical (alpha_reverse). Defaults to alphabetical.
 
@@ -86,8 +86,8 @@ Retrieve a subset of recipes based on given parameters.
 Each of the links fields is optional.
 
 + Parameters
-    + page_size (number, optional) - the number of results to return. Defaults to 12.
-    + page (number, optional) - the page of results to return. Defaults to 1.
+    + page_size (number, optional) - the number of results to return. Defaults to 16.
+    + page (number, optional) - the page of results to return. Uses 0-based indexing. Defaults to 0.
     + tags (array[String], optional) - array of filtering parameters to apply to results. Defaults to none.
     + sort (String, optional) - sorting parameter to apply to results. Options are are alphabetical (alpha), reverse alphabetical (alpha_reverse), increasing preparation time (ready_time_asc) and decrasing preparation time (ready_time_desc). Defaults to alphabetical.
 
@@ -223,8 +223,8 @@ Retrieve a subset of grocery items based on given parameters.
 Each of the links fields is optional.
 
 + Parameters
-    + page_size (number, optional) - the number of results to return. Defaults to 12.
-    + page (number, optional) - the page of results to return. Defaults to 1.
+    + page_size (number, optional) - the number of results to return. Defaults to 16.
+    + page (number, optional) - the page of results to return. Uses 0-based indexing. Defaults to 0.
     + tags (array[String], optional) - array of filtering parameters to apply to results. Defaults to none.
     + sort (String, optional) - sorting parameter to apply to results. Options are alphabetical (alpha) and reverse alphabetical (alpha_reverse). Defaults to alphabetical.
 
@@ -295,8 +295,8 @@ Retrieve a subset of tags based on given parameters.
 Each of the links fields is optional.
 
 + Parameters
-    + page_size (number, optional) - the number of results to return. Defaults to 12.
-    + page (number, optional) - the page of results to return. Defaults to 1.
+    + page_size (number, optional) - the number of results to return. Defaults to 16.
+    + page (number, optional) - the page of results to return. Uses 0-based indexing. Defaults to 0.
     + min (number, optional) - Minimum number of elements to which the tags must apply. Defaults to 0.
     + sort (String, optional) - sorting parameter to apply to results. Options are alphabetical (alpha) and reverse alphabetical (alpha_reverse). Defaults to alphabetical.
 
