@@ -30,7 +30,6 @@ export default class RecipeSingle extends React.Component {
     var _this = this;
 
     const requestString = 'http://' + apiRoot + '/recipes/' + _this.state.id;
-    console.log(requestString);
 
     // Fetch singleton's required data.
     fetch(requestString)

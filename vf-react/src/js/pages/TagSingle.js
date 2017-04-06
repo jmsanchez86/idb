@@ -25,7 +25,6 @@ export default class TagSingle extends React.Component {
     var _this = this;
 
     const requestString = 'http://' + apiRoot + '/tags/' + _this.state.id;
-    console.log(requestString);
     
     // Fetch singleton's required data.
     fetch(requestString)
@@ -36,8 +35,6 @@ export default class TagSingle extends React.Component {
         }
         response.json().then(function(responseData) {
 
-            console.log("checkout response");
-            console.log(responseData);
             _this.setState({
                 ingredients : responseData.related_ingredients,
                 grocery_items : responseData.related_grocery_items,
@@ -60,7 +57,6 @@ export default class TagSingle extends React.Component {
     const name = this.state.name;
     const blurb = this.state.blurb;
     const image = this.state.image;
-
 
     var ingredients = this.state.ingredients.map(function(ingredient){
       return(

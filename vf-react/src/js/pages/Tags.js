@@ -142,7 +142,6 @@ export default class Ingredients extends React.Component {
 
   render() {
     const data = this.state.data;
-    console.log(data);
     const links= this.state.links;
     return (
       <div id="grid-page" class="container">

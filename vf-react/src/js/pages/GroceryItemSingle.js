@@ -35,8 +35,6 @@ export default class GroceryItemSingle extends React.Component {
         }
         response.json().then(function(responseData) {
 
-            console.log("checkout response");
-            console.log(responseData);
             _this.setState({
                 related_grocery_items : responseData.related_grocery_items,
                 tags : responseData.tags,
@@ -54,8 +52,6 @@ export default class GroceryItemSingle extends React.Component {
   }
 
   render() {
-    
-    console.log("JEYO");
     const name = this.state.name;
     const image = this.state.image;
     const upc = this.state.upc;
@@ -67,9 +63,6 @@ export default class GroceryItemSingle extends React.Component {
         </div>);
       });
     const grocery_items = this.state.related_grocery_items.map(function(item){
-      console.log("HEY");
-      console.log(item.id);
-      console.log(item.name);
       return (
         <div key={item.id} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <Link to={"grocery_items/" + item.id}><p> {item.name} </p></Link>

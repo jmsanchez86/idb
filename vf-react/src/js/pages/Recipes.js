@@ -10,8 +10,6 @@ var apiRoot = '' + require('../scripts/Config.js');
 export default class Recipes extends React.Component {
   constructor(props) {
     super(props);
-    console.log("JEYO");
-    console.log(apiRoot);
     this.state = {
       filters: this.initFilters(),
       sorters: this.initSorters(),
