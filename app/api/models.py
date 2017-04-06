@@ -79,6 +79,10 @@ class Recipe(db.Model):
             return (db.engine.execute(no_filter_clause + page_clause + ";"),
                     db.engine.execute(count_clause))
 
+    @staticmethod
+    def get(recipe_id):
+        return db.session.query(Recipe).get(recipe_id)
+
 class Ingredient(db.Model):
     """
     Table of ingredients.

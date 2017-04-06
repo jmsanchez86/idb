@@ -154,6 +154,14 @@ def get_all_tags(query_params: QueryParams):
 # Detail Views #
 ################
 
+def filter_nulls(field, limit):
+    for row in field:
+        if row.name is not None:
+            yield row
+            limit -= 1
+            if limit <= 0:
+                return
+
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
@@ -176,7 +184,28 @@ def get_ingredient(ingredient_id: int):
 
 @API_BP.route('/recipes/<int:recipe_id>')
 def get_recipe(recipe_id: int):
-    return flask.json.jsonify({})
+    recipe = Recipe.get(recipe_id)
+    if not recipe:
+        return flask.json.jsonify({})
+    else:
+        return flask.json.jsonify(
+            {
+                "id": recipe.recipe_id,
+                "name": recipe.name,
+                "image": recipe.image_url,
+                "servings": recipe.servings,
+                "blurb": recipe.description,
+                "instructions": recipe.instructions,
+                "source_url": recipe.source_url,
+                "ready_time": recipe.ready_time,
+                "related recipes": [{"id": r.recipe_id, "name": r.name}
+                                    for r in recipe.similar_recipes],
+                "tags": [{"name": t.tag_name, "img": t.image_url}
+                         for t in recipe.tags],
+                "ingredient_list": [{"id": i.recipe_id,
+                                     "original_string": i.verbal_quantity}
+                                    for i in recipe.ingredients]
+            })
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
@@ -189,13 +218,6 @@ def get_tag(tag_name: str):
         return flask.json.jsonify({})
     limit = 10
     data = dict(name=tag.tag_name, blurb=tag.description, image=tag.image_url)
-    def filter_nulls(field, limit):
-        for row in field:
-            if row.name is not None:
-                yield row
-                limit -= 1
-                if limit <= 0:
-                    return
     data["related_recipes"] = [
         {"id": r.recipe_id,
          "name": r.name,
