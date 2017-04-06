@@ -36,7 +36,7 @@ We opted for a Single Page Application model for our website instead of the more
 
 #### Data Models
 
-<div class="container">![image alt text](/static/images/image_0.png)</div>
+<img class="img img-responsive full-width thumb" src="static/images/image_0.png"/>
 
 The four pillars of our model are ingredients, recipes, grocery items, and tags. Ingredients are the individual items that go into making a recipe. Recipes are the completed dishes that users can cook. Grocery items are cooking items purchasable in grocery stores. And tags are descriptive categories containing subsets of ingredients, recipes, and grocery items. In addition to viewing all the elements of one of our pillars and viewing details about an individual element, we provide a few more useful relationships such as finding which ingredients can be substituted for other ingredients and searching for recipes that are similar to each other.
 
