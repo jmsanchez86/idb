@@ -404,3 +404,7 @@ input[type="radio"] {
   padding-left: 3%;
   padding-right: 3%;
 }
+
+#grid_item_name {
+  text-transform: capitalize;
+}

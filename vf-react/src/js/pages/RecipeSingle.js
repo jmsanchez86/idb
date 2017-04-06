@@ -44,12 +44,12 @@ export default class RecipeSingle extends React.Component {
                 ingredient_list : responseData.ingredient_list,
                 tags : responseData.tags,
 
-                instructions : responseData.instructions,
+                instructions : (responseData.instructions).replace(/<(?:.|\n)*?>/gm, ''),
                 ready_time : responseData.ready_time,
                 source : responseData.source_url,
-                blurb : responseData.blurb,
+                blurb : (responseData.blurb).replace(/<(?:.|\n)*?>/gm, ''),
                 image : responseData.image,
-                name : responseData.name,
+                name : (responseData.name).replace(/\s?\{[^}]+\}/g, ''),
             });
 
         });
@@ -76,7 +76,7 @@ export default class RecipeSingle extends React.Component {
 
   render() {
     const name = this.state.name;
-    const blurb = this.state.blurb;
+    const blurb = this.state.blurb.replace(/\s?\{[^}]+\}/g,'');
     const image = this.state.image;
     const source = this.state.source;
     const ready_time = this.state.ready_time;
@@ -84,13 +84,13 @@ export default class RecipeSingle extends React.Component {
 
     const ingredients = this.state.ingredient_list.map(function(ingredient){
       return(
-        <div key={ingredient.id} class="list-group-item">
+        <div key={ingredient.id+"_"+ingredient.original_string} class="list-group-item">
           <p><Link to={"ingredients/" + ingredient.id}>{ingredient.original_string}</Link></p>
         </div>);
     });
     const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag.name} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div key={tag.name+"_"+tag.image} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
           <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });
@@ -99,9 +99,9 @@ export default class RecipeSingle extends React.Component {
       <div class="single container-fluid">
         <div class="row">
           <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
-            <h2>
+            <h3>
               {name}
-            </h2>
+            </h3>
           </div>
         </div>
         <div class="row">
