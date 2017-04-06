@@ -1,12 +1,11 @@
 import React from "react";
 
-import apiRoot from "./scripts/Config";
-
 import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
 import VFPagination from "../components/layout/VFPagination";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class Ingredients extends React.Component {
   constructor(props) {

@@ -1,9 +1,7 @@
 import React from "react";
-
-import apiRoot from "./scripts/Config";
-
 import { IndexLink, Link } from "react-router";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class TagSingle extends React.Component {
   constructor(props) {

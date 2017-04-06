@@ -1,11 +1,9 @@
 import React from "react";
-
-import apiRoot from "./scripts/Config";
-
 import { IndexLink, Link } from "react-router";
 
 import OptionalList from "../components/layout/OptionalList";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class IngredientSingle extends React.Component {
   constructor(props) {

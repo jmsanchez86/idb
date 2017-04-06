@@ -1,16 +1,17 @@
 import React from "react";
 
-import apiRoot from "./scripts/Config";
-
 import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
 import VFPagination from "../components/layout/VFPagination";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class Recipes extends React.Component {
   constructor(props) {
     super(props);
+    console.log("JEYO");
+    console.log(apiRoot);
     this.state = {
       filters: this.initFilters(),
       sorters: this.initSorters(),
