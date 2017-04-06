@@ -4,9 +4,9 @@ HOST: https://api.vennfridge.appspot.com/
 # VennFridge
 VennFridge provides information on and relationships between ingredients, recipes, grocery items, and tags.
 
-## Ingredients Collection [/api/ingredients]
+## Ingredients Collection [/ingredients]
   
-### List Ingredients [GET /api/ingredients{?page_size}{?page}{?tags}{?sort}]
+### List Ingredients [GET /ingredients{?page_size}{?page}{?tags}{?sort}]
 Retrieve a subset of ingredients based on given parameters.
 Each of the links fields is optional.
 
@@ -36,7 +36,7 @@ Each of the links fields is optional.
         }
 
         
-### View Ingredient Details [GET /api/ingredients/{id}]
+### View Ingredient Details [GET /ingredients/{id}]
 Retrieve details of a single ingredient.
 Aisle is optional.
 
@@ -79,9 +79,9 @@ Aisle is optional.
         
         No ingredient with that id exists.
 
-## Recipes Collection [/api/recipes]
+## Recipes Collection [/recipes]
 
-### List Recipes [GET /api/recipes{?page_size}{?page}{?tags}{?sort}]
+### List Recipes [GET /recipes{?page_size}{?page}{?tags}{?sort}]
 Retrieve a subset of recipes based on given parameters.
 Each of the links fields is optional.
 
@@ -111,7 +111,7 @@ Each of the links fields is optional.
             }
         }
         
-### View Recipe Details [GET /api/recipes/{id}]
+### View Recipe Details [GET /recipes/{id}]
 Retrieve details of a single recipe.
 
 + Parameters
@@ -216,9 +216,9 @@ Retrieve details of a single recipe.
         
         No recipe with that id exists.
 
-## Grocery Items Collection [/api/grocery_items]
+## Grocery Items Collection [/grocery_items]
   
-### List Grocery items [GET /api/grocery_items{?page_size}{?page}{?tags}{?sort}]
+### List Grocery items [GET /grocery_items{?page_size}{?page}{?tags}{?sort}]
 Retrieve a subset of grocery items based on given parameters.
 Each of the links fields is optional.
 
@@ -246,7 +246,7 @@ Each of the links fields is optional.
             }
         }
         
-### View Grocery Item Details [GET /api/grocery_items/{id}]
+### View Grocery Item Details [GET /grocery_items/{id}]
 Retrieve details of a single grocery item.
 
 + Parameters
@@ -288,9 +288,9 @@ Retrieve details of a single grocery item.
         
         No grocery item with that id exists.
 
-## Tags Collection [/api/tags]
+## Tags Collection [/tags]
   
-### List Tags [GET /api/tags{?page_size}{?page}{?min}{?sort}]
+### List Tags [GET /tags{?page_size}{?page}{?min}{?sort}]
 Retrieve a subset of tags based on given parameters.
 Each of the links fields is optional.
 
@@ -318,7 +318,7 @@ Each of the links fields is optional.
             }
         }
         
-### View Tag Details [GET /api/tags/{tag_name}]
+### View Tag Details [GET /tags/{tag_name}]
 Retrieve details of a single tag.
 
 + Parameters
