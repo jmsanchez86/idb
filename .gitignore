@@ -10,3 +10,4 @@ npm-debug.log
 app/scraping/data
 cloud_sql_proxy
 saved_ingredient_images/
+scrape_config.py
