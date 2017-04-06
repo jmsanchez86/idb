@@ -182,6 +182,33 @@ def get_recipe(recipe_id: int):
 def get_grocery_items(grocery_item_id: int):
     return flask.json.jsonify({})
 
-@API_BP.route('/tags/<int:tag_id>')
-def get_tag(tag_id: int):
-    return flask.json.jsonify({})
+@API_BP.route('/tags/<string:tag_name>')
+def get_tag(tag_name: str):
+    tag = Tag.get(tag_name)
+    if not tag:
+        return flask.json.jsonify({})
+    limit = 10
+    data = dict(name=tag.tag_name, blurb=tag.description, image=tag.image_url)
+    def filter_nulls(field, limit):
+        for row in field:
+            if row.name is not None:
+                yield row
+                limit -= 1
+                if limit <= 0:
+                    return
+    data["related_recipes"] = [
+        {"id": r.recipe_id,
+         "name": r.name,
+         "image": r.image_url}
+        for r in filter_nulls(tag.recipes, limit)]
+    data["related_ingredients"] = [
+        {"id": r.ingredient_id,
+         "name": r.name,
+         "image": r.image_url}
+        for r in filter_nulls(tag.ingredients, limit)]
+    data["related_grocery_items"] = [
+        {"id": r.grocery_id,
+         "name": r.name,
+         "image": r.image_url}
+        for r in filter_nulls(tag.grocery_items, limit)]
+    return flask.json.jsonify(data)

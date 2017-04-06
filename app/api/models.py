@@ -251,6 +251,12 @@ class Tag(db.Model):
         return "<Tag %s>" % (self.tag_name)
 
     @staticmethod
+    def get(tag_name):
+        query = db.session.query(Tag).filter_by(tag_name=tag_name)
+        return query.first()
+
+
+    @staticmethod
     def get_all(min_occurences, order, page, page_size):
         count_recipe_query = db.engine.execute\
                              ("SELECT tag.tag_name, tag.description, "
