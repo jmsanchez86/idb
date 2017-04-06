@@ -44,12 +44,12 @@ export default class RecipeSingle extends React.Component {
                 ingredient_list : responseData.ingredient_list,
                 tags : responseData.tags,
 
-                instructions : responseData.instructions,
+                instructions : (responseData.instructions).replace(/<(?:.|\n)*?>/gm, ''),
                 ready_time : responseData.ready_time,
                 source : responseData.source_url,
-                blurb : responseData.blurb,
+                blurb : (responseData.blurb).replace(/<(?:.|\n)*?>/gm, ''),
                 image : responseData.image,
-                name : responseData.name,
+                name : (responseData.name).replace(/\s?\{[^}]+\}/g, ''),
             });
 
         });
@@ -76,7 +76,7 @@ export default class RecipeSingle extends React.Component {
 
   render() {
     const name = this.state.name;
-    const blurb = this.state.blurb;
+    const blurb = this.state.blurb.replace(/\s?\{[^}]+\}/g,'');
     const image = this.state.image;
     const source = this.state.source;
     const ready_time = this.state.ready_time;

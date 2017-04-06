@@ -9,10 +9,14 @@ export default class RecipeItem extends React.Component {
     const item  = this.props.item;
     const image = item.image;
     const name  = item.name;
-    const blurb = item.blurb;
+    var blurb = item.blurb;
+
     var id = item.id;
     if (this.props.path == 'tags'){
       id = name;
+    }
+    if (this.props.path == 'recipes'){
+      blurb = blurb.replace(/<(?:.|\n)*?>/gm, '');
     }
 
     return (
