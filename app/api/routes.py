@@ -145,7 +145,7 @@ def get_all_tags(query_params: QueryParams):
                        query_params.page_size)
     return flask.json.jsonify({"data": [{"name": tq.tag_name,
                                          "blurb": tq.description,
-                                         "image": "/static/images/" +
+                                         "image": "/static/images/tags/" +
                                                   tq.image_url,}
                                         for tq in resp[0]],
                                "table_size": resp[1]})
@@ -181,7 +181,7 @@ def get_ingredient(ingredient_id: int):
             "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
                                       for g in items],
             "tags": [{"name": t.tag_name,
-                      "image": "/static/images/" + t.image_url,} for t in tags]
+                      "image": "/static/images/tags/" + t.image_url,} for t in tags]
             })
 
 
