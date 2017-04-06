@@ -1,5 +1,6 @@
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-sequence-index
+# pylint: disable=invalid-name
 
 
 from functools import wraps
@@ -12,6 +13,7 @@ from typing import Callable, List
 
 API_BP = flask.Blueprint('api', __name__)
 
+tag_image_prefix = "/static/images/tags/"
 
 ################
 # Browse Views #
@@ -145,7 +147,7 @@ def get_all_tags(query_params: QueryParams):
                        query_params.page_size)
     return flask.json.jsonify({"data": [{"name": tq.tag_name,
                                          "blurb": tq.description,
-                                         "image": "/static/images/tags/" +
+                                         "image": tag_image_prefix +
                                                   tq.image_url,}
                                         for tq in resp[0]],
                                "table_size": resp[1]})
@@ -181,7 +183,7 @@ def get_ingredient(ingredient_id: int):
             "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
                                       for g in items],
             "tags": [{"name": t.tag_name,
-                      "image": "/static/images/tags/" + t.image_url,} for t in tags]
+                      "image": tag_image_prefix + t.image_url,} for t in tags]
             })
 
 
@@ -203,7 +205,7 @@ def get_recipe(recipe_id: int):
                 "ready_time": recipe.ready_time,
                 "related recipes": [{"id": r.recipe_id, "name": r.name}
                                     for r in recipe.similar_recipes],
-                "tags": [{"name": t.tag_name, "img": t.image_url}
+                "tags": [{"name": t.tag_name, "img": tag_image_prefix + t.image_url}
                          for t in recipe.tags],
                 "ingredient_list": [{"id": i.recipe_id,
                                      "original_string": i.verbal_quantity}
@@ -218,7 +220,7 @@ def get_grocery_items(grocery_item_id: int):
     data = dict(id=product.grocery_id, name=product.name,
                 image=product.image_url, upc=product.upc)
     data["tags"] = [{"name": t.tag_name,
-                     "image": "/static/images/" + t.image_url}
+                     "image": tag_image_prefix + t.image_url}
                     for t in product.tags]
 
     similar_items = []
@@ -239,7 +241,8 @@ def get_tag(tag_name: str):
     if not tag:
         return flask.json.jsonify({})
     limit = 10
-    data = dict(name=tag.tag_name, blurb=tag.description, image=tag.image_url)
+    data = dict(name=tag.tag_name, blurb=tag.description,
+                image=tag_image_prefix + tag.image_url)
     data["related_recipes"] = [
         {"id": r.recipe_id,
          "name": r.name,
