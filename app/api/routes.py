@@ -220,8 +220,17 @@ def get_grocery_items(grocery_item_id: int):
     data["tags"] = [{"name": t.tag_name,
                      "image": "/static/images/" + t.image_url}
                     for t in product.tags]
+
+    similar_items = []
+    added = set()
+    for item in product.similar_grocery_items:
+        if item.grocery_id in added:
+            continue
+        added.add(item.grocery_id)
+        similar_items.append(item)
+
     data["related_grocery_items"] = [{"id": p.grocery_id, "name": p.name}
-                                     for p in product.similar_grocery_items]
+                                     for p in similar_items]
     return flask.json.jsonify(data)
 
 @API_BP.route('/tags/<string:tag_name>')
