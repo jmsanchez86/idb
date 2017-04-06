@@ -10,7 +10,10 @@ export default class RecipeItem extends React.Component {
     const image = item.image;
     const name  = item.name;
     const blurb = item.blurb;
-    const id    = item.id;
+    var id = item.id;
+    if (this.props.path == 'tags'){
+      id = name;
+    }
 
     return (
 
@@ -26,10 +29,10 @@ export default class RecipeItem extends React.Component {
           <div class="caption">
 
               <h5 class="grid">
-                {name}
+                {name && name.length > 50 ? name.substr(0,50) + "..." : name}
               </h5>
               <p>
-                {blurb}
+                {blurb && blurb.length > 100 ? blurb.substr(0,100) + "..." : blurb}
               </p>
 
           </div>

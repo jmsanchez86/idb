@@ -20,7 +20,7 @@ import Layout from "./pages/Layout";
 const app = document.getElementById('app');
 
 ReactDOM.render(
-  <Router history={hashHistory}>
+  <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
     <Route path="/" component={Layout}>
       <IndexRoute component={Landing}></IndexRoute>
 

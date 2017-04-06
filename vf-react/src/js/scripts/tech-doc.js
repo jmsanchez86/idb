@@ -63,7 +63,7 @@ We opted for a Single Page Application model for our website instead of the more
 
 #### Data Models
 
-<div class="container">![image alt text](/static/images/image_0.png)</div>
+<img class="img img-responsive full-width thumb" src="static/images/image_0.png"/>
 
 The four pillars of our model are ingredients, recipes, grocery items, and tags. Ingredients are the individual items that go into making a recipe. Recipes are the completed dishes that users can cook. Grocery items are cooking items purchasable in grocery stores. And tags are descriptive categories containing subsets of ingredients, recipes, and grocery items. In addition to viewing all the elements of one of our pillars and viewing details about an individual element, we provide a few more useful relationships such as finding which ingredients can be substituted for other ingredients and searching for recipes that are similar to each other.
 
@@ -138,11 +138,11 @@ React Router works by taking the current URL path, verifying that it is one of i
 
 **React-Bootstrap** is a library of React components that implement Twitter’s popular front-end framework, Bootstrap. As mentioned above, React with JSX and Bootstrap gives developers the power to create, style, and add functionality to page elements in one component. The major flaw in this trio is the awkward means by declaring an HTML element’s class for Bootstrap styling. For example, to create a small button with default coloring, one must declare:
 
-`<button class=”btn btn-sml btn-default”>Click Here</button>`
+\`<button class=”btn btn-sml btn-default”>Click Here</button>\`
 
 The word “button” (and “btn”) must be repeated quite a few times. It would be better if one could declare a Bootstrap component and specify its size, coloring, and style in the same way we pass other information to other Bootstrap components. React-Bootstrap allows for cleaner code, and coupled with React and JSX, it unifies the syntax for creating, styling, and adding functionality to HTML elements:
 
-`<Button bsStyle="success" bsSize="small" onClick={someFunction}>Click Here</Button>`
+\`<Button bsStyle="success" bsSize="small" onClick={someFunction}>Click Here</Button>\`
 
 ###### Webpack
 
@@ -199,4 +199,6 @@ Once our web app was deployed to Google’s App Engine servers, it was initially
             
     return tech_doc;
 });
+
+
 

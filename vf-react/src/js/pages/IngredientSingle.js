@@ -1,86 +1,119 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
-var data = require('json!../../data/food.json');
-const ingredients = data.ingredients;
-const recipes = data.recipes;
-const grocery_items = data.grocery_items;
-const tags = data.tags;
+import OptionalList from "../components/layout/OptionalList";
+
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class IngredientSingle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sub_ingredients : [],
+      grocery_items: [],
+      recipes : [],
+      tags : [],
+
+      image : '',
+      name : '',
+      id : this.props.params.id,
+
+    };
+    this.requestData();
+  }
+
+  requestData() {
+
+    var _this = this;
+
+    const requestString = 'http://' + apiRoot + '/ingredients/' + _this.state.id;
+
+    // Fetch singleton's required data.
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+
+            _this.setState({
+                sub_ingredients : responseData.substitute_ingredients,
+                grocery_items : responseData.related_grocery_items,
+                recipes : responseData.related_recipes,
+                tags : responseData.tags,
+
+                image : responseData.image,
+                name : responseData.name,
+            });
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+  }
+
   render() {
-    const id = this.props.params.id;
-    var ingredient = ingredients[id];
-    var recipeList = ingredient.recipes.map(function(recipe){
-      var recp = recipes[recipe];
+    const image = this.state.image;
+    const name = this.state.name;
+    
+    const recipes = this.state.recipes.map(function(recipe){
       return (
-        <div key={recipe} class="list-group-item">
-          <p><Link to={"recipes/" + recipe}>{recp.name}</Link></p>
+        <div key={recipe.id} class="list-group-item">
+          <p><Link to={"recipes/" + recipe.id}>{recipe.name}</Link></p>
         </div>);
     });
-    var groceryList = ingredient.grocery_items.map(function(item){
-      var groceryItem = grocery_items[item];
+    const grocery_items = this.state.grocery_items.map(function(item){
       return (
-        <div key={item} class="list-group-item">
-          <p><Link to={"grocery-items/" + item}>{groceryItem.name}</Link></p>
+        <div key={item.id} class="list-group-item">
+          <p><Link to={"grocery_items/" + item.id}>{item.name}</Link></p>
         </div>);
     });
-    var tagList = ingredient.tags.map(function(tag){
-      var tagItem = tags[tag];
+    const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag} class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
-          <Link to={"tags/" + tag}><img id="tag-single" src={tagItem.image} /></Link>
+        <div key={tag.name} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
+          <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
     });
+
     return (
 
-      <div class="container">
-        <div class="media hidden-sm hidden-xs">
-          <h2>{ingredient.name}</h2>
-          <div id="media-left" class="media-left">
-            <img class="media-object" id="image-single-lg" src={ingredient.image} alt="..." />
-            {tagList}
+      <div class="single container-fluid">
+        <div class="row">
+          <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
+            <h2>
+              {name}
+            </h2>
           </div>
-          <div class="media-body">
-            {recipeList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4 class="no">Recipes with this Ingredient</h4>)}
-            {recipeList}
-            <br />
-            {groceryList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4 class="no">Related Grocery Items</h4>)}
-            {groceryList}
+        </div>
+        <div class="row gutter-20">
+          <div class="col-lg-offset-1 col-lg-5 col-md-6 col-sm-6 col-xs-12">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    <img class="img-rounded img-responsive" src={image} />
+                  </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+            <OptionalList
+              title={"Recipes with " + name }
+              list={recipes}
+              />
+            <OptionalList
+              title="Grocery Items"
+              list={grocery_items}
+              />
+            <OptionalList
+              title="Tags"
+              list={tags}
+              />
           </div>
         </div>
 
-        <div class="container hidden-md hidden-lg">
-          <div class="row">
-            <div>
-              <h3>{ingredient.name}</h3>
-            </div>
-          </div>
-
-            <div class="row">
-              <img class="image1" id="image-single-sm" src={ingredient.image} alt="..." />
-            </div>
-            <div class="row">
-              <div class="col-sm-12 col-xs-12">
-                  {tagList}
-              </div>
-            </div>
-
-          <div id="ingSingleList" class="row">
-            <div class="col">
-            {recipeList.length > 0 ? (<h4 class="media-heading">Recipes with this Ingredient</h4>) : (<h4 class="no">Recipes with this Ingredient</h4>)}
-            {recipeList}
-            </div>
-          </div>
-          <div id="ingSingleList" class="row">
-            <div class="col">
-            {groceryList.length > 0 ? (<h4 class="media-heading">Related Grocery Items</h4>) : (<h4 class="no">Related Grocery Items</h4>)}
-            {groceryList}
-            </div>
-          </div>
       </div>
-
-    </div>
 
     );
   }
