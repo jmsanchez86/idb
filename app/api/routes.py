@@ -157,7 +157,21 @@ def get_all_tags(query_params: QueryParams):
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
-    return flask.json.jsonify({})
+    (ing, subs, items, tags) = Ingredient.get(ingredient_id)
+    if ing is None:
+        return flask.json.jsonify({})
+    else:
+        return flask.json.jsonify({
+            "id": ing.ingredient_id,
+            "name": ing.name,
+            "image": ing.image_url,
+            "aisle": ing.aisle,
+            "subsitute_ingredients": [s.substitute for s in subs],
+            "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
+                                      for g in items],
+            "tags": [{"name": t.tag_name,
+                      "image": "/static/images/" + t.image_url,} for t in tags]
+            })
 
 
 @API_BP.route('/recipes/<int:recipe_id>')

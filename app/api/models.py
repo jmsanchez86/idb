@@ -101,6 +101,17 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
     @staticmethod
+    def get(ing_id):
+        main_ingredient = db.session.query(Ingredient).get(ing_id)
+        substitutes = db.session.query(IngredientSubstitute).join(Ingredient)\
+                                .filter_by(ingredient_id=ing_id).all()
+        related_grocery_items = db.session.query(GroceryItem).join(Ingredient)\
+                                          .filter_by(ingredient_id=ing_id).all()
+        tags = db.session.query(Tag).join(TagIngredient).join(Ingredient)\
+                         .filter_by(ingredient_id=ing_id).all()
+        return (main_ingredient, substitutes, related_grocery_items, tags)
+
+    @staticmethod
     def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
         order_param, asc = orders[order]
@@ -165,7 +176,9 @@ class GroceryItem(db.Model):
     __tablename__ = "grocery_item"
 
     grocery_id = db.Column(db.Integer, primary_key=True)
-    ingredient_id = db.Column(db.Integer, primary_key=True)
+    ingredient_id = db.Column(db.Integer,
+                              db.ForeignKey("ingredient.ingredient_id"),
+                              primary_key=True)
     name = db.Column(db.Text)
     image_url = db.Column(db.Text)
     upc = db.Column(db.String(20))
