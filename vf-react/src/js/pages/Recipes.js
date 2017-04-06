@@ -80,11 +80,11 @@ export default class Recipes extends React.Component {
   initFilters() {
     const _filters = {
       1 : {
-             name : 'Starter',
+             name : 'Appetizer',
              checked : false
           },
       2 : {
-             name : 'Morning Meal',
+             name : 'Breakfast',
              checked : false
           },
       3 : {
