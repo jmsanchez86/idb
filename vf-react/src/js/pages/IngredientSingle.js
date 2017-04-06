@@ -57,7 +57,7 @@ export default class IngredientSingle extends React.Component {
   render() {
     const image = this.state.image;
     const name = this.state.name;
-    
+
     const recipes = this.state.recipes.map(function(recipe){
       return (
         <div key={recipe.id} class="list-group-item">
@@ -82,9 +82,9 @@ export default class IngredientSingle extends React.Component {
       <div class="single container-fluid">
         <div class="row">
           <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
-            <h2>
+            <h3 id="grid_item_name">
               {name}
-            </h2>
+            </h3>
           </div>
         </div>
         <div class="row gutter-20">

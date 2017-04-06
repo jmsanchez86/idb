@@ -162,7 +162,7 @@ export default class Ingredients extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div id="grid-page" class="contatiner">
+      <div id="grid-page" class="container-fluid">
         <Greeting />
         <Controller
           sorters={this.state.sorters}
