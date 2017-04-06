@@ -1,6 +1,8 @@
 
 import React from "react";
 
+import apiRoot from "./scripts/Config";
+
 import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
@@ -22,7 +24,7 @@ export default class Ingredients extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://api.vennfridge.appspot.com/tags?page_size=16&sort=";
+    var params = "http://" + apiRoot + "/tags?page_size=16&sort=";
 
     for (var id in sorters) {
       if (sorters[id].checked)

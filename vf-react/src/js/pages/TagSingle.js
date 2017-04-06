@@ -1,4 +1,7 @@
 import React from "react";
+
+import apiRoot from "./scripts/Config";
+
 import { IndexLink, Link } from "react-router";
 
 
@@ -23,7 +26,7 @@ export default class TagSingle extends React.Component {
 
     var _this = this;
 
-    const requestString = 'http://api.vennfridge.appspot.com/tags/' + _this.state.id;
+    const requestString = 'http://' + apiRoot + '/tags/' + _this.state.id;
     console.log(requestString);
     
     // Fetch singleton's required data.

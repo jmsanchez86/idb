@@ -1,4 +1,7 @@
 import React from "react";
+
+import apiRoot from "./scripts/Config";
+
 import { IndexLink, Link } from "react-router";
 
 
@@ -22,7 +25,7 @@ export default class GroceryItemSingle extends React.Component {
 
     var _this = this;
 
-    const requestString = 'http://api.vennfridge.appspot.com/grocery_items/' + _this.state.id;
+    const requestString = 'http://' + apiRoot + '/grocery_items/' + _this.state.id;
     console.log(requestString);
 
     // Fetch singleton's required data.
