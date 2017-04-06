@@ -107,13 +107,15 @@ class Ingredient(db.Model):
     @staticmethod
     def get(ing_id):
         main_ingredient = db.session.query(Ingredient).get(ing_id)
+        recipe_ingredients = main_ingredient.recipes
         substitutes = db.session.query(IngredientSubstitute).join(Ingredient)\
                                 .filter_by(ingredient_id=ing_id).all()
         related_grocery_items = db.session.query(GroceryItem).join(Ingredient)\
                                           .filter_by(ingredient_id=ing_id).all()
         tags = db.session.query(Tag).join(TagIngredient).join(Ingredient)\
                          .filter_by(ingredient_id=ing_id).all()
-        return (main_ingredient, substitutes, related_grocery_items, tags)
+        return (main_ingredient, substitutes, related_grocery_items, tags,
+                recipe_ingredients)
 
     @staticmethod
     def get_all(filters, order, page, page_size):
@@ -299,6 +301,7 @@ class RecipeIngredient(db.Model):
     verbal_quantity = db.Column(db.Text, primary_key=True)
 
     recipe = db.relationship("Recipe", back_populates="ingredients")
+    ingredient = db.relationship("Ingredient", back_populates="recipes")
 
     def __init__(self, recipe_id, ingredient_id, verbal_quantity):
         self.recipe_id = recipe_id
@@ -313,6 +316,8 @@ class RecipeIngredient(db.Model):
 
 Recipe.ingredients = db.relationship("RecipeIngredient",
                                      back_populates="recipe")
+Ingredient.recipes = db.relationship("RecipeIngredient",
+                                     back_populates="ingredient")
 
 class TagIngredient(db.Model):
     """

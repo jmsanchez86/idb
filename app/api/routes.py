@@ -166,7 +166,7 @@ def filter_nulls(field, limit):
 
 @API_BP.route('/ingredients/<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
-    (ing, subs, items, tags) = Ingredient.get(ingredient_id)
+    (ing, subs, items, tags, recipe_ing) = Ingredient.get(ingredient_id)
     if ing is None:
         return flask.json.jsonify({})
     else:
@@ -175,6 +175,8 @@ def get_ingredient(ingredient_id: int):
             "name": ing.name,
             "image": ing.image_url,
             "aisle": ing.aisle,
+            "related_recipes": [{"id": ri.recipe_id, "name": ri.recipe.name}
+                                for ri in recipe_ing[:5]],
             "subsitute_ingredients": [s.substitute for s in subs],
             "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
                                       for g in items],
