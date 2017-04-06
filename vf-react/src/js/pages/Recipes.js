@@ -133,6 +133,16 @@ export default class Recipes extends React.Component {
           {
              name: "Z - A",
              checked: false
+          },
+        ready_time_asc:
+          {
+             name: "Quickest First",
+             checked: false
+          },
+        ready_time_desc:
+          {
+             name: "Slowest FIrst",
+             checked: false
           }
       }
     )

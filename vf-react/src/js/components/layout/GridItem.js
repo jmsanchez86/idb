@@ -28,7 +28,7 @@ export default class RecipeItem extends React.Component {
 
           <div class="caption">
 
-              <h5 class="grid">
+              <h5 id="grid_item_name" class="grid">
                 {name && name.length > 50 ? name.substr(0,50) + "..." : name}
               </h5>
               <p>
