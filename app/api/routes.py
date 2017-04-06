@@ -145,7 +145,8 @@ def get_all_tags(query_params: QueryParams):
                        query_params.page_size)
     return flask.json.jsonify({"data": [{"name": tq.tag_name,
                                          "blurb": tq.description,
-                                         "image": tq.image_url,}
+                                         "image": "/static/images/" +
+                                                  tq.image_url,}
                                         for tq in resp[0]],
                                "table_size": resp[1]})
 
