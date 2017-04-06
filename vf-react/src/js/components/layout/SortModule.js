@@ -13,9 +13,9 @@ export default class SortModule extends React.Component {
     const sorters = this.props.sorters;
     const buttons = [];
     for (var id in sorters) {
-      var cls = "btn btn-default";
+      var cls = "btn btn-default btn-block";
       if (id == this.state.selectedValue)
-        cls = "btn btn-default active";
+        cls = "btn btn-default btn-block active";
       buttons.push(
         <label key={id} class={cls}>
           <h5>{sorters[id].name}</h5>
@@ -34,7 +34,7 @@ export default class SortModule extends React.Component {
     return (
         <RadioGroup name="fruit" selectedValue={this.state.selectedValue} onChange={this.onRadio.bind(this)}>
         <h5>Sort</h5>
-        <div class="btn-group btn-group-justified">
+        <div class="btn-list">
           {this.getRadioButtons()}
           </div>
         </RadioGroup>
