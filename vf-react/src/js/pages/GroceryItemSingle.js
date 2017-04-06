@@ -58,13 +58,18 @@ export default class GroceryItemSingle extends React.Component {
     console.log("JEYO");
     const name = this.state.name;
     const image = this.state.image;
-    const grocery_items = this.state.related_grocery_items;
     const upc = this.state.upc;
     
     const tags = this.state.tags.map(function(tag){
       return (
         <div key={tag.name} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
         <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
+        </div>);
+      });
+    const grocery_items = this.state.related_grocery_items.map(function(item){
+      return (
+        <div key={item.id} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <p> {item.name} </p>
         </div>);
       });
     return (
@@ -109,7 +114,18 @@ export default class GroceryItemSingle extends React.Component {
                       {tags}
                     </div>
                   </div>
-
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                      <h3 disabled={!grocery_items.length}>Related Grocery Items</h3>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="panel-body">
+                      {grocery_items}
+                    </div>
+                  </div>
                 </div>
               </div>
 
