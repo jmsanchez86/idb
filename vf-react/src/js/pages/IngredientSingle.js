@@ -38,6 +38,8 @@ export default class IngredientSingle extends React.Component {
         }
         response.json().then(function(responseData) {
 
+            console.log("checkout response");
+            console.log(responseData);
             _this.setState({
                 sub_ingredients : responseData.substitute_ingredients,
                 grocery_items : responseData.related_grocery_items,
@@ -58,7 +60,8 @@ export default class IngredientSingle extends React.Component {
   render() {
     const image = this.state.image;
     const name = this.state.name;
-
+    console.log('HEYO');
+    console.log(this.state.recipes);
     const recipes = this.state.recipes.map(function(recipe){
       return (
         <div key={recipe.id} class="list-group-item">

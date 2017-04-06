@@ -7,7 +7,7 @@ export default class GroceryItemSingle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredient : {},
+      related_grocery_items : [],
       tags : [],
 
       image : '',
@@ -35,8 +35,10 @@ export default class GroceryItemSingle extends React.Component {
         }
         response.json().then(function(responseData) {
 
+            console.log("checkout response");
+            console.log(responseData);
             _this.setState({
-                ingredient : responseData.ingredient,
+                related_grocery_items : responseData.related_grocery_items,
                 tags : responseData.tags,
 
                 image : responseData.image,
@@ -53,10 +55,10 @@ export default class GroceryItemSingle extends React.Component {
 
   render() {
     
+    console.log("JEYO");
     const name = this.state.name;
     const image = this.state.image;
-    const ing_id = this.state.ingredient.id;
-    const ingredient = this.state.ingredient;
+    const grocery_items = this.state.related_grocery_items;
     const upc = this.state.upc;
     
     const tags = this.state.tags.map(function(tag){
@@ -97,18 +99,6 @@ export default class GroceryItemSingle extends React.Component {
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="row">
-                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                      <h3 disabled={!ingredient}>Related Ingredient</h3>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                      <div key={ing_id} class="list-group-item">
-                        <p><Link to={"ingredients/" + ing_id}>{ingredient.name}</Link></p>
-                      </div>
-                    </div>
-                  </div>
                   <div class="row">
                     <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                       <h3 disabled={!tags.length}>Tags</h3>

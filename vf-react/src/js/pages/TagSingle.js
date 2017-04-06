@@ -36,10 +36,12 @@ export default class TagSingle extends React.Component {
         }
         response.json().then(function(responseData) {
 
+            console.log("checkout response");
+            console.log(responseData);
             _this.setState({
-                ingredients : responseData.ingredients,
-                grocery_items : responseData.grocery_items,
-                recipes : responseData.recipes,
+                ingredients : responseData.related_ingredients,
+                grocery_items : responseData.related_grocery_items,
+                recipes : responseData.related_recipes,
 
                 blurb : responseData.blurb,
                 image : responseData.image,
