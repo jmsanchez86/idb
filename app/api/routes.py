@@ -168,7 +168,7 @@ def filter_nulls(field, limit):
 def get_ingredient(ingredient_id: int):
     ing = Ingredient.get(ingredient_id)
     if not ing:
-        return flask.json.jsonify({})
+        return flask.abort(404)
 
     recipe_ing = ing.recipes
     subs = ing.substitutes
