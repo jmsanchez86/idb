@@ -198,6 +198,11 @@ class GroceryItem(db.Model):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
     @staticmethod
+    def get(grocery_id):
+        query = db.session.query(GroceryItem).filter_by(grocery_id=grocery_id)
+        return query.first()
+
+    @staticmethod
     def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
         order_param, asc = orders[order]

@@ -209,7 +209,17 @@ def get_recipe(recipe_id: int):
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
-    return flask.json.jsonify({})
+    product = GroceryItem.get(grocery_item_id)
+    if not product:
+        return flask.json.jsonify({})
+    data = dict(id=product.grocery_id, name=product.name,
+                image=product.image_url, upc=product.upc)
+    data["tags"] = [{"name": t.tag_name,
+                     "image": "/static/images/" + t.image_url}
+                    for t in product.tags]
+    data["related_grocery_items"] = [{"id": p.grocery_id, "name": p.name}
+                                     for p in product.similar_grocery_items]
+    return flask.json.jsonify(data)
 
 @API_BP.route('/tags/<string:tag_name>')
 def get_tag(tag_name: str):
