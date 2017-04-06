@@ -88,6 +88,7 @@ export default class RecipeSingle extends React.Component {
           <p><Link to={"ingredients/" + ingredient.id}>{ingredient.original_string}</Link></p>
         </div>);
     });
+    console.log(ingredients);
     const tags = this.state.tags.map(function(tag){
       return (
         <div key={tag.name} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
@@ -99,9 +100,9 @@ export default class RecipeSingle extends React.Component {
       <div class="single container-fluid">
         <div class="row">
           <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
-            <h2>
+            <h3>
               {name}
-            </h2>
+            </h3>
           </div>
         </div>
         <div class="row">
