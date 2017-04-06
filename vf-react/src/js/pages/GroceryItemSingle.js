@@ -67,9 +67,12 @@ export default class GroceryItemSingle extends React.Component {
         </div>);
       });
     const grocery_items = this.state.related_grocery_items.map(function(item){
+      console.log("HEY");
+      console.log(item.id);
+      console.log(item.name);
       return (
-        <div key={item.id} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
-            <p> {item.name} </p>
+        <div key={item.id} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <Link to={"grocery_items/" + item.id}><p> {item.name} </p></Link>
         </div>);
       });
     return (
