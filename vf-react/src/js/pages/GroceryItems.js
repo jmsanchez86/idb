@@ -1,31 +1,32 @@
 import React from "react";
-import { IndexLink, Link } from "react-router";
 
 import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
-
-const data = require('json!../../data/food.json');
-const grocery_items = data.grocery_items;
+import VFPagination from "../components/layout/VFPagination";
 
 
-export default class GroceryItems extends React.Component {
+export default class Ingredients extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: this.initFilters(),
-      sorters: this.initSorters()
+      sorters: this.initSorters(),
+      links:   this.initLinks(),
+      data:    {},
       };
+    this.requestQuery(this.query());
   }
+
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = ".../api/grocery_items?sort=";
+    var params = "http://api.vennfridge.appspot.com/grocery_items?page_size=16&sort=";
+
     for (var id in sorters) {
       if (sorters[id].checked)
         params += id;
     }
-    console.log(filters);
 
     var firstTag = true;
     for (var id in filters ) {
@@ -34,25 +35,91 @@ export default class GroceryItems extends React.Component {
           firstTag = false;
           params += "&tags="
         }
-        params += id + ",";
+        params += filters[id].name + ",";
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    console.log("Mock API Request:\n" + params);
-    // Query with state.filters and state.sorters
-    return grocery_items; //TODO
+    params += "&page=" + this.state.links.active;
+    return params;
   }
-  initFilters() {
-    const tags = {};
 
-    for (var id in data.tags) {
-      tags[id] = {
-          name: data.tags[id].name,
-          checked: false,
+  requestQuery(requestString) {
+    var _this = this;
+    var _data = {};
+    var _links = {};
+
+    // call api with new query params
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
         }
-    }
-    return tags; // {id, name, checked}
+        response.json().then(function(responseData) {
+          for (var id in responseData.data){
+            _data[id] = responseData.data[id];
+          }
+          for (var id in responseData.links){
+            _links[id] = responseData.links[id];
+          }
+
+          _this.state.data = _data;
+          _this.state.links = _links;
+          _this.forceUpdate();
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error: -S', err);
+      });
   }
+
+  initFilters() {
+    const _filters = {
+      1 : {
+             name : 'Soy-free',
+             checked : false
+          },
+      2 : {
+             name : 'No additives',
+             checked : false
+          },
+      3 : {
+             name : 'Gluten-free',
+             checked : false
+          },
+      4 : {
+             name : 'Hormone-free',
+             checked : false
+          },
+      5 : {
+             name : 'Non-GMO',
+             checked : false
+          },
+      6 : {
+             name : 'Wild-caught',
+             checked : false
+          },
+      7 : {
+             name : 'Kosher',
+             checked : false
+          },
+      8 : {
+             name : 'Vegan',
+             checked : false
+          },
+      9 : {
+             name : 'Vegetarian',
+             checked : false
+          },
+      10 : {
+             name : 'Organic',
+             checked : false
+          },
+    };
+    return _filters;
+  }
+
   initSorters() {
     return (
       {
@@ -61,7 +128,7 @@ export default class GroceryItems extends React.Component {
             name: "A - Z",
             checked: true
           },
-        alpha_reversed:
+        alpha_reverse:
           {
              name: "Z - A",
              checked: false
@@ -69,37 +136,45 @@ export default class GroceryItems extends React.Component {
       }
     )
   }
-  updateFilters(updatedList) {
-    const filters = this.state.filters;
-    for (var id in updatedList) {
-      filters[id].checked = updatedList[id].checked;
-    }
-    return filters;
+  initLinks() {
+    return (
+      {
+       active: 0,
+      }
+    )
   }
-  updateSorters(updatedList) {
-    const sorters = this.state.sorters;
-    for (var id in updatedList) {
-      sorters[id].checked = updatedList[id].checked;
-    }
-  }
+
   handleApply(_filters,_sorters) {
     this.setState({
         sorters: _sorters,
         filters: _filters,
+        active: 0
       });
+    const request = this.query();
+    this.requestQuery(request);
   }
-  render() {
+  handleSelect(type) {
+    this.requestQuery(this.state.links[type]);
+  }
 
+  render() {
+    const data = this.state.data;
+    const links= this.state.links;
     return (
-      <div>
-          <Greeting />
-          <Controller
-            sorters={this.state.sorters}
-            filters={this.state.filters}
-            handleApply={this.handleApply.bind(this)} />
-          <GridSystem
-            path="grocery_items"
-            data={this.query()} />
+      <div id="grid-page" class="contatiner">
+        <Greeting />
+        <Controller
+          sorters={this.state.sorters}
+          filters={this.state.filters}
+          handleApply={this.handleApply.bind(this)} />
+        <GridSystem
+          width={4}
+          path="grocery_items"
+          data={data} />
+        <VFPagination
+          active={this.state.links.active}
+          onSelect={this.handleSelect.bind(this)}
+          links={links} />
       </div>
 
     );

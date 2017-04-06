@@ -1,80 +1,128 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
-var data = require('json!../../data/food.json');
-const recipes = data.recipes;
-const ingredients = data.ingredients;
-const groceryItems = data.grocery_items;
-const tags = data.tags;
 
 export default class GroceryItemSingle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredient : {},
+      tags : [],
+
+      image : '',
+      name : '',
+      upc : '',
+      id : this.props.params.id,
+
+    };
+    this.requestData(); 
+  }
+
+  requestData() {
+
+    var _this = this;
+
+    const requestString = 'http://api.vennfridge.appspot.com/grocery_items/' + _this.state.id;
+    console.log(requestString);
+
+    // Fetch singleton's required data.
+    fetch(requestString)
+      .then(function(response) {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
+              response.status);
+        }
+        response.json().then(function(responseData) {
+
+            _this.setState({
+                ingredient : responseData.ingredient,
+                tags : responseData.tags,
+
+                image : responseData.image,
+                name : responseData.name,
+                upc : responseData.upc,
+            });
+
+        });
+      })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+  }
+
   render() {
-    const id = this.props.params.id;
-    var groceryItem = groceryItems[id];
-    var tagList = groceryItem.tags.map(function(tagID){
-      const tag = tags[tagID];
-      return(
-        <div key={tag.name} class="list-group-item">
-          <p><Link to={"tags/" + tagID}>{tag.name}</Link></p>
+    
+    const name = this.state.name;
+    const image = this.state.image;
+    const ing_id = this.state.ingredient.id;
+    const ingredient = this.state.ingredient;
+    const upc = this.state.upc;
+    
+    const tags = this.state.tags.map(function(tag){
+      return (
+        <div key={tag.name} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
-    });
+      });
     return (
-      <div class="container">
-        <div class="media hidden-xs">
-          <h3>{groceryItem.name}</h3>
-          <div class="media-left">
-            <img class="media-object" id="image-single" src={groceryItem.image} alt="..." />
-          </div>
-          <div class="media-body hidden-xs">
-          <h4>Related Ingredient:</h4>
-          <div class="list-group-item">
-            <p><Link to={"ingredients/" + groceryItem.ingredient}>{ingredients[groceryItem.ingredient].name}</Link></p>
-          </div>
 
-          <h4>Tags:</h4>
-          {tagList}
+            <div class="grocery-item-single single container-fluid">
+              <div class="row">
+                <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                  <h3>
+                    {name}
+                  </h3>
+                </div>
+              </div>
+              <div class="row top-buffer gutter-20">
+                <div class="col-lg-offset-1 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <p>
+                            <img class="img-rounded img-responsive" src={image} />
+                          </p>
+                        </div>
+                      </div>
+                      <div id="upc" class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                          <p>
+                            UPC: {upc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                      <h3 disabled={!ingredient}>Related Ingredient</h3>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                      <div key={ing_id} class="list-group-item">
+                        <p><Link to={"ingredients/" + ing_id}>{ingredient.name}</Link></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                      <h3 disabled={!tags.length}>Tags</h3>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="panel-body">
+                      {tags}
+                    </div>
+                  </div>
 
-          <h4>UPC:</h4>
-          <div class="list-group-item">
-            <p>{groceryItem.upc}</p>
-          </div>
+                </div>
+              </div>
 
-          </div>
-
-        </div>
-
-        <div class="container hidden-sm hidden-md hidden-lg">
-          <div class="row">
-            <div>
-              <h4>{groceryItem.name}</h4>
             </div>
-          </div>
-
-          <div class="row">
-            <img class="image1" id="image-single-sm" src={groceryItem.image} alt="..." />
-          </div>
-
-          <h4>Related Ingredient:</h4>
-          <div class="list-group-item">
-            <p><Link to={"ingredients/" + groceryItem.ingredient}>{ingredients[groceryItem.ingredient].name}</Link></p>
-          </div>
-
-          {tagList.length > 0 ? (<h4 class="media-heading">Tags:</h4>) : (<h4 class="no">Tags:</h4>)}
-          {tagList}
-
-          <h4>UPC:</h4>
-          <div class="list-group-item">
-            <p>{groceryItem.upc}</p>
-          </div>
-
-          </div>
-
-        </div>
-
-
-
-
-
     );
   }
 }
