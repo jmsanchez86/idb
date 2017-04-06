@@ -40,7 +40,7 @@ export default class Ingredients extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + this.state.links.active;
+    params += "&page=" + 0;
     return params;
   }
 
@@ -149,7 +149,7 @@ export default class Ingredients extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
-        active: 0
+        links: {active: 0}
       });
     const request = this.query();
     this.requestQuery(request);

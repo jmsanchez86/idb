@@ -42,12 +42,11 @@ export default class Recipes extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + this.state.links.active;
+    params += "&page=" + 0;
     return params;
   }
 
   requestQuery(requestString) {
-    console.log(requestString);
     var _this = this;
     var _data = {};
     var _links = {};
@@ -152,7 +151,9 @@ export default class Recipes extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
-        active: 0
+        links: {
+          active: 0
+        }
       });
     const request = this.query();
     this.requestQuery(request);
@@ -165,7 +166,7 @@ export default class Recipes extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div id="grid-page" class="contatiner">
+      <div id="grid-page" class="container">
         <Greeting />
         <Controller
           sorters={this.state.sorters}
