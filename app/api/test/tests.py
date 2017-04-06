@@ -1,148 +1,217 @@
-#!/usr/bin/env python3
-
 # pylint: disable=missing-docstring
-# pylint: disable=no-self-use
-# pylint: disable=pointless-string-statement
 
-from unittest import main, TestCase
+import os
+import unittest
+from app.project_root import APP_ROOT
+from app.scraping.importer import Importer, strip_html
+from app.api import models
+from app.api.test import test_data
+import flask
 
-import sqlalchemy
-import flask_sqlalchemy
-from flask import Flask
-
-from app.api.models import Ingredient, Tag, Recipe, GroceryItem, db
-from app.api.test.test_data import mock_data
-
-
-class ModelTests(TestCase):
+class DatabaseIntegrityTests(unittest.TestCase):
+    """
+    Ensure that data was properly imported into the database.
+    """
 
     @classmethod
     def setUpClass(cls):
-        print("sqlalchemy version: %s" % sqlalchemy.__version__)
-        print("flask_sqlalchemy version: %s" % flask_sqlalchemy.__version__)
-
-        cls.app = Flask(__name__)
+        cls.app = flask.Flask(__name__)
         cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
         cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         cls.app.config["SQLALCHEMY_ECHO"] = False
-        db.init_app(cls.app)
+        cls.database = models.db
+        cls.database.init_app(cls.app)
         cls.ctx = cls.app.app_context()
         cls.ctx.push()
-        db.create_all()
+        cls.database.create_all()
 
-        mock_data(db)
-
-        query = db.session.query(Ingredient).filter_by(name="licorice")
-        cls.licorice = query.first()
-
-        query = db.session.query(Recipe).filter_by(name="sandwich")
-        cls.sandwich = query.first()
-
-        query = db.session.query(GroceryItem).filter_by(name="Jake's bread")
-        cls.jakes_bread = query.first()
-
-        query = db.session.query(Tag).filter_by(tag_name="natural")
-        cls.tag = query.first()
+        imp = Importer(os.path.join(APP_ROOT, "scraping", "data"), models.db)
+        imp.run()
 
     @classmethod
     def tearDownClass(cls):
         cls.ctx.pop()
 
-    def test_ingredient(self):
-        # Ingredient by name.
-        self.assertIsNotNone(self.licorice)
-        self.assertEqual(self.licorice.ingredient_id, 1)
-        self.assertEqual(repr(self.licorice), "<Ingredient 1 licorice>")
-
-    def test_ingredient_nutrition(self):
-        # Nutrition data of an ingredient.
-        nutrients = self.licorice.nutrients
-        nutrient_data = set((n.category, n.unit, n.quantity)
-                            for n in nutrients)
-        self.assertEqual(nutrient_data, {("sugar", "kilograms", 100),
-                                         ("calories", "calories", 9001),
-                                         ("iron", "grams", 123)})
-        self.assertEqual({repr(ingn) for ingn in self.licorice.nutrients},
-                         {"<IngredientNutrient 1 sugar>",
-                          "<IngredientNutrient 1 calories>",
-                          "<IngredientNutrient 1 iron>"})
-
     def test_recipe(self):
-        # Recipe by name.
-        self.assertIsNotNone(self.sandwich)
-        self.assertEqual(self.sandwich.recipe_id, 2)
-        self.assertEqual(repr(self.sandwich), "<Recipe 2 sandwich>")
+        query = self.database.session.query(models.Recipe)
+        query = query.filter_by(recipe_id=151512)
+        recipe = query.first()
 
-    def test_recipe_nutrition(self):
-        # Nutrition data for recipe.
-        nutrients = self.sandwich.nutrients
-        nutrient_data = set((n.category, n.unit, n.quantity)
-                            for n in nutrients)
-        self.assertEqual(nutrient_data, {("sugar", "meters", 82),
-                                         ("calories", "calories", 23),
-                                         ("iron", "micrograms", 166)})
-        self.assertEqual({repr(rn) for rn in self.sandwich.nutrients},
-                         {"<RecipeNutrient 2 sugar>",
-                          "<RecipeNutrient 2 calories>",
-                          "<RecipeNutrient 2 iron>"})
+        self.assertIsNotNone(recipe)
+        self.assertEqual(recipe.ready_time, 45)
+        self.assertEqual(recipe.servings, 12)
+        self.assertEqual(recipe.name, "Bittersweet Chocolate Marquise with " +
+                         "Cherry Sauce")
+        self.assertEqual(recipe.image_url, "https://spoonacular.com/" +
+                         "recipeImages/bittersweet-chocolate-marquise-with-" +
+                         "cherry-sauce-151512.jpg")
+        self.assertEqual(recipe.description, test_data.test_recipe_description)
+        self.assertEqual(recipe.instructions, test_data.test_recipe_instructions)
+        self.assertEqual(recipe.source_url,
+                         "http://www.epicurious.com/recipes/food/views/" +
+                         "Bittersweet-Chocolate-Marquise-with-Cherry-Sauce-" +
+                         "108254")
 
-    def test_recipe_ingredients(self):
-        # Ingredients of a recipe.
-        ingredients = self.sandwich.ingredients
-        ingredient_data = set((i.ingredient_id, i.unit, i.quantity)
-                              for i in ingredients)
-        self.assertEqual(ingredient_data, {
-            (2, "grams", 50), (3, "grams", 100)})
-        self.assertEqual({repr(ri) for ri in self.sandwich.ingredients},
-                         {"<RecipeIngredient 2 2>", "<RecipeIngredient 2 3>"})
+
+    def test_ingredient(self):
+        query = self.database.session.query(models.Ingredient)
+        query = query.filter_by(ingredient_id=9070)
+        ingredient = query.first()
+
+        self.assertIsNotNone(ingredient)
+        self.assertEqual(ingredient.image_url, "")
+        self.assertEqual(ingredient.aisle, "Produce")
+
+        # TODO: Test image_url
 
     def test_grocery_item(self):
-        # Grocery item by name.
-        self.assertIsNotNone(self.jakes_bread)
-        self.assertEqual(self.jakes_bread.grocery_id, 2)
-        self.assertEqual(repr(self.jakes_bread),
-                         "<Grocery item 2 Jake's bread>")
+        query = self.database.session.query(models.GroceryItem)
+        query = query.filter_by(grocery_id=109704, ingredient_id=6972)
+        grocery_item = query.first()
 
-    def test_grocery_item_ingredients(self):
-        # Ingredients of a grocery item.
-        ingredients = self.jakes_bread.ingredients
-        ingredient_data = set((i.ingredient_id, i.unit, i.quantity)
-                              for i in ingredients)
-        self.assertEqual(ingredient_data, {(3, "slices", 12)})
-        self.assertEqual({repr(gii) for gii in self.jakes_bread.ingredients},
-                         {"<GroceryItemIngredient 2 3>"})
-
-    def test_tag(self):
-        # Tag by name
-        self.assertEqual(self.tag.image_url, "industrial.jpg")
-        self.assertEqual(repr(self.tag), "<Tag natural>")
-
-    def test_tag_ingredients(self):
-        # Tag ingredients
-        ingredients = self.tag.ingredients
-        ingredient_data = set(i.ingredient_id for i in ingredients)
-        self.assertEqual(ingredient_data, {2, 3})
-        self.assertEqual({repr(ti) for ti in self.tag.tag_ingredient_assocs},
-                         {"<TagIngredient natural 2>",
-                          "<TagIngredient natural 3>"})
-
-    def test_tag_recipes(self):
-        # Tag recipes
-        recipes = self.tag.recipes
-        recipe_data = set(r.recipe_id for r in recipes)
-        self.assertEqual(recipe_data, {2})
-        self.assertEqual({repr(tr) for tr in self.tag.tag_recipe_assocs},
-                         {"<TagRecipe natural 2>"})
-
-    def test_tag_grocery_items(self):
-        # Tag grocery items
-        items = self.tag.grocery_items
-        item_data = set(i.grocery_id for i in items)
-        self.assertEqual(item_data, {1, 2})
-        self.assertEqual({repr(tgi) for tgi in self.tag.tag_grocery_item_assocs},
-                         {"<TagGroceryItem natural 1>",
-                          "<TagGroceryItem natural 2>"})
+        self.assertIsNotNone(grocery_item)
+        self.assertEqual(grocery_item.name, "Lee Kum Kee Sriracha Chili Sauce")
+        self.assertEqual(grocery_item.image_url, "https://spoonacular.com/" +
+                         "productImages/109704-636x393.jpg")
+        self.assertEqual(grocery_item.upc, "742812730712")
 
 
-if __name__ == "__main__":  # pragma: no cover
-    main()
+    def test_tag_flag(self):
+        query = self.database.session.query(models.Tag)
+        query = query.filter_by(tag_name="Gluten-free")
+        tag = query.first()
+        self.assertIsNotNone(tag)
+
+        recipes = tag.recipes
+        recipe_ids = [recipe.recipe_id for recipe in recipes]
+        self.assertIn(101323, recipe_ids)
+        self.assertIn(119007, recipe_ids)
+        self.assertIn(125858, recipe_ids)
+
+    def test_tag_cuisine(self):
+        query = self.database.session.query(models.Tag)
+        query = query.filter_by(tag_name="American")
+        tag = query.first()
+        self.assertIsNotNone(tag)
+
+        recipes = tag.recipes
+        recipe_ids = [recipe.recipe_id for recipe in recipes]
+        self.assertIn(119007, recipe_ids)
+        self.assertIn(165522, recipe_ids)
+        self.assertIn(176208, recipe_ids)
+
+    def test_tag_dishtype(self):
+        query = self.database.session.query(models.Tag)
+        query = query.filter_by(tag_name="Lunch")
+        tag = query.first()
+        self.assertIsNotNone(tag)
+
+        recipes = tag.recipes
+        recipe_ids = [recipe.recipe_id for recipe in recipes]
+        self.assertIn(229298, recipe_ids)
+        self.assertIn(204569, recipe_ids)
+        self.assertIn(270874, recipe_ids)
+
+    def test_tag_ingredient(self):
+        query = self.database.session.query(models.Tag)
+        query = query.filter_by(tag_name="Vegan")
+        tag = query.first()
+        self.assertIsNotNone(tag)
+
+        ingredients = tag.ingredients
+        ingredient_ids = [ingredient.ingredient_id for ingredient in ingredients]
+        self.assertIn(10011282, ingredient_ids)
+        self.assertIn(1034053, ingredient_ids)
+        self.assertIn(12698, ingredient_ids)
+
+    def test_tag_badge(self):
+        query = self.database.session.query(models.Tag)
+        query = query.filter_by(tag_name="No artificial colors")
+        tag = query.first()
+        self.assertIsNotNone(tag)
+
+        grocery_items = tag.grocery_items
+        grocery_ids = [item.grocery_id for item in grocery_items]
+        self.assertIn(101017, grocery_ids)
+        self.assertIn(101280, grocery_ids)
+        self.assertIn(102111, grocery_ids)
+
+    def test_ingredient_substitutes(self):
+        query = self.database.session.query(models.Ingredient)
+        query = query.filter_by(ingredient_id=11959)
+        ingredient = query.first()
+        self.assertIsNotNone(ingredient)
+
+        substitutes = ingredient.substitutes
+        expected = {"1 cup = 1 cup watercress",
+                    "1 cup = 1 cup escarole",
+                    "1 cup = 1 cup belgian endive",
+                    "1 cup = 1 cup radicchio",
+                    "1 cup = 1 cup baby spinach"}
+
+        actual = {substitute.substitute for substitute in substitutes}
+
+        self.assertEqual(actual, expected)
+
+    def test_recipe_ingredients(self):
+        query = self.database.session.query(models.Recipe)
+        query = query.filter_by(recipe_id=510562)
+        recipe = query.first()
+        self.assertIsNotNone(recipe)
+
+        expected = {(9019, "1/4 applesauce"),
+                    (18372, "1/2 teaspoon baking soda"),
+                    (19334, "1/4 cup packed brown sugar"),
+                    (1001, "1/4 cup butter, softened"),
+                    (2010, "1/2 teaspoon cinnamon"),
+                    (9079, "3/4 cup dried cranberries"),
+                    (1123, "1 large egg"),
+                    (20081, "1/2 cup all-purpose flour"),
+                    (8402, "1 1/2 cups quick-cooking oats (not instant)"),
+                    (2047, "1/4 teaspoon salt"),
+                    (19335, "3/4 cup sugar"),
+                    (2050, "1/2 teaspoon vanilla extract"),
+                    (20081, "1/2 cup wheat flour"),
+                    (10019087, "4 ounces white chocolate chips")}
+
+
+        ingredients = recipe.ingredients
+        actual = {(ing.ingredient_id,
+                   ing.verbal_quantity) for ing in ingredients}
+
+        self.assertEqual(actual, expected)
+
+    def test_similar_recipes(self):
+        query = self.database.session.query(models.Recipe)
+        query = query.filter_by(recipe_id=628541)
+        recipe = query.first()
+        self.assertIsNotNone(recipe)
+
+        expected = {556891, 556749, 557212, 615561, 556672, 512186, 512186}
+
+        recipes = recipe.similar_recipes
+        actual = {recipe.recipe_id for recipe in recipes}
+
+        self.assertEqual(actual, expected)
+
+    def test_similar_grocery_items(self):
+        query = self.database.session.query(models.GroceryItem)
+        query = query.filter_by(grocery_id=199371)
+        grocery_item = query.first()
+        self.assertIsNotNone(grocery_item)
+
+        expected = {410889, 194508, 217511, 141916}
+
+        grocery_items = grocery_item.similar_grocery_items
+        actual = {grocery_item.grocery_id for grocery_item in grocery_items}
+
+        self.assertEqual(actual, expected)
+
+    def test_strip_html(self):
+        actual = strip_html("<a href=\"google.com\">WOWOWWWOW</a>")
+        expected = "WOWOWWWOW"
+        self.assertEqual(actual, expected)
+
+
+if __name__ == "__main__":
+    unittest.main()

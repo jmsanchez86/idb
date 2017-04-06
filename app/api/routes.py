@@ -8,6 +8,7 @@ import math
 
 import flask
 
+from app.api.database import crud
 from app.api import food_data
 from typing import Any, Callable, List, Tuple
 
@@ -113,18 +114,21 @@ def get_continuation_links(base_url: str, maxsize: int,
     if page == 0:
         return {
             "next": next_link,
-            "last": last_link}
+            "last": last_link,
+            "active": page}
     # last page
     elif page == last_page:
         return {
             "first": first_link,
-            "prev": prev_link}
+            "prev": prev_link,
+            "active": page}
     else:
         return {
             "first": first_link,
             "prev": prev_link,
             "next": next_link,
-            "last": last_link}
+            "last": last_link,
+            "active": page}
 
 
 def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
@@ -264,3 +268,8 @@ def get_tag(tag_id: int):
         {"id": recipes[i - 1]["id"], "name": recipes[i - 1]["name"]}
         for i in tag["recipes"]]  # type: ignore
     return flask.json.jsonify(tag)
+
+@API_BP.route('/test_sql_query/<int:sid>')
+def test_sql_query(sid: int):
+    result = crud.read_db(sid)
+    return flask.json.jsonify({'result': repr(result)})

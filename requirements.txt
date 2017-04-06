@@ -60,9 +60,11 @@ proto-google-cloud-spanner-v1==0.15.3
 proto-google-cloud-speech-v1beta1==0.15.3
 proto-google-cloud-vision-v1==0.90.3
 protobuf==3.2.0
+psycopg2==2.7.1
 pyasn1==0.2.3
 pyasn1-modules==0.0.8
 pycodestyle==2.3.1
+PyMySQL==0.7.10
 pyparsing==2.2.0
 requests==2.13.0
 rsa==3.4.2

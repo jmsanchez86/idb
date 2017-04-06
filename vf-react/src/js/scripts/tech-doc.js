@@ -6,6 +6,33 @@ var tech_doc = `## Venn Fridge
 
 ###### Noel Benzinger, Thomas Cardwell, Cory Dunn, Scott Hornberger, Scott Munro, Jose Sanchez
 
+## Table of Contents
+* [Introduction](#Introduction)
+* [What is the problem?](#problem)
+* [What are the use cases?](#use-cases)
+* [Design](#Introduction)
+* [Single Page Application](#single-page-application)
+* [Data Models](#data-models)
+* [RESTful API](#restful-api)
+* [Data](#Data)
+* [Data Scraping](#data-scraping)
+* [Tools](#Tools)
+* [Front-end](#front-end)
+* [Bootstrap](#bootstrap)
+* [React](#react)
+* [Webpack](#webpack)
+* [Back-end](#back-end)
+* [Flask](#flask)
+* [SQLAlchemy](#sql-alchemy)
+* [MyPy](#mypy)
+* [Productivity](productivity)
+* [Slack](#slack)
+* [ZenHub](#zenhub)
+* [Hosting](#Hosting)
+* [Using Google Cloud Platform](#gcp)
+* [Namecheap Setup](#namecheap-setup)
+
+
 ## Introduction
 
 #### What is the problem?
