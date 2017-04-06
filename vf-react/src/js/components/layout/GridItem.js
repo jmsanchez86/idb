@@ -29,10 +29,10 @@ export default class RecipeItem extends React.Component {
           <div class="caption">
 
               <h5 class="grid">
-                {name.length > 50 ? name.substr(0,50) + "..." : name}
+                {name && name.length > 50 ? name.substr(0,50) + "..." : name}
               </h5>
               <p>
-                {blurb.length > 100 ? blurb.substr(0,100) + "..." : blurb}
+                {blurb && blurb.length > 100 ? blurb.substr(0,100) + "..." : blurb}
               </p>
 
           </div>
