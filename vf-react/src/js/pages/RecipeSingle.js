@@ -88,7 +88,6 @@ export default class RecipeSingle extends React.Component {
           <p><Link to={"ingredients/" + ingredient.id}>{ingredient.original_string}</Link></p>
         </div>);
     });
-    console.log(ingredients);
     const tags = this.state.tags.map(function(tag){
       return (
         <div key={tag.name} class="center-block col-lg-2 col-md-2 col-sm-3 col-xs-3">
