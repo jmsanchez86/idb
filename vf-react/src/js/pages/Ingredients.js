@@ -5,6 +5,7 @@ import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
 import VFPagination from "../components/layout/VFPagination";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class Ingredients extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Ingredients extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://api.vennfridge.appspot.com/ingredients?page_size=16&sort=";
+    var params = "http://" + apiRoot + "/ingredients?page_size=16&sort=";
 
     for (var id in sorters) {
       if (sorters[id].checked)
@@ -39,7 +40,7 @@ export default class Ingredients extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + this.state.links.active;
+    params += "&page=" + 0;
     return params;
   }
 
@@ -133,7 +134,7 @@ export default class Ingredients extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
-        active: 0
+        links: {active: 0}
       });
     const request = this.query();
     this.requestQuery(request);
@@ -146,7 +147,7 @@ export default class Ingredients extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div id="grid-page" class="contatiner">
+      <div id="grid-page" class="container">
         <Greeting />
         <Controller
           sorters={this.state.sorters}

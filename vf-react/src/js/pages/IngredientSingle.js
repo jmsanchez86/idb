@@ -3,6 +3,7 @@ import { IndexLink, Link } from "react-router";
 
 import OptionalList from "../components/layout/OptionalList";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class IngredientSingle extends React.Component {
   constructor(props) {
@@ -25,8 +26,7 @@ export default class IngredientSingle extends React.Component {
 
     var _this = this;
 
-    const requestString = 'http://api.vennfridge.appspot.com/ingredients/' + _this.state.id;
-    console.log(requestString);
+    const requestString = 'http://' + apiRoot + '/ingredients/' + _this.state.id;
 
     // Fetch singleton's required data.
     fetch(requestString)
@@ -57,7 +57,7 @@ export default class IngredientSingle extends React.Component {
   render() {
     const image = this.state.image;
     const name = this.state.name;
-
+    
     const recipes = this.state.recipes.map(function(recipe){
       return (
         <div key={recipe.id} class="list-group-item">

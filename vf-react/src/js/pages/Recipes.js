@@ -5,6 +5,7 @@ import Greeting from "../components/layout/Greeting";
 import GridSystem from "../components/layout/GridSystem";
 import VFPagination from "../components/layout/VFPagination";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class Recipes extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Recipes extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://api.vennfridge.appspot.com/recipes?page_size=16&sort=";
+    var params = "http://" + apiRoot + "/recipes?page_size=16&sort=";
 
     for (var id in sorters) {
       if (sorters[id].checked)
@@ -39,12 +40,11 @@ export default class Recipes extends React.Component {
       }
     }
     params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + this.state.links.active;
+    params += "&page=" + 0;
     return params;
   }
 
   requestQuery(requestString) {
-    console.log(requestString);
     var _this = this;
     var _data = {};
     var _links = {};
@@ -78,11 +78,11 @@ export default class Recipes extends React.Component {
   initFilters() {
     const _filters = {
       1 : {
-             name : 'Starter',
+             name : 'Appetizer',
              checked : false
           },
       2 : {
-             name : 'Morning Meal',
+             name : 'Breakfast',
              checked : false
           },
       3 : {
@@ -149,7 +149,9 @@ export default class Recipes extends React.Component {
     this.setState({
         sorters: _sorters,
         filters: _filters,
-        active: 0
+        links: {
+          active: 0
+        }
       });
     const request = this.query();
     this.requestQuery(request);
@@ -162,7 +164,7 @@ export default class Recipes extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div id="grid-page" class="contatiner">
+      <div id="grid-page" class="container">
         <Greeting />
         <Controller
           sorters={this.state.sorters}

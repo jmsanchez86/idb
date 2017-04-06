@@ -3,6 +3,7 @@ import { IndexLink, Link } from "react-router";
 
 import OptionalList from "../components/layout/OptionalList";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class RecipeSingle extends React.Component {
   constructor(props) {
@@ -28,8 +29,7 @@ export default class RecipeSingle extends React.Component {
 
     var _this = this;
 
-    const requestString = 'http://api.vennfridge.appspot.com/recipes/' + _this.state.id;
-    console.log(requestString);
+    const requestString = 'http://' + apiRoot + '/recipes/' + _this.state.id;
 
     // Fetch singleton's required data.
     fetch(requestString)

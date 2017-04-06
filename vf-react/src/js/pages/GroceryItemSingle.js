@@ -1,12 +1,13 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class GroceryItemSingle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredient : {},
+      related_grocery_items : [],
       tags : [],
 
       image : '',
@@ -22,7 +23,7 @@ export default class GroceryItemSingle extends React.Component {
 
     var _this = this;
 
-    const requestString = 'http://api.vennfridge.appspot.com/grocery_items/' + _this.state.id;
+    const requestString = 'http://' + apiRoot + '/grocery_items/' + _this.state.id;
     console.log(requestString);
 
     // Fetch singleton's required data.
@@ -35,7 +36,7 @@ export default class GroceryItemSingle extends React.Component {
         response.json().then(function(responseData) {
 
             _this.setState({
-                ingredient : responseData.ingredient,
+                related_grocery_items : responseData.related_grocery_items,
                 tags : responseData.tags,
 
                 image : responseData.image,
@@ -51,17 +52,20 @@ export default class GroceryItemSingle extends React.Component {
   }
 
   render() {
-    
     const name = this.state.name;
     const image = this.state.image;
-    const ing_id = this.state.ingredient.id;
-    const ingredient = this.state.ingredient;
     const upc = this.state.upc;
     
     const tags = this.state.tags.map(function(tag){
       return (
         <div key={tag.name} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
         <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
+        </div>);
+      });
+    const grocery_items = this.state.related_grocery_items.map(function(item){
+      return (
+        <div key={item.id} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <Link to={"grocery_items/" + item.id}><p> {item.name} </p></Link>
         </div>);
       });
     return (
@@ -98,18 +102,6 @@ export default class GroceryItemSingle extends React.Component {
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div class="row">
                     <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                      <h3 disabled={!ingredient}>Related Ingredient</h3>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
-                      <div key={ing_id} class="list-group-item">
-                        <p><Link to={"ingredients/" + ing_id}>{ingredient.name}</Link></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                       <h3 disabled={!tags.length}>Tags</h3>
                     </div>
                   </div>
@@ -118,7 +110,18 @@ export default class GroceryItemSingle extends React.Component {
                       {tags}
                     </div>
                   </div>
-
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                      <h3 disabled={!grocery_items.length}>Related Grocery Items</h3>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="panel-body">
+                      {grocery_items}
+                    </div>
+                  </div>
                 </div>
               </div>
 

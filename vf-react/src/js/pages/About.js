@@ -133,7 +133,7 @@ export default class About extends React.Component {
         </div>);});
 
     return (
-      <div id="unique-content">
+      <div class="container" id="unique-content">
 
         <div class="container">
           <div class="col-sm-8 col-sm-offset-2 text-center">

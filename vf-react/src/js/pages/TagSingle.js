@@ -1,6 +1,7 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 
+var apiRoot = '' + require('../scripts/Config.js');
 
 export default class TagSingle extends React.Component {
   constructor(props) {
@@ -23,8 +24,7 @@ export default class TagSingle extends React.Component {
 
     var _this = this;
 
-    const requestString = 'http://api.vennfridge.appspot.com/tags/' + _this.state.id;
-    console.log(requestString);
+    const requestString = 'http://' + apiRoot + '/tags/' + _this.state.id;
     
     // Fetch singleton's required data.
     fetch(requestString)
@@ -36,9 +36,9 @@ export default class TagSingle extends React.Component {
         response.json().then(function(responseData) {
 
             _this.setState({
-                ingredients : responseData.ingredients,
-                grocery_items : responseData.grocery_items,
-                recipes : responseData.recipes,
+                ingredients : responseData.related_ingredients,
+                grocery_items : responseData.related_grocery_items,
+                recipes : responseData.related_recipes,
 
                 blurb : responseData.blurb,
                 image : responseData.image,
@@ -57,7 +57,6 @@ export default class TagSingle extends React.Component {
     const name = this.state.name;
     const blurb = this.state.blurb;
     const image = this.state.image;
-
 
     var ingredients = this.state.ingredients.map(function(ingredient){
       return(
