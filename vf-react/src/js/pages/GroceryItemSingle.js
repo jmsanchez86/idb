@@ -16,6 +16,7 @@ export default class GroceryItemSingle extends React.Component {
       id : this.props.params.id,
 
     };
+    console.log(this.props.route);
     this.requestData();
   }
 
@@ -34,7 +35,6 @@ export default class GroceryItemSingle extends React.Component {
               response.status);
         }
         response.json().then(function(responseData) {
-
             _this.setState({
                 related_grocery_items : responseData.related_grocery_items,
                 tags : responseData.tags,
@@ -49,9 +49,25 @@ export default class GroceryItemSingle extends React.Component {
     .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
+      console.log(this.state);
+  }
+  onClick(event){
+
+    var object = this.refs.main;
+    object.key=1;
+    console.log(object.key);
+  }
+  componentWillReceiveProps(nextProps) {
+    var newId = parseInt(nextProps.location.pathname.split("/")[2]);
+    console.log(newId);
+    this.state.id = newId;
+    console.log(this.state.id);
+    this.requestData();
   }
 
+
   render() {
+    console.log(this.state);
     const name = this.state.name;
     const image = this.state.image;
     const upc = this.state.upc;
@@ -59,18 +75,17 @@ export default class GroceryItemSingle extends React.Component {
     const tags = this.state.tags.map(function(tag){
       return (
         <div key={tag.name+"_"+tag.image} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
-        <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
+        <Link to={"/tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
       });
     const grocery_items = this.state.related_grocery_items.map(function(item){
       return (
-        <div key={item.id+"_"+item.name} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <Link to={"grocery_items/" + item.id}><p> {item.name} </p></Link>
+          <div key={item.id+"_"+item.name} class="list-group-item">
+              <p><Link to={"grocery_items/" + item.id}>{item.name}</Link></p>
         </div>);
       });
     return (
-
-            <div class="grocery-item-single single container-fluid">
+            <div ref="main" class="grocery-item-single single container-fluid">
               <div class="row">
                 <div class="col-lg-offset-1 col-lg-11 col-md-12 col-sm-12 col-xs-12">
                   <h3>

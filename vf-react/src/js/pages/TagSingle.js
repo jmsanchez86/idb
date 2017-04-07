@@ -68,14 +68,14 @@ export default class TagSingle extends React.Component {
     var recipes = this.state.recipes.map(function(recipe){
       return(
         <div key={recipe.id+"_"+recipe.name} class="list-group-item">
-          <p><Link to={"recipes/" + recipe.id}>{recipe.name}</Link></p>
+          <p><Link to={"/recipes/" + recipe.id}>{recipe.name}</Link></p>
         </div>);
     });
 
     var grocery_items = this.state.grocery_items.map(function(gi){
       return(
         <div key={gi.id+"_"+gi.name} class="list-group-item">
-          <p><Link to={"grocery_items/" + gi.id}>{gi.name}</Link></p>
+          <p><Link to={"/grocery_items/" + gi.id}>{gi.name}</Link></p>
         </div>);
     });
 
