@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { Router, Route, IndexRoute } from "react-router";
 
 import About from "./pages/About";
 import Tags from "./pages/Tags";
@@ -20,7 +20,7 @@ import Layout from "./pages/Layout";
 const app = document.getElementById('app');
 
 ReactDOM.render(
-  <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
+  <Router onUpdate={() => window.scrollTo(0, 0)}>
     <Route path="/" component={Layout}>
       <IndexRoute component={Landing}></IndexRoute>
 
@@ -31,10 +31,10 @@ ReactDOM.render(
 
       <Route path="about" name="about" component={About}></Route>
 
-      <Route path="recipes(/:id)" name="recipe-single" component={RecipeSingle}></Route>
-      <Route path="ingredients(/:id)" name="ingredient-single" component={IngredientSingle}></Route>
-      <Route path="grocery_items(/:id)" name="gi-single" component={GroceryItemSingle}></Route>
-      <Route path="tags(/:id)" name="tag-single" component={TagSingle}></Route>
+      <Route path="recipes/:id" name="recipe-single" component={RecipeSingle}></Route>
+      <Route path="ingredients/:id" name="ingredient-single" component={IngredientSingle}></Route>
+      <Route path="grocery_items/:id" name="gi-single" component={GroceryItemSingle}></Route>
+      <Route path="tags/:id" name="tag-single" component={TagSingle}></Route>
 
 
     </Route>
