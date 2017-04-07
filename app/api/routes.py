@@ -195,7 +195,7 @@ def get_ingredient(ingredient_id: int):
 def get_recipe(recipe_id: int):
     recipe = Recipe.get(recipe_id)
     if not recipe:
-        return flask.json.jsonify({})
+        return flask.abort(404)
     else:
         return flask.json.jsonify(
             {
@@ -220,7 +220,7 @@ def get_recipe(recipe_id: int):
 def get_grocery_items(grocery_item_id: int):
     product = GroceryItem.get(grocery_item_id)
     if not product:
-        return flask.json.jsonify({})
+        return flask.abort(404)
     data = dict(id=product.grocery_id, name=product.name,
                 image=product.image_url, upc=product.upc)
     data["tags"] = [{"name": t.tag_name,
@@ -243,7 +243,7 @@ def get_grocery_items(grocery_item_id: int):
 def get_tag(tag_name: str):
     tag = Tag.get(tag_name)
     if not tag:
-        return flask.json.jsonify({})
+        return flask.abort(404)
     limit = 10
     data = dict(name=tag.tag_name, blurb=tag.description,
                 image=tag_image_prefix + tag.image_url)
