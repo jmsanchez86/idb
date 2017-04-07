@@ -1,6 +1,7 @@
 # pylint: disable=missing-docstring
 
 import os
+import time
 import unittest
 from app.project_root import APP_ROOT
 from app.scraping.importer import Importer, strip_html
@@ -16,21 +17,24 @@ class DatabaseIntegrityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = flask.Flask(__name__)
-        cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
+        cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///test.db'
         cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         cls.app.config["SQLALCHEMY_ECHO"] = False
         cls.database = models.db
         cls.database.init_app(cls.app)
         cls.ctx = cls.app.app_context()
         cls.ctx.push()
-        cls.database.create_all()
-
-        imp = Importer(os.path.join(APP_ROOT, "scraping", "data"), models.db)
-        imp.run()
 
     @classmethod
     def tearDownClass(cls):
         cls.ctx.pop()
+
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_recipe(self):
         query = self.database.session.query(models.Recipe)
@@ -82,11 +86,13 @@ class DatabaseIntegrityTests(unittest.TestCase):
         tag = query.first()
         self.assertIsNotNone(tag)
 
-        recipes = tag.recipes
-        recipe_ids = [recipe.recipe_id for recipe in recipes]
-        self.assertIn(101323, recipe_ids)
-        self.assertIn(119007, recipe_ids)
-        self.assertIn(125858, recipe_ids)
+        tag_recipes = self.database.session.query(models.TagRecipe)
+        self.assertIsNotNone(tag_recipes.filter_by(recipe_id=101323,
+                                                   tag_name="Gluten-free").first())
+        self.assertIsNotNone(tag_recipes.filter_by(recipe_id=101323,
+                                                   tag_name="Gluten-free").first())
+        self.assertIsNotNone(tag_recipes.filter_by(recipe_id=101323,
+                                                   tag_name="Gluten-free").first())
 
     def test_tag_cuisine(self):
         query = self.database.session.query(models.Tag)

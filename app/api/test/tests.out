@@ -1,8 +1,21 @@
 .............
 ----------------------------------------------------------------------
-Ran 13 tests in 19.562s
+Ran 13 tests in 12.995s
 
 OK
+__main__.DatabaseIntegrityTests.test_grocery_item: 0.002
+__main__.DatabaseIntegrityTests.test_ingredient: 0.002
+__main__.DatabaseIntegrityTests.test_ingredient_substitutes: 0.003
+__main__.DatabaseIntegrityTests.test_recipe: 0.002
+__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.003
+__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.008
+__main__.DatabaseIntegrityTests.test_similar_recipes: 0.019
+__main__.DatabaseIntegrityTests.test_strip_html: 0.000
+__main__.DatabaseIntegrityTests.test_tag_badge: 2.202
+__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.039
+__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.103
+__main__.DatabaseIntegrityTests.test_tag_flag: 0.005
+__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.124
 Name                               Stmts   Miss  Cover   Missing
 ----------------------------------------------------------------
 app/__init__.py                        0      0   100%
@@ -10,10 +23,10 @@ app/api/__init__.py                    0      0   100%
 app/api/models.py                    225     64    72%   45, 49-79, 84, 105, 109-117, 122-148, 170, 200, 204-205, 209-241, 262, 266-267, 272-286, 312, 344, 375, 411
 app/api/test/__init__.py               0      0   100%
 app/api/test/test_data.py              2      0   100%
-app/api/test/tests.py                141      0   100%
+app/api/test/tests.py                146      0   100%
 app/project_root.py                    2      0   100%
 app/scraping/__init__.py               0      0   100%
 app/scraping/importer.py             165      3    98%   208, 260, 289
 app/scraping/tag_translations.py      80      0   100%
 ----------------------------------------------------------------
-TOTAL                                615     67    89%
+TOTAL                                620     67    89%
