@@ -1,10 +1,8 @@
 # pylint: disable=missing-docstring
 
-import os
 import time
 import unittest
-from app.project_root import APP_ROOT
-from app.scraping.importer import Importer, strip_html
+from app.scraping.importer import strip_html
 from app.api import models
 from app.api.test import test_data
 import flask
@@ -63,10 +61,10 @@ class DatabaseIntegrityTests(unittest.TestCase):
         ingredient = query.first()
 
         self.assertIsNotNone(ingredient)
-        self.assertEqual(ingredient.image_url, "")
+        self.assertEqual(ingredient.image_url, "https://storage.googleapis.com/"
+                                               "vennfridge/saved_ingredient_ima"
+                                               "ges%2F9070.jpg")
         self.assertEqual(ingredient.aisle, "Produce")
-
-        # TODO: Test image_url
 
     def test_grocery_item(self):
         query = self.database.session.query(models.GroceryItem)

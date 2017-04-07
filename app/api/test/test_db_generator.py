@@ -15,5 +15,14 @@ db = models.db
 db.init_app(app)
 with app.app_context():
     db.create_all()
+    check = 0
+    with open('dump.sql', 'r') as dump_file:
+        for line in dump_file.readlines():
+            db.engine.execute(line)
+            check += 1
+            if check % 100 == 0:
+                print(check)
+    """
     imp = Importer(os.path.join(APP_ROOT, "scraping", "data"), db)
     imp.run()
+    """
