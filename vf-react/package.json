@@ -1,6 +1,6 @@
 {
-  "name": "react-tutorials",
-  "version": "0.0.0",
+  "name": "venn-fridge",
+  "version": "0.1.0",
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
@@ -27,7 +27,8 @@
   "devDependencies": {},
   "scripts": {
     "dev": "./node_modules/.bin/webpack-dev-server --content-base src --inline --hot",
-    "pro": "webpack && cp ./src/client.min.js ../app/static/js/client.min.js"
+    "pro": "webpack && cp ./src/client.min.js ../app/static/js/client1.min.js && cp ./src/static/css/style.css ../app/static/css/style.css",
+    "winpro": "webpack && copy ./src/client.min.js ../app/static/js/client1.min.js && copy ./src/static/css/style.css ../app/static/css/style.css" 
   },
   "author": "",
   "license": "ISC"

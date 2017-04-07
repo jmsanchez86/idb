@@ -104,18 +104,12 @@ class Ingredient(db.Model):
     def __repr__(self):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
+    def get_grocery_items(self):
+        return db.session.query(GroceryItem).filter_by(ingredient_id=self.ingredient_id)
+
     @staticmethod
     def get(ing_id):
-        main_ingredient = db.session.query(Ingredient).get(ing_id)
-        recipe_ingredients = main_ingredient.recipes
-        substitutes = db.session.query(IngredientSubstitute).join(Ingredient)\
-                                .filter_by(ingredient_id=ing_id).all()
-        related_grocery_items = db.session.query(GroceryItem).join(Ingredient)\
-                                          .filter_by(ingredient_id=ing_id).all()
-        tags = db.session.query(Tag).join(TagIngredient).join(Ingredient)\
-                         .filter_by(ingredient_id=ing_id).all()
-        return (main_ingredient, substitutes, related_grocery_items, tags,
-                recipe_ingredients)
+        return db.session.query(Ingredient).get(ing_id)
 
     @staticmethod
     def get_all(filters, order, page, page_size):

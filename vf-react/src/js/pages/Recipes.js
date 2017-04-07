@@ -133,6 +133,16 @@ export default class Recipes extends React.Component {
           {
              name: "Z - A",
              checked: false
+          },
+        ready_time_asc:
+          {
+             name: "Quickest First",
+             checked: false
+          },
+        ready_time_desc:
+          {
+             name: "Slowest FIrst",
+             checked: false
           }
       }
     )
@@ -164,7 +174,7 @@ export default class Recipes extends React.Component {
     const data = this.state.data;
     const links= this.state.links;
     return (
-      <div id="grid-page" class="container">
+      <div id="grid-page" class="container-fluid">
         <Greeting />
         <Controller
           sorters={this.state.sorters}

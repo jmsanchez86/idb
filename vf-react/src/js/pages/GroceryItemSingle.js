@@ -16,7 +16,7 @@ export default class GroceryItemSingle extends React.Component {
       id : this.props.params.id,
 
     };
-    this.requestData(); 
+    this.requestData();
   }
 
   requestData() {
@@ -55,16 +55,16 @@ export default class GroceryItemSingle extends React.Component {
     const name = this.state.name;
     const image = this.state.image;
     const upc = this.state.upc;
-    
+
     const tags = this.state.tags.map(function(tag){
       return (
-        <div key={tag.name} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <div key={tag.name+"_"+tag.image} class="center-block col-lg-3 col-md-3 col-sm-3 col-xs-3">
         <Link to={"tags/" + tag.name}><img class="img-responsive" src={tag.image} /></Link>
         </div>);
       });
     const grocery_items = this.state.related_grocery_items.map(function(item){
       return (
-        <div key={item.id} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div key={item.id+"_"+item.name} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <Link to={"grocery_items/" + item.id}><p> {item.name} </p></Link>
         </div>);
       });
