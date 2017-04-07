@@ -1,14 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module app.models</title>
+<html><head><title>Python: module app.api.models</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="app.html"><font color="#ffffff">app</font></a>.models</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="app.html"><font color="#ffffff">app</font></a>.<a href="app.api.html"><font color="#ffffff">api</font></a>.models</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cnoel%5Cdesktop%5Cidb%5Capp%5Cmodels.py">c:\users\noel\desktop\idb\app\models.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/noelb/other/app/api/models.py">/home/noelb/other/app/api/models.py</a></font></td></tr></table>
     <p><tt>Database&nbsp;models&nbsp;described&nbsp;with&nbsp;SQLAlchemy.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -21,17 +21,17 @@
 <dt><font face="helvetica, arial">flask_sqlalchemy.Model(<a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="app.models.html#GroceryItem">GroceryItem</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#GroceryItemIngredient">GroceryItemIngredient</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#Ingredient">Ingredient</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#IngredientNutrient">IngredientNutrient</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#Recipe">Recipe</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#RecipeIngredient">RecipeIngredient</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#RecipeNutrient">RecipeNutrient</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#Tag">Tag</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#TagGroceryItem">TagGroceryItem</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#TagIngredient">TagIngredient</a>
-</font></dt><dt><font face="helvetica, arial"><a href="app.models.html#TagRecipe">TagRecipe</a>
+<dt><font face="helvetica, arial"><a href="app.api.models.html#GroceryItem">GroceryItem</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#Ingredient">Ingredient</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#IngredientSubstitute">IngredientSubstitute</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#Recipe">Recipe</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#RecipeIngredient">RecipeIngredient</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#SimilarGroceryItem">SimilarGroceryItem</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#SimilarRecipe">SimilarRecipe</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#Tag">Tag</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#TagGroceryItem">TagGroceryItem</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#TagIngredient">TagIngredient</a>
+</font></dt><dt><font face="helvetica, arial"><a href="app.api.models.html#TagRecipe">TagRecipe</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -45,16 +45,22 @@
 <td colspan=2><tt>Table&nbsp;of&nbsp;Grocery&nbsp;Items.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#GroceryItem">GroceryItem</a></dd>
+<dd><a href="app.api.models.html#GroceryItem">GroceryItem</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="GroceryItem-__init__"><strong>__init__</strong></a>(self, grocery_id, spoonacular_id, name, image_url, upc)</dt></dl>
+<dl><dt><a name="GroceryItem-__init__"><strong>__init__</strong></a>(self, grocery_id, ingredient_id, name, image_url, upc)</dt></dl>
 
 <dl><dt><a name="GroceryItem-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="GroceryItem-get"><strong>get</strong></a>(grocery_id)</dt></dl>
+
+<dl><dt><a name="GroceryItem-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -62,11 +68,14 @@ Data descriptors defined here:<br>
 </dl>
 <dl><dt><strong>image_url</strong></dt>
 </dl>
-<dl><dt><strong>ingredients</strong></dt>
+<dl><dt><strong>ingredient_id</strong></dt>
 </dl>
 <dl><dt><strong>name</strong></dt>
 </dl>
-<dl><dt><strong>spoonacular_id</strong></dt>
+<dl><dt><strong>similar_grocery_item_assocs</strong></dt>
+</dl>
+<dl><dt><strong>similar_grocery_items</strong></dt>
+<dd><tt>A&nbsp;descriptor&nbsp;that&nbsp;presents&nbsp;a&nbsp;read/write&nbsp;view&nbsp;of&nbsp;an&nbsp;object&nbsp;attribute.</tt></dd>
 </dl>
 <dl><dt><strong>tag_grocery_item_assocs</strong></dt>
 </dl>
@@ -77,74 +86,9 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3f9d250; GroceryItem&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f55186280f0; GroceryItem&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('grocery_item', MetaData(bind=None), Colum...g(length=20), table=&lt;grocery_item&gt;), schema=None)</dl>
-
-<hr>
-Methods inherited from flask_sqlalchemy.Model:<br>
-<dl><dt><strong>query</strong></dt>
-</dl>
-
-<hr>
-Data and other attributes inherited from flask_sqlalchemy.Model:<br>
-<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
-
-<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.BaseQuery'&gt;<dd><tt>SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;convenience&nbsp;methods&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
-&nbsp;<br>
-This&nbsp;is&nbsp;the&nbsp;default&nbsp;:attr:`~Model.query`&nbsp;object&nbsp;used&nbsp;for&nbsp;models,&nbsp;and&nbsp;exposed&nbsp;as&nbsp;:attr:`~SQLAlchemy.Query`.<br>
-Override&nbsp;the&nbsp;query&nbsp;class&nbsp;for&nbsp;an&nbsp;individual&nbsp;model&nbsp;by&nbsp;subclassing&nbsp;this&nbsp;and&nbsp;setting&nbsp;:attr:`~Model.query_class`.</tt></dl>
-
-<hr>
-Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__tablename__</strong></dt>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="GroceryItemIngredient">class <strong>GroceryItemIngredient</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Ingredients&nbsp;and&nbsp;quantities&nbsp;contained&nbsp;in&nbsp;a&nbsp;grocery&nbsp;item.<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#GroceryItemIngredient">GroceryItemIngredient</a></dd>
-<dd>flask_sqlalchemy.Model</dd>
-<dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
-<dd><a href="builtins.html#object">builtins.object</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="GroceryItemIngredient-__init__"><strong>__init__</strong></a>(self, grocery_id, ingredient_id, unit, quantity, quantity_verbal)</dt></dl>
-
-<dl><dt><a name="GroceryItemIngredient-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
-
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>grocery_id</strong></dt>
-</dl>
-<dl><dt><strong>grocery_item</strong></dt>
-</dl>
-<dl><dt><strong>ingredient_id</strong></dt>
-</dl>
-<dl><dt><strong>quantity</strong></dt>
-</dl>
-<dl><dt><strong>quantity_verbal</strong></dt>
-</dl>
-<dl><dt><strong>unit</strong></dt>
-</dl>
-<hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3fb76b0; GroceryItemIngredient&gt;</dl>
-
-<dl><dt><strong>__table__</strong> = Table('grocery_item_ingredient', MetaData(bind=N...), table=&lt;grocery_item_ingredient&gt;), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -180,28 +124,38 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Table&nbsp;of&nbsp;ingredients.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#Ingredient">Ingredient</a></dd>
+<dd><a href="app.api.models.html#Ingredient">Ingredient</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Ingredient-__init__"><strong>__init__</strong></a>(self, ingredient_id, spoonacular_id, name, image_url)</dt></dl>
+<dl><dt><a name="Ingredient-__init__"><strong>__init__</strong></a>(self, ingredient_id, name, image_url, aisle)</dt></dl>
 
 <dl><dt><a name="Ingredient-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
 
+<dl><dt><a name="Ingredient-get_grocery_items"><strong>get_grocery_items</strong></a>(self)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Ingredient-get"><strong>get</strong></a>(ing_id)</dt></dl>
+
+<dl><dt><a name="Ingredient-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt></dl>
+
 <hr>
 Data descriptors defined here:<br>
+<dl><dt><strong>aisle</strong></dt>
+</dl>
 <dl><dt><strong>image_url</strong></dt>
 </dl>
 <dl><dt><strong>ingredient_id</strong></dt>
 </dl>
 <dl><dt><strong>name</strong></dt>
 </dl>
-<dl><dt><strong>nutrients</strong></dt>
+<dl><dt><strong>recipes</strong></dt>
 </dl>
-<dl><dt><strong>spoonacular_id</strong></dt>
+<dl><dt><strong>substitutes</strong></dt>
 </dl>
 <dl><dt><strong>tag_ingredient_assocs</strong></dt>
 </dl>
@@ -210,9 +164,9 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3f6b910; Ingredient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f5518678898; Ingredient&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('ingredient', MetaData(bind=None), Column(...ng(length=100), table=&lt;ingredient&gt;), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('ingredient', MetaData(bind=None), Column(...aisle', Text(), table=&lt;ingredient&gt;), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -242,40 +196,36 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="IngredientNutrient">class <strong>IngredientNutrient</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="IngredientSubstitute">class <strong>IngredientSubstitute</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Describe&nbsp;nutrient&nbsp;quantities&nbsp;for&nbsp;ingredients.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Table&nbsp;of&nbsp;ingredient&nbsp;substitutes.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#IngredientNutrient">IngredientNutrient</a></dd>
+<dd><a href="app.api.models.html#IngredientSubstitute">IngredientSubstitute</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="IngredientNutrient-__init__"><strong>__init__</strong></a>(self, ingredient_id, category, unit, quantity)</dt></dl>
+<dl><dt><a name="IngredientSubstitute-__init__"><strong>__init__</strong></a>(self, ingredient_id, substitute)</dt></dl>
 
-<dl><dt><a name="IngredientNutrient-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+<dl><dt><a name="IngredientSubstitute-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>category</strong></dt>
-</dl>
 <dl><dt><strong>ingredient</strong></dt>
 </dl>
 <dl><dt><strong>ingredient_id</strong></dt>
 </dl>
-<dl><dt><strong>quantity</strong></dt>
-</dl>
-<dl><dt><strong>unit</strong></dt>
+<dl><dt><strong>substitute</strong></dt>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3f6bf90; IngredientNutrient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f5518678b70; IngredientSubstitute&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('ingredient_nutrient', MetaData(bind=None)...oat(), table=&lt;ingredient_nutrient&gt;), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('ingredient_substitute', MetaData(bind=Non..., primary_key=True, nullable=False), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -311,19 +261,27 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Table&nbsp;of&nbsp;recipes.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#Recipe">Recipe</a></dd>
+<dd><a href="app.api.models.html#Recipe">Recipe</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Recipe-__init__"><strong>__init__</strong></a>(self, recipe_id, spoonacular_id, name, image_url, instructions)</dt></dl>
+<dl><dt><a name="Recipe-__init__"><strong>__init__</strong></a>(self, recipe_id, name, image_url, instructions, description, ready_time, servings, source_url)</dt></dl>
 
 <dl><dt><a name="Recipe-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
 
 <hr>
+Static methods defined here:<br>
+<dl><dt><a name="Recipe-get"><strong>get</strong></a>(recipe_id)</dt></dl>
+
+<dl><dt><a name="Recipe-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt></dl>
+
+<hr>
 Data descriptors defined here:<br>
+<dl><dt><strong>description</strong></dt>
+</dl>
 <dl><dt><strong>image_url</strong></dt>
 </dl>
 <dl><dt><strong>ingredients</strong></dt>
@@ -332,11 +290,18 @@ Data descriptors defined here:<br>
 </dl>
 <dl><dt><strong>name</strong></dt>
 </dl>
-<dl><dt><strong>nutrients</strong></dt>
+<dl><dt><strong>ready_time</strong></dt>
 </dl>
 <dl><dt><strong>recipe_id</strong></dt>
 </dl>
-<dl><dt><strong>spoonacular_id</strong></dt>
+<dl><dt><strong>servings</strong></dt>
+</dl>
+<dl><dt><strong>similar_recipe_assocs</strong></dt>
+</dl>
+<dl><dt><strong>similar_recipes</strong></dt>
+<dd><tt>A&nbsp;descriptor&nbsp;that&nbsp;presents&nbsp;a&nbsp;read/write&nbsp;view&nbsp;of&nbsp;an&nbsp;object&nbsp;attribute.</tt></dd>
+</dl>
+<dl><dt><strong>source_url</strong></dt>
 </dl>
 <dl><dt><strong>tag_recipe_assocs</strong></dt>
 </dl>
@@ -345,9 +310,9 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3161e70; Recipe&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f5518678518; Recipe&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('recipe', MetaData(bind=None), Column('rec..., primary_key=True, nullable=False), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('recipe', MetaData(bind=None), Column('rec...ource_url', Text(), table=&lt;recipe&gt;), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -383,36 +348,34 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Ingredients&nbsp;and&nbsp;quantities&nbsp;contained&nbsp;in&nbsp;a&nbsp;recipe.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#RecipeIngredient">RecipeIngredient</a></dd>
+<dd><a href="app.api.models.html#RecipeIngredient">RecipeIngredient</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="RecipeIngredient-__init__"><strong>__init__</strong></a>(self, recipe_id, ingredient_id, unit, quantity, quantity_verbal)</dt></dl>
+<dl><dt><a name="RecipeIngredient-__init__"><strong>__init__</strong></a>(self, recipe_id, ingredient_id, verbal_quantity)</dt></dl>
 
 <dl><dt><a name="RecipeIngredient-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
+<dl><dt><strong>ingredient</strong></dt>
+</dl>
 <dl><dt><strong>ingredient_id</strong></dt>
-</dl>
-<dl><dt><strong>quantity</strong></dt>
-</dl>
-<dl><dt><strong>quantity_verbal</strong></dt>
 </dl>
 <dl><dt><strong>recipe</strong></dt>
 </dl>
 <dl><dt><strong>recipe_id</strong></dt>
 </dl>
-<dl><dt><strong>unit</strong></dt>
+<dl><dt><strong>verbal_quantity</strong></dt>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3fb72b0; RecipeIngredient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f5518628a90; RecipeIngredient&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('recipe_ingredient', MetaData(bind=None), ...th=100), table=&lt;recipe_ingredient&gt;), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('recipe_ingredient', MetaData(bind=None), ..., primary_key=True, nullable=False), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -442,40 +405,99 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="RecipeNutrient">class <strong>RecipeNutrient</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="SimilarGroceryItem">class <strong>SimilarGroceryItem</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Describe&nbsp;nutrient&nbsp;quantities&nbsp;for&nbsp;recipes.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Association&nbsp;table&nbsp;of&nbsp;grocery&nbsp;items&nbsp;to&nbsp;similar&nbsp;grocery&nbsp;items.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#RecipeNutrient">RecipeNutrient</a></dd>
+<dd><a href="app.api.models.html#SimilarGroceryItem">SimilarGroceryItem</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="RecipeNutrient-__init__"><strong>__init__</strong></a>(self, recipe_id, category, unit, quantity)</dt></dl>
-
-<dl><dt><a name="RecipeNutrient-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+<dl><dt><a name="SimilarGroceryItem-__init__"><strong>__init__</strong></a>(self, ingredient_id, grocery_id, similar_id)</dt></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>category</strong></dt>
+<dl><dt><strong>grocery_id</strong></dt>
 </dl>
-<dl><dt><strong>quantity</strong></dt>
+<dl><dt><strong>grocery_item</strong></dt>
 </dl>
+<dl><dt><strong>ingredient_id</strong></dt>
+</dl>
+<dl><dt><strong>similar</strong></dt>
+</dl>
+<dl><dt><strong>similar_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f55185d9438; SimilarGroceryItem&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('similar_grocery_item', MetaData(bind=None..., primary_key=True, nullable=False), schema=None)</dl>
+
+<dl><dt><strong>__table_args__</strong> = (ForeignKeyConstraint(&lt;sqlalchemy.sql.base.Column... primary_key=True, nullable=False), schema=None)), ForeignKeyConstraint(&lt;sqlalchemy.sql.base.Column... primary_key=True, nullable=False), schema=None)), {})</dl>
+
+<hr>
+Methods inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from flask_sqlalchemy.Model:<br>
+<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.BaseQuery'&gt;<dd><tt>SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;convenience&nbsp;methods&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;:attr:`~Model.query`&nbsp;object&nbsp;used&nbsp;for&nbsp;models,&nbsp;and&nbsp;exposed&nbsp;as&nbsp;:attr:`~SQLAlchemy.Query`.<br>
+Override&nbsp;the&nbsp;query&nbsp;class&nbsp;for&nbsp;an&nbsp;individual&nbsp;model&nbsp;by&nbsp;subclassing&nbsp;this&nbsp;and&nbsp;setting&nbsp;:attr:`~Model.query_class`.</tt></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__tablename__</strong></dt>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SimilarRecipe">class <strong>SimilarRecipe</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Association&nbsp;table&nbsp;of&nbsp;recipes&nbsp;to&nbsp;similar&nbsp;recipes.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="app.api.models.html#SimilarRecipe">SimilarRecipe</a></dd>
+<dd>flask_sqlalchemy.Model</dd>
+<dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SimilarRecipe-__init__"><strong>__init__</strong></a>(self, recipe_id, similar_id)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
 <dl><dt><strong>recipe</strong></dt>
 </dl>
 <dl><dt><strong>recipe_id</strong></dt>
 </dl>
-<dl><dt><strong>unit</strong></dt>
+<dl><dt><strong>similar</strong></dt>
+</dl>
+<dl><dt><strong>similar_id</strong></dt>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3f9dcb0; RecipeNutrient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f55185cbb00; SimilarRecipe&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('recipe_nutrient', MetaData(bind=None), Co..., Float(), table=&lt;recipe_nutrient&gt;), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('similar_recipe', MetaData(bind=None), Col..., primary_key=True, nullable=False), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -511,7 +533,7 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Table&nbsp;of&nbsp;tags.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#Tag">Tag</a></dd>
+<dd><a href="app.api.models.html#Tag">Tag</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
@@ -521,6 +543,12 @@ Methods defined here:<br>
 <dl><dt><a name="Tag-__init__"><strong>__init__</strong></a>(self, tag_name, image_url, description)</dt></dl>
 
 <dl><dt><a name="Tag-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Tag-get"><strong>get</strong></a>(tag_name)</dt></dl>
+
+<dl><dt><a name="Tag-get_all"><strong>get_all</strong></a>(min_occurences, order, page, page_size)</dt></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -547,9 +575,9 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3f9d750; Tag&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f5518628518; Tag&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('tag', MetaData(bind=None), Column('tag_na...', String(length=100), table=&lt;tag&gt;), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('tag', MetaData(bind=None), Column('tag_na...'description', Text(), table=&lt;tag&gt;), schema=None)</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -585,14 +613,14 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Association&nbsp;table&nbsp;for&nbsp;tags&nbsp;to&nbsp;grocery&nbsp;items.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#TagGroceryItem">TagGroceryItem</a></dd>
+<dd><a href="app.api.models.html#TagGroceryItem">TagGroceryItem</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="TagGroceryItem-__init__"><strong>__init__</strong></a>(self, tag_name, grocery_id)</dt></dl>
+<dl><dt><a name="TagGroceryItem-__init__"><strong>__init__</strong></a>(self, tag_name, ingredient_id, grocery_id)</dt></dl>
 
 <dl><dt><a name="TagGroceryItem-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
 
@@ -602,15 +630,19 @@ Data descriptors defined here:<br>
 </dl>
 <dl><dt><strong>grocery_item</strong></dt>
 </dl>
+<dl><dt><strong>ingredient_id</strong></dt>
+</dl>
 <dl><dt><strong>tag</strong></dt>
 </dl>
 <dl><dt><strong>tag_name</strong></dt>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3fcb430; TagGroceryItem&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f55185cb400; TagGroceryItem&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag_grocery_item', MetaData(bind=None), C..., primary_key=True, nullable=False), schema=None)</dl>
+
+<dl><dt><strong>__table_args__</strong> = (ForeignKeyConstraint(&lt;sqlalchemy.sql.base.Column... primary_key=True, nullable=False), schema=None)), {})</dl>
 
 <hr>
 Methods inherited from flask_sqlalchemy.Model:<br>
@@ -646,7 +678,7 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Association&nbsp;table&nbsp;for&nbsp;tags&nbsp;to&nbsp;ingredients.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#TagIngredient">TagIngredient</a></dd>
+<dd><a href="app.api.models.html#TagIngredient">TagIngredient</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
@@ -669,7 +701,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3fb7af0; TagIngredient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f551863b208; TagIngredient&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag_ingredient', MetaData(bind=None), Col..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -707,7 +739,7 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <td colspan=2><tt>Association&nbsp;table&nbsp;for&nbsp;tags&nbsp;to&nbsp;recipes.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="app.models.html#TagRecipe">TagRecipe</a></dd>
+<dd><a href="app.api.models.html#TagRecipe">TagRecipe</a></dd>
 <dd>flask_sqlalchemy.Model</dd>
 <dd><a href="flask_sqlalchemy.html#Model">flask_sqlalchemy.Model</a></dd>
 <dd><a href="builtins.html#object">builtins.object</a></dd>
@@ -730,7 +762,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x3fb7f10; TagRecipe&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f551863b9b0; TagRecipe&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag_recipe', MetaData(bind=None), Column(..., primary_key=True, nullable=False), schema=None)</dl>
 
