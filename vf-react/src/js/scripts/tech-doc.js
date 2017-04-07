@@ -6,33 +6,6 @@ var tech_doc = `## Venn Fridge
 
 ###### Noel Benzinger, Thomas Cardwell, Cory Dunn, Scott Hornberger, Scott Munro, Jose Sanchez
 
-## Table of Contents
-* [Introduction](#Introduction)
-* [What is the problem?](#problem)
-* [What are the use cases?](#use-cases)
-* [Design](#Introduction)
-* [Single Page Application](#single-page-application)
-* [Data Models](#data-models)
-* [RESTful API](#restful-api)
-* [Data](#Data)
-* [Data Scraping](#data-scraping)
-* [Tools](#Tools)
-* [Front-end](#front-end)
-* [Bootstrap](#bootstrap)
-* [React](#react)
-* [Webpack](#webpack)
-* [Back-end](#back-end)
-* [Flask](#flask)
-* [SQLAlchemy](#sql-alchemy)
-* [MyPy](#mypy)
-* [Productivity](productivity)
-* [Slack](#slack)
-* [ZenHub](#zenhub)
-* [Hosting](#Hosting)
-* [Using Google Cloud Platform](#gcp)
-* [Namecheap Setup](#namecheap-setup)
-
-
 ## Introduction
 
 #### What is the problem?
@@ -63,7 +36,7 @@ We opted for a Single Page Application model for our website instead of the more
 
 #### Data Models
 
-<img class="img img-responsive full-width thumb" src="static/images/image_0.png"/>
+<img class="img img-responsive full-width thumb" src="static/images/uml.png"/>
 
 The four pillars of our model are ingredients, recipes, grocery items, and tags. Ingredients are the individual items that go into making a recipe. Recipes are the completed dishes that users can cook. Grocery items are cooking items purchasable in grocery stores. And tags are descriptive categories containing subsets of ingredients, recipes, and grocery items. In addition to viewing all the elements of one of our pillars and viewing details about an individual element, we provide a few more useful relationships such as finding which ingredients can be substituted for other ingredients and searching for recipes that are similar to each other.
 
