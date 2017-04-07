@@ -1,3 +1,2183 @@
+commit a7decaea483ba390783f17f39965b6547b297a1e
+Merge: 3f53ed4 c88e13e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 21:54:06 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 3f53ed4532549c0462f539b4ed8749b2d31ec1be
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 21:53:53 2017 -0500
+
+    models with pylint output
+
+commit c88e13e072911698a3c4f6afcb73d240ef790973
+Merge: 3ca3556 545b0db
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 21:48:53 2017 -0500
+
+    Merge branch 'dev' of github.com:jmsanchez86/idb into dev
+
+commit 3ca355686ab11b01c00ca488ca84eb6da4732794
+Merge: 98d6f7d 97010f7
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 21:48:29 2017 -0500
+
+    fixed merge conflct.
+
+commit 545b0db0e10691cb7c5e6abce45e0c0b97b28a59
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 21:47:28 2017 -0500
+
+    Updated html docs.
+
+commit 98d6f7dd4f0cdf55921bc10e0d7a0a8a463df67f
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 21:42:33 2017 -0500
+
+    FUUCK
+
+commit a1314f39f68299e819887b0b7ddb9eb1c47b864f
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 21:40:46 2017 -0500
+
+    Fixed.
+
+commit 2b1d272b8ff9e15ca14c73859d959b0e71070b78
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 21:40:29 2017 -0500
+
+    Fixed!!
+
+commit 97010f73cc3eb1e048b5eb5a5ba453301cdde298
+Merge: 2c0ba6f de3884f
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 21:24:41 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit de3884f55c3ac2f4532c14f5ec98472540386ebd
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 21:24:12 2017 -0500
+
+    base.html -> index.html in routes.
+
+commit a6791d2b234d26dfdf388776bdb155a4b36c0644
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 21:23:25 2017 -0500
+
+    Uppercased the v on vegetarian tag.
+
+commit 2c0ba6fb5eaebd9cd48b627ca81474db4809346f
+Merge: 9a834f4 58da716
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 21:22:40 2017 -0500
+
+    Merge branch 'dev' into persistent-database-testing
+
+commit 58da716ef62d636cdf87d13f52650888e627b29f
+Merge: 6139c35 a4f1125
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 21:22:24 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+    
+    Conflicts:
+    	app/templates/index.html
+
+commit 9a834f40d24245d8996b83aaec57887d03cd6b70
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 21:17:35 2017 -0500
+
+    test database is now stored offline for quick testing
+
+commit a4f1125642ea2de441c6d78adeea2bb4d6070bae
+Merge: 6173c22 6233dd8
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 21:06:46 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 6173c220fff24e4b091d51bc15f55110a00ba37e
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 21:06:36 2017 -0500
+
+    fixed webpack min
+
+commit 077451b775c849704c05ebd73008fcde12a654ff
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 21:04:20 2017 -0500
+
+    added hack for react router grocery link
+
+commit 6233dd8ca7b4bf66fd09671504323de133f0bfc6
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Thu Apr 6 20:18:00 2017 -0500
+
+    Fixed Recipe Example
+
+commit 4e6db3bd76ed8dbef24d250245466ff46947f93e
+Merge: b740e28 6ad8c26
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Thu Apr 6 20:03:31 2017 -0500
+
+    Merge pull request #169 from jmsanchez86/api-aborts
+    
+    Return 404 for invalid ids on single item endpoints.
+
+commit 6ad8c261037b58c36c7a5be651b0cb75b26d3b94
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 19:53:51 2017 -0500
+
+    Return 404 for invalid ids on single item endpoints.
+
+commit 2c8c2cc6855eb5c5de78c723f72474448a819663
+Merge: 4b469b6 6139c35
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 19:41:09 2017 -0500
+
+    Merge branch 'dev' into persistent-database-testing
+
+commit 6139c35573ea0a599148e56f57315330c80c5250
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 19:25:12 2017 -0500
+
+    fixing links in template and updating which template is rendered
+
+commit 0cc38f952b54f28b73f7f37358327b520fde1438
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 19:22:05 2017 -0500
+
+    deleting unnecessary html files
+
+commit 4b469b6ec39893f04c0c613122fb04201e586ec2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 19:06:39 2017 -0500
+
+    created a persistent db for the tests so that we don't waste time
+    generating them all the time
+
+commit b740e28a087bf5313218831617681401e4d1cca7
+Merge: 2b4d0b6 a0ae6da
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:53:44 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 2b4d0b6f3e3e4c29b422bb71c9a672bfbee07658
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:53:33 2017 -0500
+
+    replaced front end development html urls
+
+commit a0ae6da6d82358c666aac245f38c9f0a04359a26
+Merge: 3c19af5 72e62d2
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Thu Apr 6 18:50:24 2017 -0500
+
+    Merge pull request #165 from jmsanchez86/api-ingredient-handlenones
+    
+    Single ingredient endpoint no longer fails on non-existant id.
+
+commit 3c19af5a9a19dbc2662cf18fec5687ade4d49760
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:47:26 2017 -0500
+
+    updated index html
+
+commit 72e62d2acdb5f9bf159ffab2dd1ce3b15bdf27d8
+Merge: 7257ce4 d310a7c
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 18:46:49 2017 -0500
+
+    Merged dev changes and resolved conflicts.
+
+commit b9ad9442a06462613644299c47f7afe5097af37f
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:43:58 2017 -0500
+
+    updated minjs and css
+
+commit d310a7c50e0bc75d069dca09ad7e98e57b486f67
+Merge: 31ad5c2 beba8db
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Apr 6 18:39:39 2017 -0500
+
+    Merge pull request #168 from jmsanchez86/recipe_concat
+    
+    Recipe concat
+
+commit beba8dba85f8681bed2542ab342a395160427d43
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 18:37:09 2017 -0500
+
+    Fixed comma - > period
+
+commit bd4ab4391138dfa4587da2f22e68c81100b82e90
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 18:32:47 2017 -0500
+
+    Concat id and name for detail pages.
+
+commit 95926f413f06e553ca17e228a4dd9f50db6f484f
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 18:32:10 2017 -0500
+
+    Concat id with names for detail pages.
+
+commit 7257ce406aefb41bc862ce84f15a1a11adec2f3e
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 18:31:00 2017 -0500
+
+    Return 404 for non-existant ingredient instead of an empty json.
+
+commit 54e16b42b92794876dbe77ab8d15e2c72c9db43b
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 18:24:50 2017 -0500
+
+    Forgot to commit routes changes.
+
+commit 31ad5c2d6931088a5e92be78d44f06b5b2b3d011
+Merge: 2bd5011 8452297
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:12:30 2017 -0500
+
+    Merge pull request #167 from jmsanchez86/regex-fixes
+    
+    Added regex fixes to remove html and curly strings.
+
+commit 2bd50118c14bd45079c70cfd13c69176bed0896d
+Merge: 69889bd e6eb82e
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:10:09 2017 -0500
+
+    Merge pull request #166 from jmsanchez86/title-sizes
+    
+    Title sizes
+
+commit e6eb82e1d3a5ff794c2e634ccbfdbc8ed0738f2a
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:08:59 2017 -0500
+
+    Removed console log in single recipe page
+
+commit 69889bdacdaf6a9d75e8eae6caf8ae6cc8b32572
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 18:04:26 2017 -0500
+
+    fixed vertical sort buttons
+
+commit 845229797eae5c29a41af2ba086958261993a128
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Apr 6 18:01:15 2017 -0500
+
+    Added regex fixes to remove html and curly strings.
+
+commit e8b6a0139dc58588a49b14e83b13eb22343140ca
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Apr 6 17:50:28 2017 -0500
+
+    Single ingredient endpoint no longer fails on non-existant id.
+
+commit 662d052d6f46ef227b0bbc8908cbf0d0d9247f5b
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 17:48:53 2017 -0500
+
+    Title sizes decreased.
+
+commit 54d35960a4221b27f727ce16d4a0ffcef14dde56
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Apr 6 17:37:56 2017 -0500
+
+    Fix grid page styling. Was too narrow.
+
+commit 5bc2598c8ccf2e464afd716fd2c6fa8bd55f1184
+Merge: 745c539 f8daa51
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Apr 6 17:28:16 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 745c5395ad52a2aab3f6e393fce040e4e5243b4b
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Apr 6 17:28:01 2017 -0500
+
+    Added ready sort options and capitalized ingredient grid page names.
+
+commit f8daa511a0dfc68d2a65c4b0be62e4641bf2237b
+Merge: 91f564d d1fda5c
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 17:12:47 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 91f564d9ca3352b5a3b854eff1c48efd9c57e69c
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 17:11:56 2017 -0500
+
+    fixes #164. Tag img prefix not appended everywhere it should be
+
+commit d1fda5c2a369a195a04aba027de5aa8e86190fb1
+Merge: c26e074 ccabb4f
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Thu Apr 6 16:53:23 2017 -0500
+
+    Merge pull request #163 from jmsanchez86/api-fix
+    
+    updated recipes api endpoint to hopefully fix ingredient ID duplication
+
+commit ccabb4f816370caab362c3e91efdf341ce53fcbf
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Thu Apr 6 21:19:15 2017 +0000
+
+    updated recipes api endpoint to hopefully fix ingredient ID duplication
+
+commit c26e0742fe4db9f6c5a90329d8c66c063f98b930
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 12:52:50 2017 -0500
+
+    added sauce image
+
+commit ec23c1c6ec70eb2b9bf77a85139db987d9101a29
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 01:39:24 2017 -0500
+
+    updated about to include new issue number, accomodate for 202 return
+
+commit 37b5fa0254f7931deca1bb94286ec34d02f1f3ee
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Thu Apr 6 01:07:53 2017 -0500
+
+    Updated Apiary with real examples
+
+commit 5dfc60dbc24466f493940bde7664b1f0eb201a4b
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 00:36:21 2017 -0500
+
+    fixing image links whoops
+
+commit 95172f7ce8c6a4e3e9b0f4850a3addf7d18f98d1
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 00:13:01 2017 -0500
+
+    updated tests
+
+commit 92376020f8073483e3ce897129652fde453b6d69
+Merge: 5fe9725 85dc3de
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 00:12:11 2017 -0500
+
+    Merge branch 'dev' into routes-from-database
+    
+    Conflicts:
+    	app/scraping/ingredient_images.json
+
+commit 85dc3deafe49b7ecf2430408a7bb943ca6852131
+Merge: d80afc0 96b1563
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Apr 6 00:08:50 2017 -0500
+
+    Merge pull request #153 from jmsanchez86/api-april-5
+    
+    Api april 5
+
+commit 5fe97257dc6b1e10dce10c84d692a0701bff7e52
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 00:07:00 2017 -0500
+
+    yuh
+
+commit 96b1563a7881b7963ef5ca052f7ae81f5f703230
+Merge: 9980d83 d80afc0
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 00:06:45 2017 -0500
+
+    Merge branch 'dev' into api-april-5
+
+commit 9980d83015d61ebf28df9062e5cc668de21ffa3c
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Apr 6 00:03:58 2017 -0500
+
+    fixed tech-doc
+
+commit 9b7a16b755591b9f80d82792b8bf373868a5cd30
+Merge: 6a71a55 90d8480
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 00:03:14 2017 -0500
+
+    Merge branch 'routes-from-database' of https://github.com/jmsanchez86/idb into routes-from-database
+
+commit 6a71a55552cfb2f7656d5f27bc712bf22e8d62d2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Apr 6 00:02:37 2017 -0500
+
+    images up in the cloud boi
+
+commit a0e746c723177d40d2d72e4a48b83b2ce5e410a7
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Wed Apr 5 23:49:20 2017 -0500
+
+    Removed various console logs.
+
+commit 90d8480edd215e181302b903f383c6c3944fda5e
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Wed Apr 5 23:42:39 2017 -0500
+
+    Fixed duplicate similar grocery items in grocery details endpoint.
+
+commit 40119d31e7d0d9ece38a2fa339912eb7855bf29d
+Merge: 32a5473 cf58377
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 23:39:32 2017 -0500
+
+    Merge branch 'api-april-5' of https://github.com/jmsanchez86/idb into api-april-5
+
+commit 32a5473cb44583c63f240ff3c58ab3768a751ee8
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 23:39:23 2017 -0500
+
+    fixed pagination
+
+commit 49d0f8685135918364757c313b6c11f3acc331e7
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 23:38:28 2017 -0500
+
+    cleaned up console log
+
+commit 4b379289866986df606c06304e4b09f8f3131e7e
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 23:37:33 2017 -0500
+
+    added check to make sure name and blurb exist in griditem
+
+commit cf58377eebd2e0aa5270c6760a72d0f2897a1fc4
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Wed Apr 5 23:35:34 2017 -0500
+
+    Made links out of related grocery items in grocery singles.
+
+commit 1bcf61de9e06db44bd420ba72dffcdd14b5534b6
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 23:30:17 2017 -0500
+
+    fixed blurb and name sizes
+
+commit cc230a8e9b59cffcebf2d5f7dbd62c7428b32f94
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 23:28:41 2017 -0500
+
+    escaped tech doc back apostrophes, removed table of contents
+
+commit d80afc0d7fb36d7642478c2aaf62636d51f3acb1
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Wed Apr 5 22:51:40 2017 -0500
+
+    Fix parameter descriptions
+
+commit 853e600201c92a3cf243902eba0e60154727c0d3
+Merge: 57821f9 d830a26
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Wed Apr 5 22:47:48 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 57821f943b66567a98a6b5d0f9d0e15f787fd0e1
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Wed Apr 5 22:47:37 2017 -0500
+
+    Updated yuml pdf.
+
+commit d830a26fa711843c2a4d74743fac28032e8a36d6
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Wed Apr 5 22:44:25 2017 -0500
+
+    fixed apiary endpoints
+
+commit e29ea91c8f0a1d78c488f3227bf0ce407ab01f0e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 22:40:37 2017 -0500
+
+    committing to get those image files
+
+commit a51728cbbd4e2513022eec42c12654a402bd0646
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Thu Apr 6 03:37:51 2017 +0000
+
+    update tech doc api endpoints
+
+commit 6dfb1eaa713e8261d5ee926019b2052953bc3b7b
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Wed Apr 5 22:10:16 2017 -0500
+
+    Added related grocery items for individual grocery items.
+
+commit f6b39c51838b41f8b655bdc85dbbc826f029e82d
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Thu Apr 6 03:05:17 2017 +0000
+
+    tech doc update
+
+commit 6cdb1bf12b6d49ac0b699f0ced8236055d1479ae
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Wed Apr 5 22:03:10 2017 -0500
+
+    Fixed handling of data to meet apiary agreement.
+
+commit 269d80d0b29462db2e6a3bc4d7a5997e3e725ec5
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 21:49:12 2017 -0500
+
+    adding support for related_recipes to ingredients
+
+commit 3b0255e2c2448a2efdeee60a59c6e89d493dee4d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 21:36:47 2017 -0500
+
+    updating client.min and fixing tag browse broken image bug
+
+commit 7705fb5f707a267945cd611c692153d480dc9e12
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Wed Apr 5 21:26:25 2017 -0500
+
+    Fixed script so url replacement now happens correctly.
+
+commit 6462a7fe1c14ec631e4c67775fb2b79feb8eb9d8
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Wed Apr 5 21:04:51 2017 -0500
+
+    Added apiRoot and Config.js for testing api end points locally.
+
+commit a9cd45be1eaa71e9eeac062b8f85c58741c221db
+Merge: 65870e4 7bae247
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 20:47:20 2017 -0500
+
+    Merge branch 'api-april-3' into routes-from-database
+
+commit 65870e4febf1b6ae8e843f16a7379cfc229ed504
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 20:42:04 2017 -0500
+
+    grocery items api details endpoint doneskies muhperson
+
+commit 4539f7206ede8ff0136038cfe18fadfc1d46acbf
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Wed Apr 5 20:41:59 2017 -0500
+
+    improved product information example
+
+commit 48285637679affe09c6c7ddfb488cdfd39af043d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 20:24:52 2017 -0500
+
+    added recipe detail endpoint guuuuuuurrrrrllll
+
+commit 681260038ccb9be0bca53c650e62fde1acef9908
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Wed Apr 5 20:09:29 2017 -0500
+
+    additional name updates
+
+commit 86e242eb862de7820877d8866ba7e5ef401d0bc5
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 20:04:34 2017 -0500
+
+    tag detail endpoint boiiii
+
+commit 3ea01574501cb977a5012ffa47d550036e9f23ab
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 19:25:40 2017 -0500
+
+    detail endpoint done for ingredients
+
+commit 0aa4386525d4b7165e1d84128028fccf74025da9
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Wed Apr 5 19:22:04 2017 -0500
+
+    field names updated
+
+commit 1bfc9ad9180bed2c8d3d53eff2a95994ba41b8dc
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 18:21:16 2017 -0500
+
+    added grocery item browse endpoint
+
+commit 48a2eac37763f80c91f2e22e35c2d5e39cd27e54
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 17:25:40 2017 -0500
+
+    updated filter names for tags page
+
+commit a026234b6ba166611c79dc6c8f9026dbf4ef5a55
+Author: EndlessStomach <endlessstomach8@gmail.com>
+Date:   Wed Apr 5 14:33:16 2017 -0500
+
+    Transferring API Description file from Apiary.io
+
+commit 3ec9b8592292bd27eb20c957919ad3ca17624533
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 03:25:22 2017 -0500
+
+    speed up c/o @noelbenz :: using SQL query instead of comprehensions
+
+commit ce65fc2dc87c9bd0e3283bf5f8e158cd00f2e629
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 02:46:07 2017 -0500
+
+    tags done but they is slooooww
+
+commit 9ec92417c804d451785095143ffbf7d17c3a0726
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 01:36:46 2017 -0500
+
+    recipes browse endpoint
+
+commit 2ec28cdbe33f0d1ad85cc4af76760a5eba1fcc41
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Wed Apr 5 06:19:48 2017 +0000
+
+    updated model names
+
+commit 785cd05e17b2d41965b56e621a9837e9e0c4c743
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 01:04:30 2017 -0500
+
+    cleaning up and removing food_data
+
+commit 6b7bf5696cc29b48dc7a227e25211ab82f929301
+Merge: 1da6ff6 30331b8
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Wed Apr 5 06:02:34 2017 +0000
+
+     ensure no merge conflicts branch 'dev' into data-scraping
+
+commit 813d39c2d4507405ebbbf573978a370454c4d709
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Apr 5 01:01:15 2017 -0500
+
+    ingredients browse endpoint all good
+
+commit 1da6ff64e9b09a8efb4f4526b64e09e16163c526
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Wed Apr 5 05:59:31 2017 +0000
+
+    updated diagram.yuml to current db
+
+commit 7bae247288d6fcc0c138e61f039ad27c38482471
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Apr 5 00:58:34 2017 -0500
+
+    fixed name of source url from api
+
+commit 253679c9d70fe39654330020e86c818c8ffaa96c
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Tue Apr 4 23:03:19 2017 -0500
+
+    Added source link for recipe if instructions field is null.
+
+commit 30331b85eb691ff948ef24766aee03d0492df55e
+Merge: ce97bb4 e1c5b48
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Tue Apr 4 22:56:32 2017 -0500
+
+    Merge pull request #149 from jmsanchez86/unit-test-button
+    
+    Changed tag name for apostrophe
+
+commit e1c5b48db6515582f770e9ce46e016851ea3006a
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Tue Apr 4 22:52:21 2017 -0500
+
+    updated to remove apostrophe from hordoevre
+
+commit b70297cd42a462bfbdd0a8cb729a1e3598039018
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Wed Apr 5 03:39:20 2017 +0000
+
+    added zipped image file
+
+commit 11e4e32ad68499223ed19de78c043b52cbe90447
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Wed Apr 5 02:37:53 2017 +0000
+
+    updated ingredient_images.json with more stable urls
+
+commit dd3b78ccc6cfc38f38870b439dc51f4aa558d561
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Tue Apr 4 21:37:29 2017 -0500
+
+    All uses of tag id have now been changed to use name. Links to tags no longer work until database update.
+
+commit 225f17c52d85f64e71780c3b1c939b4924a4fb9f
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Tue Apr 4 21:26:33 2017 -0500
+
+    Links to individual tags now use their name rather than id.
+
+commit 5931a373dea723589ba6e93d134105429c727566
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Tue Apr 4 20:57:08 2017 -0500
+
+    Grid pages now have tag lists hardcoded and use name in query url.
+
+commit 3e09e219c31ba91305ff2a7a41c70eec3375f66a
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Tue Apr 4 18:30:51 2017 -0500
+
+    adding a helper query_testing file
+
+commit ce97bb41d1d2c9a67ce7c1a213b7b1bcea1fa5a9
+Merge: 4972d56 321d71e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Tue Apr 4 15:40:50 2017 -0500
+
+    Merge branch 'data-scraping' into dev
+
+commit bf0211ac51221e51fb46dd34c364ba99f5b2068d
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Tue Apr 4 15:26:39 2017 -0500
+
+    RecipeSingle now grabs needed data from api.
+
+commit 03f9b50e79f4c97cbf583190725c98643bc3b070
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Tue Apr 4 15:06:26 2017 -0500
+
+    IngredintsSingle now grabs needed data from api.
+
+commit 321d71e40359ab91965018c319cdffdd44649c65
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Tue Apr 4 13:19:39 2017 -0500
+
+    database uploaded!!!
+
+commit 6c77671694292ff073ba97fc8dc2808184e7809e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Tue Apr 4 13:17:57 2017 -0500
+
+    updated to make sure all text fits in db
+
+commit 6c8a348816b1d73db7c7975cc1d2dd3691d98460
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Tue Apr 4 10:11:06 2017 -0500
+
+    updated database scripts to use new model
+
+commit 0c95285225adb6a4c335139ac39edfade4bf1de8
+Merge: f1bc989 862a7b4
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Tue Apr 4 10:08:03 2017 -0500
+
+    Merge branch 'data-scraping' of https://github.com/jmsanchez86/idb into data-scraping
+    
+    Conflicts:
+    	app/api/models.py
+
+commit 862a7b482fe7eba6fc8878727ea36fff29e38777
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Tue Apr 4 09:18:52 2017 +0000
+
+    images sanitized and file renamed
+
+commit 76f4415649049d108713ebd5a7416e5c3884ec21
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Tue Apr 4 08:00:31 2017 +0000
+
+    all image fields filled, expired links still need to be replaced
+
+commit b68f22555b6f67a3d9e3a79cff1d895ca4d349ff
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Tue Apr 4 01:17:24 2017 -0500
+
+    Modified models to get a successful run with Postgres.
+
+commit f1bc98978717a1f1672adc61fedcce2f9e946ef5
+Merge: 2d3ed2d 762a7dc
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 23:21:07 2017 -0500
+
+    Merge branch 'data-scraping' of https://github.com/jmsanchez86/idb into data-scraping
+
+commit 2d3ed2d192b75a3f0be4b51322dbe976eb5b96d9
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 23:19:22 2017 -0500
+
+    added source_url parameter to recipes
+
+commit 7ae0e95f670db08e452ac0069ad01fbe9bb2b6bd
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 22:25:11 2017 -0500
+
+    updated models to shutup pylint
+
+commit 3f14d6194c09e65c119e935c641e6adbe6fb0a10
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Mon Apr 3 22:22:52 2017 -0500
+
+    Cleaned code further.
+
+commit 762a7dcfea4c8686bd218e2e98fb7a0e328b0e1e
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Tue Apr 4 03:22:11 2017 +0000
+
+    updated images in fixed_ingredient_images through line 379
+
+commit a7400f2a93a25d50e64f5319474896562714efd3
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 22:14:01 2017 -0500
+
+    unnecessary space
+
+commit 923e4656be68eccfd7d57d3d38c930f88885de1f
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Mon Apr 3 22:12:17 2017 -0500
+
+    Removed unnecessary code in fetch request.
+
+commit 4955579b0a9eca181b1c0327f678adb10970f601
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 22:11:51 2017 -0500
+
+    removed unnecessary comment and fixed assert parens
+
+commit 274f9c6bbb2ef7aa4e17cc8ae4b967238c3bfd96
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 22:06:02 2017 -0500
+
+    removing unnecessary import in test __init__
+
+commit a10df5af642744fe433171bbe873c31fd8b29fa2
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Mon Apr 3 21:59:24 2017 -0500
+
+    TagsSingle now grabs all needed data from api.
+
+commit 5e839b8ed0df917d9cbc499c962d28d82883a946
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 21:59:14 2017 -0500
+
+    migrated our new database integrity tests to the test folder
+
+commit 83b57e719c0cad8f9bd573613bbf6d82020cd50e
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Mon Apr 3 21:56:08 2017 -0500
+
+    GET YOUR TAGS HERE
+
+commit 4972d567d240fbbed83f74d1a91ce12f48ee340f
+Merge: 8ead9ae 640f14b
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Mon Apr 3 21:25:58 2017 -0500
+
+    Merge pull request #145 from jmsanchez86/unit-test-button
+    
+    Unit test button
+
+commit 562265f4d4538521c9295883059fb969a715bdbd
+Merge: e09f6cd ae9b85e
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 21:21:57 2017 -0500
+
+    Merge branch 'api-april-3' of github.com:jmsanchez86/idb into api-april-3
+
+commit e09f6cdfaf55c88fee820593d297c0904da6dd30
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 21:20:23 2017 -0500
+
+    Grey box functon in recipes if instruction string is empty or no instruction key given,
+
+commit ae9b85e04356b31779e582c6fb49a7dad7033b8d
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Mon Apr 3 21:19:51 2017 -0500
+
+    GroceryItemSingle now grabs all needed data from api.
+
+commit 3bc5a5b087897012ba5bbcdce0b3c23dddf23483
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 21:17:30 2017 -0500
+
+    Grey out recipe instructions when not present.
+
+commit a4b54e19744fb963c9f6472df7f9e2e983000f08
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 20:44:03 2017 -0500
+
+    Passing ingredient tags import test.
+
+commit 78f24381802a89696d6ef3a248920822157bf272
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 20:25:14 2017 -0500
+
+    Added ingredient tag tests.
+
+commit f567eff34c6c5246d2ac613b6c1adfc0e8203210
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 20:13:54 2017 -0500
+
+    Implement Optional List for Ingredients page.
+
+commit f462fb8940e78be6f2337b5bcc8d29b88f037954
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 20:01:05 2017 -0500
+
+    Consolidated translation dictionaries into one. Moved replacements to the bottom.
+
+commit 4d793be21ebc04ee1e0d160985c19b86d76d34f4
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 19:44:57 2017 -0500
+
+    Merged some tags together that have similar names.
+
+commit 98dd52fe7b12c3a02a0bef116d7d56284e3b8770
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 19:44:07 2017 -0500
+
+    Added ingredient_id to SimilarGroceryItem model.
+
+commit f8339c6135798bba889d666b302e00dc8eeec6fd
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 18:34:09 2017 -0500
+
+    Passing similar grocery items import test.
+
+commit 8ed6ca0971711da1fdfe67f430567f79760ebbe7
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 18:17:29 2017 -0500
+
+    Passing related recipes import test.
+
+commit 640f14b329fe7ac55ce22ef43c31fb91c2838d7a
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Mon Apr 3 17:56:26 2017 -0500
+
+    fixed newline formatting with test output
+
+commit 13fe899de3de5598b637a35690219349dafb1e31
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 17:01:00 2017 -0500
+
+    Fixed typos in import similarity tests.
+
+commit 288386fdb67d75e9255dee2df7d5f21cc7f29296
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 17:00:08 2017 -0500
+
+    Added similarity tables for recipe and grocery items.
+
+commit 5cbc0d5effa48d10f6e5733073432bf6345ef391
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 16:31:50 2017 -0500
+
+    Added self-relation tests for recipes and grocery items.
+
+commit 6f6d69c8d4dff123405e343f7e87b346e54edb86
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 16:12:47 2017 -0500
+
+    Added tag translations.
+
+commit 42b7bc39f2f569e8f77f5c44013ea715e3679167
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 15:12:34 2017 -0500
+
+    Added tag translations.
+
+commit 1b223e6bfc9abc4a5bae74b27093f1c547a23c96
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 14:33:08 2017 -0500
+
+    All import tests passing.
+
+commit ecfcb66d15ea49f64e729200e30bc88cb83206c6
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 14:32:48 2017 -0500
+
+    TagGroceryItem primary key augmented to include ingredient_id.
+
+commit 2858ea27e0ab5a523f634831d4aeccd4ea6b238c
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 14:18:17 2017 -0500
+
+    Implement Real-time pagination for All grid pages.
+
+commit 0a7af5d547ca8c0a8ae68e7415831223113f3e20
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 13:45:33 2017 -0500
+
+    Implement Pagination on Recipes.
+
+commit 8ead9aee24cdab6e363ea826943805d7d361e8a0
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Apr 3 13:42:12 2017 -0500
+
+    adding active field to continuation links
+
+commit ecd95882547d2faada7fc2263aa1f92e3c3e81b7
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 13:29:21 2017 -0500
+
+    Implement Pagination for Ingredients.
+
+commit cb98818bcb15d485824e6d860fa09c1192d6484a
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 13:09:35 2017 -0500
+
+    Implement clearfix for grid pages.
+
+commit 23e2b353f94b4871e2234be682301c188a21e6f7
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 11:33:18 2017 -0500
+
+    "Uncovered the pagination bar"
+
+commit 3c8fefffe465b09c9de5f6843a9982acf22036df
+Merge: 746054b e88aedf
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 11:20:07 2017 -0500
+
+    fix merge conflicts.
+
+commit 746054bf04f2e6ce9fb817418110fd979aa8b591
+Merge: 8e7412c 6d66123
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 11:12:57 2017 -0500
+
+    Merge branch 'singles' of github.com:jmsanchez86/idb into api-singles
+
+commit 8e7412c7ced079ed6d270119025ae8e3647b5120
+Merge: a9d2e35 87fb494
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Apr 3 11:08:05 2017 -0500
+
+    Merge branch 'query-api' of github.com:jmsanchez86/idb into dev
+
+commit 87fb494736e5b86d58fe7c2ad34dbe965c1f7727
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Mon Apr 3 11:01:32 2017 -0500
+
+    Fixed issue with filter options not loading on arrival to Ingredients grid page.
+
+commit 701eb82835583f5ae13903f6c4d3a9d5247b47fa
+Merge: 3f69aa9 1a3be34
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Mon Apr 3 06:55:32 2017 +0000
+
+    data scraping merge
+
+commit 3f69aa9ddf7cb00f09fc37cbf14edd9b391568ee
+Author: CoryDunn <cory.dunn@sbcglobal.net>
+Date:   Mon Apr 3 06:52:35 2017 +0000
+
+    gathered 2/3rds of ingredient images
+
+commit 1a3be34544a8144aee993dbdbfcaeb272fcd2d42
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 01:46:33 2017 -0500
+
+    Passing grocery item test.
+    
+    Back end best end!
+
+commit 34694b8ba1b0645e8ef9a63e27caa2c549a20d6a
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Mon Apr 3 01:22:17 2017 -0500
+
+    unit test working, needs visual cleanup
+
+commit 852fed2dcc86af34c1d80e5dd33098ab60887b94
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 01:03:01 2017 -0500
+
+    Passing recipe ingredients test.
+
+commit 44f255af202d53ac0a25a8d93dc9f6956695b297
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 01:02:14 2017 -0500
+
+    Fixed subtitute typos and made verbal_quantity a primary key.
+
+commit 5af30f25c049ee800bc9ffcde9efc508f1bcc2a2
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Mon Apr 3 00:45:04 2017 -0500
+
+    unit test button calls api, returns test output
+
+commit de11fe04494b4a8a5eb7dcd27ba8cc187a0ab903
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Mon Apr 3 00:43:49 2017 -0500
+
+    updated apiary link to use http
+
+commit c07e0f77c12ae132c3c397132f18e35895081b70
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 00:35:17 2017 -0500
+
+    Removed name test due to inconsistencies with a certain api.
+
+commit c423a4cb0a6d73267e8361f60ce634b4cad48854
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Mon Apr 3 00:28:49 2017 -0500
+
+    Pushing in-memory data to database to pass tests.
+
+commit 58c7f5174d3ca509f2bfa23c353a83dc0cb26643
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 23:48:41 2017 -0500
+
+    Refactored importer to use in-memory dicts instead of SQLAlchemy sessions.
+
+commit 09b7ee973cc3cd4cbc323d7e6dd907b8ad60f88a
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 23:27:17 2017 -0500
+
+    Strip html and successfully implemented recipe imports.
+
+commit 5e9148d361daa2828f9aef73f25ad183207c0bec
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 23:25:37 2017 -0500
+
+    Updated models to match uml.
+
+commit 53b8ea8419a1190843d1029df4d0702b04d4ea30
+Merge: b472e8f c6c61a1
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 23:00:52 2017 -0500
+
+    Merge branch 'cloudsql-connection-testing' of https://github.com/jmsanchez86/idb into data-scraping
+
+commit 6f406dfe308332e402d47b04f38aaab664204e66
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 22:50:42 2017 -0500
+
+    Removed uses of food.json in Ingredients.js
+
+commit 68e6719972878e26a5ee494919d4003eb0e7b222
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 22:17:30 2017 -0500
+
+    Removed duplicate function.
+
+commit 50722aed6644cdf967e45afa02dcce08d10ab0e5
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 22:15:46 2017 -0500
+
+    Ingredint filter options now retrieved from api.
+
+commit c6c61a113eb3ffebd10249b23fed76f92f257864
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 21:53:46 2017 -0500
+
+    simplest model possible exposed through simplest endpoint
+
+commit 3a571ec1ea5477864e28942cfc3a335533541112
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 21:45:29 2017 -0500
+
+    moved test db scripts to crud file, scripts now just call funcs
+
+commit 1b4c9505d0e45225dcf93a0d641c27f0b66b01c2
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 21:32:29 2017 -0500
+
+    Grid pages no longer use food.json for intial render.
+
+commit 52843c087c84eb20dea2fdc8305ee152a52a25ae
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 21:32:08 2017 -0500
+
+    we shouldn't be creating a new db, we should use our model's
+
+commit 0ab8ab4068a55d458f9019543d8086fe50c8b61b
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 21:28:19 2017 -0500
+
+    Ingredients no longer uses food.json for inital render.
+
+commit 6878e74ef616dc4983b55ab07315c2ec39e9e6d9
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 21:11:58 2017 -0500
+
+    Corrected some api links.
+
+commit 11078fd3d4e72928d380cb20d60fd239506218f2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 21:05:55 2017 -0500
+
+    creating the simplest of dummy databases using the simplest of models
+
+commit b56425cec05be65baa6fa8ae245d6ece3dfcbc46
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 20:26:59 2017 -0500
+
+    wrote a little script to create empty db tables
+
+commit df389224de46afe2b38c47b2cf5792f4239ab7cb
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 20:26:22 2017 -0500
+
+    new postgresql database and instance after figuring out mistakes
+
+commit 95c9a95c07c8aa99a3bbf5abb5949af2e19e4c3a
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 19:23:01 2017 -0500
+
+    updating requirements with postgresql libraries
+    
+    +psycopg2==2.7.1
+    +PyMySQL==0.7.10
+
+commit 8d05cb8227c2e1ee22266e566c79d785bbe1f68a
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 18:29:19 2017 -0500
+
+    ignoring cloudsqlproxy executable
+
+commit b472e8f140adf920ecf1a5b51d6321cdf127dd07
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 18:23:49 2017 -0500
+
+    Added tests for pilars and recipe ingredients.
+
+commit ad663f5376ec5298e3e95d37ffb0521b9b9c57bd
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 16:19:49 2017 -0500
+
+    Setup unit testing for import.py.
+
+commit 20e1ef6a8a0d01aea39897d0a21ec010e00edfe7
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 15:53:35 2017 -0500
+
+    Simple write and read to database.
+
+commit 5bd9227fd6409f414439c037af8938fff358c263
+Merge: ab4cb4b a9d2e35
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 15:29:33 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into data-scraping
+
+commit ab4cb4b5f8a73fd3f3e0b58eeb4a0e1a6e0d0586
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 15:29:18 2017 -0500
+
+    Setup for importing.
+
+commit 8c1751740c47f3f1ea09257778737027d1c898bd
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 15:20:56 2017 -0500
+
+    Added scraping data to .gitignore.
+
+commit a9d2e357180276c6aaebdf9557eda3ce4971c941
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 15:16:01 2017 -0500
+
+    redeploy with CORS fixes
+
+commit 19464c551e75b2a77f175e4cbb92f1e6fe02ad0b
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 14:46:32 2017 -0500
+
+    running autopep8 and static-checks
+
+commit 8ced30acf8891ec362721f187e9249b58d6eebad
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 14:44:33 2017 -0500
+
+    fixing types for mypy and pylint
+
+commit dbad7c08b4e392a020420c1895c711d6ab87a9d9
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 14:17:27 2017 -0500
+
+    removed cors decorator. flask_cors does work for me on all api endpoints
+    
+    issue with cors decorator is that it got confused when there were
+    redirects from <url>/<endpoint> to <url>/<endpoint>/
+    
+    flask_cors fixes this problem
+
+commit f294ede0c5bea99bf52f2b78a0c74ba2a9563407
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 13:45:48 2017 -0500
+
+    added cors headers to detail endpoints
+
+commit 962e7ba581ff8590eaecd73a402d596c1c62cd42
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 13:42:03 2017 -0500
+
+    new decorator to append cors headers; updated browse endpoints
+    
+    minor fix: grocery_items route no longer has a trailing slash
+
+commit d8dfea0a7ffdeed04e7d0e583f0c465fced0d74c
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sun Apr 2 13:40:36 2017 -0500
+
+    Added query calls and parsing of data to the rest of the grid pages.
+
+commit 535319d32bc14d3fd36799b7b2809f023aa6b029
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 13:15:59 2017 -0500
+
+    Collected data into large files.
+
+commit 9a654773dabce624a18c909bfd46920a95bf6e46
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sun Apr 2 13:08:49 2017 -0500
+
+    Collect script to accumulate many json files into one.
+
+commit e88aedfb0fb5de957f3cb99ea3c4306432858f5d
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sun Apr 2 12:09:25 2017 -0500
+
+    Side padding for grid pages.
+
+commit a3d915598bc061224db0d60a0520a14c631f79b0
+Merge: 498e630 6d66123
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sun Apr 2 10:40:56 2017 -0500
+
+    Merge branch 'singles' into dev
+
+commit 6d66123d1d23ce2974e6c53f43d5538311dd304d
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sun Apr 2 10:28:43 2017 -0500
+
+    All single page layouts.
+
+commit 0576514de8e45ef1953a97c3040dd1297791ca8f
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 03:38:29 2017 -0500
+
+    grocery_items' ingredients now have name and id
+
+commit 4a585eb8f9d300105a3f93e51692e3824a8a204c
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 03:31:18 2017 -0500
+
+    default page_size is now 16
+
+commit 4b9a42c2a4a369886fc07eb25258f9ae0ec5b1ab
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 03:29:06 2017 -0500
+
+    alpha is now the default sort
+
+commit 397ec9acb377902dc04e1e23a86ad4956a6f1c34
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 01:22:38 2017 -0500
+
+    data all scraped
+
+commit 68ab7d570b172be30bb93d992845687262c0d2e5
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Apr 2 01:21:39 2017 -0500
+
+    now searching for multiple recipes from related recipes and checking
+    against our request limit
+
+commit 19d408d1ebed44cf20eba621bd61f481da464e9d
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sat Apr 1 22:16:51 2017 -0500
+
+    ingredients single page update.
+
+commit 562b5fcf028eaded41b2547799950ce11352de8e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 22:13:21 2017 -0500
+
+    checking if file exists to prevent unnecessary lookups
+
+commit 4b9a67f248f7329cfe7f5604ef9ac55f63bf6fff
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 22:08:09 2017 -0500
+
+    cleared the data cache. wrote a script to clear the data cache
+
+commit a6b91e50662047fe5a22e01153dc141dcf78d64b
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 21:31:49 2017 -0500
+
+    instead of write queue we are actually writing out the json
+
+commit 498e63015ee395dda3b560c19c4649d73c2245d9
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sat Apr 1 21:01:30 2017 -0500
+
+    Changed alpha_reversed to alpha_reverse.
+
+commit 2508e9b2971ed7a9b0610e0fe36f566ccfb707c2
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sat Apr 1 20:51:37 2017 -0500
+
+    Fixed inital load not rendering anything.
+
+commit e7413012d067b88acabee200b1439f0b89830d34
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sat Apr 1 20:50:14 2017 -0500
+
+    Sorted and Filtered results now render correctly.
+
+commit e1dd06fabdb542451c21322297572a9a5b862105
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 20:41:37 2017 -0500
+
+    removed unnecessary class and cleaned up linting
+
+commit 7ead39afc1325e53da431b6588026e41e7db7a88
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sat Apr 1 20:21:29 2017 -0500
+
+    Successfuly scrape with no loops.
+
+commit e48b60e7aa6ccdfcddf193e4429710622824efc0
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 20:07:00 2017 -0500
+
+    fixed tags to match contract
+
+commit da8737bf565b20dfa32487891dc5e31d763a22e2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 19:54:30 2017 -0500
+
+    recipe and grocery_items fixed
+
+commit f8062d1f748cf1cd1c4fdbe94174091ebdac3dd8
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Apr 1 19:35:07 2017 -0500
+
+    ingredients fixed
+
+commit bda846863ab19c35ff16f1e85e61bc85453a23e5
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sat Apr 1 19:24:50 2017 -0500
+
+    Removed log statments.
+
+commit b4366df56034f6ffcdb613f69aaf27be116460fe
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sat Apr 1 18:31:21 2017 -0500
+
+    fixed nesting container/bootstrap problems.
+
+commit 57b3d233dcff4395053065bc889809e515ba5c1d
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Sat Apr 1 18:19:52 2017 -0500
+
+    Added calls to api and parsing of response.
+
+commit dedc90c82a3522639563b9884f91cef07d9d8683
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sat Apr 1 18:02:53 2017 -0500
+
+    Improve single recipe layout.
+
+commit d62a4a3c07bf866d3d0546f52fd76903a2882dc9
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 17:50:24 2017 -0500
+
+    added button but breaks on cors reasons
+
+commit 57d04573398682800622cf192dee2e37b417126a
+Merge: 3c7e8d1 bec9e89
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Sat Apr 1 16:53:18 2017 -0500
+
+    Merge pull request #140 from jmsanchez86/model-ids
+    
+    Removed spoonacular_id
+
+commit 3c7e8d126b2c3ad5ccef3933f78f0a48995809c6
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sat Apr 1 16:51:50 2017 -0500
+
+    Added Access-Control-Allow-Origin to json responses.
+
+commit 15dc62a8b536c32c4f4408c648a4b009d9a28b76
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sat Apr 1 15:42:11 2017 -0500
+
+    fixed font styles.
+
+commit dd57a72f7f6d1f80b231c8728b64e3a825bca5a0
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Sat Apr 1 15:30:31 2017 -0500
+
+    smaller nav bar.
+
+commit cebcdb13ab4ad3a25b2252304b1248c8438ce286
+Merge: 7caab97 7b3adbe
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sat Apr 1 14:05:17 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into data-scraping
+
+commit 7caab97257a5df3b71701d5d6f2e329bc129675f
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sat Apr 1 14:04:02 2017 -0500
+
+    Put json data in data folder.
+
+commit 7b3adbe0936cdb6296e0d70d8693990fda3e32e2
+Merge: 14a0494 0ddd37e
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 12:14:31 2017 -0500
+
+    Merge pull request #134 from jmsanchez86/pagination
+    
+    Pagination
+
+commit 0ddd37e90b71058ad1d9c18bac45942f7df5d074
+Merge: 83c5106 14a0494
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 12:11:00 2017 -0500
+
+    Merge branch 'dev' into pagination
+
+commit bec9e89643f07ee8bdf53888cfaa361447769870
+Merge: 5b1ae2d 14a0494
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sat Apr 1 12:09:00 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into model-ids
+
+commit 83c510662b884e9bb1ac2153440f526925bdaa56
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 12:07:15 2017 -0500
+
+    removed duplicate query functions
+
+commit dbd8106dec450093fea199036ee37f96c50554f0
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 12:06:42 2017 -0500
+
+    fixed react key warning from filter and sort module
+
+commit 14a04946fe6003ab8c29e4cfb9aeaf6cf5b28bb1
+Merge: b4ba1ea aa38069
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Sat Apr 1 12:06:40 2017 -0500
+
+    Merge pull request #138 from jmsanchez86/microservice-restructure
+    
+    Microservice restructure
+
+commit b4ba1ea2537e7defaeb98620e0342b1476503620
+Merge: 9ecd9e6 3e2bc76
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 11:36:10 2017 -0500
+
+    Merge pull request #139 from jmsanchez86/modularize
+    
+    Modularize with fixed header
+
+commit 3e2bc767f06daef05747c404bc64f76233b642f8
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sat Apr 1 11:25:20 2017 -0500
+
+    increased top margin of webpage body
+
+commit 80e216a25756cb15f98ae84798db2860b4f46040
+Merge: 019a95c c9ca0e3
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Fri Mar 31 18:58:16 2017 -0500
+
+    Merge pull request #137 from jmsanchez86/fixed-header
+    
+    Fixed header
+
+commit aa38069bb123ca92c9f42ad2fce75347a3553221
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 17:57:48 2017 -0500
+
+    moved the yaml files to the top level directory
+
+commit c9ca0e3d7627b03ab3321bb285ec164c47b8102d
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Fri Mar 31 17:01:09 2017 -0500
+
+    fixed css main text margin
+
+commit 992fa292bf5f095d2598892fa7480c20cfd3c206
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Fri Mar 31 16:05:02 2017 -0500
+
+    added fixed header
+
+commit 5b1ae2dea9280027b880635b4d57f92ba4eb7451
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Fri Mar 31 13:37:36 2017 -0500
+
+    Got rid of spoonacular_id.
+
+commit d635fc5a17e2ae96619e8e0aea9371232aa23726
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 13:37:01 2017 -0500
+
+    rebase cleanup
+
+commit 3943903e631fbcdafce44f476f255f05fe7f806d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 13:32:44 2017 -0500
+
+    I guess pep8 wants the extra line
+
+commit e5976e08eaf5efa3d84aaaf38d7fc9a709eb9cdd
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 13:35:03 2017 -0500
+
+    rebase merge microservices with dev branch changes
+
+commit 0bf31e0f3d6ad8b7251c5061162650910bf86b59
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 13:30:17 2017 -0500
+
+    removed unnecessary line in site/routes.py
+
+commit 6d1045066c9e2447d97815b89d0b3f2391c1abb0
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 13:29:37 2017 -0500
+
+    bug-fix: tags endpoint wasn't returning tags`
+
+commit fb055724b911f54510080088c4d57fc4e224386f
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 31 13:28:29 2017 -0500
+
+    changed startup to general create app function that registers variable
+    blueprints
+
+commit cc6b4179ad4abf3ec1c515a186f641e87c80bd67
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Fri Mar 31 12:51:29 2017 -0500
+
+    Pagination functioning for Ingredients.
+
+commit 9ecd9e61ce7132107e667daa771776e08b7f8c9b
+Merge: 7a0855c 2161100
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Fri Mar 31 12:05:48 2017 -0500
+
+    Merge pull request #132 from jmsanchez86/test-out
+    
+    updating to run coverage and generate tests.out
+
+commit 9b345d1ea93a65a12c6e8eeb033b57e468e6d085
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Fri Mar 31 10:56:29 2017 -0500
+
+    groceryItems > grocery_items
+
+commit e03c2385afcdf12d3105eec1b86082b11d425daa
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Fri Mar 31 09:48:05 2017 -0500
+
+    Mock query string alert on Recipes.
+
+commit 019a95c773da8cfe99ca74ca5effbd2dc27c2d50
+Merge: 474b6d5 ea2a2c2
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Thu Mar 30 23:57:02 2017 -0500
+
+    it made me merge
+
+commit 2161100a96413e8c96c0b3e85246d023675cfd9a
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 23:22:09 2017 -0500
+
+    updating test output
+
+commit cfb114d18bbf09ce72d9f59e6fd83857290503f2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 23:21:38 2017 -0500
+
+    autopep8 run
+
+commit a592e5c312faf3efe50bc16b171c1d0008c03a7b
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 23:21:18 2017 -0500
+
+    prevent `make-format` from printing shell cmds
+
+commit ea7aff41285f6fd4b9413b6043acd507bf437569
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 23:19:47 2017 -0500
+
+    makefile now running tests with coverage
+    closes #92
+
+commit 8848372903142f7c06084ee2c0a7c76d5bc77170
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 23:06:34 2017 -0500
+
+    added repr calls to tests for full coverage
+
+commit d9e3a93dbb820f08769e5fc93047becb767f2863
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 23:06:22 2017 -0500
+
+    fixed sugar typo
+
+commit df2d6b36bf2a6a7c9b73cd4257e022d690d7d490
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Mar 30 22:48:09 2017 -0500
+
+    Implement sorting and filtering on all pages.
+
+commit 83ab1aaa8d0181f4babdd2af16098909d32ab91c
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Mar 30 22:20:41 2017 -0500
+
+    Creating API HTTP request string.
+
+commit 383b0db85bcaed415f81799c20ab16596727ccc8
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Mar 30 21:57:14 2017 -0500
+
+    Sorting implemented.
+
+commit c6c29e896be6faa022b35e074456abfc7f32a08e
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Mar 30 21:42:11 2017 -0500
+
+    Read from a fake online rest api.
+
+commit c33a488a7738a88622e0f25e4a9b4229b430d13d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 21:33:42 2017 -0500
+
+    updating venv requirements to better reflect project
+
+commit 14257ea2bdd73174397a10197d102d3fb9a17281
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 21:27:19 2017 -0500
+
+    remove numpy from travis
+
+commit 7a0855c47251e40db35d24de37fd6970866031e2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 20:51:14 2017 -0500
+
+    updating app.yaml with prod database name
+    
+    config file will be uploaded separately to slack
+
+commit 23de5148efa8c9ea9f444ce8734f767f8bf21407
+Merge: fea65a7 dad9816
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Mar 30 20:38:42 2017 -0500
+
+    Merge pull request #129 from jmsanchez86/test-endpoint
+    
+    Created the unit test api endpoint
+
+commit 2bccda54f9a232e05da49a841b26bad317a8c448
+Author: Noel Benzinger <noel.benzinger@utexas.edu>
+Date:   Thu Mar 30 20:34:28 2017 -0500
+
+    Single item manual scraping and pseudo code.
+
+commit dad9816115dfb60a62a4e5a74e5763c9021b4fbd
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 20:06:19 2017 -0500
+
+    fixed the app context pop issue.
+    
+    closes #95
+    closes #98
+
+commit 474f104b928ab358632850c61582cb59ed6409d1
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 19:50:31 2017 -0500
+
+    made every test use the app context. still not working
+
+commit 93511ce2de78b2a5a271a25576d214925eec01fc
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 01:11:56 2017 -0500
+
+    dummy test endpoint that just returns success
+
+commit ebf1333deba8d889e362dab0845edd542f8e734e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 01:11:10 2017 -0500
+
+    renamed folder since we don't want module imports getting confused
+
+commit fbb12a06569935ab95465681d2b0e3472c51211d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 01:10:25 2017 -0500
+
+    renamed to ModelTests since its a class
+
+commit d98eff37bab88c84d8d18a8991b952dc029cdf10
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 00:59:40 2017 -0500
+
+    added module import for tests endpoint
+
+commit 446826369541e7524c595166c2c81bf9797186c8
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Thu Mar 30 00:58:44 2017 -0500
+
+    create stub files for the tests endpoint
+
+commit fea65a7618e0dd1035da29673637a01bdf5b9f52
+Merge: 25ae991 72024d0
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Thu Mar 30 00:51:37 2017 -0500
+
+    Merge pull request #128 from jmsanchez86/match-api-contract
+    
+    Match mock api with api contract
+
+commit d2479bbe521b6f33cef1a1a39426fb448c10f595
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Wed Mar 29 23:04:16 2017 -0500
+
+    Send info from Ingredients to the Modal Check boxes, and back.
+
+commit 72024d06e0555d27ef83e1fd75695d371a552f5b
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Mar 29 22:38:57 2017 -0500
+
+    fix pylint and autopep8 fighting over this line
+
+commit cda110e5f46abe997417b6c7f964fe0b06b21d27
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Mar 29 22:36:14 2017 -0500
+
+    merged query params into a single class to make
+    mypy checking easier
+
+commit 59b635b3773cac4a5941f50331dd3b524a47448e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Mar 29 21:47:49 2017 -0500
+
+    fixing autopep8 formatting
+
+commit 57ceb3a0225425b3a7e59061b08e106cb575bca6
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Mar 29 21:42:55 2017 -0500
+
+    continuation links carry over filter and sort params
+
+commit d6678ce7b9f7ca7260ff815c5d1b43b4768ca531
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Mar 29 21:26:10 2017 -0500
+
+    added ready_time param to  mock data
+
+commit ea2a2c2e225da7850babacb8f3f63d4b763bee6b
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Wed Mar 29 21:24:42 2017 -0500
+
+    Modularize Controller Component further.
+
+commit e417580385b9b14d53024c71588ec26a3e36d9c7
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Wed Mar 29 21:23:03 2017 -0500
+
+    added support for sorting and filtering
+    
+    also updated pagesize param to be page_size
+
+commit 7f2eb2095b2f67e4e5c514c3413e864241229da1
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Wed Mar 29 18:14:26 2017 -0500
+
+    Add sort/filter controller fnctionality.
+
+commit 474b6d5093e059094080e4554d5bbf3e490061e2
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Wed Mar 29 00:33:48 2017 -0500
+
+    have sort buttons, not in proper alignment
+
+commit 66d43dcb2634e21c6ab9a9c9e23e88b05247ae38
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Tue Mar 28 20:35:08 2017 -0500
+
+    Added a modal popup button.
+
+commit 25ae99124d2401dfdaa61166420fc6d79dee3fa2
+Merge: a36017b b729636
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Tue Mar 28 11:56:31 2017 -0500
+
+    Merge pull request #115 from jmsanchez86/automate-autopep8
+    
+    updated our format call to autopep8 every py file
+
+commit 1dad9422f44ba650ea4222952ea14e83cf60d63d
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Tue Mar 28 11:47:03 2017 -0500
+
+    columns 4 wide.
+
+commit a36017b52a57b43bd64f999acf0e615e5a97ecdf
+Merge: 675cc63 f72c441
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Tue Mar 28 11:43:57 2017 -0500
+
+    Merge pull request #85 from jmsanchez86/about-programmatic-issues-commits
+    
+    About updated with programmatic stat totals
+
+commit 675cc6375b3d0c95a1e36895490c9830eba176a0
+Merge: 081e098 338eb6d
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Tue Mar 28 11:21:48 2017 -0500
+
+    Merge pull request #124 from jmsanchez86/modularize
+    
+    Modularize
+
+commit 338eb6dd5e348a4a815b3bbdcae7c5f37cf8b91c
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Tue Mar 28 09:52:21 2017 -0500
+
+    Change 'cat' poperty to 'link'.
+
+commit fc3ae773ceda575c610c977d262f90d255f9a119
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Tue Mar 28 09:34:16 2017 -0500
+
+    Add generalized gridItem for grid pages. Darken border for hover.
+
+commit 081e0984dde54df592216f6d1a2902c534e7ecac
+Merge: c5e520b add2d5d
+Author: Scott Munro <scottmunro@utexas.edu>
+Date:   Mon Mar 27 22:52:20 2017 -0500
+
+    Merge pull request #87 from jmsanchez86/simple-api-redo
+    
+    Simple api with mock data for the frontend to call
+
+commit b729636988e965ce9e6ff9902bc7efab9f78bcf7
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 22:20:40 2017 -0500
+
+    updated our format call to autopep8 every py file
+
+commit 0949ab5b26540fbed8b89cd0053242eb4312362e
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 17:03:45 2017 -0500
+
+    Generalize Grid Item. Thumbnails Linkable.
+
+commit f72c44148d60ca24508d56a5f1b04bcdf67eae53
+Merge: 0c8c3a5 c5e520b
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Mon Mar 27 16:19:13 2017 -0500
+
+    Merge branch 'dev' into about-programmatic-issues-commits
+
+commit 60923f3d458369b7b9a6701c5765f80279aaf445
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 15:47:15 2017 -0500
+
+    implement all grid modules on grid pages.
+
+commit f23d47774b634460e4b2449f483b2a84cecc125e
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 15:44:49 2017 -0500
+
+    create thmbnail module for gird pages.
+
+commit add2d5d5e86d4bde8620d9ab1f08c53f8756174d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 15:17:12 2017 -0500
+
+    formatting api/routes.py for pep8
+
+commit 97d7304f0fd4704e22eaa8fd8f8532cbffda830e
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 15:09:35 2017 -0500
+
+    type annotating the api routes
+
+commit 35d90d0d657f476f7cabc1089577749cfacb7251
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 14:58:36 2017 -0500
+
+    update continuation_route to add continuation links to response
+
+commit b1c4d76e517984d896fa57bdfa0d8dbc29a6f3f4
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 13:51:42 2017 -0500
+
+    added a function to generate continuation links
+
+commit ff67d4524964705d0536fab029bc703d064fc121
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 13:23:52 2017 -0500
+
+    api endpoints return loops of each list (up to a maxsize)
+
+commit ab3762ee3a5c22002aff681a7034af4d05f25860
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Mon Mar 27 12:42:41 2017 -0500
+
+    changed food_data to store things as a list again
+    because its easier to work with when doing mock
+    paging
+
+commit c5e520b30e7301d808d0c684e479d881f03958bd
+Merge: 75da067 07c7cfc
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 12:29:59 2017 -0500
+
+    Merge branch 'modularize' into dev
+
+commit 07c7cfc8bbf669736112d70cf296c3b2e23e8824
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 12:29:26 2017 -0500
+
+    updated packaga.json and client.min.js
+
+commit 75da06747411eb2a6e43a571856f0f1b0d3bbc8d
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 12:18:54 2017 -0500
+
+    fixed merge conflicts.
+
+commit 717eb431aac6733b15ab509341059bb0b6b6e2c4
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 12:16:51 2017 -0500
+
+    Fixed Merge conflict team-info
+
+commit 3da4ff36e37b9df02301325a950c9cb75b4fd634
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 12:05:47 2017 -0500
+
+    Delete Article.js
+
+commit 11c77036ec8c8d27664faaae3c93b25e88fd1548
+Merge: 0b8c885 c3add5e
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Mon Mar 27 12:03:17 2017 -0500
+
+    updated team info. Cat picture.
+
+commit 0c8c3a5c1eda1e1c0051772d30a867ce0303e32e
+Merge: 86d04f2 905d034
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sun Mar 26 15:33:24 2017 -0500
+
+    Merge branch 'about-programmatic-issues-commits' of https://github.com/jmsanchez86/idb into about-programmatic-issues-commits
+
+commit 86d04f247165e97db3626d2c086bd321aa7793a5
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sun Mar 26 15:33:11 2017 -0500
+
+    corrected useful links
+
+commit 905d034efee7b5bc6892d70e36b4828fe8b89731
+Merge: 3398083 c3add5e
+Author: thomascardwell7 <thomascardwell7@gmail.com>
+Date:   Sun Mar 26 15:29:46 2017 -0500
+
+    Merge branch 'dev' into about-programmatic-issues-commits
+
+commit 3398083f07f630f56f7fe6f8fed88cccd68b3833
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sun Mar 26 15:17:57 2017 -0500
+
+    fixed programmatic stats to be plural for 0 case
+
+commit 7cc5f20a19ff18690d9c455c45779c1eae41fd1a
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sun Mar 26 15:11:12 2017 -0500
+
+    moved ugly markdown string out of about page
+
+commit 934c8a993ce48ce78fba7f899db9a895f009b5dc
+Author: Thomas Cardwell <thomascardwell7@gmail.com>
+Date:   Sun Mar 26 14:53:42 2017 -0500
+
+    updated team stats to be programmatic (individual issues still hardcoded)
+
+commit 2d8b7007ba71c1adfcbdbfd0f8ab56618eec4d80
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Mar 26 02:40:23 2017 -0500
+
+    browse endpoints respond to pagesize and page number
+    
+    this is useful for pagination and continues
+    
+    Some articles site this as a harmful pattern, but since our
+    data source isn't changing I think it'll work just fine
+    
+    http://blog.vermorel.com/journal/2015/5/8/nearly-all-web-apis-get-paging-wrong.html
+
+commit 02beee518a5b7a8e94e83ae0b0f0d6c92dbe53c8
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Mar 26 02:39:29 2017 -0500
+
+    prevent name collision between app module and package
+    
+    app module renamed to startup
+
+commit b689622f4fbb4e5dc6d86cbc674627a63ea384ae
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Mar 26 00:55:36 2017 -0500
+
+    updated detail api endpoints to return specific instances
+
+commit 992a9844d993fdf3012df465c69a6686c17f0bf8
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Mar 26 00:38:12 2017 -0500
+
+    restructured food_data to be more similar to original json
+
+commit be2b840200dd1a32883740f1670dba3a62dd247f
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sun Mar 26 00:21:22 2017 -0500
+
+    migrated food_data.json to a python representation
+
+commit e6c0a8aef756454b7aab810bf95937e0b9d54856
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Sat Mar 25 23:16:46 2017 -0500
+
+    migrating simple-api branch changes to a new branch
+
+commit c3add5ea3356f9543662ed5617baacd05b715fc8
+Merge: 537ace6 b2d60c2
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 24 09:56:03 2017 -0500
+
+    Merge branch 'dev' of https://github.com/jmsanchez86/idb into dev
+
+commit 537ace630251a07ce521b526bf099f8e9af72221
+Merge: ac2e805 c8f440d
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 24 08:43:29 2017 -0500
+
+    Merge branch 'master' into dev
+    
+    Conflicts:
+    	app/static/js/client.min.js
+    	vf-react/src/client.min.js
+
+commit ac2e805cbf3d38347c87214c06c975c9a4beb608
+Author: Scott Munro <scottnmunro@gmail.com>
+Date:   Fri Mar 24 08:40:40 2017 -0500
+
+    fixing about page links for github pages
+
+commit b2d60c27539dfb3e0514cc6b6d983042fc98dd3e
+Author: Jose Sanchez <jmsanchez8653@hotmail.com>
+Date:   Thu Mar 23 21:33:03 2017 -0500
+
+    Redone git log
+
 commit c8f440de718150cd62eea6ab771aee74da00ef0c
 Author: Scott Munro <scottnmunro@gmail.com>
 Date:   Thu Mar 23 21:29:23 2017 -0500
@@ -95,7 +2275,7 @@ Date:   Thu Mar 23 19:23:00 2017 -0500
     Merge branch 'dev' into frontend-integration
     
     Conflicts:
-            vf-react/src/client.min.js
+    	vf-react/src/client.min.js
 
 commit 6f357f10e9b8c526431410aad1b512a5fc3fd369
 Author: Thomas Cardwell <Thomas Cardwell>
@@ -204,6 +2384,18 @@ Author: Scott Munro <scottnmunro@gmail.com>
 Date:   Thu Mar 23 15:39:44 2017 -0500
 
     don't phony the pylintrc
+
+commit 0b8c885daecd996edb6a7ca166453baa88e178bf
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Mar 23 14:12:03 2017 -0500
+
+    Changed the order of the script being loaded.
+
+commit c4566830391b9eff7c037427dd78bb60cafa5254
+Author: Scott Hornberger <scott.hornberger@utexas.edu>
+Date:   Thu Mar 23 13:56:01 2017 -0500
+
+    Update team-info.
 
 commit e32da269efaea8ba3872b948a4b12b446202bdd9
 Author: Noel Benzinger <noelbenzinger@gmail.com>
@@ -382,7 +2574,7 @@ Date:   Wed Mar 22 00:25:49 2017 -0500
     Merge branch 'dev' into model-tests
     
     Conflicts:
-            .gitignore
+    	.gitignore
 
 commit 1f6f892446be93726ea62f508efc56b1213c167e
 Author: Thomas Cardwell <Thomas Cardwell>
