@@ -188,7 +188,7 @@ def get_ingredient(ingredient_id: int):
         "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
                                   for g in items],
         "tags": [{"name": t.tag_name,
-                 "image": tag_image_prefix + t.image_url,} for t in tags]
+                  "image": tag_image_prefix + t.image_url,} for t in tags]
         })
 
 @API_BP.route('/recipes/<int:recipe_id>')
@@ -209,7 +209,7 @@ def get_recipe(recipe_id: int):
                 "ready_time": recipe.ready_time,
                 "related recipes": [{"id": r.recipe_id, "name": r.name}
                                     for r in recipe.similar_recipes],
-                "tags": [{"name": t.tag_name, "img": tag_image_prefix + t.image_url}
+                "tags": [{"name": t.tag_name, "image": tag_image_prefix + t.image_url}
                          for t in recipe.tags],
                 "ingredient_list": [{"id": i.ingredient_id,
                                      "original_string": i.verbal_quantity}
