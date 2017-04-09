@@ -60,24 +60,16 @@ def get_continuation_links(base_url: str, maxsize: int,
         last_link += tag_query
 
     # first page
-    if page == 0:
-        return {
-            "next": next_link,
-            "last": last_link,
-            "active": page}
-    # last page
-    elif page == last_page:
-        return {
-            "first": first_link,
-            "prev": prev_link,
-            "active": page}
-    else:
-        return {
-            "first": first_link,
-            "prev": prev_link,
-            "next": next_link,
-            "last": last_link,
-            "active": page}
+    link_dict = dict(active=page)
+    if page != 0:
+        link_dict["first"] = first_link
+        link_dict["prev"] = prev_link
+
+    if page != last_page:
+        link_dict["next"] = next_link
+        link_dict["last"] = last_link
+
+    return link_dict
 
 
 def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
