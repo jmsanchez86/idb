@@ -1,6 +1,7 @@
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-sequence-index
 # pylint: disable=invalid-name
+# pylint: disable=too-many-arguments
 
 
 from functools import wraps
@@ -22,29 +23,34 @@ tag_image_prefix = "/static/images/tags/"
 class QueryParams:
     # pylint: disable=too-few-public-methods
     def __init__(self, page: int, page_size: int, tag_filters: List[str],
-                 sort_key: str) -> None:
+                 sort_key: str, min_occurences: int) -> None:
         self.page = page
         self.page_size = page_size
         self.tag_filters = tag_filters
         self.sort_key = sort_key
+        self.min_occurences = min_occurences
 
 
 def get_continuation_links(base_url: str, maxsize: int,
                            query_params: QueryParams):
+    # pylint: disable=too-many-locals
     page = query_params.page
     psize = query_params.page_size
     tag_filters = query_params.tag_filters
     sort_param = query_params.sort_key
+    min_occurences = query_params.min_occurences
 
     total_pages = int(math.ceil(maxsize / psize))
     last_page = max(0, total_pages - 1)
-    url_template = base_url + "?page={p}&page_size={ps}&sort={s}"
-    first_link = url_template.format(p=0, ps=psize, s=sort_param)
+    url_template = base_url + "?page={p}&page_size={ps}&sort={s}&min={min}"
+    first_link = url_template.format(p=0, ps=psize, s=sort_param,
+                                     min=min_occurences)
     prev_link = url_template.format(p=min(last_page, max(0, page - 1)),
-                                    ps=psize, s=sort_param)
+                                    ps=psize, s=sort_param, min=min_occurences)
     next_link = url_template.format(p=min(last_page, max(0, page + 1)),
-                                    ps=psize, s=sort_param)
-    last_link = url_template.format(p=last_page, ps=psize, s=sort_param)
+                                    ps=psize, s=sort_param, min=min_occurences)
+    last_link = url_template.format(p=last_page, ps=psize, s=sort_param,
+                                    min=min_occurences)
 
     if len(tag_filters) > 0:
         tag_query = "&tags={ts}".format(ts=",".join(tag_filters))
@@ -84,8 +90,10 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
         sort_param = req.args.get("sort", "alpha")
         tags = req.args.get("tags").split(
             ",") if "tags" in req.args else []
+        min_occurences = int(req.args.get("min", 0))
         query_params = QueryParams(page=page, page_size=psize,
-                                   tag_filters=tags, sort_key=sort_param)
+                                   tag_filters=tags, sort_key=sort_param,
+                                   min_occurences=min_occurences)
         resp = flask.json.loads(route_fn(query_params).data)
         data = resp["data"]
         table_size = resp["table_size"]
@@ -142,9 +150,8 @@ def get_all_grocery_items(query_params: QueryParams):
 @API_BP.route('/tags')
 @continuation_route
 def get_all_tags(query_params: QueryParams):
-    min_occurences = int(flask.request.args.get("min", 0))
-    resp = Tag.get_all(min_occurences, query_params.sort_key, query_params.page,
-                       query_params.page_size)
+    resp = Tag.get_all(query_params.min_occurences, query_params.sort_key,
+                       query_params.page, query_params.page_size)
     return flask.json.jsonify({"data": [{"name": tq.tag_name,
                                          "blurb": tq.description,
                                          "image": tag_image_prefix +
