@@ -14,6 +14,10 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 db = SQLAlchemy()  # type: SQLAlchemy
 
+def init_db(app):
+    app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
+    db.init_app(app)
+
 class Recipe(db.Model):
     """
     Table of recipes.
