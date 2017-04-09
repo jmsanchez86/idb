@@ -4,6 +4,7 @@ import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
+from app.api.models import Recipe
 from app.api.test import test_data
 import flask
 
@@ -216,7 +217,7 @@ class DatabaseIntegrityTests(unittest.TestCase):
         expected = "WOWOWWWOW"
         self.assertEqual(actual, expected)
 
-class TestModels(unittest.TestCase):
+class ModelTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = flask.Flask(__name__)
@@ -241,7 +242,56 @@ class TestModels(unittest.TestCase):
 
     def test_get_all_recipe(self):
         # def get_all(filters, order, page, page_size)
-        pass
+        """
+        query, table_size_query = Recipe.get_all(query_params.tag_filters,
+                                                 query_params.sort_key,
+                                                 query_params.page,
+                                                 query_params.page_size)
+        return flask.json.jsonify({"data": [{"id": rq.recipe_id,
+                                             "name": rq.name,
+                                             "image": rq.image_url,
+                                             "blurb": rq.description,
+                                             "ready_time": rq.ready_time}
+                                            for rq in query],
+                                   "table_size": table_size_query.fetchone()[0]})
+        """
+        with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
+            query, table_size_query = Recipe.get_all([], "alpha", 0, 1)
+            recipe_0 = next(iter(query))
+            self.assertEqual(recipe_0, None)
+            self.assertEqual(table_size_query, 0)
+
+        with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
+            query, table_size_query = Recipe.get_all([], "alpha", 0, 16)
+            recipes = list(query)
+            self.assertEqual(len(recipes), 16)
+            self.assertEqual(recipes[15], None)
+            self.assertEqual(table_size_query, 0)
+
+        with self.subTest(msg="No tags; Alpha; Page=2; Pagesize=16"):
+            query, table_size_query = Recipe.get_all([], "alpha", 2, 16)
+            recipes = list(query)
+            self.assertEqual(len(recipes), 16)
+            self.assertEqual(recipes[15], None)
+            self.assertEqual(table_size_query, 0)
+
+        with self.subTest(msg="No tags; Ready time rev; Page=2; Pagesize=16"):
+            query, table_size_query = Recipe.get_all([], "ready_time_desc", 2,
+                                                     16)
+            recipes = list(query)
+            self.assertEqual(recipes[15], None)
+            self.assertTrue(recipes[0].ready_time >= recipes[1].ready_time)
+            self.assertEqual(table_size_query, 0)
+
+        with self.subTest(msg="Vegan Beverage; Ready time rev; "
+                              "Page=2; Pagesize=16"):
+            tag_list = ["Vegan", "Beverage"]
+            query, table_size_query = Recipe.get_all(tag_list, "ready_time_desc",
+                                                     2, 16)
+            recipes = list(query)
+            self.assertEqual(recipes[15], None)
+            self.assertTrue(set().issuperset(set(tag_list))) # recipe[15].tags)
+            self.assertEqual(table_size_query, 0)
 
     def test_get_recipe(self):
         # def get(recipe_id)
