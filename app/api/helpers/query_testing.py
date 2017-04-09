@@ -8,11 +8,13 @@ from app.api.models import *
 def query(sql):
     return db.engine.execute(sql)
 
+
 def queryfm(sql, count):
     res = query(sql)
     rows = res.fetchmany(count)
     res.close()
     return rows
+
 
 if __name__ == "__main__":
     ctx = API_SERVICE.app_context()
@@ -22,4 +24,3 @@ if __name__ == "__main__":
         db.engine.execute(f.read())
 
     ctx.pop()
-
