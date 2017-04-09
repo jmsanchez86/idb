@@ -216,6 +216,151 @@ class DatabaseIntegrityTests(unittest.TestCase):
         expected = "WOWOWWWOW"
         self.assertEqual(actual, expected)
 
+class TestModels(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = flask.Flask(__name__)
+        cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///test.db'
+        cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        cls.app.config["SQLALCHEMY_ECHO"] = False
+        cls.database = models.db
+        cls.database.init_app(cls.app)
+        cls.ctx = cls.app.app_context()
+        cls.ctx.push()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.ctx.pop()
+
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
+
+    def test_get_all_recipe(self):
+        # def get_all(filters, order, page, page_size)
+        pass
+
+    def test_get_recipe(self):
+        # def get(recipe_id)
+        pass
+
+    def test_get_all_ingredient(self):
+        # def get_all(filters, order, page, page_size)
+        pass
+
+    def test_get_ingredient(self):
+        # def get(ing_id)
+        pass
+
+    def test_ingredient_grocery_items(self):
+        # def get_grocery_items(self)
+        pass
+
+    def test_get_all_groceryitem(self):
+        # def get_all(filters, order, page, page_size)
+        pass
+
+    def test_get_groceryitem(self):
+        # def get(grocery_id)
+        pass
+
+    def test_get_all_tag(self):
+        # def get_all(min_occurences, order, page, page_size):
+        pass
+
+    def test_get_tag(self):
+        # def get(tag_name):
+        pass
+
+
+# Report
+# ======
+# 222 statements analysed.
+#
+# Statistics by type
+# ------------------
+#
+# +---------+-------+-----------+-----------+------------+---------+
+# |type     |number |old number |difference |%documented |%badname |
+# +=========+=======+===========+===========+============+=========+
+# |module   |1      |1          |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |class    |11     |11         |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |method   |29     |29         |=          |68.97       |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |function |0      |0          |=          |0           |0        |
+# +---------+-------+-----------+-----------+------------+---------+
+#
+#
+#
+# External dependencies
+# ---------------------
+# ::
+#
+#     flask_sqlalchemy (app.api.models)
+#     sqlalchemy
+#       \-ext
+#         \-associationproxy (app.api.models)
+#
+#
+#
+# Raw metrics
+# -----------
+#
+# +----------+-------+------+---------+-----------+
+# |type      |number |%     |previous |difference |
+# +==========+=======+======+=========+===========+
+# |code      |302    |50.59 |302      |=          |
+# +----------+-------+------+---------+-----------+
+# |docstring |77     |12.90 |77       |=          |
+# +----------+-------+------+---------+-----------+
+# |comment   |124    |20.77 |124      |=          |
+# +----------+-------+------+---------+-----------+
+# |empty     |94     |15.75 |94       |=          |
+# +----------+-------+------+---------+-----------+
+#
+#
+#
+# Duplication
+# -----------
+#
+# +-------------------------+------+---------+-----------+
+# |                         |now   |previous |difference |
+# +=========================+======+=========+===========+
+# |nb duplicated lines      |0     |0        |=          |
+# +-------------------------+------+---------+-----------+
+# |percent duplicated lines |0.000 |0.000    |=          |
+# +-------------------------+------+---------+-----------+
+#
+#
+#
+# Messages by category
+# --------------------
+#
+# +-----------+-------+---------+-----------+
+# |type       |number |previous |difference |
+# +===========+=======+=========+===========+
+# |convention |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |refactor   |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |warning    |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |error      |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+#
+#
+#
+# Global evaluation
+# -----------------
+# Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+
+
 
 if __name__ == "__main__":
     unittest.main()
