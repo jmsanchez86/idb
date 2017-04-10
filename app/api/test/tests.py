@@ -1,4 +1,5 @@
 # pylint: disable=missing-docstring
+# pylint: disable=fixme
 
 import time
 import unittest
@@ -399,7 +400,7 @@ class ModelTests(unittest.TestCase):
 
         with self.subTest(msg="No tags; alpha rev; Page=2; Pagesize=16"):
             query, table_size_query = GroceryItem.get_all([], "alpha_reverse",
-                                                         2, 16)
+                                                          2, 16)
             items = list(query)
             # TODO sqlite correction
             self.assertEqual(items[15].grocery_id, 407084)
@@ -409,8 +410,7 @@ class ModelTests(unittest.TestCase):
                               "Page=0; Pagesize=16"):
             tag_set = set(("Pescetarian", "Peanut-free", "MSG-free"))
             query, table_size_query = GroceryItem.get_all(list(tag_set),
-                                                         "alpha_reverse", 0,
-                                                         16)
+                                                          "alpha_reverse", 0, 16)
             last_item = list(query)[15]
             _last_item_query = GroceryItem.get(last_item.grocery_id)
             last_item_tags = set(t.tag_name for t in _last_item_query.tags)
@@ -453,7 +453,7 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(table_size, 72)
 
         with self.subTest(msg="No min; Alpha; Page=2; Pagesize=16"):
-            query, table_size_query = Tag.get_all(0, "alpha", 2, 16)
+            query = Tag.get_all(0, "alpha", 2, 16)[0]
 
             tags = list(query)
             self.assertEqual(len(tags), 16)
@@ -461,18 +461,19 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(tags[15].tag_name, "Organic")
 
         with self.subTest(msg="No min; alpha rev; Page=2; Pagesize=16"):
-            query, table_size_query = Tag.get_all(0, "alpha_reverse", 2, 16)
+            query = Tag.get_all(0, "alpha_reverse", 2, 16)[0]
             tags = list(query)
             # TODO sqlite correction
             self.assertEqual(tags[15].tag_name, "Hormone-free")
             self.assertTrue(tags[0].tag_name >= tags[1].tag_name)
 
         with self.subTest(msg="min 30; alpha rev; Page=0; Pagesize=16"):
-            query, table_size_query = Tag.get_all(30, "alpha_reverse", 0, 16)
+            query, table_size = Tag.get_all(30, "alpha_reverse", 0, 16)
             last_tag = list(query)[15]
             # TODO sqlite correction
             self.assertEqual(last_tag.tag_name, "Antipasto")
-        
+            self.assertEqual(table_size, 17)
+
     def test_get_tag(self):
         tag = Tag.get("Dessert")
         self.assertEqual(tag.tag_name, "Dessert")
