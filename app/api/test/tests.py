@@ -4,7 +4,7 @@ import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
-from app.api.models import Recipe, Ingredient
+from app.api.models import Recipe, Ingredient, GroceryItem
 from app.api.test import test_data
 import flask
 
@@ -377,8 +377,50 @@ class ModelTests(unittest.TestCase):
                          set((131706, 21194, 195045)))
 
     def test_get_all_groceryitem(self):
-        # def get_all(filters, order, page, page_size)
-        pass
+        with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
+            query, table_size_query = GroceryItem.get_all([], "alpha", 0, 1)
+            item_0 = next(iter(query))
+            self.assertEqual(item_0.grocery_id, 95469)
+            self.assertEqual(table_size_query.fetchone()[0], 2157)
+
+        with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
+            query, table_size_query = GroceryItem.get_all([], "alpha", 0, 16)
+            items = list(query)
+            self.assertEqual(len(items), 16)
+            # TODO sqlite correction
+            self.assertEqual(items[15].grocery_id, 182146)
+            self.assertEqual(table_size_query.fetchone()[0], 2157)
+
+        with self.subTest(msg="No tags; Alpha; Page=2; Pagesize=16"):
+            query, table_size_query = GroceryItem.get_all([], "alpha", 2, 16)
+
+            items = list(query)
+            self.assertEqual(len(items), 16)
+            # TODO sqlite correction
+            self.assertEqual(items[15].grocery_id, 176079)
+
+        with self.subTest(msg="No tags; alpha rev; Page=2; Pagesize=16"):
+            query, table_size_query = GroceryItem.get_all([], "alpha_reverse",
+                                                         2, 16)
+            items = list(query)
+            # TODO sqlite correction
+            self.assertEqual(items[15].grocery_id, 407084)
+            self.assertTrue(items[0].name >=
+                            items[1].name)
+
+        with self.subTest(msg="Pescetarian, Peanut-free, MSG-free; alpha rev; "
+                              "Page=0; Pagesize=16"):
+            tag_set = set(("Pescetarian", "Peanut-free", "MSG-free"))
+            query, table_size_query = GroceryItem.get_all(list(tag_set),
+                                                         "alpha_reverse", 0,
+                                                         16)
+            last_item = list(query)[15]
+            _last_item_query = GroceryItem.get(last_item.grocery_id)
+            last_item_tags = set(t.tag_name for t in _last_item_query.tags)
+            # TODO sqlite correction
+            self.assertEqual(last_item.grocery_id, 219930)
+            self.assertTrue(last_item_tags.issuperset(tag_set))
+            self.assertEqual(table_size_query.fetchone()[0], 1831)
 
     def test_get_groceryitem(self):
         # def get(grocery_id)
