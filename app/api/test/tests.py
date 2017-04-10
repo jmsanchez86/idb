@@ -501,6 +501,9 @@ class ModelTests(unittest.TestCase):
                               751116, 755750, 758662, 765471, 822427, 826828,
                               831524)))
 
+def resp_to_dict(resp):
+    return flask.json.loads(resp.data)
+
 class RouteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -528,50 +531,51 @@ class RouteTests(unittest.TestCase):
         print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_get_all_recipe(self):
-        print(RouteTests.client.get('/ingredients/1000'))
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
-            query, table_size_query = Recipe.get_all([], "alpha", 0, 1)
-            recipe_0 = next(iter(query))
-            self.assertEqual(recipe_0.recipe_id, 557212)
-            self.assertEqual(table_size_query.fetchone()[0], 375)
+            query = resp_to_dict(RouteTests.client.get('/recipes?page_size=1'))
+            self.assertEqual(query["data"][0]["id"], 557212)
 
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
-            query, table_size_query = Recipe.get_all([], "alpha", 0, 16)
-            recipes = list(query)
+            query = resp_to_dict(RouteTests.client.get('/recipes?page_size=16'))
+            recipes = query["data"]
+            self.assertEqual(recipes[0]["id"], 557212)
             self.assertEqual(len(recipes), 16)
-            self.assertEqual(recipes[15].recipe_id, 547264)
-            self.assertEqual(table_size_query.fetchone()[0], 375)
+            self.assertEqual(recipes[15]["id"], 547264)
 
         with self.subTest(msg="No tags; Alpha; Page=2; Pagesize=16"):
-            query, table_size_query = Recipe.get_all([], "alpha", 2, 16)
-
-            recipes = list(query)
+            query = resp_to_dict(RouteTests.client.get('/recipes?page_size=16'
+                                                       '&page=2'))
+            recipes = query["data"]
             self.assertEqual(len(recipes), 16)
             # TODO: fix and replace sqlite so that we get the correct response
             # should be 101323, but sqlite is dumb
-            self.assertEqual(recipes[15].recipe_id, 493614)
+            self.assertEqual(recipes[15]["id"], 493614)
 
         with self.subTest(msg="No tags; Ready time rev; Page=2; Pagesize=16"):
-            query, table_size_query = Recipe.get_all([], "ready_time_desc", 2,
-                                                     16)
-            recipes = list(query)
+            query = resp_to_dict(RouteTests.client.get('/recipes?page_size=16'
+                                                       '&page=2'
+                                                       '&sort=ready_time_desc'))
+            recipes = query["data"]
             # TODO: dumb sqlite should be 474497 but sqlite is dumb
-            self.assertEqual(recipes[15].recipe_id, 539503)
-            self.assertTrue(recipes[0].ready_time >= recipes[1].ready_time)
+            self.assertEqual(recipes[15]["id"], 539503)
+            self.assertTrue(recipes[0]["ready_time"] >= recipes[1]["ready_time"])
 
         with self.subTest(msg="Vegan Beverage; Ready time rev; "
                               "Page=0; Pagesize=16"):
+            query = resp_to_dict(RouteTests.client.get('/recipes?page_size=16'
+                                                       '&page=0'
+                                                       '&sort=ready_time_desc'
+                                                       '&tags=Vegan,Beverage'))
+            recipes = query["data"]
             tag_set = set(("Vegan", "Beverage"))
-            query, table_size_query = Recipe.get_all(list(tag_set),
-                                                     "ready_time_desc", 0, 16)
-            last_recipe = list(query)[15]
-            _last_recipe_query = Recipe.get(last_recipe.recipe_id)
+            last_recipe = recipes[15]
+            _last_recipe_query = Recipe.get(last_recipe["id"])
             last_recipe_tags = set(t.tag_name for t in _last_recipe_query.tags)
             # TODO: dumb sqlite should be 493245 but sqlite is dumb
-            self.assertEqual(last_recipe.recipe_id, 578431)
+            self.assertEqual(last_recipe["id"], 578431)
             self.assertTrue(last_recipe_tags.issuperset(tag_set))
-            self.assertEqual(table_size_query.fetchone()[0], 20)
 
+    """
     def test_get_recipe(self):
         query = Recipe.get(9344)
         self.assertEqual(query.recipe_id, 9344)
@@ -787,6 +791,7 @@ class RouteTests(unittest.TestCase):
                               629041, 629825, 705048, 711303, 733472, 738124,
                               751116, 755750, 758662, 765471, 822427, 826828,
                               831524)))
+    """
 
 
 # Report
