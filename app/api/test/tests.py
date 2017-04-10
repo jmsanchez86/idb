@@ -423,8 +423,22 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(table_size_query.fetchone()[0], 1831)
 
     def test_get_groceryitem(self):
-        # def get(grocery_id)
-        pass
+        ing = GroceryItem.get(412409)
+        self.assertEqual(ing.grocery_id, 412409)
+        self.assertEqual(ing.name, "Yucatan Avocado Halves")
+        self.assertEqual(ing.image_url, "https://spoonacular.com/productImages"
+                                        "/412409-636x393.jpg")
+        self.assertEqual(ing.upc, "767119103205")
+        self.assertEqual(set(g.grocery_id for g in ing.similar_grocery_items),
+                         set((207299, 181939, 191636, 192435)))
+        self.assertEqual(set(t.tag_name for t in ing.tags),
+                         set(("Gluten-free", "No preservatives", "Vegetarian",
+                              "Grain-free", "Pescetarian", "Soy-free",
+                              "MSG-free", "Nut-free", "Dairy-free", "Corn-free",
+                              "Peanut-free", "Sugar-free", "Sulfite-free",
+                              "Wheat-free", "Vegan", "No artificial ingredients",
+                              "No artificial colors", "No additives",
+                              "No artificial flavors", "Egg-free")))
 
     def test_get_all_tag(self):
         # def get_all(min_occurences, order, page, page_size):
