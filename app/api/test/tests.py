@@ -353,7 +353,6 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(table_size_query.fetchone()[0], 332)
 
     def test_get_ingredient(self):
-        # def get(ing_id)
         ing = Ingredient.get(9070)
         self.assertEqual(ing.ingredient_id, 9070)
         self.assertEqual(ing.name, "cherries")
@@ -475,9 +474,31 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(last_tag.tag_name, "Antipasto")
         
     def test_get_tag(self):
-        # def get(tag_name):
-        pass
+        tag = Tag.get("Dessert")
+        self.assertEqual(tag.tag_name, "Dessert")
+        self.assertEqual(tag.description,
+                         "A sweet dish usually served at the end of a meal.")
+        self.assertEqual(tag.image_url, "Dessert.png")
+        self.assertEqual(len(set(tag.ingredients)), 0)
+        self.assertEqual(len(set(tag.grocery_items)), 0)
 
+        recipe_set = set(r.recipe_id for r in tag.recipes)
+        self.assertEqual(len(recipe_set), 80)
+        self.assertEqual(recipe_set,
+                         set((53235, 55423, 60909, 62998, 67162, 67282, 73294,
+                              139944, 141807, 144066, 158655, 159245, 173136,
+                              200432, 202648, 220435, 292277, 298055, 385501,
+                              472420, 474497, 477341, 478320, 488980, 495427,
+                              495478, 506482, 510562, 518993, 519894, 522532,
+                              522946, 530398, 532997, 540557, 542484, 547768,
+                              548324, 549698, 549981, 554362, 556672, 556749,
+                              556891, 566617, 568570, 570378, 570953, 573568,
+                              575640, 581235, 583788, 586254, 590142, 590387,
+                              590545, 592010, 604931, 609554, 613127, 615561,
+                              619185, 623812, 624132, 628541, 628699, 629026,
+                              629041, 629825, 705048, 711303, 733472, 738124,
+                              751116, 755750, 758662, 765471, 822427, 826828,
+                              831524)))
 
 # Report
 # ======
