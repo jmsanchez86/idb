@@ -353,10 +353,6 @@ class ModelTests(unittest.TestCase):
             self.assertTrue(last_ing_tags.issuperset(tag_set))
             self.assertEqual(table_size_query.fetchone()[0], 332)
 
-    def test_ingredient_grocery_items(self):
-        # def get_grocery_items(self)
-        pass
-
     def test_get_ingredient(self):
         # def get(ing_id)
         ing = Ingredient.get(9070)
@@ -373,6 +369,12 @@ class ModelTests(unittest.TestCase):
                          set((56980, 209417, 177259, 201700, 173789)))
         self.assertEqual(set(t.tag_name for t in ing.tags),
                          set(("Dairy-free", "Vegetarian", "Vegan")))
+
+    def test_ingredient_grocery_items(self):
+        ing = Ingredient.get(93653)
+        grocery_items = ing.get_grocery_items()
+        self.assertEqual(set(g.grocery_id for g in grocery_items),
+                         set((131706, 21194, 195045)))
 
     def test_get_all_groceryitem(self):
         # def get_all(filters, order, page, page_size)
