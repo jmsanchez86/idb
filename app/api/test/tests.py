@@ -241,21 +241,6 @@ class ModelTests(unittest.TestCase):
         print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_get_all_recipe(self):
-        # def get_all(filters, order, page, page_size)
-        """
-        query, table_size_query = Recipe.get_all(query_params.tag_filters,
-                                                 query_params.sort_key,
-                                                 query_params.page,
-                                                 query_params.page_size)
-        return flask.json.jsonify({"data": [{"id": rq.recipe_id,
-                                             "name": rq.name,
-                                             "image": rq.image_url,
-                                             "blurb": rq.description,
-                                             "ready_time": rq.ready_time}
-                                            for rq in query],
-                                   "table_size": table_size_query.fetchone()[0]})
-        """
-
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
             query, table_size_query = Recipe.get_all([], "alpha", 0, 1)
             recipe_0 = next(iter(query))
@@ -300,8 +285,28 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(table_size_query.fetchone()[0], 20)
 
     def test_get_recipe(self):
-        # def get(recipe_id)
-        pass
+        query = Recipe.get(9344)
+        self.assertEqual(query.recipe_id, 9344)
+        self.assertTrue(query.instructions != "" and
+                        query.instructions is not None)
+        self.assertTrue(query.servings, 4)
+        self.assertTrue(query.ready_time, 45)
+        self.assertTrue(query.source_url, "http://www.bonappetit.com/recipes/20"
+                                          "11/08/beet-carrot-and-apple-juice-wi"
+                                          "th-ginger")
+        self.assertEqual(query.image_url, "https://spoonacular.com/recipeImages"
+                                          "/beet_carrot_and_apple_juice_with_gi"
+                                          "nger-9344.jpg")
+        # TODO: fix when migrate away from sqlite
+        self.assertEqual([i.ingredient_id for i in query.ingredients],
+                         [9003, 9152, 11080, 11124, 11216, 1029003])
+        # TODO: fix when migrate away from sqlite
+        self.assertEqual([r.recipe_id for r in query.similar_recipes],
+                         [9739, 233626, 472371, 488159, 500633, 620307])
+        self.assertEqual([t.tag_name for t in query.tags],
+                         ["Beverage", "Vegan", "Gluten-free", "Whole30",
+                          "Dairy-free", "Vegetarian"])
+
 
     def test_get_all_ingredient(self):
         # def get_all(filters, order, page, page_size)

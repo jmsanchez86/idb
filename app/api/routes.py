@@ -207,7 +207,7 @@ def get_recipe(recipe_id: int):
                 "instructions": recipe.instructions,
                 "source_url": recipe.source_url,
                 "ready_time": recipe.ready_time,
-                "related recipes": [{"id": r.recipe_id, "name": r.name}
+                "related_recipes": [{"id": r.recipe_id, "name": r.name}
                                     for r in recipe.similar_recipes],
                 "tags": [{"name": t.tag_name, "image": tag_image_prefix + t.image_url}
                          for t in recipe.tags],
