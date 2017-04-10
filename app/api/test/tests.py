@@ -4,7 +4,7 @@ import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
-from app.api.models import Recipe
+from app.api.models import Recipe, Ingredient
 from app.api.test import test_data
 import flask
 
@@ -298,27 +298,81 @@ class ModelTests(unittest.TestCase):
                                           "/beet_carrot_and_apple_juice_with_gi"
                                           "nger-9344.jpg")
         # TODO: fix when migrate away from sqlite
-        self.assertEqual([i.ingredient_id for i in query.ingredients],
-                         [9003, 9152, 11080, 11124, 11216, 1029003])
+        self.assertEqual(set(i.ingredient_id for i in query.ingredients),
+                         set((9003, 9152, 11080, 11124, 11216, 1029003)))
         # TODO: fix when migrate away from sqlite
-        self.assertEqual([r.recipe_id for r in query.similar_recipes],
-                         [9739, 233626, 472371, 488159, 500633, 620307])
-        self.assertEqual([t.tag_name for t in query.tags],
-                         ["Beverage", "Vegan", "Gluten-free", "Whole30",
-                          "Dairy-free", "Vegetarian"])
+        self.assertEqual(set(r.recipe_id for r in query.similar_recipes),
+                         set((9739, 233626, 472371, 488159, 500633, 620307)))
+        self.assertEqual(set(t.tag_name for t in query.tags),
+                         set(("Beverage", "Vegan", "Gluten-free", "Whole30",
+                              "Dairy-free", "Vegetarian")))
 
 
     def test_get_all_ingredient(self):
-        # def get_all(filters, order, page, page_size)
-        pass
+        with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
+            query, table_size_query = Ingredient.get_all([], "alpha", 0, 1)
+            ingredient_0 = next(iter(query))
+            self.assertEqual(ingredient_0.ingredient_id, 1102047)
+            self.assertEqual(table_size_query.fetchone()[0], 629)
 
-    def test_get_ingredient(self):
-        # def get(ing_id)
-        pass
+        with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
+            query, table_size_query = Ingredient.get_all([], "alpha", 0, 16)
+            ingredients = list(query)
+            self.assertEqual(len(ingredients), 16)
+            self.assertEqual(ingredients[15].ingredient_id, 9016)
+            self.assertEqual(table_size_query.fetchone()[0], 629)
+
+        with self.subTest(msg="No tags; Alpha; Page=2; Pagesize=16"):
+            query, table_size_query = Ingredient.get_all([], "alpha", 2, 16)
+
+            ingredients = list(query)
+            self.assertEqual(len(ingredients), 16)
+            # TODO sqlite correction
+            self.assertEqual(ingredients[15].ingredient_id, 1002030)
+
+        with self.subTest(msg="No tags; alpha rev; Page=2; Pagesize=16"):
+            query, table_size_query = Ingredient.get_all([], "alpha_reverse",
+                                                         2, 16)
+            ingredients = list(query)
+            # TODO sqlite correction
+            self.assertEqual(ingredients[15].ingredient_id, 10020081)
+            self.assertTrue(ingredients[0].name >=
+                            ingredients[1].name)
+
+        with self.subTest(msg="Dairy-free; alpha rev; "
+                              "Page=0; Pagesize=16"):
+            tag_set = set(("Dairy-free",))
+            query, table_size_query = Ingredient.get_all(list(tag_set),
+                                                         "alpha_reverse", 0,
+                                                         16)
+            last_ing = list(query)[15]
+            _last_ing_query = Ingredient.get(last_ing.ingredient_id)
+            last_ing_tags = set(t.tag_name for t in _last_ing_query.tags)
+            # TODO sqlite correction
+            self.assertEqual(last_ing.ingredient_id, 10611282)
+            self.assertTrue(last_ing_tags.issuperset(tag_set))
+            self.assertEqual(table_size_query.fetchone()[0], 332)
 
     def test_ingredient_grocery_items(self):
         # def get_grocery_items(self)
         pass
+
+    def test_get_ingredient(self):
+        # def get(ing_id)
+        ing = Ingredient.get(9070)
+        self.assertEqual(ing.ingredient_id, 9070)
+        self.assertEqual(ing.name, "cherries")
+        self.assertEqual(ing.image_url,
+                         "https://storage.googleapis.com/vennfridge/saved_ingre"
+                         "dient_images%2F9070.jpg")
+        self.assertEqual(ing.aisle, "Produce")
+        self.assertEqual(set(ri.recipe_id for ri in ing.recipes),
+                         set((199872, 758662, 711208, 738124, 73294, 53235,
+                              151512, 616762)))
+        self.assertEqual(set(g.grocery_id for g in ing.get_grocery_items()),
+                         set((56980, 209417, 177259, 201700, 173789)))
+        self.assertEqual(set(t.tag_name for t in ing.tags),
+                         set(("Dairy-free", "Vegetarian", "Vegan")))
 
     def test_get_all_groceryitem(self):
         # def get_all(filters, order, page, page_size)
