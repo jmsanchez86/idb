@@ -4,7 +4,7 @@ import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
-from app.api.models import Recipe, Ingredient, GroceryItem
+from app.api.models import Recipe, Ingredient, GroceryItem, Tag
 from app.api.test import test_data
 import flask
 
@@ -336,8 +336,7 @@ class ModelTests(unittest.TestCase):
             ingredients = list(query)
             # TODO sqlite correction
             self.assertEqual(ingredients[15].ingredient_id, 10020081)
-            self.assertTrue(ingredients[0].name >=
-                            ingredients[1].name)
+            self.assertTrue(ingredients[0].name >= ingredients[1].name)
 
         with self.subTest(msg="Dairy-free; alpha rev; "
                               "Page=0; Pagesize=16"):
@@ -405,8 +404,7 @@ class ModelTests(unittest.TestCase):
             items = list(query)
             # TODO sqlite correction
             self.assertEqual(items[15].grocery_id, 407084)
-            self.assertTrue(items[0].name >=
-                            items[1].name)
+            self.assertTrue(items[0].name >= items[1].name)
 
         with self.subTest(msg="Pescetarian, Peanut-free, MSG-free; alpha rev; "
                               "Page=0; Pagesize=16"):
@@ -441,9 +439,41 @@ class ModelTests(unittest.TestCase):
                               "No artificial flavors", "Egg-free")))
 
     def test_get_all_tag(self):
-        # def get_all(min_occurences, order, page, page_size):
-        pass
+        with self.subTest(msg="No min; Alpha; Page=0; Pagesize=1"):
+            query, table_size = Tag.get_all(0, "alpha", 0, 1)
+            tag_0 = next(iter(query))
+            self.assertEqual(tag_0.tag_name, "American")
+            self.assertEqual(table_size, 72)
 
+        with self.subTest(msg="No min; Alpha; Page=0; Pagesize=16"):
+            query, table_size = Tag.get_all(0, "alpha", 0, 16)
+            tags = list(query)
+            self.assertEqual(len(tags), 16)
+            # TODO sqlite correction
+            self.assertEqual(tags[15].tag_name, "European")
+            self.assertEqual(table_size, 72)
+
+        with self.subTest(msg="No min; Alpha; Page=2; Pagesize=16"):
+            query, table_size_query = Tag.get_all(0, "alpha", 2, 16)
+
+            tags = list(query)
+            self.assertEqual(len(tags), 16)
+            # TODO sqlite correction
+            self.assertEqual(tags[15].tag_name, "Organic")
+
+        with self.subTest(msg="No min; alpha rev; Page=2; Pagesize=16"):
+            query, table_size_query = Tag.get_all(0, "alpha_reverse", 2, 16)
+            tags = list(query)
+            # TODO sqlite correction
+            self.assertEqual(tags[15].tag_name, "Hormone-free")
+            self.assertTrue(tags[0].tag_name >= tags[1].tag_name)
+
+        with self.subTest(msg="min 30; alpha rev; Page=0; Pagesize=16"):
+            query, table_size_query = Tag.get_all(30, "alpha_reverse", 0, 16)
+            last_tag = list(query)[15]
+            # TODO sqlite correction
+            self.assertEqual(last_tag.tag_name, "Antipasto")
+        
     def test_get_tag(self):
         # def get(tag_name):
         pass
