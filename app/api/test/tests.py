@@ -503,7 +503,7 @@ class ModelTests(unittest.TestCase):
                               831524)))
 
 
-def resp_to_dict(resp):
+def resp_to_dict(resp: flask.Response):
     return flask.json.loads(resp.data)
 
 
