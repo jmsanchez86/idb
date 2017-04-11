@@ -658,57 +658,53 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(set(t["name"] for t in query["tags"]),
                          set(("Dairy-free", "Vegetarian", "Vegan")))
 
-    """
-    def test_ingredient_grocery_items(self):
-        ing = Ingredient.get(93653)
-        grocery_items = ing.get_grocery_items()
-        self.assertEqual(set(g.grocery_id for g in grocery_items),
-                         set((131706, 21194, 195045)))
-
     def test_get_all_groceryitem(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
-            query, table_size_query = GroceryItem.get_all([], "alpha", 0, 1)
-            item_0 = next(iter(query))
-            self.assertEqual(item_0.grocery_id, 95469)
-            self.assertEqual(table_size_query.fetchone()[0], 2157)
+            query = resp_to_dict(RouteTests.client.get('/grocery_items?'
+                                                       'page_size=1'))
+            self.assertEqual(query["data"][0]["id"], 95469)
 
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
-            query, table_size_query = GroceryItem.get_all([], "alpha", 0, 16)
-            items = list(query)
+            query = resp_to_dict(RouteTests.client.get('/grocery_items?'
+                                                       'page_size=16'))
+            items = query["data"]
             self.assertEqual(len(items), 16)
             # TODO sqlite correction
-            self.assertEqual(items[15].grocery_id, 182146)
-            self.assertEqual(table_size_query.fetchone()[0], 2157)
+            self.assertEqual(items[15]["id"], 182146)
 
         with self.subTest(msg="No tags; Alpha; Page=2; Pagesize=16"):
-            query, table_size_query = GroceryItem.get_all([], "alpha", 2, 16)
-
-            items = list(query)
+            query = resp_to_dict(RouteTests.client.get('/grocery_items?'
+                                                       'page_size=16&page=2'))
+            items = query["data"]
             self.assertEqual(len(items), 16)
             # TODO sqlite correction
-            self.assertEqual(items[15].grocery_id, 176079)
+            self.assertEqual(items[15]["id"], 176079)
 
         with self.subTest(msg="No tags; alpha rev; Page=2; Pagesize=16"):
-            query, table_size_query = GroceryItem.get_all([], "alpha_reverse",
-                                                          2, 16)
-            items = list(query)
+            query = resp_to_dict(RouteTests.client.get('/grocery_items?'
+                                                       'page_size=16&page=2'
+                                                       '&sort=alpha_reverse'))
+            items = query["data"]
             # TODO sqlite correction
-            self.assertEqual(items[15].grocery_id, 407084)
-            self.assertTrue(items[0].name >= items[1].name)
+            self.assertEqual(items[15]["id"], 407084)
+            self.assertTrue(items[0]["name"] >= items[1]["name"])
 
         with self.subTest(msg="Pescetarian, Peanut-free, MSG-free; alpha rev; "
                               "Page=0; Pagesize=16"):
+            query = resp_to_dict(RouteTests.client.get('/grocery_items?'
+                                                       'page_size=16&page=0'
+                                                       '&sort=alpha_reverse'
+                                                       '&tags=Pescetarian,'
+                                                       'Peanut-free,MSG-free'))
             tag_set = set(("Pescetarian", "Peanut-free", "MSG-free"))
-            query, table_size_query = GroceryItem.get_all(list(tag_set),
-                                                          "alpha_reverse", 0, 16)
-            last_item = list(query)[15]
-            _last_item_query = GroceryItem.get(last_item.grocery_id)
+            last_item = query["data"][15]
+            _last_item_query = GroceryItem.get(last_item["id"])
             last_item_tags = set(t.tag_name for t in _last_item_query.tags)
             # TODO sqlite correction
-            self.assertEqual(last_item.grocery_id, 219930)
+            self.assertEqual(last_item["id"], 219930)
             self.assertTrue(last_item_tags.issuperset(tag_set))
-            self.assertEqual(table_size_query.fetchone()[0], 1831)
 
+    """
     def test_get_groceryitem(self):
         ing = GroceryItem.get(412409)
         self.assertEqual(ing.grocery_id, 412409)
