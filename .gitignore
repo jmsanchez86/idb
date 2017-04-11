@@ -12,3 +12,4 @@ cloud_sql_proxy
 saved_ingredient_images/
 scrape_config.py
 dump.sql
+keyfile.py
