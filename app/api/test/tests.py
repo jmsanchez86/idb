@@ -784,21 +784,7 @@ class RouteUtilityTests(unittest.TestCase):
         time_elapsed = time.time() - self.start_time
         print("%s: %.3f" % (self.id(), time_elapsed))
 
-    def test_pagination_correct_page_numbers(self):
-        # check first, last, next, prev, and active page
-        pass
-
-    def test_pagination_correct_page_sizes(self):
-        pass
-
-    def test_pagingation_correct_filters(self):
-        # check when no filters are passed through and win some filters are passed through
-        pass
-
-    def test_pagination_correct_sort_params(self):
-        pass
-
-    def test_pagination_correct_min_param(self):
+    def test_pagination_retain_sort_min_page_size(self):
         query_params = QueryParams(2, 1, [], "alpha", 10)
         links = get_continuation_links('', 100, query_params)
         exp = "?page={}" + "&page_size={}&sort={}&min={}".format(1, "alpha", 10)
@@ -807,6 +793,15 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertEqual(links["next"], exp.format(3))
         self.assertEqual(links["last"], exp.format(99))
         self.assertEqual(links["active"], 2)
+
+
+    def test_pagination_correct_page_numbers(self):
+        # check first, last, next, prev, and active page
+        pass
+
+    def test_pagingation_correct_filters(self):
+        # check when no filters are passed through and win some filters are passed through
+        pass
 
     class NameObj:
         # pylint: disable=too-few-public-methods
