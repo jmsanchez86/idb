@@ -1,11 +1,13 @@
 # pylint: disable=missing-docstring
 # pylint: disable=fixme
+# pylint: disable=invalid-name
 
 import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
+from app.api.routes import filter_nulls
 from app.api.test import test_data
 import flask
 
@@ -773,6 +775,76 @@ class RouteTests(unittest.TestCase):
         tag_db_query = Tag.get(query["name"])
         whole_recipe_set = set(r.recipe_id for r in tag_db_query.recipes)
         self.assertTrue(recipe_set.issubset(whole_recipe_set))
+
+class RouteUtilityTests(unittest.TestCase):
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
+
+    def test_pagination_correct_page_numbers(self):
+        # check first, last, next, prev, and active page
+        pass
+
+    def test_pagination_correct_page_sizes(self):
+        pass
+
+    def test_pagingation_correct_filters(self):
+        # check when no filters are passed through and win some filters are passed through
+        pass
+
+    def test_pagination_correct_sort_params(self):
+        pass
+
+    def test_pagination_correct_min_param(self):
+        pass
+
+    class NameObj:
+        # pylint: disable=too-few-public-methods
+        def __init__(self: 'NameObj', name: str):
+            self.name = name
+        def __eq__(self: 'NameObj', other: 'NameObj'):
+            return other.name == self.name
+
+    # def filter_nulls(field, limit):
+    def test_filter_nulls_no_nulls_small(self):
+        # test that a list too small to hit limit without nulls behaves properly
+        # [1, 2, 3]
+        test_rows = [RouteUtilityTests.NameObj(str(i)) for i in range(1, 4)]
+        filtered_rows = list(filter_nulls(test_rows, 10))
+        self.assertEqual(len(filtered_rows), 3)
+
+    def test_filter_nulls_no_nulls_hit_limit(self):
+        # test that a list with no nulls and more than the limit doesn't return
+        # more than the limit
+        test_rows = [RouteUtilityTests.NameObj(str(i)) for i in range(1, 12)]
+        filtered_rows = list(filter_nulls(test_rows, 10))
+        self.assertEqual(len(filtered_rows), 10)
+        self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
+                                             for i in range(1, 11)))
+    def test_filter_nulls_nulls_dont_hit_limit(self):
+        # test that a list with enough elements to hit the limit doesn't because
+        # enough elements are null
+        test_rows = [RouteUtilityTests.NameObj(str(i)) for i in range(1, 10)]
+        test_rows.append(RouteUtilityTests.NameObj(None))
+        filtered_rows = list(filter_nulls(test_rows, 10))
+        self.assertEqual(len(filtered_rows), 9)
+        self.assertTrue(all(r.name for r in filtered_rows))
+
+    def test_filter_nulls_nulls_hit_limit(self):
+        # test that a list with enough elements to hit the limit after filitering
+        # nulls still properly handles the limits
+        test_rows = [RouteUtilityTests.NameObj(str(i)) for i in range(1, 3)]
+        test_rows.append(RouteUtilityTests.NameObj(None))
+        test_rows.append(RouteUtilityTests.NameObj(None))
+        test_rows += [RouteUtilityTests.NameObj(str(i)) for i in range(3, 15)]
+        filtered_rows = list(filter_nulls(test_rows, 10))
+        self.assertEqual(len(filtered_rows), 10)
+        self.assertTrue(all(r.name for r in filtered_rows))
+        self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
+                                             for i in range(1, 11)))
 
 
 # Report
