@@ -1,9 +1,9 @@
-.....................................
+......................................
 ----------------------------------------------------------------------
-Ran 37 tests in 4.029s
+Ran 38 tests in 4.226s
 
 OK
-__main__.DatabaseIntegrityTests.test_grocery_item: 0.067
+__main__.DatabaseIntegrityTests.test_grocery_item: 0.069
 __main__.DatabaseIntegrityTests.test_ingredient: 0.002
 __main__.DatabaseIntegrityTests.test_ingredient_substitutes: 0.003
 __main__.DatabaseIntegrityTests.test_recipe: 0.003
@@ -11,28 +11,29 @@ __main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.004
 __main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.011
 __main__.DatabaseIntegrityTests.test_similar_recipes: 0.012
 __main__.DatabaseIntegrityTests.test_strip_html: 0.000
-__main__.DatabaseIntegrityTests.test_tag_badge: 2.514
-__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.043
-__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.114
-__main__.DatabaseIntegrityTests.test_tag_flag: 0.005
-__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.132
-__main__.ModelTests.test_get_all_groceryitem: 0.186
+__main__.DatabaseIntegrityTests.test_tag_badge: 2.556
+__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.042
+__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.111
+__main__.DatabaseIntegrityTests.test_tag_flag: 0.006
+__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.154
+__main__.ModelTests.test_get_all_groceryitem: 0.191
 __main__.ModelTests.test_get_all_ingredient: 0.032
-__main__.ModelTests.test_get_all_recipe: 0.100
-__main__.ModelTests.test_get_all_tag: 0.015
-__main__.ModelTests.test_get_groceryitem: 0.033
+__main__.ModelTests.test_get_all_recipe: 0.103
+__main__.ModelTests.test_get_all_tag: 0.018
+__main__.ModelTests.test_get_groceryitem: 0.036
 __main__.ModelTests.test_get_ingredient: 0.013
-__main__.ModelTests.test_get_recipe: 0.020
-__main__.ModelTests.test_get_tag: 0.106
+__main__.ModelTests.test_get_recipe: 0.021
+__main__.ModelTests.test_get_tag: 0.114
 __main__.ModelTests.test_ingredient_grocery_items: 0.003
-__main__.RouteTests.test_get_all_groceryitem: 0.205
-__main__.RouteTests.test_get_all_ingredient: 0.043
-__main__.RouteTests.test_get_all_recipe: 0.111
-__main__.RouteTests.test_get_all_tag: 0.027
-__main__.RouteTests.test_get_groceryitem: 0.036
-__main__.RouteTests.test_get_ingredient: 0.022
-__main__.RouteTests.test_get_recipe: 0.020
-__main__.RouteTests.test_get_tag: 0.123
+__main__.RouteTests.test_get_all_groceryitem: 0.231
+__main__.RouteTests.test_get_all_ingredient: 0.049
+__main__.RouteTests.test_get_all_recipe: 0.134
+__main__.RouteTests.test_get_all_tag: 0.036
+__main__.RouteTests.test_get_groceryitem: 0.040
+__main__.RouteTests.test_get_ingredient: 0.024
+__main__.RouteTests.test_get_recipe: 0.022
+__main__.RouteTests.test_get_tag: 0.147
+__main__.RouteTests.test_model_404s: 0.011
 __main__.RouteUtilityTests.test_filter_nulls_no_nulls_hit_limit: 0.000
 __main__.RouteUtilityTests.test_filter_nulls_no_nulls_small: 0.000
 __main__.RouteUtilityTests.test_filter_nulls_nulls_dont_hit_limit: 0.000
@@ -45,12 +46,12 @@ Name                               Stmts   Miss  Cover   Missing
 app/__init__.py                        0      0   100%
 app/api/__init__.py                    0      0   100%
 app/api/models.py                    226     48    79%   18-19, 39-46, 49, 103-106, 109, 164-165, 168, 191-195, 198, 255-257, 260, 305-307, 310, 338-339, 342, 369-370, 373, 404-406, 409, 437-438, 471-473
-app/api/routes.py                    126      5    96%   172, 197, 222, 233, 245
+app/api/routes.py                    126      1    99%   233
 app/api/test/__init__.py               0      0   100%
 app/api/test/test_data.py              2      0   100%
-app/api/test/tests.py                583      0   100%
+app/api/test/tests.py                587      0   100%
 app/scraping/__init__.py               0      0   100%
 app/scraping/importer.py             165    139    16%   71-93, 97-98, 103, 106-124, 131-150, 153-163, 166-196, 199-212, 215-244, 248-260, 263-289
 app/scraping/tag_translations.py      80      0   100%
 ----------------------------------------------------------------
-TOTAL                               1182    192    84%
+TOTAL                               1186    188    84%
