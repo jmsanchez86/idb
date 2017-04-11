@@ -811,6 +811,13 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertEqual(links["last"], exp.format(9))
         self.assertEqual(links["active"], 4)
 
+        query_params.tag_filters = []
+        links = get_continuation_links('', 100, query_params)
+        self.assertNotIn("&tags=", links["first"])
+        self.assertNotIn("&tags=", links["prev"])
+        self.assertNotIn("&tags=", links["next"])
+        self.assertNotIn("&tags=", links["last"])
+
     class NameObj:
         # pylint: disable=too-few-public-methods
         def __init__(self: 'NameObj', name: str):
