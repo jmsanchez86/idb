@@ -796,12 +796,20 @@ class RouteUtilityTests(unittest.TestCase):
 
 
     def test_pagination_correct_page_numbers(self):
-        # check first, last, next, prev, and active page
+        # check first, last, next, prev, and active page in different
+        # circumstances, at beginning, at end, in middle, on only page
         pass
 
     def test_pagingation_correct_filters(self):
-        # check when no filters are passed through and win some filters are passed through
-        pass
+        query_params = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10)
+        links = get_continuation_links('', 100, query_params)
+        exp = "?page={}" + "&page_size={}&sort={}&min={}".format(10, "alpha", 10)
+        exp += "&tags=Vegan,Dairy-free"
+        self.assertEqual(links["first"], exp.format(0))
+        self.assertEqual(links["prev"], exp.format(3))
+        self.assertEqual(links["next"], exp.format(5))
+        self.assertEqual(links["last"], exp.format(9))
+        self.assertEqual(links["active"], 4)
 
     class NameObj:
         # pylint: disable=too-few-public-methods
