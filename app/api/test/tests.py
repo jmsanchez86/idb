@@ -776,6 +776,12 @@ class RouteTests(unittest.TestCase):
         whole_recipe_set = set(r.recipe_id for r in tag_db_query.recipes)
         self.assertTrue(recipe_set.issubset(whole_recipe_set))
 
+    def test_model_404s(self):
+        endpoints = ['/recipes/0', '/ingredients/0', '/grocery_items/0',
+                     '/tags/asdfasdf']
+        responses = [RouteTests.client.get(e).status_code for e in endpoints]
+        self.assertTrue(all(i == 404 for i in responses))
+
 class RouteUtilityTests(unittest.TestCase):
     def setUp(self):
         self.start_time = time.time()
