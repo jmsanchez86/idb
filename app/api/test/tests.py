@@ -643,23 +643,22 @@ class RouteTests(unittest.TestCase):
             self.assertEqual(last_ing["id"], 10611282)
             self.assertTrue(last_ing_tags.issuperset(tag_set))
 
-        """
     def test_get_ingredient(self):
-        ing = Ingredient.get(9070)
-        self.assertEqual(ing.ingredient_id, 9070)
-        self.assertEqual(ing.name, "cherries")
-        self.assertEqual(ing.image_url,
+        query = resp_to_dict(RouteTests.client.get('/ingredients/9070'))
+        self.assertEqual(query["id"], 9070)
+        self.assertEqual(query["name"], "cherries")
+        self.assertEqual(query["image"],
                          "https://storage.googleapis.com/vennfridge/saved_ingre"
                          "dient_images%2F9070.jpg")
-        self.assertEqual(ing.aisle, "Produce")
-        self.assertEqual(set(ri.recipe_id for ri in ing.recipes),
-                         set((199872, 758662, 711208, 738124, 73294, 53235,
-                              151512, 616762)))
-        self.assertEqual(set(g.grocery_id for g in ing.get_grocery_items()),
+        self.assertEqual(query["aisle"], "Produce")
+        self.assertEqual(set(ri["id"] for ri in query["related_recipes"]),
+                         set((199872, 758662, 73294, 151512, 616762)))
+        self.assertEqual(set(g["id"] for g in query["related_grocery_items"]),
                          set((56980, 209417, 177259, 201700, 173789)))
-        self.assertEqual(set(t.tag_name for t in ing.tags),
+        self.assertEqual(set(t["name"] for t in query["tags"]),
                          set(("Dairy-free", "Vegetarian", "Vegan")))
 
+    """
     def test_ingredient_grocery_items(self):
         ing = Ingredient.get(93653)
         grocery_items = ing.get_grocery_items()
