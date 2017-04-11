@@ -29,22 +29,29 @@ export default class Ingredients extends React.Component {
         params += id;
     }
 
-    var firstTag = true;
+    var min = 0;
     for (var id in filters ) {
-      if (filters[id].checked) {
-        if (firstTag) {
-          firstTag = false;
-          params += "&tags="
-        }
-        params += id + ",";
+      if (filters[id].checked && id > min) {
+        console.log("id: " +id);
+        console.log("min: " +min);
+        min = id;
       }
     }
-    params = firstTag ? params : params.substring(0, params.length-1);
+    if (min > 0) {
+      console.log(min);
+      params += ("&min="+min);
+    }
+
     params += "&page=" + 0;
+
+    console.log(params);
     return params;
+
+
   }
 
   requestQuery(requestString) {
+    console.log(requestString);
     var _this = this;
     var _data = {};
     var _links = {};
