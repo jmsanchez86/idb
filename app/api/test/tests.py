@@ -859,10 +859,10 @@ class RouteUtilityTests(unittest.TestCase):
 
     class NameObj:
         # pylint: disable=too-few-public-methods
-        def __init__(self: 'NameObj', name: str):
+        def __init__(self, name: str) -> None:
             self.name = name
 
-        def __eq__(self: 'NameObj', other: 'NameObj'):
+        def __eq__(self, other) -> bool:
             return other.name == self.name
 
     # def filter_nulls(field, limit):
