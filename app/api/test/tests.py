@@ -11,6 +11,7 @@ from app.api.routes import filter_nulls, get_continuation_links, QueryParams
 from app.api.test import test_data
 import flask
 
+
 class DatabaseIntegrityTests(unittest.TestCase):
     """
     Ensure that data was properly imported into the database.
@@ -52,12 +53,12 @@ class DatabaseIntegrityTests(unittest.TestCase):
                          "recipeImages/bittersweet-chocolate-marquise-with-" +
                          "cherry-sauce-151512.jpg")
         self.assertEqual(recipe.description, test_data.test_recipe_description)
-        self.assertEqual(recipe.instructions, test_data.test_recipe_instructions)
+        self.assertEqual(recipe.instructions,
+                         test_data.test_recipe_instructions)
         self.assertEqual(recipe.source_url,
                          "http://www.epicurious.com/recipes/food/views/" +
                          "Bittersweet-Chocolate-Marquise-with-Cherry-Sauce-" +
                          "108254")
-
 
     def test_ingredient(self):
         query = self.database.session.query(models.Ingredient)
@@ -80,7 +81,6 @@ class DatabaseIntegrityTests(unittest.TestCase):
         self.assertEqual(grocery_item.image_url, "https://spoonacular.com/" +
                          "productImages/109704-636x393.jpg")
         self.assertEqual(grocery_item.upc, "742812730712")
-
 
     def test_tag_flag(self):
         query = self.database.session.query(models.Tag)
@@ -127,7 +127,7 @@ class DatabaseIntegrityTests(unittest.TestCase):
         self.assertIsNotNone(tag)
 
         ingredients = tag.ingredients
-        ingredient_ids = [ingredient.ingredient_id for ingredient in ingredients]
+        ingredient_ids = [i.ingredient_id for i in ingredients]
         self.assertIn(10011282, ingredient_ids)
         self.assertIn(1034053, ingredient_ids)
         self.assertIn(12698, ingredient_ids)
@@ -182,7 +182,6 @@ class DatabaseIntegrityTests(unittest.TestCase):
                     (20081, "1/2 cup wheat flour"),
                     (10019087, "4 ounces white chocolate chips")}
 
-
         ingredients = recipe.ingredients
         actual = {(ing.ingredient_id,
                    ing.verbal_quantity) for ing in ingredients}
@@ -219,6 +218,7 @@ class DatabaseIntegrityTests(unittest.TestCase):
         actual = strip_html("<a href=\"google.com\">WOWOWWWOW</a>")
         expected = "WOWOWWWOW"
         self.assertEqual(actual, expected)
+
 
 class ModelTests(unittest.TestCase):
     @classmethod
@@ -309,7 +309,6 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(set(t.tag_name for t in query.tags),
                          set(("Beverage", "Vegan", "Gluten-free", "Whole30",
                               "Dairy-free", "Vegetarian")))
-
 
     def test_get_all_ingredient(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
@@ -503,8 +502,10 @@ class ModelTests(unittest.TestCase):
                               751116, 755750, 758662, 765471, 822427, 826828,
                               831524)))
 
+
 def resp_to_dict(resp):
     return flask.json.loads(resp.data)
+
 
 class RouteTests(unittest.TestCase):
     @classmethod
@@ -538,7 +539,8 @@ class RouteTests(unittest.TestCase):
             self.assertEqual(query["data"][0]["id"], 557212)
 
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
-            query = resp_to_dict(RouteTests.client.get('/recipes?page_size=16'))
+            query = resp_to_dict(
+                RouteTests.client.get('/recipes?page_size=16'))
             recipes = query["data"]
             self.assertEqual(recipes[0]["id"], 557212)
             self.assertEqual(len(recipes), 16)
@@ -560,7 +562,8 @@ class RouteTests(unittest.TestCase):
             recipes = query["data"]
             # TODO: dumb sqlite should be 474497 but sqlite is dumb
             self.assertEqual(recipes[15]["id"], 539503)
-            self.assertTrue(recipes[0]["ready_time"] >= recipes[1]["ready_time"])
+            self.assertTrue(recipes[0]["ready_time"] >=
+                            recipes[1]["ready_time"])
 
         with self.subTest(msg="Vegan Beverage; Ready time rev; "
                               "Page=0; Pagesize=16"):
@@ -599,7 +602,6 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(set(t["name"] for t in query["tags"]),
                          set(("Beverage", "Vegan", "Gluten-free", "Whole30",
                               "Dairy-free", "Vegetarian")))
-
 
     def test_get_all_ingredient(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
@@ -782,6 +784,7 @@ class RouteTests(unittest.TestCase):
         responses = [RouteTests.client.get(e).status_code for e in endpoints]
         self.assertTrue(all(i == 404 for i in responses))
 
+
 class RouteUtilityTests(unittest.TestCase):
     def setUp(self):
         self.start_time = time.time()
@@ -793,13 +796,13 @@ class RouteUtilityTests(unittest.TestCase):
     def test_pagination_retain_sort_min_page_size(self):
         query_params = QueryParams(2, 1, [], "alpha", 10)
         links = get_continuation_links('', 100, query_params)
-        exp = "?page={}" + "&page_size={}&sort={}&min={}".format(1, "alpha", 10)
+        exp = "?page={}" + \
+              "&page_size={}&sort={}&min={}".format(1, "alpha", 10)
         self.assertEqual(links["first"], exp.format(0))
         self.assertEqual(links["prev"], exp.format(1))
         self.assertEqual(links["next"], exp.format(3))
         self.assertEqual(links["last"], exp.format(99))
         self.assertEqual(links["active"], 2)
-
 
     def test_pagination_correct_page_numbers(self):
         with self.subTest(msg="At the beginning of a set of pages"):
@@ -838,7 +841,8 @@ class RouteUtilityTests(unittest.TestCase):
     def test_pagingation_correct_filters(self):
         query_params = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10)
         links = get_continuation_links('', 100, query_params)
-        exp = "?page={}" + "&page_size={}&sort={}&min={}".format(10, "alpha", 10)
+        exp = "?page={}" + \
+              "&page_size={}&sort={}&min={}".format(10, "alpha", 10)
         exp += "&tags=Vegan,Dairy-free"
         self.assertEqual(links["first"], exp.format(0))
         self.assertEqual(links["prev"], exp.format(3))
@@ -857,6 +861,7 @@ class RouteUtilityTests(unittest.TestCase):
         # pylint: disable=too-few-public-methods
         def __init__(self: 'NameObj', name: str):
             self.name = name
+
         def __eq__(self: 'NameObj', other: 'NameObj'):
             return other.name == self.name
 
@@ -876,6 +881,7 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertEqual(len(filtered_rows), 10)
         self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
                                              for i in range(1, 11)))
+
     def test_filter_nulls_nulls_dont_hit_limit(self):
         # test that a list with enough elements to hit the limit doesn't because
         # enough elements are null
@@ -981,8 +987,6 @@ class RouteUtilityTests(unittest.TestCase):
 # Global evaluation
 # -----------------
 # Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
-
-
 
 
 if __name__ == "__main__":
