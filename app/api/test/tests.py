@@ -575,31 +575,31 @@ class RouteTests(unittest.TestCase):
             self.assertEqual(last_recipe["id"], 578431)
             self.assertTrue(last_recipe_tags.issuperset(tag_set))
 
-    """
     def test_get_recipe(self):
-        query = Recipe.get(9344)
-        self.assertEqual(query.recipe_id, 9344)
-        self.assertTrue(query.instructions != "" and
-                        query.instructions is not None)
-        self.assertTrue(query.servings, 4)
-        self.assertTrue(query.ready_time, 45)
-        self.assertTrue(query.source_url, "http://www.bonappetit.com/recipes/20"
-                                          "11/08/beet-carrot-and-apple-juice-wi"
-                                          "th-ginger")
-        self.assertEqual(query.image_url, "https://spoonacular.com/recipeImages"
-                                          "/beet_carrot_and_apple_juice_with_gi"
-                                          "nger-9344.jpg")
+        query = resp_to_dict(RouteTests.client.get('/recipes/9344'))
+        self.assertEqual(query["id"], 9344)
+        self.assertTrue(query["instructions"] != "" and
+                        query["instructions"] is not None)
+        self.assertTrue(query["servings"], 4)
+        self.assertTrue(query["ready_time"], 45)
+        self.assertTrue(query["source_url"], "http://www.bonappetit.com/recipes/"
+                                             "2011/08/beet-carrot-and-apple-juic"
+                                             "e-with-ginger")
+        self.assertEqual(query["image"], "https://spoonacular.com/recipeImag"
+                                         "es/beet_carrot_and_apple_juice_wit"
+                                         "h_ginger-9344.jpg")
         # TODO: fix when migrate away from sqlite
-        self.assertEqual(set(i.ingredient_id for i in query.ingredients),
+        self.assertEqual(set(i["id"] for i in query["ingredient_list"]),
                          set((9003, 9152, 11080, 11124, 11216, 1029003)))
         # TODO: fix when migrate away from sqlite
-        self.assertEqual(set(r.recipe_id for r in query.similar_recipes),
+        self.assertEqual(set(r["id"] for r in query["related_recipes"]),
                          set((9739, 233626, 472371, 488159, 500633, 620307)))
-        self.assertEqual(set(t.tag_name for t in query.tags),
+        self.assertEqual(set(t["name"] for t in query["tags"]),
                          set(("Beverage", "Vegan", "Gluten-free", "Whole30",
                               "Dairy-free", "Vegetarian")))
 
 
+    """
     def test_get_all_ingredient(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
             query, table_size_query = Ingredient.get_all([], "alpha", 0, 1)
