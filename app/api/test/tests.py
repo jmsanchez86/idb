@@ -722,43 +722,43 @@ class RouteTests(unittest.TestCase):
                               "No artificial colors", "No additives",
                               "No artificial flavors", "Egg-free")))
 
-    """
     def test_get_all_tag(self):
         with self.subTest(msg="No min; Alpha; Page=0; Pagesize=1"):
-            query, table_size = Tag.get_all(0, "alpha", 0, 1)
-            tag_0 = next(iter(query))
-            self.assertEqual(tag_0.tag_name, "American")
-            self.assertEqual(table_size, 72)
+            query = resp_to_dict(RouteTests.client.get('/tags?page_size=1'))
+            self.assertEqual(query["data"][0]["name"], "American")
 
         with self.subTest(msg="No min; Alpha; Page=0; Pagesize=16"):
-            query, table_size = Tag.get_all(0, "alpha", 0, 16)
-            tags = list(query)
+            query = resp_to_dict(RouteTests.client.get('/tags?page_size=16'))
+            tags = query["data"]
             self.assertEqual(len(tags), 16)
             # TODO sqlite correction
-            self.assertEqual(tags[15].tag_name, "European")
-            self.assertEqual(table_size, 72)
+            self.assertEqual(tags[15]["name"], "European")
 
         with self.subTest(msg="No min; Alpha; Page=2; Pagesize=16"):
-            query = Tag.get_all(0, "alpha", 2, 16)[0]
-
-            tags = list(query)
+            query = resp_to_dict(RouteTests.client.get('/tags?page_size=16'
+                                                       '&page=2'))
+            tags = query["data"]
             self.assertEqual(len(tags), 16)
             # TODO sqlite correction
-            self.assertEqual(tags[15].tag_name, "Organic")
+            self.assertEqual(tags[15]["name"], "Organic")
 
         with self.subTest(msg="No min; alpha rev; Page=2; Pagesize=16"):
-            query = Tag.get_all(0, "alpha_reverse", 2, 16)[0]
-            tags = list(query)
+            query = resp_to_dict(RouteTests.client.get('/tags?page_size=16'
+                                                       '&page=2'
+                                                       '&sort=alpha_reverse'))
+            tags = query["data"]
             # TODO sqlite correction
-            self.assertEqual(tags[15].tag_name, "Hormone-free")
-            self.assertTrue(tags[0].tag_name >= tags[1].tag_name)
+            self.assertEqual(tags[15]["name"], "Hormone-free")
+            self.assertTrue(tags[0]["name"] >= tags[1]["name"])
 
         with self.subTest(msg="min 30; alpha rev; Page=0; Pagesize=16"):
-            query, table_size = Tag.get_all(30, "alpha_reverse", 0, 16)
-            last_tag = list(query)[15]
+            query = resp_to_dict(RouteTests.client.get('/tags?page_size=16'
+                                                       '&min=30'
+                                                       '&sort=alpha_reverse'))
+            last_tag = query["data"][15]
             # TODO sqlite correction
-            self.assertEqual(last_tag.tag_name, "Antipasto")
-            self.assertEqual(table_size, 17)
+            self.assertEqual(last_tag["name"], "Antipasto")
+    """
 
     def test_get_tag(self):
         tag = Tag.get("Dessert")
