@@ -704,17 +704,16 @@ class RouteTests(unittest.TestCase):
             self.assertEqual(last_item["id"], 219930)
             self.assertTrue(last_item_tags.issuperset(tag_set))
 
-    """
     def test_get_groceryitem(self):
-        ing = GroceryItem.get(412409)
-        self.assertEqual(ing.grocery_id, 412409)
-        self.assertEqual(ing.name, "Yucatan Avocado Halves")
-        self.assertEqual(ing.image_url, "https://spoonacular.com/productImages"
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/412409'))
+        self.assertEqual(query["id"], 412409)
+        self.assertEqual(query["name"], "Yucatan Avocado Halves")
+        self.assertEqual(query["image"], "https://spoonacular.com/productImages"
                                         "/412409-636x393.jpg")
-        self.assertEqual(ing.upc, "767119103205")
-        self.assertEqual(set(g.grocery_id for g in ing.similar_grocery_items),
+        self.assertEqual(query["upc"], "767119103205")
+        self.assertEqual(set(g["id"] for g in query["related_grocery_items"]),
                          set((207299, 181939, 191636, 192435)))
-        self.assertEqual(set(t.tag_name for t in ing.tags),
+        self.assertEqual(set(t["name"] for t in query["tags"]),
                          set(("Gluten-free", "No preservatives", "Vegetarian",
                               "Grain-free", "Pescetarian", "Soy-free",
                               "MSG-free", "Nut-free", "Dairy-free", "Corn-free",
@@ -723,6 +722,7 @@ class RouteTests(unittest.TestCase):
                               "No artificial colors", "No additives",
                               "No artificial flavors", "Egg-free")))
 
+    """
     def test_get_all_tag(self):
         with self.subTest(msg="No min; Alpha; Page=0; Pagesize=1"):
             query, table_size = Tag.get_all(0, "alpha", 0, 1)
