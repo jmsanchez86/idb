@@ -41,29 +41,34 @@ import json
 import re
 from pathlib import Path
 
-if __name__ == "__main__":
+
+def main():
+    """
+    Performs the collection
+    """
     args = sys.argv
 
-    assert(len(args) == 2)
+    assert len(args) == 2
 
     path = Path(args[1])
-    assert(path.exists())
-    assert(path.is_dir())
+    assert path.exists()
+    assert path.is_dir()
 
     filename = path.name + ".json"
     filedata = dict()
 
-    for f in path.glob("*.json"):
-        fname = re.search("(.+)\.json", f.name).group(1)
-        data = json.loads(f.read_text())
+    for _file in path.glob("*.json"):
+        # pylint: disable=anomalous-backslash-in-string
+        # using the backslash for regex
+        fname = re.search("(.+)\.json", _file.name).group(1)
+        data = json.loads(_file.read_text())
         # JSON indexes cannot be numerical so we leave fname as a str.
         filedata[fname] = data
 
     print("write to: " + filename)
-    with open(filename, "w") as f:
-        f.write(json.dumps(filedata, sort_keys=True, indent=4))
+    with open(filename, "w") as _file:
+        _file.write(json.dumps(filedata, sort_keys=True, indent=4))
 
 
-
-
-
+if __name__ == "__main__":
+    main()
