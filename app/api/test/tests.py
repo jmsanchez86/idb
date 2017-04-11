@@ -796,9 +796,38 @@ class RouteUtilityTests(unittest.TestCase):
 
 
     def test_pagination_correct_page_numbers(self):
-        # check first, last, next, prev, and active page in different
-        # circumstances, at beginning, at end, in middle, on only page
-        pass
+        with self.subTest(msg="At the beginning of a set of pages"):
+            query_params = QueryParams(0, 1, [], "alpha", 10)
+            links = get_continuation_links('', 10, query_params)
+            self.assertNotIn("first", links)
+            self.assertNotIn("prev", links)
+            self.assertIn("next", links)
+            self.assertIn("last", links)
+            self.assertIn("active", links)
+        with self.subTest(msg="At the end of a set of pages"):
+            query_params = QueryParams(9, 1, [], "alpha", 10)
+            links = get_continuation_links('', 10, query_params)
+            self.assertIn("first", links)
+            self.assertIn("prev", links)
+            self.assertNotIn("next", links)
+            self.assertNotIn("last", links)
+            self.assertIn("active", links)
+        with self.subTest(msg="In the middle of a set of pages"):
+            query_params = QueryParams(5, 1, [], "alpha", 10)
+            links = get_continuation_links('', 10, query_params)
+            self.assertIn("first", links)
+            self.assertIn("prev", links)
+            self.assertIn("next", links)
+            self.assertIn("last", links)
+            self.assertIn("active", links)
+        with self.subTest(msg="On the only page"):
+            query_params = QueryParams(0, 1, [], "alpha", 10)
+            links = get_continuation_links('', 1, query_params)
+            self.assertNotIn("first", links)
+            self.assertNotIn("prev", links)
+            self.assertNotIn("next", links)
+            self.assertNotIn("last", links)
+            self.assertIn("active", links)
 
     def test_pagingation_correct_filters(self):
         query_params = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10)
