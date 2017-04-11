@@ -709,7 +709,7 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(query["id"], 412409)
         self.assertEqual(query["name"], "Yucatan Avocado Halves")
         self.assertEqual(query["image"], "https://spoonacular.com/productImages"
-                                        "/412409-636x393.jpg")
+                                         "/412409-636x393.jpg")
         self.assertEqual(query["upc"], "767119103205")
         self.assertEqual(set(g["id"] for g in query["related_grocery_items"]),
                          set((207299, 181939, 191636, 192435)))
@@ -758,35 +758,21 @@ class RouteTests(unittest.TestCase):
             last_tag = query["data"][15]
             # TODO sqlite correction
             self.assertEqual(last_tag["name"], "Antipasto")
-    """
 
     def test_get_tag(self):
-        tag = Tag.get("Dessert")
-        self.assertEqual(tag.tag_name, "Dessert")
-        self.assertEqual(tag.description,
+        query = resp_to_dict(RouteTests.client.get('/tags/Dessert'))
+        self.assertEqual(query["name"], "Dessert")
+        self.assertEqual(query["blurb"],
                          "A sweet dish usually served at the end of a meal.")
-        self.assertEqual(tag.image_url, "Dessert.png")
-        self.assertEqual(len(set(tag.ingredients)), 0)
-        self.assertEqual(len(set(tag.grocery_items)), 0)
+        self.assertEqual(query["image"], "/static/images/tags/Dessert.png")
+        self.assertEqual(len(set(query["related_ingredients"])), 0)
+        self.assertEqual(len(set(query["related_grocery_items"])), 0)
 
-        recipe_set = set(r.recipe_id for r in tag.recipes)
-        self.assertEqual(len(recipe_set), 80)
-        self.assertEqual(recipe_set,
-                         set((53235, 55423, 60909, 62998, 67162, 67282, 73294,
-                              139944, 141807, 144066, 158655, 159245, 173136,
-                              200432, 202648, 220435, 292277, 298055, 385501,
-                              472420, 474497, 477341, 478320, 488980, 495427,
-                              495478, 506482, 510562, 518993, 519894, 522532,
-                              522946, 530398, 532997, 540557, 542484, 547768,
-                              548324, 549698, 549981, 554362, 556672, 556749,
-                              556891, 566617, 568570, 570378, 570953, 573568,
-                              575640, 581235, 583788, 586254, 590142, 590387,
-                              590545, 592010, 604931, 609554, 613127, 615561,
-                              619185, 623812, 624132, 628541, 628699, 629026,
-                              629041, 629825, 705048, 711303, 733472, 738124,
-                              751116, 755750, 758662, 765471, 822427, 826828,
-                              831524)))
-    """
+        recipe_set = set(r["id"] for r in query["related_recipes"])
+        self.assertEqual(len(recipe_set), 10)
+        tag_db_query = Tag.get(query["name"])
+        whole_recipe_set = set(r.recipe_id for r in tag_db_query.recipes)
+        self.assertTrue(recipe_set.issubset(whole_recipe_set))
 
 
 # Report
