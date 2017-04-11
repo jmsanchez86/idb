@@ -3,6 +3,8 @@
 # pylint: disable=no-self-use
 # pylint: disable=pointless-string-statement
 # pylint: disable=too-few-public-methods
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-locals
 
 """
 Imports json data into the database.
@@ -14,11 +16,11 @@ from pathlib import Path
 from app.api import models
 from app.scraping.tag_translations import tags
 
+
 def strip_html(html):
     """
     Remove all html tags from a string.
     """
-    # TODO: Remove all html tags if necessary
     stripper = re.compile("<a.*?>")
     html = re.sub(stripper, "", html)
 
@@ -26,6 +28,7 @@ def strip_html(html):
     html = re.sub(stripper, "", html)
 
     return html
+
 
 """
 
@@ -49,7 +52,6 @@ Known tags
 """
 
 
-
 class Importer:
     """
     Imports json data from a directory into a databse.
@@ -60,9 +62,10 @@ class Importer:
                         "veryHealthy", "veryPopular", "whole30"]
 
     # Recipe tags that make sense to propogate down to ingredients.
-    propogate_flags = ["lowFodmap", "ketogenic", "veryHealthy", "vegan", "whole30", "dairyFree"]
+    propogate_flags = ["lowFodmap", "ketogenic",
+                       "veryHealthy", "vegan", "whole30", "dairyFree"]
 
-    def __init__(self, data_dir: str, database):
+    def __init__(self, data_dir: str, database) -> None:
         """
         data_dir - a directory containing the necessary json files.
         database       - a SQLAlchemy database instance.
@@ -73,30 +76,28 @@ class Importer:
 
         self.find_similar_recipes = self.read_json("find_similar_recipes.json")
         self.get_ingredient_substitutes = \
-                self.read_json("get_ingredient_substitutes.json")
+            self.read_json("get_ingredient_substitutes.json")
         self.get_product_information = \
-                self.read_json("get_product_information.json")
+            self.read_json("get_product_information.json")
         self.get_product_map = self.read_json("get_product_map.json")
         self.recipes = self.read_json("recipes.json")
         self.summarize_recipe = self.read_json("summarize_recipe.json")
 
-        self.recipes = dict()
-        self.ingredients = dict()
-        self.grocery_items = dict()
-        self.tags = dict()
-        self.ingredient_substitutes = list()
-        self.recipe_ingredients = list()
-        self.tag_recipes = dict()
-        self.tag_ingredients = dict()
-        self.tag_grocery_items = dict()
-        self.similar_recipes = list()
-        self.similar_grocery_items = list()
-
+        self.recipes = dict()  # type: dict
+        self.ingredients = dict()  # type: dict
+        self.grocery_items = dict()  # type: dict
+        self.tags = dict()  # type: dict
+        self.ingredient_substitutes = list()  # type: list
+        self.recipe_ingredients = list()  # type: list
+        self.tag_recipes = dict()  # type: dict
+        self.tag_ingredients = dict()  # type: dict
+        self.tag_grocery_items = dict()  # type: dict
+        self.similar_recipes = list()  # type: list
+        self.similar_grocery_items = list()  # type: list
 
     def read_json(self, filename):
         path = self.data_dir / filename
         return json.loads(path.read_text())
-
 
     @property
     def session(self):
@@ -145,7 +146,8 @@ class Importer:
                 similar_id = similar["id"]
                 if similar_id not in self.recipes:
                     continue
-                self.similar_recipes.append(models.SimilarRecipe(int_id, similar["id"]))
+                self.similar_recipes.append(
+                    models.SimilarRecipe(int_id, similar["id"]))
 
         self.commit()
 
@@ -209,7 +211,8 @@ class Importer:
 
         key = (tag_name, ingredient_id)
         if key not in self.tag_ingredients:
-            self.tag_ingredients[key] = models.TagIngredient(tag_name, ingredient_id)
+            self.tag_ingredients[key] = models.TagIngredient(
+                tag_name, ingredient_id)
 
     def ingredient(self, recipe_id, ingredient_data, flags):
         ingredient_id = ingredient_data.get("id", 0)
@@ -227,10 +230,14 @@ class Importer:
             aisle = ingredient_data.get("aisle", None)
             assert aisle != None
 
-            self.ingredients[ingredient_id] = (models.Ingredient(ingredient_id, name, "", aisle))
+            self.ingredients[ingredient_id] = (
+                models.Ingredient(ingredient_id, name, "", aisle))
 
-            for subst in self.get_ingredient_substitutes.get(str(ingredient_id), {}).get("substitutes", []):
-                self.ingredient_substitutes.append(models.IngredientSubstitute(ingredient_id, subst))
+            for subst in self.get_ingredient_substitutes\
+                             .get(str(ingredient_id), {})\
+                             .get("substitutes", []):
+                self.ingredient_substitutes.append(
+                    models.IngredientSubstitute(ingredient_id, subst))
 
             products = self.get_product_map.get(str(ingredient_id), None)
             if products:
@@ -241,8 +248,8 @@ class Importer:
         verbal_quantity = ingredient_data.get("originalString", None)
         assert verbal_quantity != None
 
-        self.recipe_ingredients.append(models.RecipeIngredient(recipe_id, ingredient_id, verbal_quantity))
-
+        self.recipe_ingredients.append(models.RecipeIngredient(
+            recipe_id, ingredient_id, verbal_quantity))
 
     def product_tag(self, ingredient_id, product_id, spoon_name):
         tag_info = tags[spoon_name]
@@ -255,9 +262,11 @@ class Importer:
 
         key = (ingredient_id, product_id, tag_name)
         if key not in self.tag_grocery_items:
-            self.tag_grocery_items[key] = models.TagGroceryItem(tag_name, ingredient_id, product_id)
+            self.tag_grocery_items[key] = models.TagGroceryItem(
+                tag_name, ingredient_id, product_id)
         else:
-            print("Ingredient {} product {} has multiple of tag {}.".format(ingredient_id, product_id, tag_name))
+            print("Ingredient {} product {} has multiple of tag {}.".format(
+                ingredient_id, product_id, tag_name))
 
     def product(self, ingredient_id, product_data, other_products):
         product_id = product_data.get("id", None)
@@ -270,8 +279,8 @@ class Importer:
             if other_id == product_id:
                 continue
 
-            self.similar_grocery_items.append(models.SimilarGroceryItem(ingredient_id, product_id, other_id))
-
+            self.similar_grocery_items.append(
+                models.SimilarGroceryItem(ingredient_id, product_id, other_id))
 
         product_info = self.get_product_information[str(product_id)]
 
@@ -281,9 +290,11 @@ class Importer:
 
         key = (ingredient_id, product_id)
         if key not in self.grocery_items:
-            self.grocery_items[key] = models.GroceryItem(product_id, ingredient_id, name, image_url, upc)
+            self.grocery_items[key] = models.GroceryItem(
+                product_id, ingredient_id, name, image_url, upc)
 
             for badge in product_info.get("badges", []):
                 self.product_tag(ingredient_id, product_id, badge)
         else:
-            print("Ingredient {} contains multiple grocery product {}.".format(ingredient_id, product_id))
+            print("Ingredient {} contains multiple grocery product {}.".format(
+                ingredient_id, product_id))

@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := test
 
-PY_SOURCE := $(shell find ./app -name '*.py')
+PY_SOURCE := $(shell find ./app -name '*.py' -not -path './app/scraping/*')
 FILES :=                 \
 	app/api/models.py    \
 	app/api/test/tests.py\

@@ -26,11 +26,7 @@ def upload_to_gcloud():
 
     with open('cloud_storage_ingredient_images_url.json', 'w') as cloud_img_json:
         json.dump(link_map, cloud_img_json)
-    """
-    FOR EACH ING_ID IN NEW_LINKS_MAP:
-        UPDATE_IMAGE
-        CALL NOELS SCRIPPTTT???
-    """
+
 
 def upload_to_bucket(file_stream, filename):
     """
@@ -51,6 +47,7 @@ def upload_to_bucket(file_stream, filename):
         url = url.decode('utf-8')
 
     return url
+
 
 if __name__ == "__main__":
     upload_to_gcloud()

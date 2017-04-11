@@ -8,6 +8,7 @@ from app.api import models
 from app.api.main import API_SERVICE
 from app.scraping.importer import Importer
 
+
 def run_import():
     """
     imports the json data into real postgres database

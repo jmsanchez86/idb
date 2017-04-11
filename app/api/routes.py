@@ -2,6 +2,7 @@
 # pylint: disable=invalid-sequence-index
 # pylint: disable=invalid-name
 # pylint: disable=too-many-arguments
+# pylint: disable=unused-import
 
 
 from functools import wraps
@@ -10,7 +11,7 @@ import math
 import flask
 
 from app.api.models import Ingredient, Recipe, Tag, GroceryItem
-from typing import Callable, List
+from typing import Callable, List, Set
 
 API_BP = flask.Blueprint('api', __name__)
 
@@ -19,6 +20,7 @@ tag_image_prefix = "/static/images/tags/"
 ################
 # Browse Views #
 ################
+
 
 class QueryParams:
     # pylint: disable=too-few-public-methods
@@ -62,12 +64,12 @@ def get_continuation_links(base_url: str, maxsize: int,
     # first page
     link_dict = dict(active=page)
     if page != 0:
-        link_dict["first"] = first_link
-        link_dict["prev"] = prev_link
+        link_dict["first"] = first_link  # type: ignore
+        link_dict["prev"] = prev_link  # type: ignore
 
     if page != last_page:
-        link_dict["next"] = next_link
-        link_dict["last"] = last_link
+        link_dict["next"] = next_link  # type: ignore
+        link_dict["last"] = last_link  # type: ignore
 
     return link_dict
 
@@ -124,7 +126,6 @@ def get_all_recipes(query_params: QueryParams):
                                "table_size": table_size_query.fetchone()[0]})
 
 
-
 @API_BP.route('/grocery_items')
 @continuation_route
 def get_all_grocery_items(query_params: QueryParams):
@@ -144,11 +145,11 @@ def get_all_grocery_items(query_params: QueryParams):
 def get_all_tags(query_params: QueryParams):
     resp = Tag.get_all(query_params.min_occurences, query_params.sort_key,
                        query_params.page, query_params.page_size)
-    return flask.json.jsonify({"data": [{"name": tq.tag_name,
-                                         "blurb": tq.description,
-                                         "image": tag_image_prefix +
-                                                  tq.image_url,}
-                                        for tq in resp[0]],
+    return flask.json.jsonify({"data":
+                               [{"name": t.tag_name,
+                                 "blurb": t.description,
+                                 "image": tag_image_prefix + t.image_url}
+                                for t in resp[0]],
                                "table_size": resp[1]})
 
 
@@ -187,8 +188,9 @@ def get_ingredient(ingredient_id: int):
         "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
                                   for g in items],
         "tags": [{"name": t.tag_name,
-                  "image": tag_image_prefix + t.image_url,} for t in tags]
-        })
+                  "image": tag_image_prefix + t.image_url, } for t in tags]
+    })
+
 
 @API_BP.route('/recipes/<int:recipe_id>')
 def get_recipe(recipe_id: int):
@@ -215,6 +217,7 @@ def get_recipe(recipe_id: int):
                                     for i in recipe.ingredients]
             })
 
+
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
     product = GroceryItem.get(grocery_item_id)
@@ -227,16 +230,16 @@ def get_grocery_items(grocery_item_id: int):
                     for t in product.tags]
 
     similar_items = []
-    added = set()
+    added = set()  # type: Set[int]
     for item in product.similar_grocery_items:
-        if item.grocery_id in added:
-            continue
-        added.add(item.grocery_id)
-        similar_items.append(item)
+        if item.grocery_id not in added:
+            added.add(item.grocery_id)
+            similar_items.append(item)
 
     data["related_grocery_items"] = [{"id": p.grocery_id, "name": p.name}
                                      for p in similar_items]
     return flask.json.jsonify(data)
+
 
 @API_BP.route('/tags/<string:tag_name>')
 def get_tag(tag_name: str):

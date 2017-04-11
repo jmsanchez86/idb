@@ -14,6 +14,12 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 db = SQLAlchemy()  # type: SQLAlchemy
 
+
+def init_db(app):
+    app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
+    db.init_app(app)
+
+
 class Recipe(db.Model):
     """
     Table of recipes.
@@ -54,9 +60,10 @@ class Recipe(db.Model):
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
             order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
-            start=page_size*page, size=page_size)
+            start=page_size * page, size=page_size)
         if len(filters) > 0:
-            tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
+            tagclause = ' OR '.join(
+                ["tag_name='{}'".format(t) for t in filters])
             filter_clause = (" SELECT recipe_id, name, image_url, description, "
                              "ready_time FROM (SELECT recipe_id, name, image_url, "
                              " description, ready_time, COUNT(recipe_id) AS cnt "
@@ -67,8 +74,8 @@ class Recipe(db.Model):
                              "{tags} ) AS fst GROUP BY recipe_id, name, "
                              "image_url, description, ready_time) AS scnd WHERE cnt = "
                              "{tag_count} ")\
-                            .format(tags=tagclause, tag_count=len(filters)) +\
-                            sort_clause
+                .format(tags=tagclause, tag_count=len(filters)) +\
+                sort_clause
             count_clause = counter.format(subquery=filter_clause)
             return (db.engine.execute(filter_clause + page_clause + ";"),
                     db.engine.execute(count_clause))
@@ -82,6 +89,7 @@ class Recipe(db.Model):
     @staticmethod
     def get(recipe_id):
         return db.session.query(Recipe).get(recipe_id)
+
 
 class Ingredient(db.Model):
     """
@@ -119,9 +127,10 @@ class Ingredient(db.Model):
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
             order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
-            start=page_size*page, size=page_size)
+            start=page_size * page, size=page_size)
         if len(filters) > 0:
-            tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
+            tagclause = ' OR '.join(
+                ["tag_name='{}'".format(t) for t in filters])
             filter_clause = (" SELECT ingredient_id, name, image_url FROM "
                              "(SELECT ingredient_id, name, image_url, "
                              "COUNT(ingredient_id) AS cnt FROM "
@@ -130,8 +139,8 @@ class Ingredient(db.Model):
                              " t ON i.ingredient_id = t.ingredient_id WHERE "
                              "{tags} ) AS fst GROUP BY ingredient_id, name, "
                              "image_url) AS scnd WHERE cnt = {tag_count} ")\
-                            .format(tags=tagclause, tag_count=len(filters)) +\
-                            sort_clause
+                .format(tags=tagclause, tag_count=len(filters)) +\
+                sort_clause
             count_clause = counter.format(subquery=filter_clause)
             return (db.engine.execute(filter_clause + page_clause + ";"),
                     db.engine.execute(count_clause))
@@ -141,6 +150,7 @@ class Ingredient(db.Model):
             count_clause = counter.format(subquery=no_filter_clause)
             return (db.engine.execute(no_filter_clause + page_clause + ";"),
                     db.engine.execute(count_clause))
+
 
 class IngredientSubstitute(db.Model):
     """
@@ -163,6 +173,7 @@ class IngredientSubstitute(db.Model):
     def __repr__(self):
         return "<Ingredient Substitute %d %s>" % (self.ingredient_id,
                                                   self.substitute)
+
 
 Ingredient.substitutes = db.relationship("IngredientSubstitute",
                                          back_populates="ingredient")
@@ -206,9 +217,10 @@ class GroceryItem(db.Model):
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
             order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
-            start=page_size*page, size=page_size)
+            start=page_size * page, size=page_size)
         if len(filters) > 0:
-            tagclause = ' OR '.join(["tag_name='{}'".format(t) for t in filters])
+            tagclause = ' OR '.join(
+                ["tag_name='{}'".format(t) for t in filters])
             filter_clause = (" SELECT distinct grocery_id, name, image_url FROM "
                              "(SELECT grocery_id, ingredient_id, name, image_url, "
                              "COUNT(grocery_id) AS cnt FROM "
@@ -220,8 +232,8 @@ class GroceryItem(db.Model):
                              "{tags} ) AS fst GROUP BY grocery_id, "
                              "ingredient_id, name, "
                              "image_url) AS scnd WHERE cnt = {tag_count} ")\
-                            .format(tags=tagclause, tag_count=len(filters)) +\
-                            sort_clause
+                .format(tags=tagclause, tag_count=len(filters)) +\
+                sort_clause
             count_clause = counter.format(subquery=filter_clause)
             return (db.engine.execute(filter_clause + page_clause + ";"),
                     db.engine.execute(count_clause))
@@ -260,18 +272,16 @@ class Tag(db.Model):
         query = db.session.query(Tag).filter_by(tag_name=tag_name)
         return query.first()
 
-
     @staticmethod
     def get_all(min_occurences, order, page, page_size):
-        count_recipe_query = db.engine.execute\
-                             ("SELECT tag.tag_name, tag.description, "
-                              "tag.image_url, COUNT(tag_recipe.recipe_id) "
-                              "AS cnt FROM tag LEFT JOIN tag_recipe ON "
-                              "(tag.tag_name = tag_recipe.tag_name) GROUP BY "
-                              "tag.tag_name;")
+        count_recipe_query = db.engine.execute("SELECT tag.tag_name, tag.description, "
+                                               "tag.image_url, COUNT(tag_recipe.recipe_id) "
+                                               "AS cnt FROM tag LEFT JOIN tag_recipe ON "
+                                               "(tag.tag_name = tag_recipe.tag_name) GROUP BY "
+                                               "tag.tag_name;")
         orders = {"alpha": False,
                   "alpha_reverse": True}
-        filtered_tags = [pair for pair in count_recipe_query\
+        filtered_tags = [pair for pair in count_recipe_query
                          if pair.cnt >= min_occurences]
         sorted_tags = sorted(filtered_tags,
                              key=lambda e: e.tag_name,
@@ -279,6 +289,7 @@ class Tag(db.Model):
 
         return (sorted_tags[page * page_size: page * page_size + page_size],
                 len(sorted_tags))
+
 
 class RecipeIngredient(db.Model):
     """
@@ -312,6 +323,7 @@ Recipe.ingredients = db.relationship("RecipeIngredient",
                                      back_populates="recipe")
 Ingredient.recipes = db.relationship("RecipeIngredient",
                                      back_populates="ingredient")
+
 
 class TagIngredient(db.Model):
     """
@@ -388,7 +400,7 @@ class TagGroceryItem(db.Model):
     ingredient_id = db.Column(db.Integer, primary_key=True)
     grocery_id = db.Column(db.Integer, primary_key=True)
 
-    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id],
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], # type: ignore
                                               [GroceryItem.ingredient_id,
                                                GroceryItem.grocery_id]), {})
 
@@ -413,6 +425,7 @@ GroceryItem.tags = association_proxy("tag_grocery_item_assocs", "tag")
 Tag.grocery_items = association_proxy(
     "tag_grocery_item_assocs", "grocery_item")
 
+
 class SimilarRecipe(db.Model):
     """
     Association table of recipes to similar recipes.
@@ -433,11 +446,13 @@ class SimilarRecipe(db.Model):
         self.recipe_id = recipe_id
         self.similar_id = similar_id
 
+
 Recipe.similar_recipe_assocs =\
-        db.relationship("SimilarRecipe",
-                        back_populates="recipe",
-                        foreign_keys=[SimilarRecipe.recipe_id])
+    db.relationship("SimilarRecipe",
+                    back_populates="recipe",
+                    foreign_keys=[SimilarRecipe.recipe_id])
 Recipe.similar_recipes = association_proxy("similar_recipe_assocs", "similar")
+
 
 class SimilarGroceryItem(db.Model):
     """
@@ -450,7 +465,7 @@ class SimilarGroceryItem(db.Model):
     grocery_id = db.Column(db.Integer, primary_key=True)
     similar_id = db.Column(db.Integer, primary_key=True)
 
-    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id],
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], # type: ignore
                                               [GroceryItem.ingredient_id,
                                                GroceryItem.grocery_id]),
                       db.ForeignKeyConstraint([ingredient_id, similar_id],
@@ -468,94 +483,92 @@ class SimilarGroceryItem(db.Model):
         self.grocery_id = grocery_id
         self.similar_id = similar_id
 
+
 GroceryItem.similar_grocery_item_assocs =\
-        db.relationship("SimilarGroceryItem", back_populates="grocery_item",
-                        foreign_keys=[SimilarGroceryItem.grocery_id])
+    db.relationship("SimilarGroceryItem", back_populates="grocery_item",
+                    foreign_keys=[SimilarGroceryItem.grocery_id])
 GroceryItem.similar_grocery_items =\
-        association_proxy("similar_grocery_item_assocs", "similar")
+    association_proxy("similar_grocery_item_assocs", "similar")
 
-"""
-Report
-======
-222 statements analysed.
-
-Statistics by type
-------------------
-
-+---------+-------+-----------+-----------+------------+---------+
-|type     |number |old number |difference |%documented |%badname |
-+=========+=======+===========+===========+============+=========+
-|module   |1      |1          |=          |100.00      |0.00     |
-+---------+-------+-----------+-----------+------------+---------+
-|class    |11     |11         |=          |100.00      |0.00     |
-+---------+-------+-----------+-----------+------------+---------+
-|method   |29     |29         |=          |68.97       |0.00     |
-+---------+-------+-----------+-----------+------------+---------+
-|function |0      |0          |=          |0           |0        |
-+---------+-------+-----------+-----------+------------+---------+
-
-
-
-External dependencies
----------------------
-::
-
-    flask_sqlalchemy (app.api.models)
-    sqlalchemy 
-      \-ext 
-        \-associationproxy (app.api.models)
-
-
-
-Raw metrics
------------
-
-+----------+-------+------+---------+-----------+
-|type      |number |%     |previous |difference |
-+==========+=======+======+=========+===========+
-|code      |302    |50.59 |302      |=          |
-+----------+-------+------+---------+-----------+
-|docstring |77     |12.90 |77       |=          |
-+----------+-------+------+---------+-----------+
-|comment   |124    |20.77 |124      |=          |
-+----------+-------+------+---------+-----------+
-|empty     |94     |15.75 |94       |=          |
-+----------+-------+------+---------+-----------+
-
-
-
-Duplication
------------
-
-+-------------------------+------+---------+-----------+
-|                         |now   |previous |difference |
-+=========================+======+=========+===========+
-|nb duplicated lines      |0     |0        |=          |
-+-------------------------+------+---------+-----------+
-|percent duplicated lines |0.000 |0.000    |=          |
-+-------------------------+------+---------+-----------+
-
-
-
-Messages by category
---------------------
-
-+-----------+-------+---------+-----------+
-|type       |number |previous |difference |
-+===========+=======+=========+===========+
-|convention |0      |0        |=          |
-+-----------+-------+---------+-----------+
-|refactor   |0      |0        |=          |
-+-----------+-------+---------+-----------+
-|warning    |0      |0        |=          |
-+-----------+-------+---------+-----------+
-|error      |0      |0        |=          |
-+-----------+-------+---------+-----------+
-
-
-
-Global evaluation
------------------
-Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
-"""
-
+# Report
+# ======
+# 222 statements analysed.
+#
+# Statistics by type
+# ------------------
+#
+# +---------+-------+-----------+-----------+------------+---------+
+# |type     |number |old number |difference |%documented |%badname |
+# +=========+=======+===========+===========+============+=========+
+# |module   |1      |1          |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |class    |11     |11         |=          |100.00      |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |method   |29     |29         |=          |68.97       |0.00     |
+# +---------+-------+-----------+-----------+------------+---------+
+# |function |0      |0          |=          |0           |0        |
+# +---------+-------+-----------+-----------+------------+---------+
+#
+#
+#
+# External dependencies
+# ---------------------
+# ::
+#
+#     flask_sqlalchemy (app.api.models)
+#     sqlalchemy
+#       \-ext
+#         \-associationproxy (app.api.models)
+#
+#
+#
+# Raw metrics
+# -----------
+#
+# +----------+-------+------+---------+-----------+
+# |type      |number |%     |previous |difference |
+# +==========+=======+======+=========+===========+
+# |code      |302    |50.59 |302      |=          |
+# +----------+-------+------+---------+-----------+
+# |docstring |77     |12.90 |77       |=          |
+# +----------+-------+------+---------+-----------+
+# |comment   |124    |20.77 |124      |=          |
+# +----------+-------+------+---------+-----------+
+# |empty     |94     |15.75 |94       |=          |
+# +----------+-------+------+---------+-----------+
+#
+#
+#
+# Duplication
+# -----------
+#
+# +-------------------------+------+---------+-----------+
+# |                         |now   |previous |difference |
+# +=========================+======+=========+===========+
+# |nb duplicated lines      |0     |0        |=          |
+# +-------------------------+------+---------+-----------+
+# |percent duplicated lines |0.000 |0.000    |=          |
+# +-------------------------+------+---------+-----------+
+#
+#
+#
+# Messages by category
+# --------------------
+#
+# +-----------+-------+---------+-----------+
+# |type       |number |previous |difference |
+# +===========+=======+=========+===========+
+# |convention |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |refactor   |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |warning    |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+# |error      |0      |0        |=          |
+# +-----------+-------+---------+-----------+
+#
+#
+#
+# Global evaluation
+# -----------------
+# Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)

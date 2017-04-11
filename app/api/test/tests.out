@@ -1,32 +1,57 @@
-.............
+......................................
 ----------------------------------------------------------------------
-Ran 13 tests in 12.995s
+Ran 38 tests in 4.440s
 
 OK
-__main__.DatabaseIntegrityTests.test_grocery_item: 0.002
+__main__.DatabaseIntegrityTests.test_grocery_item: 0.085
 __main__.DatabaseIntegrityTests.test_ingredient: 0.002
 __main__.DatabaseIntegrityTests.test_ingredient_substitutes: 0.003
-__main__.DatabaseIntegrityTests.test_recipe: 0.002
-__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.003
-__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.008
-__main__.DatabaseIntegrityTests.test_similar_recipes: 0.019
+__main__.DatabaseIntegrityTests.test_recipe: 0.003
+__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.004
+__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.011
+__main__.DatabaseIntegrityTests.test_similar_recipes: 0.011
 __main__.DatabaseIntegrityTests.test_strip_html: 0.000
-__main__.DatabaseIntegrityTests.test_tag_badge: 2.202
-__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.039
-__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.103
+__main__.DatabaseIntegrityTests.test_tag_badge: 2.797
+__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.046
+__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.119
 __main__.DatabaseIntegrityTests.test_tag_flag: 0.005
-__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.124
+__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.145
+__main__.ModelTests.test_get_all_groceryitem: 0.192
+__main__.ModelTests.test_get_all_ingredient: 0.031
+__main__.ModelTests.test_get_all_recipe: 0.103
+__main__.ModelTests.test_get_all_tag: 0.015
+__main__.ModelTests.test_get_groceryitem: 0.034
+__main__.ModelTests.test_get_ingredient: 0.013
+__main__.ModelTests.test_get_recipe: 0.020
+__main__.ModelTests.test_get_tag: 0.121
+__main__.ModelTests.test_ingredient_grocery_items: 0.003
+__main__.RouteTests.test_get_all_groceryitem: 0.210
+__main__.RouteTests.test_get_all_ingredient: 0.046
+__main__.RouteTests.test_get_all_recipe: 0.117
+__main__.RouteTests.test_get_all_tag: 0.034
+__main__.RouteTests.test_get_groceryitem: 0.036
+__main__.RouteTests.test_get_ingredient: 0.022
+__main__.RouteTests.test_get_recipe: 0.020
+__main__.RouteTests.test_get_tag: 0.131
+__main__.RouteTests.test_model_404s: 0.009
+__main__.RouteUtilityTests.test_filter_nulls_no_nulls_hit_limit: 0.000
+__main__.RouteUtilityTests.test_filter_nulls_no_nulls_small: 0.000
+__main__.RouteUtilityTests.test_filter_nulls_nulls_dont_hit_limit: 0.000
+__main__.RouteUtilityTests.test_filter_nulls_nulls_hit_limit: 0.000
+__main__.RouteUtilityTests.test_pagination_correct_page_numbers: 0.000
+__main__.RouteUtilityTests.test_pagination_retain_sort_min_page_size: 0.000
+__main__.RouteUtilityTests.test_pagingation_correct_filters: 0.000
 Name                               Stmts   Miss  Cover   Missing
 ----------------------------------------------------------------
 app/__init__.py                        0      0   100%
 app/api/__init__.py                    0      0   100%
-app/api/models.py                    225     64    72%   45, 49-79, 84, 105, 109-117, 122-148, 170, 200, 204-205, 209-241, 262, 266-267, 272-286, 312, 344, 375, 411
+app/api/models.py                    225     48    79%   19-20, 41-48, 51, 107-110, 113, 170-171, 174, 198-202, 205, 263-265, 268, 312-314, 317, 346-347, 350, 377-378, 381, 412-414, 417, 446-447, 482-484
+app/api/routes.py                    125      0   100%
 app/api/test/__init__.py               0      0   100%
 app/api/test/test_data.py              2      0   100%
-app/api/test/tests.py                146      0   100%
-app/project_root.py                    2      0   100%
+app/api/test/tests.py                587      0   100%
 app/scraping/__init__.py               0      0   100%
-app/scraping/importer.py             165      3    98%   208, 260, 289
+app/scraping/importer.py             165    139    16%   74-96, 99-100, 104, 107-125, 132-152, 155-165, 168-198, 201-214, 218-251, 255-268, 272-299
 app/scraping/tag_translations.py      80      0   100%
 ----------------------------------------------------------------
-TOTAL                                620     67    89%
+TOTAL                               1184    187    84%
