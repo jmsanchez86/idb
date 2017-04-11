@@ -83,17 +83,17 @@ class Importer:
         self.recipes = self.read_json("recipes.json")
         self.summarize_recipe = self.read_json("summarize_recipe.json")
 
-        self.recipes = dict()
-        self.ingredients = dict()
-        self.grocery_items = dict()
-        self.tags = dict()
-        self.ingredient_substitutes = list()
-        self.recipe_ingredients = list()
-        self.tag_recipes = dict()
-        self.tag_ingredients = dict()
-        self.tag_grocery_items = dict()
-        self.similar_recipes = list()
-        self.similar_grocery_items = list()
+        self.recipes = dict()  # type: dict
+        self.ingredients = dict()  # type: dict
+        self.grocery_items = dict()  # type: dict
+        self.tags = dict()  # type: dict
+        self.ingredient_substitutes = list()  # type: list
+        self.recipe_ingredients = list()  # type: list
+        self.tag_recipes = dict()  # type: dict
+        self.tag_ingredients = dict()  # type: dict
+        self.tag_grocery_items = dict()  # type: dict
+        self.similar_recipes = list()  # type: list
+        self.similar_grocery_items = list()  # type: list
 
     def read_json(self, filename):
         path = self.data_dir / filename
