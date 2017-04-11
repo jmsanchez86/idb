@@ -7,7 +7,7 @@ import unittest
 from app.scraping.importer import strip_html
 from app.api import models
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
-from app.api.routes import filter_nulls
+from app.api.routes import filter_nulls, get_continuation_links, QueryParams
 from app.api.test import test_data
 import flask
 
@@ -799,7 +799,14 @@ class RouteUtilityTests(unittest.TestCase):
         pass
 
     def test_pagination_correct_min_param(self):
-        pass
+        query_params = QueryParams(2, 1, [], "alpha", 10)
+        links = get_continuation_links('', 100, query_params)
+        exp = "?page={}" + "&page_size={}&sort={}&min={}".format(1, "alpha", 10)
+        self.assertEqual(links["first"], exp.format(0))
+        self.assertEqual(links["prev"], exp.format(1))
+        self.assertEqual(links["next"], exp.format(3))
+        self.assertEqual(links["last"], exp.format(99))
+        self.assertEqual(links["active"], 2)
 
     class NameObj:
         # pylint: disable=too-few-public-methods
