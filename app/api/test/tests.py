@@ -599,51 +599,51 @@ class RouteTests(unittest.TestCase):
                               "Dairy-free", "Vegetarian")))
 
 
-    """
     def test_get_all_ingredient(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
-            query, table_size_query = Ingredient.get_all([], "alpha", 0, 1)
-            ingredient_0 = next(iter(query))
-            self.assertEqual(ingredient_0.ingredient_id, 1102047)
-            self.assertEqual(table_size_query.fetchone()[0], 629)
+            query = resp_to_dict(RouteTests.client.get('/ingredients?'
+                                                       'page_size=1'))
+            self.assertEqual(query["data"][0]["id"], 1102047)
 
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=16"):
-            query, table_size_query = Ingredient.get_all([], "alpha", 0, 16)
-            ingredients = list(query)
+            query = resp_to_dict(RouteTests.client.get('/ingredients?'
+                                                       'page_size=16'))
+            ingredients = query["data"]
             self.assertEqual(len(ingredients), 16)
-            self.assertEqual(ingredients[15].ingredient_id, 9016)
-            self.assertEqual(table_size_query.fetchone()[0], 629)
+            self.assertEqual(ingredients[15]["id"], 9016)
 
         with self.subTest(msg="No tags; Alpha; Page=2; Pagesize=16"):
-            query, table_size_query = Ingredient.get_all([], "alpha", 2, 16)
-
-            ingredients = list(query)
+            query = resp_to_dict(RouteTests.client.get('/ingredients?'
+                                                       'page_size=16&page=2'))
+            ingredients = query["data"]
             self.assertEqual(len(ingredients), 16)
             # TODO sqlite correction
-            self.assertEqual(ingredients[15].ingredient_id, 1002030)
+            self.assertEqual(ingredients[15]["id"], 1002030)
 
         with self.subTest(msg="No tags; alpha rev; Page=2; Pagesize=16"):
-            query, table_size_query = Ingredient.get_all([], "alpha_reverse",
-                                                         2, 16)
-            ingredients = list(query)
+            query = resp_to_dict(RouteTests.client.get('/ingredients?'
+                                                       'page_size=16&page=2'
+                                                       '&sort=alpha_reverse'))
+            ingredients = query["data"]
             # TODO sqlite correction
-            self.assertEqual(ingredients[15].ingredient_id, 10020081)
-            self.assertTrue(ingredients[0].name >= ingredients[1].name)
+            self.assertEqual(ingredients[15]["id"], 10020081)
+            self.assertTrue(ingredients[0]["name"] >= ingredients[1]["name"])
 
         with self.subTest(msg="Dairy-free; alpha rev; "
                               "Page=0; Pagesize=16"):
             tag_set = set(("Dairy-free",))
-            query, table_size_query = Ingredient.get_all(list(tag_set),
-                                                         "alpha_reverse", 0,
-                                                         16)
-            last_ing = list(query)[15]
-            _last_ing_query = Ingredient.get(last_ing.ingredient_id)
+            query = resp_to_dict(RouteTests.client.get('/ingredients?'
+                                                       'page_size=16'
+                                                       '&sort=alpha_reverse'
+                                                       '&tags=Dairy-free'))
+            last_ing = query["data"][15]
+            _last_ing_query = Ingredient.get(last_ing["id"])
             last_ing_tags = set(t.tag_name for t in _last_ing_query.tags)
             # TODO sqlite correction
-            self.assertEqual(last_ing.ingredient_id, 10611282)
+            self.assertEqual(last_ing["id"], 10611282)
             self.assertTrue(last_ing_tags.issuperset(tag_set))
-            self.assertEqual(table_size_query.fetchone()[0], 332)
 
+        """
     def test_get_ingredient(self):
         ing = Ingredient.get(9070)
         self.assertEqual(ing.ingredient_id, 9070)
