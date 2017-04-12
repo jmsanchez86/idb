@@ -21,8 +21,6 @@ export default class Nav extends React.Component {
     const navClass = collapsed ? "collapse" : "";
 
     return (
- /* NEW */
-
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -45,6 +43,9 @@ export default class Nav extends React.Component {
               </li>
               <li activeClassName="active">
                 <Link to="tags" onClick={this.toggleCollapse.bind(this)}>Tags</Link>
+              </li>
+              <li activeClassName="active">
+                <Link to="search" onClick={this.toggleCollapse.bind(this)}>Search</Link>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
