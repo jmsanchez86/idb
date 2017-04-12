@@ -13,7 +13,9 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
+    "es6-promise": "^4.1.0",
     "history": "^1.17.0",
+    "isomorphic-fetch": "^2.2.1",
     "json-loader": "^0.5.4",
     "react": "^0.14.6",
     "react-bootstrap": "^0.30.8",
@@ -28,7 +30,7 @@
   "scripts": {
     "dev": "./node_modules/.bin/webpack-dev-server --content-base src --inline --hot",
     "pro": "webpack && cp ./src/client.min.js ../app/static/js/client1.min.js && cp ./src/static/css/style.css ../app/static/css/style.css",
-    "winpro": "webpack && copy ./src/client.min.js ../app/static/js/client1.min.js && copy ./src/static/css/style.css ../app/static/css/style.css" 
+    "winpro": "webpack && copy ./src/client.min.js ../app/static/js/client1.min.js && copy ./src/static/css/style.css ../app/static/css/style.css"
   },
   "author": "",
   "license": "ISC"
