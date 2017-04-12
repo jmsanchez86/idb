@@ -5,6 +5,8 @@ Build a search index from the database.
 
 import os
 import sys
+import pickle
+from pathlib import Path
 from app.api.database_connector import database_connect
 
 # TODO: This does not belong here.
@@ -87,18 +89,57 @@ def cmd_text():
     database_connect(cmd_text_db)
 
 def cmd_build():
-    print("Build!")
+    index = dict()
+
+    def add_to_index(recipe_id, text, word_size):
+        for i in range(0, len(text) - word_size + 1):
+            substring = text[i:i + word_size]
+            if substring in index:
+                index[substring].add(recipe_id)
+            else:
+                index[substring.lower()] = set([recipe_id])
+
+    minimum_word = 3
+    maximum_word = 10
+
+    # This simplified routine only processes recipes so the generated index
+    # lacks a distinction between types of data (ingredients vs recipes vs
+    # tags vs ...).
+
+    recipe_paths = list(Path("data/recipes").glob("*.txt"))
+    recipe_count = len(recipe_paths)
+
+    # Notify the user of the current progress every X recipes.
+    status_freq = recipe_count // 10
+
+    for r_index, recipe_path in enumerate(recipe_paths):
+        text = recipe_path.read_text()
+
+        recipe_id = int(recipe_path.name[:-4])
+
+        for word_size in range(minimum_word, maximum_word + 1):
+            add_to_index(recipe_id, text, word_size)
+
+        if r_index % status_freq == 0:
+            print("Progress: {:.1f}%".format((r_index / recipe_count) * 100))
+
+    pickle.dump(index, open("index.p", "wb"))
+
+def cmd_search():
+    print("Search!")
 
 if __name__ == "__main__":
 
     commands = {"text": cmd_text,
-                "build": cmd_build}
+                "build": cmd_build,
+                "search": cmd_search}
 
     if len(sys.argv) <= 1 or sys.argv[1] not in commands:
         print("Possible options are:\n"
               "python index.py text  - generate text versions of database"
               " items and save them locally.\n"
-              "python index.py build - builds the search index cache.")
+              "python index.py build - builds the search index cache."
+              "python index.py search - conduct a search using a the index")
     else:
         commands[sys.argv[1]]()
 
