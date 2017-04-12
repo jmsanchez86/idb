@@ -81,9 +81,7 @@ def cmd_text_db(db):
             text_file.write(text)
 
         if index % status_freq == 0:
-            print("Progress: {:.3g}%".format(index / recipe_count))
-
-
+            print("Progress: {:.1f}%".format((index / recipe_count) * 100))
 
 def cmd_text():
     database_connect(cmd_text_db)
