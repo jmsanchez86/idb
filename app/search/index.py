@@ -176,11 +176,20 @@ def cmd_search(args):
         else:
             hit_group_recipes[terms].add(recipe_id)
 
-    results = hit_group_recipes
+    results_count = 0
+
+    for terms_tuple in sorted(hit_group_recipes.keys(),
+                              key=lambda tup: len(tup),
+                              reverse=True):
+        print(terms_tuple)
+        print(hit_group_recipes[terms_tuple])
+        print("\n")
+        results_count += len(hit_group_recipes[terms_tuple])
+
     timediff = time.perf_counter() - start
-    print(results)
+
     print("\n\n{num_results} results found in {seconds:.6f} seconds.\n"
-          .format(num_results=len(results),
+          .format(num_results=results_count,
                   seconds=timediff))
 
 def main():
