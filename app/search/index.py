@@ -6,6 +6,7 @@ Build a search index from the database.
 import os
 import sys
 import time
+import re
 import pickle
 from pathlib import Path
 from app.api.database_connector import database_connect
@@ -92,16 +93,17 @@ def cmd_text(args):
 def cmd_build(args):
     index = dict()
 
-    def add_to_index(recipe_id, text, word_size):
-        for i in range(0, len(text) - word_size + 1):
-            substring = text[i:i + word_size]
-            if substring in index:
-                index[substring].add(recipe_id)
-            else:
-                index[substring.lower()] = set([recipe_id])
+    # TODO: Move constant to an appropriate location.
+    # Words longer than this are not indexed.
+    maximum_wordlength = 20
 
-    minimum_word = 3
-    maximum_word = 10
+    def add_to_index(recipe_id, text):
+        # TODO: Match unicode letter characters.
+        for term in re.compile(r"([a-zA-Z0-9\'\-]+)").findall(text):
+            if term.lower() in index:
+                index[term.lower()].add(recipe_id)
+            else:
+                index[term.lower()] = set([recipe_id])
 
     # This simplified routine only processes recipes so the generated index
     # lacks a distinction between types of data (ingredients vs recipes vs
@@ -118,12 +120,13 @@ def cmd_build(args):
 
         recipe_id = int(recipe_path.name[:-4])
 
-        for word_size in range(minimum_word, maximum_word + 1):
-            add_to_index(recipe_id, text, word_size)
+        add_to_index(recipe_id, text)
 
         if r_index % status_freq == 0:
             print("Progress: {:.1f}%".format((r_index / recipe_count) * 100))
 
+    # TODO: Store index in database using association tables between terms and
+    # pillars.
     pickle.dump(index, open("index.p", "wb"))
 
 def cmd_search(args):
@@ -146,14 +149,14 @@ def cmd_search(args):
               "\tpython index.py build\n")
         return
 
-    full_term = " ".join(args)
+    full_term = " ".join(args).lower()
 
     start = time.perf_counter()
     if full_term not in index:
         timediff = time.perf_counter() - start
         print("No results found. Took {:.6f} seconds".format(timediff))
     else:
-        results = index[" ".join(args)]
+        results = index[full_term]
         timediff = time.perf_counter() - start
         print(results)
         print("\n\n{num_results} results found in {seconds:.6f} seconds.\n"
