@@ -151,44 +151,45 @@ def cmd_search(args):
 
     start_time = time.perf_counter()
 
-    recipe_word_hits = dict()
-
+    # Build a dictionary mapping recipes to a set of terms they contain.
+    recipe_termset = dict()
     for term in args:
         if term not in index:
             continue
 
         for recipe_id in index[term]:
-            if recipe_id not in recipe_word_hits:
-                recipe_word_hits[recipe_id] = set([term])
+            if recipe_id not in recipe_termset:
+                recipe_termset[recipe_id] = set([term])
             else:
-                recipe_word_hits[recipe_id].add(term)
+                recipe_termset[recipe_id].add(term)
 
-    if not recipe_word_hits:
+    # No results found, exit early.
+    if not recipe_termset:
         timediff = time.perf_counter() - start
         print("No results found. Took {:.6f} seconds".format(timediff))
 
-    hit_group_recipes = dict()
-
-    for recipe_id in recipe_word_hits:
-        terms = tuple(recipe_word_hits[recipe_id])
-        if terms not in hit_group_recipes:
-            hit_group_recipes[terms] = set([recipe_id])
+    # Flip recipe_termset to get a termset -> recipes dictionary.
+    termset_recipes = dict()
+    for recipe_id in recipe_termset:
+        terms = tuple(recipe_termset[recipe_id])
+        if terms not in termset_recipes:
+            termset_recipes[terms] = set([recipe_id])
         else:
-            hit_group_recipes[terms].add(recipe_id)
+            termset_recipes[terms].add(recipe_id)
 
+    # Display and count the results.
     results_count = 0
-
-    for terms_tuple in sorted(hit_group_recipes.keys(),
+    for termset in sorted(termset_recipes.keys(),
                               key=lambda tup: len(tup),
                               reverse=True):
-        print(terms_tuple)
-        print(hit_group_recipes[terms_tuple])
+        print(termset)
+        print(termset_recipes[termset])
         print("\n")
-        results_count += len(hit_group_recipes[terms_tuple])
+        results_count += len(termset_recipes[termset])
 
     timediff = time.perf_counter() - start
 
-    print("\n\n{num_results} results found in {seconds:.6f} seconds.\n"
+    print("{num_results} results found in {seconds:.6f} seconds.\n"
           .format(num_results=results_count,
                   seconds=timediff))
 
