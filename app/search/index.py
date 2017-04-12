@@ -5,6 +5,7 @@ Build a search index from the database.
 
 import os
 import sys
+import time
 import pickle
 from pathlib import Path
 from app.api.database_connector import database_connect
@@ -85,10 +86,10 @@ def cmd_text_db(db):
         if index % status_freq == 0:
             print("Progress: {:.1f}%".format((index / recipe_count) * 100))
 
-def cmd_text():
+def cmd_text(args):
     database_connect(cmd_text_db)
 
-def cmd_build():
+def cmd_build(args):
     index = dict()
 
     def add_to_index(recipe_id, text, word_size):
@@ -125,21 +126,56 @@ def cmd_build():
 
     pickle.dump(index, open("index.p", "wb"))
 
-def cmd_search():
-    print("Search!")
+def cmd_search(args):
+    if len(args) == 0:
+        print("No search terms given.")
+        return
 
-if __name__ == "__main__":
+    index = None
+    try:
+        start = time.perf_counter()
+        # Loading the index takes a few seconds usually.
+        index = pickle.load(open("index.p", "rb"))
+
+        timediff = time.perf_counter() - start
+        print("Index loaded in {:.4f} seconds.".format(timediff))
+    except FileNotFoundError as error:
+        print("Index file index.p not found. You need to build the index"
+              " first.\n"
+              "\tpython index.py text\n"
+              "\tpython index.py build\n")
+        return
+
+    full_term = " ".join(args)
+
+    start = time.perf_counter()
+    if full_term not in index:
+        timediff = time.perf_counter() - start
+        print("No results found. Took {:.6f} seconds".format(timediff))
+    else:
+        results = index[" ".join(args)]
+        timediff = time.perf_counter() - start
+        print(results)
+        print("\n\n{num_results} results found in {seconds:.6f} seconds.\n"
+              .format(num_results=len(results),
+                      seconds=timediff))
+
+def main():
 
     commands = {"text": cmd_text,
                 "build": cmd_build,
                 "search": cmd_search}
 
     if len(sys.argv) <= 1 or sys.argv[1] not in commands:
-        print("Possible options are:\n"
+        print("Possible commands are:\n"
               "python index.py text  - generate text versions of database"
               " items and save them locally.\n"
               "python index.py build - builds the search index cache."
-              "python index.py search - conduct a search using a the index")
+              "python index.py search TERMS - conduct a search using a the"
+              " index cache.")
     else:
-        commands[sys.argv[1]]()
+        commands[sys.argv[1]](sys.argv[2:])
+
+if __name__ == "__main__":
+    main()
 
