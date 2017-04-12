@@ -1,7 +1,9 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
+import { FormGroup, InputGroup, FormControl, Button, MenuItem, Glyphicon } from "react-bootstrap";
 import BigButton from "./BigButton";
 import Modal from "./Modal";
+import SearchBar from "./SearchBar";
 
 export default class Controller extends React.Component {
   constructor() {
@@ -32,7 +34,8 @@ export default class Controller extends React.Component {
 
   render() {
     return (
-      <div id="Controller" class="row ">
+      <div id="Conroller" class="container-fluid">
+        <div id="Controller" class="row ">
           <BigButton />
           <Modal
             sorters ={this.props.sorters}
@@ -42,6 +45,7 @@ export default class Controller extends React.Component {
             onApply ={this.handleApply.bind(this)}
           />
         </div>
+      </div>
     )
   }
 }
