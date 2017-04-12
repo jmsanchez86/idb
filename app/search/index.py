@@ -149,19 +149,39 @@ def cmd_search(args):
               "\tpython index.py build\n")
         return
 
-    full_term = " ".join(args).lower()
+    start_time = time.perf_counter()
 
-    start = time.perf_counter()
-    if full_term not in index:
+    recipe_word_hits = dict()
+
+    for term in args:
+        if term not in index:
+            continue
+
+        for recipe_id in index[term]:
+            if recipe_id not in recipe_word_hits:
+                recipe_word_hits[recipe_id] = set([term])
+            else:
+                recipe_word_hits[recipe_id].add(term)
+
+    if not recipe_word_hits:
         timediff = time.perf_counter() - start
         print("No results found. Took {:.6f} seconds".format(timediff))
-    else:
-        results = index[full_term]
-        timediff = time.perf_counter() - start
-        print(results)
-        print("\n\n{num_results} results found in {seconds:.6f} seconds.\n"
-              .format(num_results=len(results),
-                      seconds=timediff))
+
+    hit_group_recipes = dict()
+
+    for recipe_id in recipe_word_hits:
+        terms = tuple(recipe_word_hits[recipe_id])
+        if terms not in hit_group_recipes:
+            hit_group_recipes[terms] = set([recipe_id])
+        else:
+            hit_group_recipes[terms].add(recipe_id)
+
+    results = hit_group_recipes
+    timediff = time.perf_counter() - start
+    print(results)
+    print("\n\n{num_results} results found in {seconds:.6f} seconds.\n"
+          .format(num_results=len(results),
+                  seconds=timediff))
 
 def main():
 
