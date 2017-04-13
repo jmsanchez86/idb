@@ -19,6 +19,7 @@ export default class SearchItem extends React.Component {
     if (this.props.path == 'recipes'){
       blurb = blurb.replace(/<(?:.|\n)*?>/gm, '');
     }
+    const search_index = blurb.indexOf("recipe");
 
     return (
       <div>
@@ -35,7 +36,12 @@ export default class SearchItem extends React.Component {
             {name && name.length > 50 ? name.substr(0,100) + "..." : name}
             </h5>
             <p>
-            {blurb && blurb.length > 100 ? blurb.substr(0,500) + "..." : blurb}
+            {blurb ? 
+                (search_index > 0 && search_index < 500 ?
+                    blurb.substr(0,search_index) : (blurb.substr(0, 330)) + "...") :
+                 ""}
+            {blurb && search_index > 0 ? (<b>recipe</b>) : ""}
+            {blurb && search_index > 0 ? blurb.substring(search_index + 6, 330) + "...": ""}
             </p>
 
         </div>
