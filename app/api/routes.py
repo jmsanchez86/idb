@@ -275,5 +275,7 @@ def get_tag(tag_name: str):
 def search():
     if "q" not in req.args:
         return flask.abort(400)
+    page_size = req.args.get("page_size", 10)
+    page = req.args.get("page", 0)
     search_query = req.args.get("q").split()
     return flask.json.jsonify({'query': search_query})
