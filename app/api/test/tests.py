@@ -905,6 +905,40 @@ class RouteUtilityTests(unittest.TestCase):
                                              for i in range(1, 11)))
 
 
+class SearchTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from app.api.routes import API_BP
+        cls.app = flask.Flask(__name__)
+        cls.app.register_blueprint(API_BP)
+        cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///test.db'
+        cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        cls.app.config["SQLALCHEMY_ECHO"] = False
+        cls.database = models.db
+        cls.database.init_app(cls.app)
+        cls.ctx = cls.app.app_context()
+        cls.ctx.push()
+        cls.client = cls.app.test_client()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.ctx.pop()
+
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
+
+    def test_no_query(self):
+        resp = SearchTests.client.get('/search')
+        self.assertEqual(resp.status_code, 400)
+
+    def test_valid_query(self):
+        r = resp_to_dict(SearchTests.client.get('/search?q=This+test+passed'))
+        self.assertEqual(r, {'query': ['This', 'test', 'passed']})
+
 # Report
 # ======
 # 222 statements analysed.

@@ -9,6 +9,7 @@ from functools import wraps
 import math
 
 import flask
+from flask import request as req
 
 from app.api.models import Ingredient, Recipe, Tag, GroceryItem
 from typing import Callable, List, Set
@@ -17,9 +18,9 @@ API_BP = flask.Blueprint('api', __name__)
 
 tag_image_prefix = "/static/images/tags/"
 
-################
-# Browse Views #
-################
+###################
+# Browse Endpoint #
+###################
 
 
 class QueryParams:
@@ -75,7 +76,6 @@ def get_continuation_links(base_url: str, maxsize: int,
 
 
 def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
-    from flask import request as req
 
     @wraps(route_fn)
     def wrapped_route_function():
@@ -153,9 +153,9 @@ def get_all_tags(query_params: QueryParams):
                                "table_size": resp[1]})
 
 
-################
-# Detail Views #
-################
+###################
+# Detail Endpoint #
+###################
 
 def filter_nulls(field, limit):
     for row in field:
@@ -265,3 +265,15 @@ def get_tag(tag_name: str):
          "image": r.image_url}
         for r in filter_nulls(tag.grocery_items, limit)]
     return flask.json.jsonify(data)
+
+
+###################
+# Search Endpoint #
+###################
+
+@API_BP.route('/search')
+def search():
+    if "q" not in req.args:
+        return flask.abort(400)
+    search_query = req.args.get("q").split()
+    return flask.json.jsonify({'query': search_query})
