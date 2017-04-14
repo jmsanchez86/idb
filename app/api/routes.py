@@ -201,7 +201,7 @@ def get_grocery_items(grocery_item_id: int):
         return flask.abort(404)
     data = dict(id=product.grocery_id, name=product.name,
                 image=product.image_url, upc=product.upc,
-				ingredient_id=product.ingredient_id)
+                ingredient_id=product.ingredient_id)
     data["tags"] = [{"name": t.tag_name,
                      "image": tag_image_prefix + t.image_url}
                     for t in product.tags]
