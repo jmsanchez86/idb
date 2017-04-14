@@ -272,9 +272,14 @@ def get_tag(tag_name: str):
 @API_BP.route('/search')
 @continuation_route
 def search(query_params: QueryParams):
+    from app.api.helpers.test_cream_cheese_search_query import\
+            get_test_search_query
+
     if not query_params.search_query:
         return flask.abort(400)
-    # page_size = req.args.get("page_size", 10)
-    # page = query_params.page
-    search_terms = query_params.search_query.split()
-    return flask.json.jsonify({'data': search_terms, 'table_size': 30})
+
+    MOCK_SEARCH_LOOP_SIZE = 30
+    res = get_test_search_query(query_params.page, query_params.page_size,
+                                MOCK_SEARCH_LOOP_SIZE)
+    # search_terms = query_params.search_query.split()
+    return flask.json.jsonify({'data': res, 'table_size': MOCK_SEARCH_LOOP_SIZE})
