@@ -75,7 +75,8 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
         args = req.args
 
         page = int(args.get("page", 0))
-        page_size = int(args.get("page_size", 16))
+        page_size = int(args.get("page_size",
+                                 10 if "search" in req.path else 16))
         sort_key = args.get("sort", "alpha")
         min_occurences = int(args.get("min", 0))
         tags = args.get("tags").split(",") if "tags" in args else []
