@@ -7,6 +7,7 @@
 
 from functools import wraps
 import math
+import re
 
 import flask
 from flask import request as req
@@ -25,42 +26,35 @@ tag_image_prefix = "/static/images/tags/"
 
 class QueryParams:
     # pylint: disable=too-few-public-methods
-    def __init__(self, page: int, page_size: int, tag_filters: List[str],
-                 sort_key: str, min_occurences: int) -> None:
+    def __init__(self, page: int, page_size: int,
+                 sort_key: str, min_occurences: int,
+                 tags: List[str], search_query: str) -> None:
         self.page = page
         self.page_size = page_size
-        self.tag_filters = tag_filters
         self.sort_key = sort_key
         self.min_occurences = min_occurences
+        self.tags = tags
+        self.search_query = search_query
 
 
-def get_continuation_links(base_url: str, maxsize: int,
-                           query_params: QueryParams):
+def get_continuation_links(base_url: str, req_args: dict,
+                           maxsize: int, query_params: QueryParams):
     # pylint: disable=too-many-locals
     page = query_params.page
     psize = query_params.page_size
-    tag_filters = query_params.tag_filters
-    sort_param = query_params.sort_key
-    min_occurences = query_params.min_occurences
 
     total_pages = int(math.ceil(maxsize / psize))
     last_page = max(0, total_pages - 1)
-    url_template = base_url + "?page={p}&page_size={ps}&sort={s}&min={min}"
-    first_link = url_template.format(p=0, ps=psize, s=sort_param,
-                                     min=min_occurences)
-    prev_link = url_template.format(p=min(last_page, max(0, page - 1)),
-                                    ps=psize, s=sort_param, min=min_occurences)
-    next_link = url_template.format(p=min(last_page, max(0, page + 1)),
-                                    ps=psize, s=sort_param, min=min_occurences)
-    last_link = url_template.format(p=last_page, ps=psize, s=sort_param,
-                                    min=min_occurences)
+    url_template = base_url + "?page={p}"
 
-    if len(tag_filters) > 0:
-        tag_query = "&tags={ts}".format(ts=",".join(tag_filters))
-        first_link += tag_query
-        prev_link += tag_query
-        next_link += tag_query
-        last_link += tag_query
+    for key in (k for k in req_args if k != "page"):
+        v = re.sub(' ', '+', req_args.get(key))
+        url_template += "&{k}={v}".format(k=key, v=v)
+
+    first_link = url_template.format(p=0)
+    last_link = url_template.format(p=last_page, ps=psize)
+    prev_link = url_template.format(p=min(last_page, max(0, page - 1)))
+    next_link = url_template.format(p=min(last_page, max(0, page + 1)))
 
     # first page
     link_dict = dict(active=page)
@@ -76,22 +70,24 @@ def get_continuation_links(base_url: str, maxsize: int,
 
 
 def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
-
     @wraps(route_fn)
     def wrapped_route_function():
-        page = int(req.args.get("page", 0))
-        psize = int(req.args.get("page_size", 16))
-        sort_param = req.args.get("sort", "alpha")
-        tags = req.args.get("tags").split(
-            ",") if "tags" in req.args else []
-        min_occurences = int(req.args.get("min", 0))
-        query_params = QueryParams(page=page, page_size=psize,
-                                   tag_filters=tags, sort_key=sort_param,
-                                   min_occurences=min_occurences)
+        args = req.args
+
+        page = int(args.get("page", 0))
+        page_size = int(args.get("page_size", 16))
+        sort_key = args.get("sort", "alpha")
+        min_occurences = int(args.get("min", 0))
+        tags = args.get("tags").split(",") if "tags" in args else []
+        search_query = args.get("q", None)
+
+        query_params = QueryParams(page, page_size, sort_key, min_occurences,
+                                   tags, search_query)
         resp = flask.json.loads(route_fn(query_params).data)
         data = resp["data"]
         table_size = resp["table_size"]
-        links = get_continuation_links(req.base_url, table_size, query_params)
+        links = get_continuation_links(req.base_url, req.args, table_size,
+                                       query_params)
         return flask.json.jsonify({"data": data, "links": links})
     return wrapped_route_function
 
@@ -99,7 +95,7 @@ def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
 @API_BP.route('/ingredients')
 @continuation_route
 def get_all_ingredients(query_params: QueryParams):
-    query, table_size_query = Ingredient.get_all(query_params.tag_filters,
+    query, table_size_query = Ingredient.get_all(query_params.tags,
                                                  query_params.sort_key,
                                                  query_params.page,
                                                  query_params.page_size)
@@ -113,7 +109,7 @@ def get_all_ingredients(query_params: QueryParams):
 @API_BP.route('/recipes')
 @continuation_route
 def get_all_recipes(query_params: QueryParams):
-    query, table_size_query = Recipe.get_all(query_params.tag_filters,
+    query, table_size_query = Recipe.get_all(query_params.tags,
                                              query_params.sort_key,
                                              query_params.page,
                                              query_params.page_size)
@@ -129,7 +125,7 @@ def get_all_recipes(query_params: QueryParams):
 @API_BP.route('/grocery_items')
 @continuation_route
 def get_all_grocery_items(query_params: QueryParams):
-    query, table_size_query = GroceryItem.get_all(query_params.tag_filters,
+    query, table_size_query = GroceryItem.get_all(query_params.tags,
                                                   query_params.sort_key,
                                                   query_params.page,
                                                   query_params.page_size)
@@ -210,7 +206,8 @@ def get_recipe(recipe_id: int):
                 "ready_time": recipe.ready_time,
                 "related_recipes": [{"id": r.recipe_id, "name": r.name}
                                     for r in recipe.similar_recipes],
-                "tags": [{"name": t.tag_name, "image": tag_image_prefix + t.image_url}
+                "tags": [{"name": t.tag_name,
+                          "image": tag_image_prefix + t.image_url}
                          for t in recipe.tags],
                 "ingredient_list": [{"id": i.ingredient_id,
                                      "original_string": i.verbal_quantity}
@@ -272,17 +269,11 @@ def get_tag(tag_name: str):
 ###################
 
 @API_BP.route('/search')
-def search():
-    if "q" not in req.args:
+@continuation_route
+def search(query_params: QueryParams):
+    if not query_params.search_query:
         return flask.abort(400)
-    page_size = req.args.get("page_size", 10)
-    page = req.args.get("page", 0)
-    search_query = req.args.get("q").split()
-    test_links = {
-                'active': 1,
-                'first': '/search?q=Test+query&page=0&page_size=10',
-                'prev': '/search?q=Test+query&page=0&page_size=10',
-                'next': '/search?q=Test+query&page=2&page_size=10',
-                'last': '/search?q=Test+query&page=2&page_size=10',
-            }
-    return flask.json.jsonify({'query': search_query, 'links': test_links})
+    # page_size = req.args.get("page_size", 10)
+    # page = query_params.page
+    search_terms = query_params.search_query.split()
+    return flask.json.jsonify({'data': search_terms, 'table_size': 30})

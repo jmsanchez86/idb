@@ -1,6 +1,7 @@
 # pylint: disable=missing-docstring
 # pylint: disable=fixme
 # pylint: disable=invalid-name
+# pylint: disable=too-many-lines
 
 import time
 import unittest
@@ -827,44 +828,49 @@ class RouteUtilityTests(unittest.TestCase):
         print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_pagination_retain_sort_min_page_size(self):
-        query_params = QueryParams(2, 1, [], "alpha", 10)
-        links = get_continuation_links('', 100, query_params)
-        exp = "?page={}" + \
-              "&page_size={}&sort={}&min={}".format(1, "alpha", 10)
-        self.assertEqual(links["first"], exp.format(0))
-        self.assertEqual(links["prev"], exp.format(1))
-        self.assertEqual(links["next"], exp.format(3))
-        self.assertEqual(links["last"], exp.format(99))
+        req_args = {"page": "2", "page_size": "1", "sort": "alpha", "min": "10"}
+        links = get_continuation_links('', req_args, 100,
+                                       QueryParams(2, 1, [], "alpha", 10, None))
+        query_params = ["&page_size=1", "&sort=alpha", "&min=10"]
+        for link, page in [("first", 0), ("prev", 1), ("next", 3), ("last", 99)]:
+            self.assertIn("?page={}".format(page), links[link])
+            for query_param in query_params:
+                self.assertIn(query_param, links[link])
         self.assertEqual(links["active"], 2)
 
     def test_pagination_correct_page_numbers(self):
+        req_args = {"page_size": "1", "sort": "alpha", "min": "10"}
         with self.subTest(msg="At the beginning of a set of pages"):
-            query_params = QueryParams(0, 1, [], "alpha", 10)
-            links = get_continuation_links('', 10, query_params)
+            req_args["page"] = 0
+            query_params = QueryParams(0, 1, [], "alpha", 10, None)
+            links = get_continuation_links('', req_args, 10, query_params)
             self.assertNotIn("first", links)
             self.assertNotIn("prev", links)
             self.assertIn("next", links)
             self.assertIn("last", links)
             self.assertIn("active", links)
         with self.subTest(msg="At the end of a set of pages"):
-            query_params = QueryParams(9, 1, [], "alpha", 10)
-            links = get_continuation_links('', 10, query_params)
+            req_args["page"] = 9
+            query_params = QueryParams(9, 1, [], "alpha", 10, None)
+            links = get_continuation_links('', req_args, 10, query_params)
             self.assertIn("first", links)
             self.assertIn("prev", links)
             self.assertNotIn("next", links)
             self.assertNotIn("last", links)
             self.assertIn("active", links)
         with self.subTest(msg="In the middle of a set of pages"):
-            query_params = QueryParams(5, 1, [], "alpha", 10)
-            links = get_continuation_links('', 10, query_params)
+            req_args["page"] = 5
+            query_params = QueryParams(5, 1, [], "alpha", 10, None)
+            links = get_continuation_links('', req_args, 10, query_params)
             self.assertIn("first", links)
             self.assertIn("prev", links)
             self.assertIn("next", links)
             self.assertIn("last", links)
             self.assertIn("active", links)
         with self.subTest(msg="On the only page"):
-            query_params = QueryParams(0, 1, [], "alpha", 10)
-            links = get_continuation_links('', 1, query_params)
+            req_args["page"] = 0
+            query_params = QueryParams(0, 1, [], "alpha", 10, None)
+            links = get_continuation_links('', req_args, 1, query_params)
             self.assertNotIn("first", links)
             self.assertNotIn("prev", links)
             self.assertNotIn("next", links)
@@ -872,19 +878,19 @@ class RouteUtilityTests(unittest.TestCase):
             self.assertIn("active", links)
 
     def test_pagingation_correct_filters(self):
-        query_params = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10)
-        links = get_continuation_links('', 100, query_params)
-        exp = "?page={}" + \
-              "&page_size={}&sort={}&min={}".format(10, "alpha", 10)
-        exp += "&tags=Vegan,Dairy-free"
-        self.assertEqual(links["first"], exp.format(0))
-        self.assertEqual(links["prev"], exp.format(3))
-        self.assertEqual(links["next"], exp.format(5))
-        self.assertEqual(links["last"], exp.format(9))
+        req_args = {"page": "4", "page_size": "10", "tags": "Vegan,Dairy-free",
+                    "sort": "alpha", "min": "10"}
+        qp = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10, None)
+        links = get_continuation_links('', req_args, 100, qp)
+        query_params = ["&page_size=10", "&sort=alpha", "&min=10", "tags=Vegan,Dairy-free"]
+        for link, page in [("first", 0), ("prev", 3), ("next", 5), ("last", 9)]:
+            self.assertIn("?page={}".format(page), links[link])
+            for query_param in query_params:
+                self.assertIn(query_param, links[link])
         self.assertEqual(links["active"], 4)
 
-        query_params.tag_filters = []
-        links = get_continuation_links('', 100, query_params)
+        req_args = {"page": "4", "page_size": "10", "sort": "alpha", "min": "10"}
+        links = get_continuation_links('', req_args, 100, qp)
         self.assertNotIn("&tags=", links["first"])
         self.assertNotIn("&tags=", links["prev"])
         self.assertNotIn("&tags=", links["next"])
@@ -972,7 +978,7 @@ class SearchTests(unittest.TestCase):
         resp = SearchTests.client.get('/search?q=This+test+passed')
         resp_data = resp_to_dict(resp)
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp_data["query"], ['This', 'test', 'passed'])
+        self.assertEqual(resp_data["data"], ['This', 'test', 'passed'])
 
 # Report
 # ======
