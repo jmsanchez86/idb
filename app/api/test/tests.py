@@ -8,7 +8,7 @@ import unittest
 from app.scraping.importer import strip_html
 from app.api import models
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
-from app.api.routes import filter_nulls, get_continuation_links, QueryParams
+from app.api.routes import filter_nulls, get_continuation_links
 from app.api.test import test_data
 import flask
 
@@ -829,8 +829,7 @@ class RouteUtilityTests(unittest.TestCase):
 
     def test_pagination_retain_sort_min_page_size(self):
         req_args = {"page": "2", "page_size": "1", "sort": "alpha", "min": "10"}
-        links = get_continuation_links('', req_args, 100,
-                                       QueryParams(2, 1, [], "alpha", 10, None))
+        links = get_continuation_links('', 2, 1, req_args, 100)
         query_params = ["&page_size=1", "&sort=alpha", "&min=10"]
         for link, page in [("first", 0), ("prev", 1), ("next", 3), ("last", 99)]:
             self.assertIn("?page={}".format(page), links[link])
@@ -842,8 +841,7 @@ class RouteUtilityTests(unittest.TestCase):
         req_args = {"page_size": "1", "sort": "alpha", "min": "10"}
         with self.subTest(msg="At the beginning of a set of pages"):
             req_args["page"] = 0
-            query_params = QueryParams(0, 1, [], "alpha", 10, None)
-            links = get_continuation_links('', req_args, 10, query_params)
+            links = get_continuation_links('', 0, 1, req_args, 10)
             self.assertNotIn("first", links)
             self.assertNotIn("prev", links)
             self.assertIn("next", links)
@@ -851,8 +849,7 @@ class RouteUtilityTests(unittest.TestCase):
             self.assertIn("active", links)
         with self.subTest(msg="At the end of a set of pages"):
             req_args["page"] = 9
-            query_params = QueryParams(9, 1, [], "alpha", 10, None)
-            links = get_continuation_links('', req_args, 10, query_params)
+            links = get_continuation_links('', 9, 1, req_args, 10)
             self.assertIn("first", links)
             self.assertIn("prev", links)
             self.assertNotIn("next", links)
@@ -860,8 +857,7 @@ class RouteUtilityTests(unittest.TestCase):
             self.assertIn("active", links)
         with self.subTest(msg="In the middle of a set of pages"):
             req_args["page"] = 5
-            query_params = QueryParams(5, 1, [], "alpha", 10, None)
-            links = get_continuation_links('', req_args, 10, query_params)
+            links = get_continuation_links('', 5, 1, req_args, 10)
             self.assertIn("first", links)
             self.assertIn("prev", links)
             self.assertIn("next", links)
@@ -869,8 +865,7 @@ class RouteUtilityTests(unittest.TestCase):
             self.assertIn("active", links)
         with self.subTest(msg="On the only page"):
             req_args["page"] = 0
-            query_params = QueryParams(0, 1, [], "alpha", 10, None)
-            links = get_continuation_links('', req_args, 1, query_params)
+            links = get_continuation_links('', 0, 1, req_args, 1)
             self.assertNotIn("first", links)
             self.assertNotIn("prev", links)
             self.assertNotIn("next", links)
@@ -880,8 +875,7 @@ class RouteUtilityTests(unittest.TestCase):
     def test_pagingation_correct_filters(self):
         req_args = {"page": "4", "page_size": "10", "tags": "Vegan,Dairy-free",
                     "sort": "alpha", "min": "10"}
-        qp = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10, None)
-        links = get_continuation_links('', req_args, 100, qp)
+        links = get_continuation_links('', 4, 10, req_args, 100)
         query_params = ["&page_size=10", "&sort=alpha", "&min=10", "tags=Vegan,Dairy-free"]
         for link, page in [("first", 0), ("prev", 3), ("next", 5), ("last", 9)]:
             self.assertIn("?page={}".format(page), links[link])
@@ -890,7 +884,7 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertEqual(links["active"], 4)
 
         req_args = {"page": "4", "page_size": "10", "sort": "alpha", "min": "10"}
-        links = get_continuation_links('', req_args, 100, qp)
+        links = get_continuation_links('', 4, 10, req_args, 100)
         self.assertNotIn("&tags=", links["first"])
         self.assertNotIn("&tags=", links["prev"])
         self.assertNotIn("&tags=", links["next"])
