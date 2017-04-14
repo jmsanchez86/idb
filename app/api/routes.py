@@ -278,4 +278,11 @@ def search():
     page_size = req.args.get("page_size", 10)
     page = req.args.get("page", 0)
     search_query = req.args.get("q").split()
-    return flask.json.jsonify({'query': search_query})
+    test_links = {
+                'active': 1,
+                'first': '/search?q=Test+query&page=0&page_size=10',
+                'prev': '/search?q=Test+query&page=0&page_size=10',
+                'next': '/search?q=Test+query&page=2&page_size=10',
+                'last': '/search?q=Test+query&page=2&page_size=10',
+            }
+    return flask.json.jsonify({'query': search_query, 'links': test_links})

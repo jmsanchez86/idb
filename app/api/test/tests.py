@@ -784,6 +784,39 @@ class RouteTests(unittest.TestCase):
         responses = [RouteTests.client.get(e).status_code for e in endpoints]
         self.assertTrue(all(i == 404 for i in responses))
 
+    def test_query_params_carry_over(self):
+        with self.subTest(msg="test recipe, ingredient, grocery items"):
+            endpoints = ['/recipes', '/ingredients', '/grocery_items']
+            query_pieces = ['&page_size=5', '&sort=alpha_reverse', '&tags=Vegan,Vegetarian']
+            query = ''.join(query_pieces)
+            for e in endpoints:
+                resp = resp_to_dict(RouteTests.client.get(e + '?page=1' + query))
+                for qp in query_pieces:
+                    self.assertIn(qp, resp["links"]["first"])
+                    self.assertIn(qp, resp["links"]["prev"])
+                    self.assertIn(qp, resp["links"]["next"])
+                    self.assertIn(qp, resp["links"]["last"])
+
+        with self.subTest(msg="test tags"):
+            query_pieces = ['&page_size=5', '&sort=alpha_reverse', '&min=10']
+            query = ''.join(query_pieces)
+            resp = resp_to_dict(RouteTests.client.get('/tags?page=1' + query))
+            for qp in query_pieces:
+                self.assertIn(qp, resp["links"]["first"])
+                self.assertIn(qp, resp["links"]["prev"])
+                self.assertIn(qp, resp["links"]["next"])
+                self.assertIn(qp, resp["links"]["last"])
+
+        with self.subTest(msg="test search"):
+            query_pieces = ['q=Test+query', '&page_size=10']
+            query = ''.join(query_pieces)
+            resp = resp_to_dict(RouteTests.client.get('/search?page=1&' + query))
+            for qp in query_pieces:
+                self.assertIn(qp, resp["links"]["first"])
+                self.assertIn(qp, resp["links"]["prev"])
+                self.assertIn(qp, resp["links"]["next"])
+                self.assertIn(qp, resp["links"]["last"])
+
 
 class RouteUtilityTests(unittest.TestCase):
     def setUp(self):
@@ -936,8 +969,10 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 400)
 
     def test_valid_query(self):
-        r = resp_to_dict(SearchTests.client.get('/search?q=This+test+passed'))
-        self.assertEqual(r, {'query': ['This', 'test', 'passed']})
+        resp = SearchTests.client.get('/search?q=This+test+passed')
+        resp_data = resp_to_dict(resp)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp_data["query"], ['This', 'test', 'passed'])
 
 # Report
 # ======
