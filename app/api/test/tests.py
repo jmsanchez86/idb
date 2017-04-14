@@ -728,6 +728,20 @@ class RouteTests(unittest.TestCase):
                               "No artificial colors", "No additives",
                               "No artificial flavors", "Egg-free")))
 
+    def test_groceryitem_ingredient_id(self):
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/94841'))
+        self.assertEqual(query["id"], 94841)
+        self.assertEqual(query["ingredient_id"], 11109)
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/64628'))
+        self.assertEqual(query["id"], 64628)
+        self.assertEqual(query["ingredient_id"], 11109)
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/210595'))
+        self.assertEqual(query["id"], 210595)
+        self.assertEqual(query["ingredient_id"], 2047)
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/210593'))
+        self.assertEqual(query["id"], 210593)
+        self.assertEqual(query["ingredient_id"], 2047)
+
     def test_get_all_tag(self):
         with self.subTest(msg="No min; Alpha; Page=0; Pagesize=1"):
             query = resp_to_dict(RouteTests.client.get('/tags?page_size=1'))
