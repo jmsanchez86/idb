@@ -975,10 +975,17 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 400)
 
     def test_valid_query(self):
-        resp = SearchTests.client.get('/search?q=This+test+passed')
-        resp_data = resp_to_dict(resp)
+        resp = SearchTests.client.get('/search?q=With+query')
+        resp_json = resp_to_dict(resp)
+        data = resp_json["data"]
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp_data["data"], ['This', 'test', 'passed'])
+        self.assertEqual(len(data), 10)
+        self.assertEqual(data[0]["id"], "509488")
+        self.assertEqual(set(e["pillar_name"] for e in data),
+                         {'recipes', 'ingredients', 'grocery_items', 'tags'})
+        self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
+        self.assertIn("next", resp_json["links"])
+        self.assertIn("last", resp_json["links"])
 
 # Report
 # ======
