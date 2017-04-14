@@ -1,8 +1,9 @@
 # pylint: disable=missing-docstring
+# pylint: disable=line-too-long
 
 from typing import Any, List
 
-query_resp =\
+TEST_DATA =\
     [
         {
             "id": "509488",
@@ -71,4 +72,4 @@ def mock_loop_list(li: List[Any], page: int, page_size: int, maxsize: int):
 
 
 def get_test_search_query(page: int, page_size: int, maxsize: int):
-    return mock_loop_list(query_resp, page, page_size, maxsize)
+    return mock_loop_list(TEST_DATA, page, page_size, maxsize)
