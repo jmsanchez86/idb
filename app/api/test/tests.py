@@ -8,7 +8,8 @@ import unittest
 from app.scraping.importer import strip_html
 from app.api import models
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
-from app.api.routes import filter_nulls, get_continuation_links
+from app.api.routes import filter_nulls, get_continuation_links,\
+                           get_taglist_from_query
 from app.api.test import test_data
 import flask
 
@@ -936,6 +937,10 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertTrue(all(r.name for r in filtered_rows))
         self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
                                              for i in range(1, 11)))
+    def test_taglist_helper(self):
+        self.assertEqual(get_taglist_from_query(dict()), [])
+        self.assertEqual(get_taglist_from_query(dict(tags="A,B")), ["A", "B"])
+        self.assertEqual(get_taglist_from_query(dict(tags="A")), ["A"])
 
 
 class SearchTests(unittest.TestCase):
