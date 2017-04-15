@@ -456,3 +456,14 @@ input[type="radio"] {
 #NavSearch {
   margin-top: 10px;
 }
+
+#TextBox {
+  font-family: Raleway, sans-serif;
+  /*float:left !important;*/
+  display: block !important;
+}
+
+#SearchButton {
+  display: inline-block !important;
+  /*float:left !important;*/
+}
