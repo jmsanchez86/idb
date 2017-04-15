@@ -1,4 +1,5 @@
 import React from "react";
+
 import ReactDOM from "react-dom";
 import { Router, Route, IndexRoute } from "react-router";
 
@@ -8,6 +9,7 @@ import GroceryItems from "./pages/GroceryItems";
 import Ingredients from "./pages/Ingredients";
 import Landing from "./pages/Landing";
 import Recipes from "./pages/Recipes";
+import Visual from "./pages/Visualization";
 
 import RecipeSingle from "./pages/RecipeSingle";
 import IngredientSingle from "./pages/IngredientSingle";
@@ -28,6 +30,7 @@ ReactDOM.render(
       <Route path="ingredients" name="ingredients" component={Ingredients}></Route>
       <Route path="grocery_items" name="grocery_items" component={GroceryItems}></Route>
       <Route path="tags" name="tags" component={Tags}></Route>
+      <Route path="visual" name="visual" component={Visual}></Route>
 
       <Route path="about" name="about" component={About}></Route>
 
