@@ -6,7 +6,8 @@ Build a search index and use it to search through the command line.
 
 import sys
 from app.api.database_connector import database_connect
-from app.search.index import download_descriptions, build_index
+from app.search.descriptions import download_descriptions
+from app.search.index import build_index
 from app.search.search import page_search, search, sorted_results_keys
 
 def cmd_text(args):
@@ -22,8 +23,15 @@ def cmd_search(args):
     start = int(args[0])
     end = int(args[1])
 
-    for idx, result in enumerate(page_search(" ".join(args[2:]), start, end)):
-        print("{:3d}: {}".format(idx, result))
+    def on_connect(db):
+        for idx, result in enumerate(page_search(" ".join(args[2:]),
+                                                 start, end)):
+            print("{:3d}: {}".format(idx, result))
+            result.contextualize(db)
+            for context in result.contexts:
+                print("\t" + context)
+
+    database_connect(on_connect)
 
 def cmd_searchall(args):
     terms_recipes = search(" ".join(args))

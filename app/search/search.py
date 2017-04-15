@@ -5,6 +5,7 @@ Perform searches with multi-word queries using an index.
 
 import re
 import pickle
+from app.search.descriptions import describe_item
 
 # Possible improvements
 #   > Turn words into their lexemes to handle plurality and tenses of words.
@@ -20,19 +21,54 @@ class SearchResult:
         self.pillar = pillar
         self.item_id = item_id
         self.terms = terms
+        self.contexts = None
+
+    def contextualize(self, db):
+        """
+        Build a list of substrings from the description that frame the search
+        context.
+        """
+        if self.pillar == "recipe":
+            res = db.engine.execute("SELECT recipe_id, name, servings, "
+                                    "ready_time, description, instructions "
+                                    "FROM recipe WHERE recipe_id = {recipe_id}"
+                                    "".format(recipe_id=self.item_id))
+            description = (describe_item("recipe", res.fetchone())
+                           .replace("\n", " ").replace("\r", " "))
+            description = re.sub(r"\.([A-Z])", r". \1", description)
+
+            matches = []
+            for term in self.terms:
+                matches.append(re.search(term, description,
+                                         flags = re.IGNORECASE | re.DOTALL))
+
+            matches.sort(key=lambda match: match.start())
+
+            def make_section(start, end):
+                return (max(start, 0), min(end, len(description)))
+
+            sections = []
+            section = make_section(matches[0].start() - 50,
+                                   matches[0].end() + 50)
+            for match in matches[1:]:
+                if match.start() <= section[1]:
+                    section = make_section(section[0], match.end() + 50)
+                else:
+                    sections.append(section)
+                    section = make_section(match.start() - 50,
+                                           match.end() + 50)
+            if section:
+                sections.append(section)
+
+            self.contexts = [description[section[0]:section[1]]
+                             for section in sections]
 
     def __repr__(self):
-        return "<{} id={} terms={}>".format(self.pillar, self.item_id, self.terms)
+        return "<{} id={} terms={}>".format(self.pillar,
+                                            self.item_id, self.terms)
 
 def split_query(query):
     return list(re.compile("([^\s]+)").findall(query))
-
-def contextualize(description, query):
-    args = split_query(query)
-
-    # TODO: Search contextualization.
-
-    return [description]
 
 def search(query):
     """
@@ -121,6 +157,8 @@ def page_search(query, page_number, page_size):
             result_index += 1
         result_index = 0
         set_n += 1
+
+
 
     return search_results
 
