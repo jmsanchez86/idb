@@ -137,6 +137,10 @@ def page_search(query, page_number, page_size):
     search_results = []
     sorted_keys = sorted_results_keys(terms_recipes)
 
+    total_result_count = 0
+    for _, result_set in terms_recipes.items():
+        total_result_count += len(result_set)
+
     # Find the first result set for the requested page.
     while set_n < len(terms_recipes):
         result_set = terms_recipes[sorted_keys[set_n]]
@@ -160,7 +164,7 @@ def page_search(query, page_number, page_size):
 
 
 
-    return search_results
+    return search_results, total_result_count
 
 
 

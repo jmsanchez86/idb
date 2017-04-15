@@ -20,12 +20,13 @@ def cmd_search(args):
 
     assert(len(args) >= 3)
 
-    start = int(args[0])
-    end = int(args[1])
+    page = int(args[0])
+    page_size = int(args[1])
 
     def on_connect(db):
-        for idx, result in enumerate(page_search(" ".join(args[2:]),
-                                                 start, end)):
+        results, count = page_search(" ".join(args[2:]), page, page_size)
+        print("\n{} results found.\n".format(count))
+        for idx, result in enumerate(results):
             print("{:3d}: {}".format(idx, result))
             result.contextualize(db)
             for context in result.contexts:
