@@ -7,29 +7,51 @@ export default class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: "",
       terms: "",
     };
   }
 
-  onClick(event) {
-    console.log(this.refs.myText.value);
-    console.log(this.refs.myText.placeholder);
-    this.refs.myText.value="";
+  handleChange(event) {
+    this.setState({value: event.target.value});
   }
+
+  handleSubmit(event) {
+    alert('submitted: ' + this.state.value);
+    event.preventDefault();
+    this.setState({value: ""});
+  }
+
+  sanitizeString() {
+    return this.state.raw.replace(/[^\w\s]/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
+  }
+
   render() {
     return (
-      <div id="NavSearch" class="form-group form-group-md pull-right col-lg-3 col-md-3 col-sm-6">
-        <div  class="input-group">
-          <p><input type="text" ref="myText" id="TextBox" class="search-query form-control" placeholder="Search" /></p>
-          <span class="input-group-btn">
-            <Link to="search">
-            <button class="btn btn-md btn-default" type="button" onClick={this.onClick.bind(this)}>
-              <span class=" glyphicon glyphicon-search"></span>
-            </button>
-            </Link>
-          </span>
-        </div>
-      </div>
+      <span id="NavSearch" class="form-group form-group-md col-lg-3 col-md-3 col-sm-6 pull-right">
+
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <div class="input-group">
+            <input
+              class="search-query form-control"
+              id="TextBox"
+              placeholder="Search our site..."
+              value={this.state.value}
+              onChange={this.handleChange.bind(this)}
+              />
+              <span class="input-group-btn">
+                <button
+                  class="btn btn-md btn-default"
+                  id="SearchButton"
+                  type="submit button"
+                  value="Submit">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </span>
+              </div>
+            </form>
+
+      </span>
     )
   }
 };
