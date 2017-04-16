@@ -5,7 +5,7 @@ class SearchStore extends EventEmitter {
   constructor() {
     super();
     this.values = "";
-    this.response = {data: {}, links:{}};
+    this.response = {data: [], links:{}};
     this.err = "";
     }
 
