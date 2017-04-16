@@ -13,6 +13,7 @@ import flask
 from flask import request as req
 
 from app.api.models import Ingredient, Recipe, Tag, GroceryItem
+from app.search import search as Search
 from typing import Callable, List, Set
 
 API_BP = flask.Blueprint('api', __name__)
@@ -250,16 +251,13 @@ def get_tag(tag_name: str):
 
 @API_BP.route('/search')
 def search():
-    from app.api.helpers.test_cream_cheese_search_query import\
-            get_test_search_query
-
     if "q" not in req.args:
         return flask.abort(400)
 
-    MOCK_SEARCH_LOOP_SIZE = 30
     page = int(req.args.get("page", 0))
     page_size = int(req.args.get("page_size", 10))
-    data = get_test_search_query(page, page_size, MOCK_SEARCH_LOOP_SIZE)
+    results, search_size = Search.page_search(req.args.get("q"), page, page_size)
+    xformed_results = [r.model.search_result_xform(r) for r in results]
     links = get_continuation_links(req.base_url, page, page_size, req.args,
-                                   MOCK_SEARCH_LOOP_SIZE)
-    return flask.json.jsonify({'data': data, 'links': links})
+                                   search_size)
+    return flask.json.jsonify({'data': xformed_results, 'links': links})
