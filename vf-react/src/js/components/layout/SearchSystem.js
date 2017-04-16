@@ -9,15 +9,13 @@ export default class SearchSystem extends React.Component {
     const data = this.props.data;
     const path = this.props.path;
     const searchItems=[];
-    var i = 0;
-    const w = this.props.width;
     console.log(data);
     for (var id in data) {
-      console.log(id);
-      if (!(i++ % w)) {
-        searchItems.push(<div key={"clear-"+i} class="clearfix"></div>);
-      }
-      searchItems.push(<SearchItem key={id} path={path} item={data[id]} />);
+      const item = data[id];
+      searchItems.push(<SearchItem
+                          key={item.id + id}
+                          path={path}
+                          item={item} />);
     }
     return searchItems;
   }
