@@ -37,7 +37,7 @@ class Recipe(db.Model):
     source_url = db.Column(db.Text)
 
     def __init__(self, recipe_id, name, image_url, instructions, description,
-            ready_time, servings, source_url): # pragma: no cover
+                 ready_time, servings, source_url): # pragma: no cover
         self.recipe_id = recipe_id
         self.name = name
         self.image_url = image_url
@@ -90,6 +90,17 @@ class Recipe(db.Model):
     def get(recipe_id):
         return db.session.query(Recipe).get(recipe_id)
 
+    @staticmethod
+    def search_result_xform(search_result):
+        search_result.contextualize(db)
+        inst = Recipe.get(search_result.item_id)
+        return {
+            "id": str(inst.recipe_id),
+            "pillar_name": "recipe",
+            "name": str(inst.name),
+            "image": inst.image_url,
+            "contexts": search_result.contexts
+        }
 
 class Ingredient(db.Model):
     """
@@ -118,6 +129,18 @@ class Ingredient(db.Model):
     @staticmethod
     def get(ing_id):
         return db.session.query(Ingredient).get(ing_id)
+
+    @staticmethod
+    def search_result_xform(search_result):
+        search_result.contextualize(db)
+        inst = Ingredient.get(search_result.item_id)
+        return {
+            "id": str(inst.ingredient_id),
+            "pillar_name": "ingredient",
+            "name": str(inst.name),
+            "image": inst.image_url,
+            "contexts": search_result.contexts
+        }
 
     @staticmethod
     def get_all(filters, order, page, page_size):
@@ -210,6 +233,18 @@ class GroceryItem(db.Model):
         return query.first()
 
     @staticmethod
+    def search_result_xform(search_result):
+        search_result.contextualize(db)
+        inst = GroceryItem.get(search_result.item_id)
+        return {
+            "id": str(inst.grocery_id),
+            "pillar_name": "grocery_item",
+            "name": str(inst.name),
+            "image": inst.image_url,
+            "contexts": search_result.contexts
+        }
+
+    @staticmethod
     def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
         order_param, asc = orders[order]
@@ -271,6 +306,18 @@ class Tag(db.Model):
     def get(tag_name):
         query = db.session.query(Tag).filter_by(tag_name=tag_name)
         return query.first()
+
+    @staticmethod
+    def search_result_xform(search_result):
+        search_result.contextualize(db)
+        inst = Tag.get(search_result.item_id)
+        return {
+            "id": tag_name,
+            "pillar_name": "tag",
+            "name": tag_name,
+            "image": inst.image_url,
+            "contexts": search_result.contexts
+        }
 
     @staticmethod
     def get_all(min_occurences, order, page, page_size):
