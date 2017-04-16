@@ -2,7 +2,6 @@ import React from "react";
 import SearchItem from "./SearchItem";
 import { ListGroup } from "react-bootstrap";
 
-
 export default class SearchSystem extends React.Component {
 
   getSearchItems(data, path) {
