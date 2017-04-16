@@ -8,6 +8,7 @@ TEST_DATA =\
         {
             "id": "509488",
             "pillar_name": 'recipes',
+            "name": 'Almond Joy Cheesecake',
             "image": "https://spoonacular.com/recipeImages/A-High-Protein-Snack--Healthy-Almond-Joy-Cheesecake-%7BGluten-Free--Low-Carb-+-High-Protein%7D-509488.jpg",
             "contexts":
                 [
@@ -20,6 +21,7 @@ TEST_DATA =\
         {
             "id": "408444",
             "pillar_name": "grocery_items",
+            "name": 'Dairy Pure All Natural Sour Cream',
             "image": "https://spoonacular.com/productImages/408444-636x393.jpg",
             "contexts":
                 [
@@ -32,6 +34,7 @@ TEST_DATA =\
         {
             "id": "19228",
             "pillar_name": "ingredients",
+            "name": 'Cream cheese frosting',
             "image": "https://storage.googleapis.com/vennfridge/saved_ingredient_images%2F19228.jpg",
             "contexts":
                 [
@@ -42,6 +45,7 @@ TEST_DATA =\
         {
             "id": "Dip",
             "pillar_name": "tags",
+            "name": 'Dip',
             "image": "http://vennfridge.me/static/images/tags/Dip.png",
             "contexts":
                 [

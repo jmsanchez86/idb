@@ -994,6 +994,7 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(len(data), 10)
         self.assertEqual(data[0]["id"], "509488")
+        self.assertEqual(data[0]["name"], "Almond Joy Cheesecake")
         self.assertEqual(set(e["pillar_name"] for e in data),
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))

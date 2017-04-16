@@ -1,40 +1,41 @@
-..........................................
+...........................................
 ----------------------------------------------------------------------
-Ran 42 tests in 4.134s
+Ran 43 tests in 4.735s
 
 OK
-__main__.DatabaseIntegrityTests.test_grocery_item: 0.066
+__main__.DatabaseIntegrityTests.test_grocery_item: 0.065
 __main__.DatabaseIntegrityTests.test_ingredient: 0.002
-__main__.DatabaseIntegrityTests.test_ingredient_substitutes: 0.003
+__main__.DatabaseIntegrityTests.test_ingredient_substitutes: 0.004
 __main__.DatabaseIntegrityTests.test_recipe: 0.003
-__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.004
-__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.011
-__main__.DatabaseIntegrityTests.test_similar_recipes: 0.011
+__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.005
+__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.013
+__main__.DatabaseIntegrityTests.test_similar_recipes: 0.012
 __main__.DatabaseIntegrityTests.test_strip_html: 0.000
-__main__.DatabaseIntegrityTests.test_tag_badge: 2.474
-__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.042
-__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.120
+__main__.DatabaseIntegrityTests.test_tag_badge: 2.781
+__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.047
+__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.122
 __main__.DatabaseIntegrityTests.test_tag_flag: 0.005
-__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.136
-__main__.ModelTests.test_get_all_groceryitem: 0.195
-__main__.ModelTests.test_get_all_ingredient: 0.034
-__main__.ModelTests.test_get_all_recipe: 0.104
+__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.164
+__main__.ModelTests.test_get_all_groceryitem: 0.201
+__main__.ModelTests.test_get_all_ingredient: 0.037
+__main__.ModelTests.test_get_all_recipe: 0.110
 __main__.ModelTests.test_get_all_tag: 0.016
-__main__.ModelTests.test_get_groceryitem: 0.036
+__main__.ModelTests.test_get_groceryitem: 0.041
 __main__.ModelTests.test_get_ingredient: 0.014
-__main__.ModelTests.test_get_recipe: 0.021
-__main__.ModelTests.test_get_tag: 0.112
+__main__.ModelTests.test_get_recipe: 0.026
+__main__.ModelTests.test_get_tag: 0.131
 __main__.ModelTests.test_ingredient_grocery_items: 0.003
-__main__.RouteTests.test_get_all_groceryitem: 0.215
-__main__.RouteTests.test_get_all_ingredient: 0.046
-__main__.RouteTests.test_get_all_recipe: 0.111
-__main__.RouteTests.test_get_all_tag: 0.026
-__main__.RouteTests.test_get_groceryitem: 0.038
+__main__.RouteTests.test_get_all_groceryitem: 0.225
+__main__.RouteTests.test_get_all_ingredient: 0.042
+__main__.RouteTests.test_get_all_recipe: 0.132
+__main__.RouteTests.test_get_all_tag: 0.029
+__main__.RouteTests.test_get_groceryitem: 0.040
 __main__.RouteTests.test_get_ingredient: 0.023
-__main__.RouteTests.test_get_recipe: 0.021
-__main__.RouteTests.test_get_tag: 0.131
+__main__.RouteTests.test_get_recipe: 0.023
+__main__.RouteTests.test_get_tag: 0.143
+__main__.RouteTests.test_groceryitem_ingredient_id: 0.155
 __main__.RouteTests.test_model_404s: 0.010
-__main__.RouteTests.test_query_params_carry_over: 0.068
+__main__.RouteTests.test_query_params_carry_over: 0.077
 __main__.RouteUtilityTests.test_filter_nulls_no_nulls_hit_limit: 0.000
 __main__.RouteUtilityTests.test_filter_nulls_no_nulls_small: 0.000
 __main__.RouteUtilityTests.test_filter_nulls_nulls_dont_hit_limit: 0.000
@@ -44,20 +45,20 @@ __main__.RouteUtilityTests.test_pagination_retain_sort_min_page_size: 0.000
 __main__.RouteUtilityTests.test_pagingation_correct_filters: 0.000
 __main__.RouteUtilityTests.test_taglist_helper: 0.000
 __main__.SearchTests.test_no_query: 0.001
-__main__.SearchTests.test_valid_query: 0.002
+__main__.SearchTests.test_valid_query: 0.003
 Name                                                Stmts   Miss  Cover   Missing
 ---------------------------------------------------------------------------------
 app/__init__.py                                         0      0   100%
 app/api/__init__.py                                     0      0   100%
 app/api/helpers/__init__.py                             0      0   100%
 app/api/helpers/test_cream_cheese_search_query.py      18      0   100%
-app/api/models.py                                     225     48    79%   19-20, 41-48, 51, 107-110, 113, 170-171, 174, 198-202, 205, 263-265, 268, 312-314, 317, 346-347, 350, 377-378, 381, 412-414, 417, 446-447, 482-484
+app/api/models.py                                     156      0   100%
 app/api/routes.py                                     121      0   100%
 app/api/test/__init__.py                                0      0   100%
 app/api/test/test_data.py                               2      0   100%
-app/api/test/tests.py                                 655      0   100%
+app/api/test/tests.py                                 669      0   100%
 app/scraping/__init__.py                                0      0   100%
-app/scraping/importer.py                              165    139    16%   74-96, 99-100, 104, 107-125, 132-152, 155-165, 168-198, 201-214, 218-251, 255-268, 272-299
+app/scraping/importer.py                               12      0   100%
 app/scraping/tag_translations.py                       80      0   100%
 ---------------------------------------------------------------------------------
-TOTAL                                                1266    187    85%
+TOTAL                                                1058      0   100%
