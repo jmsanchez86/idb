@@ -30,62 +30,6 @@ export default class Search extends React.Component {
     })
   }
 
-  query() {
-    const sorters = this.state.sorters;
-    const filters = this.state.filters;
-    var params = "http://" + apiRoot + "/recipes?page_size=16&sort=";
-
-    for (var id in sorters) {
-      if (sorters[id].checked)
-        params += id;
-    }
-
-    var firstTag = true;
-    for (var id in filters ) {
-      if (filters[id].checked) {
-        if (firstTag) {
-          firstTag = false;
-          params += "&tags="
-        }
-        params += filters[id].name + ",";
-      }
-    }
-    params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + 0;
-    return params;
-  }
-
-  requestQuery(requestString) {
-    var _this = this;
-    var _data = {};
-    var _links = {};
-
-    //call api with new query params
-    fetch(requestString)
-      .then(function(response) {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
-              response.status);
-        }
-        response.json().then(function(responseData) {
-          for (var id in responseData.data){
-            _data[id] = responseData.data[id];
-          }
-          for (var id in responseData.links){
-            _links[id] = responseData.links[id];
-          }
-
-          _this.state.data = _data;
-          _this.state.links = _links;
-          _this.forceUpdate();
-
-        });
-      })
-    .catch(function(err) {
-        console.log('Fetch Error: -S', err);
-      });
-  }
-
   initFilters() {
     const _filters = {
       1 : {
@@ -142,19 +86,10 @@ export default class Search extends React.Component {
     )
   }
 
-  handleApply(_filters,_sorters) {
-    this.setState({
-        sorters: _sorters,
-        filters: _filters,
-        links: {
-          active: 0
-        }
-      });
-    const request = this.query();
-    this.requestQuery(request);
-  }
   handleSelect(type) {
-    this.requestQuery(this.state.links[type]);
+    //TODO move this actions
+    //this.requestQuery(this.state.links[type]);
+    console.log(this.state.links[type]);
   }
 
   render() {
@@ -163,7 +98,7 @@ export default class Search extends React.Component {
     const links= SearchStore.getLinks();
     return (
       <div id="search-page" class="container-fluid">
-        
+
         <SearchSystem
           width={2}
           path="recipes"
