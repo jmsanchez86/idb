@@ -7,6 +7,7 @@ import VFPagination from "../components/layout/VFPagination";
 
 var apiRoot = '' + require('../scripts/Config.js');
 
+
 export default class Recipes extends React.Component {
   constructor(props) {
     super(props);
@@ -165,7 +166,6 @@ export default class Recipes extends React.Component {
           onSelect={this.handleSelect.bind(this)}
           links={links} />
       </div>
-
     );
   }
 }

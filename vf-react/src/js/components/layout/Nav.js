@@ -1,5 +1,6 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
+import SearchBarNav from "./SearchBarNav";
 
 export default class Nav extends React.Component {
   constructor() {
@@ -50,9 +51,12 @@ export default class Nav extends React.Component {
             </ul>
             <ul class="nav navbar-nav navbar-right">
             <li activeClassName="active">
-              <Link to="about" onClick={this.toggleCollapse.bind(this)}>About Us</Link>
+            <Link to="about" onClick={this.toggleCollapse.bind(this)}>About Us</Link>
             </li>
             </ul>
+
+            <SearchBarNav />
+
           </div>
         </div>
       </nav>

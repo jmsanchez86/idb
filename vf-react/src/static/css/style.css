@@ -76,7 +76,7 @@ ul.nav a:hover {
 }
 
 /* This changes when navbar collapses */
- @media (max-width: 1100px) {
+ @media (max-width: 1300px) {
   .navbar-header {
       float: none;
   }
@@ -327,7 +327,7 @@ label.btn.btn-default.active {
   color: #fffefe !important;
   background-color:#428AB0 !important;
   outline: #fffefe !important;
-  border-color: #fff;
+  border-color:#428AB0 !important;
 }
 
 .btn.btn-default:active:focus:hover  {
@@ -350,12 +350,6 @@ label.btn.btn-default.active {
   outline: #fffefe !important;
 }
 
-.btn span.glyphicon {
-	opacity: 0;
-}
-.btn.active span.glyphicon {
-	opacity: 1;
-}
 
 /* Hiding the radiobuttons & checkboxes */
 input[type="radio"] {
@@ -368,6 +362,11 @@ input[type="radio"] {
   padding: 0px;
 }
 
+#BigSearch {
+  display: block;
+  width: 100%;
+  padding: 0px;
+}
 
 #Controller {
   margin-bottom: 10px;
@@ -407,4 +406,64 @@ input[type="radio"] {
 
 #grid_item_name {
   text-transform: capitalize;
+}
+
+
+
+#custom-search-input {
+  margin:0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+#custom-search-input .search-query {
+  padding-right: 3px;
+  padding-right: 4px \9;
+  padding-left: 3px;
+  padding-left: 4px \9;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#custom-search-input button {
+  border: 0;
+  background: none;
+  /** belows styles are working good */
+  padding: 2px 5px;
+  margin-top: 2px;
+  position: relative;
+  left: -28px;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color:#D9230F;
+}
+
+.search-query:focus + button {
+  z-index: 3;
+}
+
+#Controller {
+  margin-top:20px;
+}
+
+#NavSearch {
+  margin-top: 10px;
+}
+
+#TextBox {
+  font-family: Raleway, sans-serif;
+  /*float:left !important;*/
+  display: block !important;
+}
+
+#SearchButton {
+  display: inline-block !important;
+  /*float:left !important;*/
 }

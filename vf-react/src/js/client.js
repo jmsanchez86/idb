@@ -31,6 +31,8 @@ ReactDOM.render(
       <Route path="tags" name="tags" component={Tags}></Route>
       <Route path="search" name="search" component={Search}></Route>
 
+      <Route path="search" name="search" component={Search}></Route>
+
       <Route path="about" name="about" component={About}></Route>
 
       <Route path="recipes/:id" name="recipe-single" component={RecipeSingle}></Route>
