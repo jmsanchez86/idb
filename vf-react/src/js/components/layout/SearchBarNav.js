@@ -2,6 +2,8 @@
 import React from "react";
 import { Link } from "react-router";
 
+import SearchStore from "../../stores/SearchStore";
+import * as SearchActions from "../../actions/SearchActions"
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -17,7 +19,7 @@ export default class SearchBar extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('submitted: ' + this.state.value);
+    SearchActions.searchSubmit(this.state.value);
     event.preventDefault();
     this.setState({value: ""});
   }
