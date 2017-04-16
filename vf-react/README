@@ -1,3 +1,9 @@
 ##### Run these commands : ######
-npm install
-npm run dev
+- npm install - Installs necessary dependencies. Make sure node and npm are up to date first.
+- npm run dev - This runs a webpack server hosted on localhost:8080
+- npm run pro (for linux)
+minifies the js file and copies it to the proper location in app (also copies the current style sheet)
+You still have to RENAME THE FILES IN APP TO THE CURRENT VERSION and UPDATE THE index.html FILE.
+- npm run winpro (for windows)
+minifies the js file and copies it to the proper location in app (also copies the current style sheet)
+You still have to RENAME THE FILES IN APP TO THE CURRENT VERSION and UPDATE THE index.html FILE.

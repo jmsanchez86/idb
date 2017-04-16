@@ -1,13 +1,15 @@
 # pylint: disable=missing-docstring
 # pylint: disable=fixme
 # pylint: disable=invalid-name
+# pylint: disable=too-many-lines
 
 import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
-from app.api.routes import filter_nulls, get_continuation_links, QueryParams
+from app.api.routes import filter_nulls, get_continuation_links,\
+                           get_taglist_from_query
 from app.api.test import test_data
 import flask
 
@@ -726,6 +728,20 @@ class RouteTests(unittest.TestCase):
                               "No artificial colors", "No additives",
                               "No artificial flavors", "Egg-free")))
 
+    def test_groceryitem_ingredient_id(self):
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/94841'))
+        self.assertEqual(query["id"], 94841)
+        self.assertEqual(query["ingredient_id"], 11109)
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/64628'))
+        self.assertEqual(query["id"], 64628)
+        self.assertEqual(query["ingredient_id"], 11109)
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/210595'))
+        self.assertEqual(query["id"], 210595)
+        self.assertEqual(query["ingredient_id"], 2047)
+        query = resp_to_dict(RouteTests.client.get('/grocery_items/210593'))
+        self.assertEqual(query["id"], 210593)
+        self.assertEqual(query["ingredient_id"], 2047)
+
     def test_get_all_tag(self):
         with self.subTest(msg="No min; Alpha; Page=0; Pagesize=1"):
             query = resp_to_dict(RouteTests.client.get('/tags?page_size=1'))
@@ -784,6 +800,39 @@ class RouteTests(unittest.TestCase):
         responses = [RouteTests.client.get(e).status_code for e in endpoints]
         self.assertTrue(all(i == 404 for i in responses))
 
+    def test_query_params_carry_over(self):
+        with self.subTest(msg="test recipe, ingredient, grocery items"):
+            endpoints = ['/recipes', '/ingredients', '/grocery_items']
+            query_pieces = ['&page_size=5', '&sort=alpha_reverse', '&tags=Vegan,Vegetarian']
+            query = ''.join(query_pieces)
+            for e in endpoints:
+                resp = resp_to_dict(RouteTests.client.get(e + '?page=1' + query))
+                for qp in query_pieces:
+                    self.assertIn(qp, resp["links"]["first"])
+                    self.assertIn(qp, resp["links"]["prev"])
+                    self.assertIn(qp, resp["links"]["next"])
+                    self.assertIn(qp, resp["links"]["last"])
+
+        with self.subTest(msg="test tags"):
+            query_pieces = ['&page_size=5', '&sort=alpha_reverse', '&min=10']
+            query = ''.join(query_pieces)
+            resp = resp_to_dict(RouteTests.client.get('/tags?page=1' + query))
+            for qp in query_pieces:
+                self.assertIn(qp, resp["links"]["first"])
+                self.assertIn(qp, resp["links"]["prev"])
+                self.assertIn(qp, resp["links"]["next"])
+                self.assertIn(qp, resp["links"]["last"])
+
+        with self.subTest(msg="test search"):
+            query_pieces = ['q=Test+query', '&page_size=10']
+            query = ''.join(query_pieces)
+            resp = resp_to_dict(RouteTests.client.get('/search?page=1&' + query))
+            for qp in query_pieces:
+                self.assertIn(qp, resp["links"]["first"])
+                self.assertIn(qp, resp["links"]["prev"])
+                self.assertIn(qp, resp["links"]["next"])
+                self.assertIn(qp, resp["links"]["last"])
+
 
 class RouteUtilityTests(unittest.TestCase):
     def setUp(self):
@@ -794,44 +843,44 @@ class RouteUtilityTests(unittest.TestCase):
         print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_pagination_retain_sort_min_page_size(self):
-        query_params = QueryParams(2, 1, [], "alpha", 10)
-        links = get_continuation_links('', 100, query_params)
-        exp = "?page={}" + \
-              "&page_size={}&sort={}&min={}".format(1, "alpha", 10)
-        self.assertEqual(links["first"], exp.format(0))
-        self.assertEqual(links["prev"], exp.format(1))
-        self.assertEqual(links["next"], exp.format(3))
-        self.assertEqual(links["last"], exp.format(99))
+        req_args = {"page": "2", "page_size": "1", "sort": "alpha", "min": "10"}
+        links = get_continuation_links('', 2, 1, req_args, 100)
+        query_params = ["&page_size=1", "&sort=alpha", "&min=10"]
+        for link, page in [("first", 0), ("prev", 1), ("next", 3), ("last", 99)]:
+            self.assertIn("?page={}".format(page), links[link])
+            for query_param in query_params:
+                self.assertIn(query_param, links[link])
         self.assertEqual(links["active"], 2)
 
     def test_pagination_correct_page_numbers(self):
+        req_args = {"page_size": "1", "sort": "alpha", "min": "10"}
         with self.subTest(msg="At the beginning of a set of pages"):
-            query_params = QueryParams(0, 1, [], "alpha", 10)
-            links = get_continuation_links('', 10, query_params)
+            req_args["page"] = 0
+            links = get_continuation_links('', 0, 1, req_args, 10)
             self.assertNotIn("first", links)
             self.assertNotIn("prev", links)
             self.assertIn("next", links)
             self.assertIn("last", links)
             self.assertIn("active", links)
         with self.subTest(msg="At the end of a set of pages"):
-            query_params = QueryParams(9, 1, [], "alpha", 10)
-            links = get_continuation_links('', 10, query_params)
+            req_args["page"] = 9
+            links = get_continuation_links('', 9, 1, req_args, 10)
             self.assertIn("first", links)
             self.assertIn("prev", links)
             self.assertNotIn("next", links)
             self.assertNotIn("last", links)
             self.assertIn("active", links)
         with self.subTest(msg="In the middle of a set of pages"):
-            query_params = QueryParams(5, 1, [], "alpha", 10)
-            links = get_continuation_links('', 10, query_params)
+            req_args["page"] = 5
+            links = get_continuation_links('', 5, 1, req_args, 10)
             self.assertIn("first", links)
             self.assertIn("prev", links)
             self.assertIn("next", links)
             self.assertIn("last", links)
             self.assertIn("active", links)
         with self.subTest(msg="On the only page"):
-            query_params = QueryParams(0, 1, [], "alpha", 10)
-            links = get_continuation_links('', 1, query_params)
+            req_args["page"] = 0
+            links = get_continuation_links('', 0, 1, req_args, 1)
             self.assertNotIn("first", links)
             self.assertNotIn("prev", links)
             self.assertNotIn("next", links)
@@ -839,19 +888,18 @@ class RouteUtilityTests(unittest.TestCase):
             self.assertIn("active", links)
 
     def test_pagingation_correct_filters(self):
-        query_params = QueryParams(4, 10, ["Vegan", "Dairy-free"], "alpha", 10)
-        links = get_continuation_links('', 100, query_params)
-        exp = "?page={}" + \
-              "&page_size={}&sort={}&min={}".format(10, "alpha", 10)
-        exp += "&tags=Vegan,Dairy-free"
-        self.assertEqual(links["first"], exp.format(0))
-        self.assertEqual(links["prev"], exp.format(3))
-        self.assertEqual(links["next"], exp.format(5))
-        self.assertEqual(links["last"], exp.format(9))
+        req_args = {"page": "4", "page_size": "10", "tags": "Vegan,Dairy-free",
+                    "sort": "alpha", "min": "10"}
+        links = get_continuation_links('', 4, 10, req_args, 100)
+        query_params = ["&page_size=10", "&sort=alpha", "&min=10", "tags=Vegan,Dairy-free"]
+        for link, page in [("first", 0), ("prev", 3), ("next", 5), ("last", 9)]:
+            self.assertIn("?page={}".format(page), links[link])
+            for query_param in query_params:
+                self.assertIn(query_param, links[link])
         self.assertEqual(links["active"], 4)
 
-        query_params.tag_filters = []
-        links = get_continuation_links('', 100, query_params)
+        req_args = {"page": "4", "page_size": "10", "sort": "alpha", "min": "10"}
+        links = get_continuation_links('', 4, 10, req_args, 100)
         self.assertNotIn("&tags=", links["first"])
         self.assertNotIn("&tags=", links["prev"])
         self.assertNotIn("&tags=", links["next"])
@@ -903,7 +951,55 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertTrue(all(r.name for r in filtered_rows))
         self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
                                              for i in range(1, 11)))
+    def test_taglist_helper(self):
+        self.assertEqual(get_taglist_from_query(dict()), [])
+        self.assertEqual(get_taglist_from_query(dict(tags="A,B")), ["A", "B"])
+        self.assertEqual(get_taglist_from_query(dict(tags="A")), ["A"])
 
+
+class SearchTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from app.api.routes import API_BP
+        cls.app = flask.Flask(__name__)
+        cls.app.register_blueprint(API_BP)
+        cls.app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///test.db'
+        cls.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        cls.app.config["SQLALCHEMY_ECHO"] = False
+        cls.database = models.db
+        cls.database.init_app(cls.app)
+        cls.ctx = cls.app.app_context()
+        cls.ctx.push()
+        cls.client = cls.app.test_client()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.ctx.pop()
+
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
+
+    def test_no_query(self):
+        resp = SearchTests.client.get('/search')
+        self.assertEqual(resp.status_code, 400)
+
+    def test_valid_query(self):
+        resp = SearchTests.client.get('/search?q=With+query')
+        resp_json = resp_to_dict(resp)
+        data = resp_json["data"]
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(data), 10)
+        self.assertEqual(data[0]["id"], "509488")
+        self.assertEqual(data[0]["name"], "Almond Joy Cheesecake")
+        self.assertEqual(set(e["pillar_name"] for e in data),
+                         {'recipes', 'ingredients', 'grocery_items', 'tags'})
+        self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
+        self.assertIn("next", resp_json["links"])
+        self.assertIn("last", resp_json["links"])
 
 # Report
 # ======
