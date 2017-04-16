@@ -2,10 +2,15 @@
 """
 Perform searches with multi-word queries using an index.
 """
+# pylint: disable=missing-docstring
 
+
+from app.project_root import get_path_to_file
+import os
 import re
 import pickle
 from app.search.descriptions import describe_item
+from app.api import models
 
 # Possible improvements
 #   > Turn words into their lexemes to handle plurality and tenses of words.
@@ -17,8 +22,8 @@ from app.search.descriptions import describe_item
 
 class SearchResult:
 
-    def __init__(self, pillar, item_id, terms):
-        self.pillar = pillar
+    def __init__(self, model, item_id, terms):
+        self.model = model
         self.item_id = item_id
         self.terms = terms
         self.contexts = None
@@ -28,7 +33,7 @@ class SearchResult:
         Build a list of substrings from the description that frame the search
         context.
         """
-        if self.pillar == "recipe":
+        if self.model.__tablename__:
             res = db.engine.execute("SELECT recipe_id, name, servings, "
                                     "ready_time, description, instructions "
                                     "FROM recipe WHERE recipe_id = {recipe_id}"
@@ -40,7 +45,7 @@ class SearchResult:
             matches = []
             for term in self.terms:
                 matches.append(re.search(term, description,
-                                         flags = re.IGNORECASE | re.DOTALL))
+                                         flags=re.IGNORECASE | re.DOTALL))
 
             matches.sort(key=lambda match: match.start())
 
@@ -63,8 +68,9 @@ class SearchResult:
             self.contexts = [description[section[0]:section[1]]
                              for section in sections]
 
+
     def __repr__(self):
-        return "<{} id={} terms={}>".format(self.pillar,
+        return "<{} id={} terms={}>".format(self.model.__tablename__,
                                             self.item_id, self.terms)
 
 def split_query(query):
@@ -76,6 +82,7 @@ def search(query):
     SearchResult objects.
     """
 
+
     args = split_query(query)
 
     if len(args) == 0:
@@ -83,7 +90,7 @@ def search(query):
 
     # TODO: Don't load pickle file here, we want to load it once.
     try:
-        index = pickle.load(open("index.p", "rb"))
+        index = pickle.load(open(get_path_to_file("search", "index.p"), "rb"))
     except FileNotFoundError as error:
         print("Index file index.p not found. You need to build the index"
               " first.\n"
@@ -109,7 +116,7 @@ def search(query):
     # Flip recipe_terms to get a terms -> recipes dictionary.
     terms_results = {}
     for recipe_id, terms in recipe_terms.items():
-        result = SearchResult("recipe", recipe_id, tuple(terms))
+        result = SearchResult(models.Recipe, recipe_id, tuple(terms))
         if result.terms not in terms_results:
             terms_results[result.terms] = list([result])
         else:
