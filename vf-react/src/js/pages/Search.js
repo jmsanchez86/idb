@@ -2,13 +2,15 @@ import React from "react";
 
 import Controller from "../components/layout/Controller";
 import Greeting from "../components/layout/Greeting";
+import SearchStore from "../stores/SearchStore";
 import SearchSystem from "../components/layout/SearchSystem";
 import VFPagination from "../components/layout/VFPagination";
+
 
 var apiRoot = '' + require('../scripts/Config.js');
 
 
-export default class Recipes extends React.Component {
+export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +19,15 @@ export default class Recipes extends React.Component {
       links:   this.initLinks(),
       data:    {},
       };
-    this.requestQuery(this.query());
+  }
+
+  componentWillMount() {
+    SearchStore.on("change", () => {
+      this.setState({
+        data: SearchStore.getData(),
+        links:SearchStore.getLinks(),
+      })
+    })
   }
 
   query() {
@@ -148,19 +158,17 @@ export default class Recipes extends React.Component {
   }
 
   render() {
-    const data = this.state.data;
-    const links= this.state.links;
+    console.log();
+    const data = SearchStore.getData();
+    const links= SearchStore.getLinks();
     return (
       <div id="search-page" class="container-fluid">
-        <Greeting />
-        <Controller
-          sorters={this.state.sorters}
-          filters={this.state.filters}
-          handleApply={this.handleApply.bind(this)} />
+        
         <SearchSystem
           width={2}
           path="recipes"
           data={data} />
+
         <VFPagination
           active={this.state.links.active}
           onSelect={this.handleSelect.bind(this)}
