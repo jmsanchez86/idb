@@ -9,10 +9,9 @@ import os
 import sys
 from app.api.main import API_SERVICE
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
-from app.api.database_connector import database_connect
 from app.search.descriptions import download_model_descriptions
 from app.search.index import build_index
-from app.search.search import page_search, search, sorted_results_keys
+from app.search.search import page_search, search_model, sorted_results_keys
 
 def cmd_text(args):
     """
@@ -45,10 +44,7 @@ def cmd_search(args):
     page = int(args[0])
     page_size = int(args[1])
 
-    def on_connect(db):
-        """
-        Perform the search after we've connected to our db
-        """
+    with API_SERVICE.app_context():
         results, count = page_search(" ".join(args[2:]), page, page_size)
         print("\n{} results found.\n".format(count))
         for idx, result in enumerate(results):
@@ -57,14 +53,12 @@ def cmd_search(args):
             for context in result.contexts:
                 print("\t" + context)
 
-    database_connect(on_connect)
-
 def cmd_searchall(args):
     """
     Perform a searchall
     """
 
-    terms_recipes = search(" ".join(args))
+    terms_recipes = search_model(" ".join(args), Recipe)
     num_results = 0
     print("\n")
     for terms in sorted_results_keys(terms_recipes):

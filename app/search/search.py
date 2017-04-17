@@ -91,7 +91,7 @@ class SearchResult:
 def split_query(query):
     return list(re.compile(r"[^\s]+").findall(query))
 
-def search(query):
+def search_model(query, model):
     """
     Performs a search on all models and their attributes. Returns a list of
     SearchResult objects.
@@ -101,33 +101,31 @@ def search(query):
     assert SEARCH_INDICES != None
     assert query != ""
 
-    args = split_query(query.lower())
+    query_terms = split_query(query.lower())
 
     # Build a dictionary mapping recipes to a list of terms they contain.
-    recipe_terms = dict()
-    for term in args:
-        if term not in SEARCH_INDICES["recipe"]:
+    id_to_terms_map = dict()
+    for term in query_terms:
+        if term not in SEARCH_INDICES[model.__tablename__]:
             continue
-        for recipe_id in SEARCH_INDICES["recipe"][term]:
-            if recipe_id not in recipe_terms:
-                recipe_terms[recipe_id] = list([term])
-            else:
-                recipe_terms[recipe_id].append(term)
+        for elem_id in SEARCH_INDICES[model.__tablename__][term]:
+            if elem_id not in id_to_terms_map:
+                id_to_terms_map[elem_id] = []
+            id_to_terms_map[elem_id].append(term)
 
     # No results found, exit early.
-    if not recipe_terms:
-        return {}
+    if len(id_to_terms_map) == 0:
+        return id_to_terms_map
 
     # Flip recipe_terms to get a terms -> recipes dictionary.
-    terms_results = {}
-    for recipe_id, terms in recipe_terms.items():
-        result = SearchResult(models.Recipe, recipe_id, tuple(terms))
-        if result.terms not in terms_results:
-            terms_results[result.terms] = list([result])
-        else:
-            terms_results[result.terms].append(result)
+    terms_to_search_results_map = dict()
+    for elem_id, terms in id_to_terms_map.items():
+        result = SearchResult(model, elem_id, tuple(terms))
+        if result.terms not in terms_to_search_results_map:
+            terms_to_search_results_map[result.terms] = []
+        terms_to_search_results_map[result.terms].append(result)
 
-    return terms_results
+    return terms_to_search_results_map
 
 def sorted_results_keys(terms_recipes):
     return [key[1] for key in
@@ -140,7 +138,7 @@ def page_search(query, page_number, page_size):
     SearchResult objects.
     """
 
-    terms_recipes = search(query)
+    terms_recipes = search_model(query, models.Recipe)
 
     start = page_number * page_size
     end = start + page_size
