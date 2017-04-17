@@ -3,67 +3,69 @@
 Perform searches with multi-word queries using an index.
 """
 # pylint: disable=missing-docstring
+# pylint: disable=global-statement
+# pylint: disable=invalid-name
 
 
-from app.project_root import get_path_to_file
-import os
 import re
 import pickle
-from app.search.descriptions import describe_item
+from app.project_root import get_path_to_file
 from app.api import models
 
-SEARCH_INDEX = None
+SEARCH_INDICES = None
 
 def init_search_index():
-    global SEARCH_INDEX
+    global SEARCH_INDICES
     try:
-        with open(get_path_to_file("search", "index.p"), "rb") as index_file:
-            SEARCH_INDEX = pickle.load(index_file)
+        current_file = "<no file>"
+        SEARCH_INDICES = dict()
+        for model in ["recipe", "ingredient", "grocery_item", "tag"]:
+            index_file_path = get_path_to_file("search", "search_indices",
+                                               model + "_index.p")
+            current_file = index_file_path
+            with open(index_file_path, "rb") as index_file:
+                SEARCH_INDICES[model] = pickle.load(index_file)
     except FileNotFoundError as error:
-        raise FileNotFoundError("Index file index.p not found.\n"
-                                "You need to build the index\n"
-                                "\tpython index.py text\n"
-                                "\tpython index.py build\n")
+        raise FileNotFoundError(str(error) + "\n\n" +
+                                "Index file {} not found.\n"
+                                "Must build the search indices\n"
+                                "\tpython main.py build\n".format(current_file))
 
 # Possible improvements
 #   > Turn words into their lexemes to handle plurality and tenses of words.
-#   > Promote search results where search terms show up together in the same 
+#   > Promote search results where search terms show up together in the same
 #     order.
 #   > Weight index items based on word hit counts and other stats.
 #   > Throw away stop words (and, or, with, of)
 #   > Handle unicode characters.
 
 class SearchResult:
-
+    # pylint: disable=too-few-public-methods
     def __init__(self, model, item_id, terms):
         self.model = model
         self.item_id = item_id
         self.terms = terms
         self.contexts = None
 
-    def contextualize(self, db):
+    def contextualize(self):
         """
         Build a list of substrings from the description that frame the search
         context.
         """
         if self.model.__tablename__:
-            res = db.engine.execute("SELECT recipe_id, name, servings, "
-                                    "ready_time, description, instructions "
-                                    "FROM recipe WHERE recipe_id = {recipe_id}"
-                                    "".format(recipe_id=self.item_id))
-            description = (describe_item("recipe", res.fetchone())
-                           .replace("\n", " ").replace("\r", " "))
-            description = re.sub(r"\.([A-Z])", r". \1", description)
+            recipe = models.Recipe.query.filter_by(recipe_id=self.item_id).first()
+            desc = recipe.describe().replace("\n", " ").replace("\r", " ")
+            desc = re.sub(r"\.([A-Z])", r". \1", desc)
 
             matches = []
             for term in self.terms:
-                matches.append(re.search(term, description,
+                matches.append(re.search(term, desc,
                                          flags=re.IGNORECASE | re.DOTALL))
 
             matches.sort(key=lambda match: match.start())
 
             def make_section(start, end):
-                return (max(start, 0), min(end, len(description)))
+                return (max(start, 0), min(end, len(desc)))
 
             sections = []
             section = make_section(matches[0].start() - 50,
@@ -78,7 +80,7 @@ class SearchResult:
             if section:
                 sections.append(section)
 
-            self.contexts = [description[section[0]:section[1]]
+            self.contexts = [desc[section[0]:section[1]]
                              for section in sections]
 
 
@@ -87,7 +89,7 @@ class SearchResult:
                                             self.item_id, self.terms)
 
 def split_query(query):
-    return list(re.compile("([^\s]+)").findall(query))
+    return list(re.compile(r"[^\s]+").findall(query))
 
 def search(query):
     """
@@ -96,7 +98,7 @@ def search(query):
     """
 
     # init_search_index must be called prior
-    assert SEARCH_INDEX != None
+    assert SEARCH_INDICES != None
     assert query != ""
 
     args = split_query(query.lower())
@@ -104,9 +106,9 @@ def search(query):
     # Build a dictionary mapping recipes to a list of terms they contain.
     recipe_terms = dict()
     for term in args:
-        if term not in SEARCH_INDEX:
+        if term not in SEARCH_INDICES["recipe"]:
             continue
-        for recipe_id in SEARCH_INDEX[term]:
+        for recipe_id in SEARCH_INDICES["recipe"][term]:
             if recipe_id not in recipe_terms:
                 recipe_terms[recipe_id] = list([term])
             else:
@@ -128,7 +130,7 @@ def search(query):
     return terms_results
 
 def sorted_results_keys(terms_recipes):
-    return [key[1] for key in 
+    return [key[1] for key in
             sorted([(len(terms), terms) for terms in terms_recipes.keys()],
                    reverse=True)]
 
@@ -175,6 +177,3 @@ def page_search(query, page_number, page_size):
 
 
     return search_results, total_result_count
-
-
-
