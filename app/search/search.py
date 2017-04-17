@@ -12,6 +12,19 @@ import pickle
 from app.search.descriptions import describe_item
 from app.api import models
 
+SEARCH_INDEX = None
+
+def init_search_index():
+    global SEARCH_INDEX
+    try:
+        with open(get_path_to_file("search", "index.p"), "rb") as index_file:
+            SEARCH_INDEX = pickle.load(index_file)
+    except FileNotFoundError as error:
+        raise FileNotFoundError("Index file index.p not found.\n"
+                                "You need to build the index\n"
+                                "\tpython index.py text\n"
+                                "\tpython index.py build\n")
+
 # Possible improvements
 #   > Turn words into their lexemes to handle plurality and tenses of words.
 #   > Promote search results where search terms show up together in the same 
@@ -82,28 +95,18 @@ def search(query):
     SearchResult objects.
     """
 
+    # init_search_index must be called prior
+    assert SEARCH_INDEX != None
+    assert query != ""
 
-    args = split_query(query)
-
-    if len(args) == 0:
-        return {}
-
-    # TODO: Don't load pickle file here, we want to load it once.
-    try:
-        index = pickle.load(open(get_path_to_file("search", "index.p"), "rb"))
-    except FileNotFoundError as error:
-        print("Index file index.p not found. You need to build the index"
-              " first.\n"
-              "\tpython index.py text\n"
-              "\tpython index.py build\n")
-        return
+    args = split_query(query.lower())
 
     # Build a dictionary mapping recipes to a list of terms they contain.
     recipe_terms = dict()
     for term in args:
-        if term not in index:
+        if term not in SEARCH_INDEX:
             continue
-        for recipe_id in index[term]:
+        for recipe_id in SEARCH_INDEX[term]:
             if recipe_id not in recipe_terms:
                 recipe_terms[recipe_id] = list([term])
             else:
