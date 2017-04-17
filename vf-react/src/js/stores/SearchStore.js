@@ -4,17 +4,27 @@ import Dispatcher from "../Dispatcher";
 class SearchStore extends EventEmitter {
   constructor() {
     super();
-    this.state = {
-      value: "",
+    this.values = "";
+    this.response = {data: [], links:{}};
+    this.err = "";
     }
-  }
+
 
   handleRequest(obj) {
     console.log(obj);
   }
-  handleResponse(obj) {
-    console.log(obj);
+  handleResponse(response) {
+    this.response = response;
+    console.log(this.response);
+    this.emit("change");
   }
+  getData() {
+    return this.response.data;
+  }
+  getLinks() {
+    return this.response.links;
+  }
+
   handleError(obj) {
     console.log(obj);
   }
