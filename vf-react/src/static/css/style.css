@@ -409,7 +409,6 @@ input[type="radio"] {
 }
 
 
-
 #custom-search-input {
   margin:0;
   margin-top: 10px;
@@ -466,4 +465,9 @@ input[type="radio"] {
 #SearchButton {
   display: inline-block !important;
   /*float:left !important;*/
+}
+
+span .search-context{
+  font-size: 22px;
+  font-weight: 500;
 }

@@ -2,18 +2,14 @@ import React from "react";
 import SearchItem from "./SearchItem";
 import { ListGroup } from "react-bootstrap";
 
-
 export default class SearchSystem extends React.Component {
 
-  getSearchItems(data, path) {
+  getSearchItems(data) {
     const searchItems=[];
-    var i = 0;
-    const w = this.props.width;
-    for (var id in data) {
-      if (!(i++ % w)) {
-        searchItems.push(<div key={"clear-"+i} class="clearfix"></div>);
-      }
-      searchItems.push(<SearchItem key={id} path={path} item={data[id]} />);
+    console.log(data);
+    for (var id in data) { 
+      console.log(id);
+      searchItems.push(<SearchItem key={id} path={this.props.path +  "/" + data[id].pillar_name + "/" + id} item={data[id]} />);
     }
     return searchItems;
   }
@@ -22,7 +18,7 @@ export default class SearchSystem extends React.Component {
     return (
       <div class="container-fluid" id="grid-page">
         <ListGroup>
-            {this.getSearchItems(this.props.data, this.props.path)}
+            {this.getSearchItems(this.props.data)}
         </ListGroup>
       </div>
     );

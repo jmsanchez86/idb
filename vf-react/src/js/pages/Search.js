@@ -15,6 +15,7 @@ export default class Recipes extends React.Component {
       filters: this.initFilters(),
       sorters: this.initSorters(),
       links:   this.initLinks(),
+      path: "http://" + apiRoot,
       data:    {},
       };
     this.requestQuery(this.query());
@@ -23,25 +24,25 @@ export default class Recipes extends React.Component {
   query() {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://" + apiRoot + "/recipes?page_size=16&sort=";
+    var params = "http://" + apiRoot + "/search?q=cheese";
 
-    for (var id in sorters) {
-      if (sorters[id].checked)
-        params += id;
-    }
+    // for (var id in sorters) {
+    //   if (sorters[id].checked)
+    //     params += id;
+    // }
 
-    var firstTag = true;
-    for (var id in filters ) {
-      if (filters[id].checked) {
-        if (firstTag) {
-          firstTag = false;
-          params += "&tags="
-        }
-        params += filters[id].name + ",";
-      }
-    }
-    params = firstTag ? params : params.substring(0, params.length-1);
-    params += "&page=" + 0;
+    // var firstTag = true;
+    // for (var id in filters ) {
+    //   if (filters[id].checked) {
+    //     if (firstTag) {
+    //       firstTag = false;
+    //       params += "&tags="
+    //     }
+    //     params += filters[id].name + ",";
+    //   }
+    // }
+    // params = firstTag ? params : params.substring(0, params.length-1);
+    // params += "&page=" + 0;
     return params;
   }
 
@@ -58,15 +59,14 @@ export default class Recipes extends React.Component {
               response.status);
         }
         response.json().then(function(responseData) {
-          for (var id in responseData.data){
-            _data[id] = responseData.data[id];
+          for (var result of responseData.data){
+            _data[result.id] = result;
           }
-          for (var id in responseData.links){
-            _links[id] = responseData.links[id];
-          }
+          
 
           _this.state.data = _data;
-          _this.state.links = _links;
+          //console.log(_data);
+          _this.state.links = responseData.links; //_links;
           _this.forceUpdate();
 
         });
@@ -110,16 +110,6 @@ export default class Recipes extends React.Component {
           {
              name: "Z - A",
              checked: false
-          },
-        ready_time_asc:
-          {
-             name: "Quickest First",
-             checked: false
-          },
-        ready_time_desc:
-          {
-             name: "Slowest FIrst",
-             checked: false
           }
       }
     )
@@ -149,18 +139,15 @@ export default class Recipes extends React.Component {
 
   render() {
     const data = this.state.data;
+    //console.log(data);
+    const path = this.state.path;
     const links= this.state.links;
     return (
       <div id="search-page" class="container-fluid">
         <Greeting />
-        <Controller
-          sorters={this.state.sorters}
-          filters={this.state.filters}
-          handleApply={this.handleApply.bind(this)} />
         <SearchSystem
-          width={2}
-          path="recipes"
-          data={data} />
+          data={data} 
+          path={path}/>
         <VFPagination
           active={this.state.links.active}
           onSelect={this.handleSelect.bind(this)}
