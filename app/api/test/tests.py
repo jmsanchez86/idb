@@ -8,6 +8,7 @@ import unittest
 from app.scraping.importer import strip_html
 from app.api import models
 from app.search import search
+from app.search.search import SearchResult
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
 from app.api.routes import filter_nulls, get_continuation_links,\
                            get_taglist_from_query
@@ -1009,7 +1010,7 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(set(e["pillar_name"] for e in data),
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
-        
+
         span_open = """<span class="search-context">"""
         span_close = "</span>"
         for e in data:
@@ -1021,6 +1022,26 @@ class SearchTests(unittest.TestCase):
         caps_q = resp_to_dict(SearchTests.client.get('/search?q=Corn'))["data"]
         lower_q = resp_to_dict(SearchTests.client.get('/search?q=corn'))["data"]
         self.assertEqual(caps_q, lower_q)
+
+class SearchResultClassTests(unittest.TestCase):
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
+
+    def test_tag_description(self):
+        # def tag_description(desc: str, terms_to_tag: List[str]) -> str:
+        desc = "apple banana clementine dogfood egg food apple banana"
+        terms_to_tag = ["apple", "clementine", "dogfood"]
+        span_open = """<span class="search-context">"""
+        span_close = "</span>"
+        tagged_desc = ("{so}apple{sc} banana {so}clementine{sc} {so}dogfood{sc}"
+                       " egg food {so}apple{sc} banana"
+                       .format(so=span_open, sc=span_close))
+        self.assertEqual(tagged_desc,
+                         SearchResult.tag_description(desc, terms_to_tag))
 
 # Report
 # ======
