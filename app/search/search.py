@@ -53,8 +53,8 @@ class SearchResult:
         context.
         """
         if self.model.__tablename__:
-            recipe = models.Recipe.query.filter_by(recipe_id=self.item_id).first()
-            desc = recipe.describe().replace("\n", " ").replace("\r", " ")
+            item = self.model.get(self.item_id)
+            desc = item.describe().replace("\n", " ").replace("\r", " ")
             desc = re.sub(r"\.([A-Z])", r". \1", desc)
 
             matches = []
