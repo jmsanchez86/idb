@@ -1043,8 +1043,9 @@ class SearchTests(unittest.TestCase):
                 self.assertIn(span_close, context)
 
     def test_case_insensitive_query(self):
-        caps_q = resp_to_dict(SearchTests.client.get('/search?q=Corn'))["data"]
-        lower_q = resp_to_dict(SearchTests.client.get('/search?q=corn'))["data"]
+        client = SearchTests.client
+        caps_q = resp_to_dict(client.get('/search?q=Cream cheese'))["data"]
+        lower_q = resp_to_dict(client.get('/search?q=cream cheese'))["data"]
         self.assertEqual(caps_q, lower_q)
 
 class SearchResultClassTests(unittest.TestCase):

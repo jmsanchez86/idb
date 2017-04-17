@@ -26,7 +26,7 @@ def init_search_index():
             current_file = index_file_path
             with open(index_file_path, "rb") as index_file:
                 SEARCH_INDICES[model] = pickle.load(index_file)
-    except FileNotFoundError as error:
+    except FileNotFoundError as error:  # pragma: no cover
         raise FileNotFoundError(str(error) + "\n\n" +
                                 "Index file {} not found.\n"
                                 "Must build the search indices\n"
@@ -100,7 +100,7 @@ class SearchResult:
                          for section in sections]
 
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         return "<{} id={} terms={}>".format(self.model.__tablename__,
                                             self.item_id, self.terms)
 
