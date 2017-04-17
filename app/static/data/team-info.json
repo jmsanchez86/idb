@@ -37,7 +37,7 @@
         "bio": "Scott is a senior at the University of Texas at Austin studying Computer Science. In the past he's interned with Google and Microsoft, and will be returning fulltime to Microsoft in the Fall of 2017. In his free time Scott enjoys playing videogames, listening to crazy music, and poorly quoting old episodes of the Simpsons.",
         "responsibilities": "Setup Google Cloud Platform, helped design database models and query strategy, scraped data for the database, helped build search functionality, implemented the flask routes, led Agile Development.",
         "imgUrl": "https://scottnm.github.io/images/profile_pic.jpg",
-        "numberOfUnitTests": 69
+        "numberOfUnitTests": 70
     },
     {
         "name": "Jose Sanchez",

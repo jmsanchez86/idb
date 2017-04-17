@@ -247,6 +247,23 @@ class ModelTests(unittest.TestCase):
         time_elapsed = time.time() - self.start_time
         print("%s: %.3f" % (self.id(), time_elapsed))
 
+    def test_get_id_on_main_pillars(self):
+        r = Recipe(1, "", "", "", "", 0, 0, "")
+        self.assertEqual(r.get_id(), r.recipe_id)
+        self.assertEqual(1, r.get_id())
+
+        i = Ingredient(2, "", "", "")
+        self.assertEqual(i.get_id(), i.ingredient_id)
+        self.assertEqual(2, i.get_id())
+
+        g = GroceryItem(3, 0, "", "", "")
+        self.assertEqual(g.get_id(), g.grocery_id)
+        self.assertEqual(3, g.get_id())
+
+        t = Tag("4", "", "")
+        self.assertEqual(t.get_id(), t.tag_name)
+        self.assertEqual("4", t.get_id())
+
     def test_get_all_recipe(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
             query, table_size_query = Recipe.get_all([], "alpha", 0, 1)
