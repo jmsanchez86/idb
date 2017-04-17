@@ -14,4 +14,4 @@ saved_ingredient_images/
 scrape_config.py
 dump.sql
 keyfile.py
-
+test_description_download.py
