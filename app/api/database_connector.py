@@ -21,5 +21,7 @@ def database_connect(callback):
 
     ctx.pop()
 
-
-
+def get_connection_context():
+    ctx = API_SERVICE.app_context()
+    ctx.push()
+    return ctx
