@@ -1009,6 +1009,13 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(set(e["pillar_name"] for e in data),
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
+        
+        span_open = """<span class="search-context">"""
+        span_close = "</span>"
+        for e in data:
+            for context in e["contexts"]:
+                self.assertIn(span_open, context)
+                self.assertIn(span_close, context)
 
     def test_case_insensitive_query(self):
         caps_q = resp_to_dict(SearchTests.client.get('/search?q=Corn'))["data"]
