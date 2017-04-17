@@ -408,3 +408,8 @@ input[type="radio"] {
 #grid_item_name {
   text-transform: capitalize;
 }
+
+span .search-context{
+  font-size: 22px;
+  font-weight: 500;
+}
