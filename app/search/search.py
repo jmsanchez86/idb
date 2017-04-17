@@ -11,6 +11,7 @@ import re
 import pickle
 from app.project_root import get_path_to_file
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
+from typing import List
 
 SEARCH_INDICES = None
 
@@ -47,41 +48,56 @@ class SearchResult:
         self.terms = terms
         self.contexts = None
 
+    @staticmethod
+    def tag_description(desc: str, terms_to_tag: List[str]) -> str:
+        """
+        Given a string, replace all occurences of each tag term with that tag
+        term wrapped in span tags.
+        """
+        for term in terms_to_tag:
+            desc = re.sub(term, """<span class="search-context">""" + term +
+                          "</span>", desc, flags=re.IGNORECASE)
+        return desc
+
     def contextualize(self):
         """
         Build a list of substrings from the description that frame the search
         context.
         """
-        if self.model.__tablename__:
-            item = self.model.get(self.item_id)
-            desc = item.describe().replace("\n", " ").replace("\r", " ")
-            desc = re.sub(r"\.([A-Z])", r". \1", desc)
+        assert self.model != None
 
-            matches = []
-            for term in self.terms:
-                matches.append(re.search(term, desc,
-                                         flags=re.IGNORECASE | re.DOTALL))
+        item = self.model.get(self.item_id)
+        desc = item.describe().replace("\n", " ").replace("\r", " ")
+        desc = re.sub(r"\.([A-Z])", r". \1", desc)
+        desc = SearchResult.tag_description(desc, self.terms)
 
-            matches.sort(key=lambda match: match.start())
+        matches = []
+        for term in self.terms:
+            matches.append(re.search(term, desc,
+                                     flags=re.IGNORECASE | re.DOTALL))
 
-            def make_section(start, end):
-                return (max(start, 0), min(end, len(desc)))
+        matches.sort(key=lambda match: match.start())
 
-            sections = []
-            section = make_section(matches[0].start() - 50,
-                                   matches[0].end() + 50)
-            for match in matches[1:]:
-                if match.start() <= section[1]:
-                    section = make_section(section[0], match.end() + 50)
-                else:
-                    sections.append(section)
-                    section = make_section(match.start() - 50,
-                                           match.end() + 50)
-            if section:
+        def make_section(start, end):
+            return (max(start, 0), min(end, len(desc)))
+
+        num_leading_chars = 50 + len("""<span class="search-context">""")
+        num_following_chars = 50 + len("</span>")
+        sections = []
+        section = make_section(matches[0].start() - num_leading_chars,
+                               matches[0].end() + num_following_chars)
+        for match in matches[1:]:
+            if match.start() <= section[1]:
+                section = make_section(section[0], match.end() + num_following_chars)
+            else:
                 sections.append(section)
+                section = make_section(match.start() - num_leading_chars,
+                                       match.end() + num_following_chars)
+        if section:
+            sections.append(section)
 
-            self.contexts = [desc[section[0]:section[1]]
-                             for section in sections]
+        self.contexts = [desc[section[0]:section[1]]
+                         for section in sections]
 
 
     def __repr__(self):
