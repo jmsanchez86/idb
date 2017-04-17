@@ -50,6 +50,57 @@ class Recipe(db.Model):
     def __repr__(self): # pragma: no cover
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
+    def get_id(self):
+        return self.recipe_id
+
+    def describe(self):
+        """
+        Generate a text description of a recipes attributes.
+        """
+
+        def format_minutes(ready_time):
+            """
+            Take an integral amount of minutes and return a human-readable text
+            version.
+            """
+            minutes = ready_time % 60
+            hours = (ready_time // 60) % 24
+            days = ready_time // (60 * 24)
+
+            unit_strs = []
+
+            if days == 1:
+                unit_strs.append("{} day".format(days))
+            elif days > 1:
+                unit_strs.append("{} days".format(days))
+
+            if hours == 1:
+                unit_strs.append("{} hour".format(hours))
+            elif hours > 1:
+                unit_strs.append("{} hours".format(hours))
+
+            if minutes == 1:
+                unit_strs.append("{} minute".format(minutes))
+            elif minutes > 1:
+                unit_strs.append("{} minutes".format(minutes))
+
+            return ", ".join(unit_strs)
+
+        fmt = ("{name}\n"
+               "Recipe id: {id}\n"
+               "Servings: {servings}\n"
+               "Ready in: {ready_time}\n"
+               "Decription: {description}\n"
+               "Instructions: {instructions}")
+
+        return fmt.format(name=self.name,
+                          id=self.recipe_id,
+                          servings=self.servings,
+                          ready_time=format_minutes(self.ready_time),
+                          description=self.description,
+                          instructions=self.instructions)
+
+
     @staticmethod
     def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False),
@@ -122,6 +173,21 @@ class Ingredient(db.Model):
 
     def __repr__(self): # pragma: no cover
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
+
+    def get_id(self):
+        return self.ingredient_id
+
+    def describe(self):
+        """
+        Generate a text description of a ingredient attributes.
+        """
+        fmt = ("{name}\n"
+               "Ingredient id: {id}\n"
+               "Aisle: {aisle}\n")
+
+        return fmt.format(name=self.name,
+                          id=self.ingredient_id,
+                          aisle=self.aisle)
 
     def get_grocery_items(self):
         return db.session.query(GroceryItem).filter_by(ingredient_id=self.ingredient_id)
@@ -227,6 +293,15 @@ class GroceryItem(db.Model):
     def __repr__(self): # pragma: no cover
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
+    def get_id(self):
+        return self.grocery_id
+
+    def describe(self):
+        """
+        Generate a text description of a grocery item attributes.
+        """
+        return "{name}\nupc: {upc}\n".format(name=self.name, upc=self.upc)
+
     @staticmethod
     def get(grocery_id):
         query = db.session.query(GroceryItem).filter_by(grocery_id=grocery_id)
@@ -301,6 +376,16 @@ class Tag(db.Model):
 
     def __repr__(self): # pragma: no cover
         return "<Tag %s>" % (self.tag_name)
+
+    def get_id(self):
+        return self.tag_name
+
+    def describe(self):
+        """
+        Generate a text description of a grocery item attributes.
+        """
+        return "{name}\ndescription: {desc}\n".format(name=self.tag_name,
+                                                      desc=self.description)
 
     @staticmethod
     def get(tag_name):
