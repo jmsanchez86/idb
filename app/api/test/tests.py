@@ -7,6 +7,7 @@ import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
+from app.search import search
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
 from app.api.routes import filter_nulls, get_continuation_links,\
                            get_taglist_from_query
@@ -520,6 +521,7 @@ class RouteTests(unittest.TestCase):
         cls.app.config["SQLALCHEMY_ECHO"] = False
         cls.database = models.db
         cls.database.init_app(cls.app)
+        search.init_search_index()
         cls.ctx = cls.app.app_context()
         cls.ctx.push()
         cls.client = cls.app.test_client()
@@ -968,6 +970,7 @@ class SearchTests(unittest.TestCase):
         cls.app.config["SQLALCHEMY_ECHO"] = False
         cls.database = models.db
         cls.database.init_app(cls.app)
+        search.init_search_index()
         cls.ctx = cls.app.app_context()
         cls.ctx.push()
         cls.client = cls.app.test_client()
@@ -987,19 +990,29 @@ class SearchTests(unittest.TestCase):
         resp = SearchTests.client.get('/search')
         self.assertEqual(resp.status_code, 400)
 
+    def test_empty_query(self):
+        resp = SearchTests.client.get('/search?q=    ')
+        self.assertTrue(False)
+
     def test_valid_query(self):
-        resp = SearchTests.client.get('/search?q=With+query')
+        resp = SearchTests.client.get('/search?q=Cream')
         resp_json = resp_to_dict(resp)
         data = resp_json["data"]
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(len(data), 10)
-        self.assertEqual(data[0]["id"], "509488")
-        self.assertEqual(data[0]["name"], "Almond Joy Cheesecake")
+        self.assertEqual(data[0]["id"], "719744")
+        self.assertEqual(data[0]["name"], "Chocolate protein cake , "
+                                          "How to make high protein bread")
         self.assertEqual(set(e["pillar_name"] for e in data),
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
         self.assertIn("next", resp_json["links"])
         self.assertIn("last", resp_json["links"])
+
+    def test_case_insensitive_query(self):
+        caps_q = resp_to_dict(SearchTests.client.get('/search?q=Corn'))["data"]
+        lower_q = resp_to_dict(SearchTests.client.get('/search?q=corn'))["data"]
+        self.assertEqual(caps_q, lower_q)
 
 # Report
 # ======
