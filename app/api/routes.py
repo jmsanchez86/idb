@@ -254,9 +254,13 @@ def search():
     if "q" not in req.args:
         return flask.abort(400)
 
+    query = req.args.get("q").strip()
+    if query == "":
+        return flask.abort(400)
+
     page = int(req.args.get("page", 0))
     page_size = int(req.args.get("page_size", 10))
-    results, search_size = Search.page_search(req.args.get("q"), page, page_size)
+    results, search_size = Search.page_search(query, page, page_size)
     xformed_results = [r.model.search_result_xform(r) for r in results]
     links = get_continuation_links(req.base_url, page, page_size, req.args,
                                    search_size)

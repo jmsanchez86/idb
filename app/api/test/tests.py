@@ -992,7 +992,7 @@ class SearchTests(unittest.TestCase):
 
     def test_empty_query(self):
         resp = SearchTests.client.get('/search?q=    ')
-        self.assertTrue(False)
+        self.assertTrue(resp.status_code, 400)
 
     def test_valid_query(self):
         resp = SearchTests.client.get('/search?q=Cream')
