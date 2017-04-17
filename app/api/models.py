@@ -96,7 +96,7 @@ class Recipe(db.Model):
         inst = Recipe.get(search_result.item_id)
         return {
             "id": str(inst.recipe_id),
-            "pillar_name": "recipe",
+            "pillar_name": "recipes",
             "name": str(inst.name),
             "image": inst.image_url,
             "contexts": search_result.contexts
@@ -136,7 +136,7 @@ class Ingredient(db.Model):
         inst = Ingredient.get(search_result.item_id)
         return {
             "id": str(inst.ingredient_id),
-            "pillar_name": "ingredient",
+            "pillar_name": "ingredients",
             "name": str(inst.name),
             "image": inst.image_url,
             "contexts": search_result.contexts
@@ -238,7 +238,7 @@ class GroceryItem(db.Model):
         inst = GroceryItem.get(search_result.item_id)
         return {
             "id": str(inst.grocery_id),
-            "pillar_name": "grocery_item",
+            "pillar_name": "grocery_items",
             "name": str(inst.name),
             "image": inst.image_url,
             "contexts": search_result.contexts
@@ -313,7 +313,7 @@ class Tag(db.Model):
         inst = Tag.get(search_result.item_id)
         return {
             "id": tag_name,
-            "pillar_name": "tag",
+            "pillar_name": "tags",
             "name": tag_name,
             "image": inst.image_url,
             "contexts": search_result.contexts
