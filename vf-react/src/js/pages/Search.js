@@ -14,7 +14,7 @@ export default class Recipes extends React.Component {
       filters: this.initFilters(),
       sorters: this.initSorters(),
       links:   this.initLinks(),
-      path: "http://" + apiRoot,
+      path: "http://vennfridge.me",
       data:    {},
       };
     this.requestQuery(this.query());
