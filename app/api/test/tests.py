@@ -331,6 +331,13 @@ class ModelTests(unittest.TestCase):
                          set(("Beverage", "Vegan", "Gluten-free", "Whole30",
                               "Dairy-free", "Vegetarian")))
 
+    def test_recipe_describe(self):
+        r_1 = Recipe(0, "", "", "", "", 1501, 0, "")
+        self.assertIn("1 day, 1 hour, 1 minute", r_1.describe())
+
+        r_multiple = Recipe(0, "", "", "", "", 3002, 0, "")
+        self.assertIn("2 days, 2 hours, 2 minutes", r_multiple.describe())
+
     def test_get_all_ingredient(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
             query, table_size_query = Ingredient.get_all([], "alpha", 0, 1)
