@@ -6,7 +6,7 @@ export default class SearchItem extends React.Component {
   getContexts(contexts) {
     const context_html_list = [];
     for (var c of contexts) {
-      context_html_list.push((<p class="search-c">... <span key={c}  dangerouslySetInnerHTML={{__html: c}} /> ...</p>))
+      context_html_list.push((<p key={c} class="search-c">... <span dangerouslySetInnerHTML={{__html: c}} /> ...</p>))
     }
     return context_html_list;
   }

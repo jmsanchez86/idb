@@ -11,37 +11,18 @@ export default class Recipes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: this.initFilters(),
-      sorters: this.initSorters(),
       links:   this.initLinks(),
-      path: "http://vennfridge.me",
       data:    {},
       };
     this.requestQuery(this.query());
   }
 
-  query() {
+  query(search_string) {
     const sorters = this.state.sorters;
     const filters = this.state.filters;
-    var params = "http://" + apiRoot + "/search?q=cheese";
+    var params = "http://" + apiRoot + "/search?q="+search_string;
 
-    // for (var id in sorters) {
-    //   if (sorters[id].checked)
-    //     params += id;
-    // }
-
-    // var firstTag = true;
-    // for (var id in filters ) {
-    //   if (filters[id].checked) {
-    //     if (firstTag) {
-    //       firstTag = false;
-    //       params += "&tags="
-    //     }
-    //     params += filters[id].name + ",";
-    //   }
-    // }
-    // params = firstTag ? params : params.substring(0, params.length-1);
-    // params += "&page=" + 0;
+    params += "&page=" + 0;
     return params;
   }
 
@@ -64,7 +45,6 @@ export default class Recipes extends React.Component {
           
 
           _this.state.data = _data;
-          //console.log(_data);
           _this.state.links = responseData.links; //_links;
           _this.forceUpdate();
 
@@ -75,44 +55,6 @@ export default class Recipes extends React.Component {
       });
   }
 
-  initFilters() {
-    const _filters = {
-      1 : {
-             name : 'Ingredients',
-             checked : false
-          },
-      2 : {
-             name : 'Recipes',
-             checked : false
-          },
-      3 : {
-             name : 'Grocery Items',
-             checked : false
-          },
-      4 : {
-             name : 'Tags',
-             checked : false
-          }
-    };
-    return _filters;
-  }
-
-  initSorters() {
-    return (
-      {
-        alpha:
-          {
-            name: "A - Z",
-            checked: true
-          },
-        alpha_reverse:
-          {
-             name: "Z - A",
-             checked: false
-          }
-      }
-    )
-  }
   initLinks() {
     return (
       {
@@ -129,7 +71,7 @@ export default class Recipes extends React.Component {
           active: 0
         }
       });
-    const request = this.query();
+    const request = this.query("cheese");
     this.requestQuery(request);
   }
   handleSelect(type) {
@@ -138,15 +80,12 @@ export default class Recipes extends React.Component {
 
   render() {
     const data = this.state.data;
-    //console.log(data);
-    const path = this.state.path;
     const links= this.state.links;
     return (
       <div id="search-page" class="container-fluid">
         <Greeting />
         <SearchSystem
-          data={data} 
-          path={path}/>
+          data={data} />
         <VFPagination
           active={this.state.links.active}
           onSelect={this.handleSelect.bind(this)}

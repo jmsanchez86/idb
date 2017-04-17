@@ -17,7 +17,6 @@ export default class OptionalList extends React.Component {
   render() {
     const title = this.props.title;
     const empty = !this.props.list.length;
-    console.log(this.props.list);
 
     return (
       <div>
