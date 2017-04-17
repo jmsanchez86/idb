@@ -995,19 +995,20 @@ class SearchTests(unittest.TestCase):
         self.assertTrue(resp.status_code, 400)
 
     def test_valid_query(self):
-        resp = SearchTests.client.get('/search?q=Cream')
-        resp_json = resp_to_dict(resp)
-        data = resp_json["data"]
-        self.assertEqual(resp.status_code, 200)
-        self.assertEqual(len(data), 10)
-        self.assertEqual(data[0]["id"], "719744")
-        self.assertEqual(data[0]["name"], "Chocolate protein cake , "
-                                          "How to make high protein bread")
+        data = []
+        for i in ((0, 10), (17, 5), (10, 10), (39, 5)):
+            url = "/search?q=Sauce&page={}&page_size={}".format(i[0], i[1])
+            resp = SearchTests.client.get(url)
+            self.assertEqual(resp.status_code, 200)
+            resp_data = resp_to_dict(resp)["data"]
+            data.extend(resp_data)
+        self.assertEqual(len(data), 27)
+        self.assertEqual(data[0]["id"], "573568")
+        self.assertEqual(data[0]["name"], "Snickers Rice Krispie Treats with "
+                                          "Salted Caramel")
         self.assertEqual(set(e["pillar_name"] for e in data),
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
-        self.assertIn("next", resp_json["links"])
-        self.assertIn("last", resp_json["links"])
 
     def test_case_insensitive_query(self):
         caps_q = resp_to_dict(SearchTests.client.get('/search?q=Corn'))["data"]

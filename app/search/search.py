@@ -10,7 +10,7 @@ Perform searches with multi-word queries using an index.
 import re
 import pickle
 from app.project_root import get_path_to_file
-from app.api import models
+from app.api.models import Recipe, Ingredient, GroceryItem, Tag
 
 SEARCH_INDICES = None
 
@@ -91,7 +91,7 @@ class SearchResult:
 def split_query(query):
     return list(re.compile(r"[^\s]+").findall(query))
 
-def search_model(query, model):
+def search_model(query, model, terms_to_search_results_map):
     """
     Performs a search on all models and their attributes. Returns a list of
     SearchResult objects.
@@ -113,12 +113,7 @@ def search_model(query, model):
                 id_to_terms_map[elem_id] = []
             id_to_terms_map[elem_id].append(term)
 
-    # No results found, exit early.
-    if len(id_to_terms_map) == 0:
-        return id_to_terms_map
-
     # Flip recipe_terms to get a terms -> recipes dictionary.
-    terms_to_search_results_map = dict()
     for elem_id, terms in id_to_terms_map.items():
         result = SearchResult(model, elem_id, tuple(terms))
         if result.terms not in terms_to_search_results_map:
@@ -127,9 +122,9 @@ def search_model(query, model):
 
     return terms_to_search_results_map
 
-def sorted_results_keys(terms_recipes):
+def sorted_results_keys(search_results_map):
     return [key[1] for key in
-            sorted([(len(terms), terms) for terms in terms_recipes.keys()],
+            sorted([(len(terms), terms) for terms in search_results_map.keys()],
                    reverse=True)]
 
 def page_search(query, page_number, page_size):
@@ -138,40 +133,16 @@ def page_search(query, page_number, page_size):
     SearchResult objects.
     """
 
-    terms_recipes = search_model(query, models.Recipe)
+    search_results_map = search_model(query, Recipe, dict())
+    search_results_map = search_model(query, Ingredient, search_results_map)
+    search_results_map = search_model(query, GroceryItem, search_results_map)
+    search_results_map = search_model(query, Tag, search_results_map)
 
     start = page_number * page_size
     end = start + page_size
-    set_n = 0
-    total_index = 0
-    search_results = []
-    sorted_keys = sorted_results_keys(terms_recipes)
+    sorted_keys = sorted_results_keys(search_results_map)
+    search_results = [result
+                      for key in sorted_keys
+                      for result in search_results_map[key]]
 
-    total_result_count = 0
-    for _, result_set in terms_recipes.items():
-        total_result_count += len(result_set)
-
-    # Find the first result set for the requested page.
-    while set_n < len(terms_recipes):
-        result_set = terms_recipes[sorted_keys[set_n]]
-        if total_index + len(result_set) > start:
-            break
-        total_index += len(result_set)
-        set_n += 1
-
-    # Starting with the first result set of the page, fill search results
-    # until the page size is met.
-    result_index = start - total_index
-    while (len(search_results) < end - start
-           and set_n < len(terms_recipes)):
-        result_set = list(terms_recipes[sorted_keys[set_n]])
-        while (len(search_results) < end - start
-               and result_index < len(result_set)):
-            search_results.append(result_set[result_index])
-            result_index += 1
-        result_index = 0
-        set_n += 1
-
-
-
-    return search_results, total_result_count
+    return search_results[start:end], len(search_results)

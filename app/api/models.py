@@ -143,7 +143,7 @@ class Recipe(db.Model):
 
     @staticmethod
     def search_result_xform(search_result):
-        search_result.contextualize(db)
+        search_result.contextualize()
         inst = Recipe.get(search_result.item_id)
         return {
             "id": str(inst.recipe_id),
@@ -198,7 +198,7 @@ class Ingredient(db.Model):
 
     @staticmethod
     def search_result_xform(search_result):
-        search_result.contextualize(db)
+        search_result.contextualize()
         inst = Ingredient.get(search_result.item_id)
         return {
             "id": str(inst.ingredient_id),
@@ -309,7 +309,7 @@ class GroceryItem(db.Model):
 
     @staticmethod
     def search_result_xform(search_result):
-        search_result.contextualize(db)
+        search_result.contextualize()
         inst = GroceryItem.get(search_result.item_id)
         return {
             "id": str(inst.grocery_id),
@@ -394,12 +394,12 @@ class Tag(db.Model):
 
     @staticmethod
     def search_result_xform(search_result):
-        search_result.contextualize(db)
+        search_result.contextualize()
         inst = Tag.get(search_result.item_id)
         return {
-            "id": tag_name,
+            "id": inst.tag_name,
             "pillar_name": "tags",
-            "name": tag_name,
+            "name": inst.tag_name,
             "image": inst.image_url,
             "contexts": search_result.contexts
         }

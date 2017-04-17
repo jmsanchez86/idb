@@ -47,9 +47,10 @@ def cmd_search(args):
     with API_SERVICE.app_context():
         results, count = page_search(" ".join(args[2:]), page, page_size)
         print("\n{} results found.\n".format(count))
+        for result in results:
+            result.contextualize()
         for idx, result in enumerate(results):
             print("{:3d}: {}".format(idx, result))
-            result.contextualize()
             for context in result.contexts:
                 print("\t" + context)
 
@@ -58,11 +59,11 @@ def cmd_searchall(args):
     Perform a searchall
     """
 
-    terms_recipes = search_model(" ".join(args), Recipe)
+    terms_map = search_model(" ".join(args), Recipe, dict())
     num_results = 0
     print("\n")
-    for terms in sorted_results_keys(terms_recipes):
-        result_set = terms_recipes[terms]
+    for terms in sorted_results_keys(terms_map):
+        result_set = terms_map[terms]
         print("{} results containing {}".format(len(result_set), terms))
         print(", ".join(str(result.item_id) for result in result_set))
         print("\n")
