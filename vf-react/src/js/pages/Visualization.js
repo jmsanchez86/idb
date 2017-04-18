@@ -2,24 +2,27 @@ import React from "react";
 
 import * as d3 from "d3";
 
-var total = 0;
+var film_total = 0;
+var planet_total = 0;
+var char_total = 0;
+var global_total = 0;
+
+var link_total = 0;
+var links_ = [];
 export default class Visual extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			count : 0,
-			width : 1920,
+		    width : 1920,
 			height : 1080,
-			end : 0,
-			graph : { 	
-						nodes : [{id : "Hello", group : 10, film : true},
-								 {id : "World", group : 10, film : false}], 
-						links : [{source : "World", target : "Hello", value : 5}]
-					},
-			final_graph : {
-							 nodes : [],
-							 links : []
-						  },
+
+			film_nodes : [],
+			char_nodes : [],
+			plan_nodes : [],
+
+			film_links : [],
+			char_links : [],
+			plan_links : [],
 		}
 	}
 
@@ -34,7 +37,7 @@ export default class Visual extends React.Component {
 		var simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.id; }))
 		    .force("charge", d3.forceManyBody())
-		    .force("center", d3.forceCenter(this.state.width / 2, this.state.height / 2));
+		    .force("center", d3.forceCenter(this.state.width / 3, this.state.height / 3));
 		
 
 		var link = svg.append("g")
@@ -49,7 +52,7 @@ export default class Visual extends React.Component {
 		  .selectAll("circle")
 		  .data(graph.nodes)
 		  .enter().append("circle")
-		    .attr("r", function(d) { d.film ? radius=15 : radius=9; return radius;})
+		    .attr("r", function(d) { d.film ? radius=20 : radius=10; return radius;})
 		    .attr("fill", function(d) { return color(d.group); })
 		    .call(d3.drag()
 		        .on("start", dragstarted)
@@ -96,9 +99,10 @@ export default class Visual extends React.Component {
 		}
 	}
 
-	requestData(requestString, graph, film, group) {
+	requestData(requestString, target, type) {
 		var _this = this;
-		var count = _this.state.count++;
+		var links = [];
+
 		fetch(requestString)
 		  .then(function(response) {
 		     if (response.status !== 200) {
@@ -106,29 +110,16 @@ export default class Visual extends React.Component {
 		           response.status);
 		     }
 		     response.json().then(function(responseData) {
-		      //console.log(responseData);
-		    	for (var id in responseData) {
-		    		const item = responseData[id];
-		    		
-		    		console.log({id : item.name, group : group, film : false});
-		    		graph.nodes.push({id : item.name, group : group, film : false});
 
-		    		console.log({source : item.name, target : film, value : 5 });
-		    		graph.links.push({source : item.name, target : film, value : 5 });
-		    	}	
-
-		    	    _this.setState({ final_graph : graph, count: count });
-		    	    console.log(_this.state.final_graph);
-		    	    console.log("Count");
-		    	    console.log(_this.state.count);
-		    	    total++;
-		    	    console.log("Total");
-		    	    console.log(total);
-		    	    if (total === 34) {
-		    	    	var setme = new Set(_this.state.final_graph.nodes);
-		    	    	console.log(setme);
-		    	    	_this.buildGraph(_this.state.final_graph);
-		    	    }
+		     	//console.log(responseData);
+		    	links_.push({source: responseData[0].name, target: target, value: 5});	
+		    	link_total++;
+		    	global_total++;
+		 		console.log(global_total);
+		    	 
+		    	if (link_total === 121) {
+		    		console.log(links_);
+		    	}
 		    	});
 		     })
 		   .catch(function(err) {
@@ -137,11 +128,14 @@ export default class Visual extends React.Component {
 	}
 
 	componentDidMount() {
+		this.buildGraph();
+	}
+
+
+	buildFilmNodes () {
 		var _this = this;
-		var graph = {
-			nodes : [],
-			links : []
-		};
+		var nodes = [];
+
 		var request;
 		// Acquire films
 		for (var i = 1; i < 3; i++){
@@ -153,18 +147,30 @@ export default class Visual extends React.Component {
 		            console.log('Looks like there was a problem loading sweawakens info. Status Code: ' +
 		              response.status);
 		        }
-		        console.log(request);
 		        response.json().then(function(responseData) {
 		    		for (var id in responseData) {
 		    			const film = responseData[id];
-		    			graph.nodes.push({id : film.title, group : film.episode_no, film : true});
-		    			for (var pid in film.planet_list) {
+		    			nodes.push({id : film.title, group : film.episode_no, film : true});
+		    			for (var pid in film.planet_list){
 		    				const planet = film.planet_list[pid];
-		    				_this.requestData(planet, graph, film.title, film.episode_no);
+		    				_this.requestData(planet, film.title, "film");
 		    			}
 		    		}	
 
-		    		_this.setState({ final_graph : graph});
+		    		_this.setState({ film_nodes : nodes });
+		    		film_total++;
+		    		global_total++;
+		    		console.log(global_total);
+		    		if (global_total === 28){
+		    			console.log("Done.");
+		    			var final = nodes.concat(_this.state.char_nodes);
+		    			final = final.concat(_this.state.plan_nodes);
+		    			var graph = {
+		    							nodes : final,
+		    							links : [],
+		    						};
+		    			_this.visualize(graph);
+		    		}
 
 		        });
 		      })
@@ -173,14 +179,106 @@ export default class Visual extends React.Component {
 		      });
 		}
 	}
+	buildPlanetNodes() {
+		var _this = this;
+		var nodes = [];
 
-	buildGraph(graph) {
-		this.visualize(graph);
+		var request;
+		// Acquire planets
+		for (var i = 1; i < 12; i++){
+			request = "http://www.thesweawakens.me/api/planets/?page=";
+			request += i;
+			fetch(request)
+		      .then(function(response) {
+		        if (response.status !== 200) {
+		            console.log('Looks like there was a problem loading sweawakens info. Status Code: ' +
+		              response.status);
+		        }
+		        response.json().then(function(responseData) {
+		    		for (var id in responseData) {
+		    			const planet = responseData[id];
+		    			nodes.push({id : planet.name, group : 10, film : false});
+		    			for (var cid in planet.character_list) {
+		    				const charr = planet.character_list[cid];
+		    				_this.requestData(charr, planet.name, "planet");
+		    			}
+		    		}	
+
+		    		_this.setState({ plan_nodes : nodes });
+		    		planet_total++;
+		    		global_total++;
+		    		console.log(global_total);
+		    		if (global_total === 28){
+		    			console.log("Done.");
+		    			var final = nodes.concat(_this.state.char_nodes);
+		    			final = final.concat(_this.state.film_nodes);
+		    			var graph = {
+		    							nodes : final,
+		    							links : [],
+		    						};
+		    			_this.visualize(graph);
+		    		}
+
+		        });
+		      })
+		    .catch(function(err) {
+		        console.log('Fetch Error: -S', err);
+		      });
+		}
+	}
+	buildCharNodes() {
+		var _this = this;
+		var nodes = [];
+
+		var request;
+		// Acquire planets
+		for (var i = 1; i < 16; i++){
+			request = "http://www.thesweawakens.me/api/characters/?page=";
+			request += i;
+			fetch(request)
+		      .then(function(response) {
+		        if (response.status !== 200) {
+		            console.log('Looks like there was a problem loading sweawakens info. Status Code: ' +
+		              response.status);
+		        }
+		        response.json().then(function(responseData) {
+		    		for (var id in responseData) {
+		    			const char = responseData[id];
+		    			nodes.push({id : char.name, group : 15, film : false});
+		    		}	
+
+		    		_this.setState({ char_nodes : nodes });
+		    		char_total++;
+		    		global_total++;
+		    		console.log(global_total);
+		    		if (global_total === 28){
+		    			console.log("Done.");
+		    			var final = nodes.concat(_this.state.plan_nodes);
+		    			final = final.concat(_this.state.film_nodes);
+		    			var graph = {
+		    							nodes : final,
+		    							links : [],
+		    						};
+		    			_this.visualize(graph);
+		    		}
+
+		        });
+		      })
+		    .catch(function(err) {
+		        console.log('Fetch Error: -S', err);
+		      });
+		}
+
+	}
+	buildGraph() {
+		this.buildFilmNodes();
+		this.buildPlanetNodes();
+		this.buildCharNodes();
 	}
 
 	render() {
 		return (
-			<div class="container">
+			<div>
 			<svg width={this.state.width} height={this.state.height}>
 			</svg>
 			</div>
