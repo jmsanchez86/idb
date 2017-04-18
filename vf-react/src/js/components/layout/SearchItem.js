@@ -34,9 +34,8 @@ export default class SearchItem extends React.Component {
         <div class="caption col-md-9 col-sm-6 col-xs-12">
 
             <h4 id="search_item_name" class="search">
-            {name && name.length > 50 ? name.substr(0,100) + "..." : name}
+              {name && name.length > 50 ? name.substr(0,100) + "..." : name}
             </h4>
-
 
             {this.getContexts(item.contexts)}
 
