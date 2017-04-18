@@ -51,9 +51,15 @@ export default class Search extends React.Component {
     const value= SearchStore.getValue();
     return (
       <div id="search-page" class="container-fluid">
+        <VFPagination
+          active={links.active}
+          onSelect={this.handleSelect.bind(this)}
+          links={links} />
+
         <div id="SearchHeader">
           Search results for "{value}"
         </div>
+
         <SearchSystem
           data={data} />
         <VFPagination
