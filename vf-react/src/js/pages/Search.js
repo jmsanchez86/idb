@@ -16,12 +16,14 @@ export default class Search extends React.Component {
     this.state = {
       links:   this.initLinks(),
       data:    {},
+      value:   ""
       };
   }
 
   componentWillMount() {
     SearchStore.on("change", () => {
       this.setState({
+        value:SearchStore.getValue(),
         data: SearchStore.getData(),
         links:SearchStore.getLinks(),
       })
@@ -43,13 +45,15 @@ export default class Search extends React.Component {
   }
 
   render() {
-
     const path = this.state.path;
     const data = SearchStore.getData();
     const links= SearchStore.getLinks();
+    const value= SearchStore.getValue();
     return (
       <div id="search-page" class="container-fluid">
-
+        <div id="SearchHeader">
+          Search results for "{value}"
+        </div>
         <SearchSystem
           data={data} />
         <VFPagination

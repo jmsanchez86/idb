@@ -486,3 +486,9 @@ span .search-context{
   font-weight: 600;
   background-color: #ccd5e5;
 }
+
+#SearchHeader {
+  font-family: Dosis;
+  font-size: 30px;
+  text-align: center;
+}

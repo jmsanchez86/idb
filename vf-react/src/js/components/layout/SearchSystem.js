@@ -5,7 +5,7 @@ import { ListGroup } from "react-bootstrap";
 export default class SearchSystem extends React.Component {
 
   getSearchItems() {
-    const data = this.props.data;
+    const data = this.props.data.and;
 
     const searchItems=[];
 
@@ -20,7 +20,7 @@ export default class SearchSystem extends React.Component {
 
   render() {
     return (
-      <div class="container-fluid" id="grid-page">
+      <div class="container-fluid" id="SearchSystem">
         <ListGroup>
             {this.getSearchItems()}
         </ListGroup>

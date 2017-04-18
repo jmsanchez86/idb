@@ -16,15 +16,16 @@ export default class SearchBar extends React.Component {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit() {
-    SearchActions.searchSubmit(this.state.value);
-    this.setState({value: ""});
-    
+  handleSubmit(e) {
+    if (!this.state.value.length) {
+      e.preventDefault();
+    }
+    else {
+      SearchActions.searchSubmit(this.state.value);
+      this.setState({value: ""});
+    }
   }
 
-  sanitizeString() {
-    return this.state.value.replace(/[^\w\s]/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
-  }
   getLink() {
     return "search" +  sanitizeString();
   }
@@ -44,6 +45,7 @@ export default class SearchBar extends React.Component {
             <span class="input-group-btn">
             <Link onClick={this.handleSubmit.bind(this)} to="search">
               <button
+                disabled={!this.state.value.length}
                 class="btn btn-md btn-default"
                 id="SearchButton"
                 type="submit button"
