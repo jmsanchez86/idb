@@ -22,7 +22,6 @@ export function searchSubmit(value) {
         // console.log(_data);
         // console.log(_links);
         const obj = {data: _data, links: _links};
-        console.log(obj);
         Dispatcher.dispatch({type:"SEARCH_RESPONSE", obj});
 
       });
