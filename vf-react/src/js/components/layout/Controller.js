@@ -3,7 +3,6 @@ import { IndexLink, Link } from "react-router";
 import { FormGroup, InputGroup, FormControl, Button, MenuItem, Glyphicon } from "react-bootstrap";
 import BigButton from "./BigButton";
 import Modal from "./Modal";
-import SearchBar from "./SearchBar";
 
 export default class Controller extends React.Component {
   constructor() {

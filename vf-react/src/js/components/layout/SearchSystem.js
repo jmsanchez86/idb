@@ -8,7 +8,6 @@ export default class SearchSystem extends React.Component {
     const data = this.props.data;
 
     const searchItems=[];
-    console.log(data);
     for (var id in data) {
       const item = data[id];
       searchItems.push(<SearchItem
