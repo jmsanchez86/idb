@@ -42,11 +42,12 @@ def init_search_index():
 
 class SearchResult:
     # pylint: disable=too-few-public-methods
-    def __init__(self, model, item_id, terms):
+    def __init__(self, model, item_id, terms, is_and):
         self.model = model
         self.item_id = item_id
         self.terms = terms
         self.contexts = None
+        self.is_and = is_and
 
     @staticmethod
     def tag_description(desc: str, terms_to_tag: List[str]) -> str:
@@ -131,7 +132,8 @@ def search_model(query, model, terms_to_search_results_map):
 
     # Flip recipe_terms to get a terms -> recipes dictionary.
     for elem_id, terms in id_to_terms_map.items():
-        result = SearchResult(model, elem_id, tuple(terms))
+        result = SearchResult(model, elem_id, tuple(terms),
+                              len(terms) == len(query_terms))
         if result.terms not in terms_to_search_results_map:
             terms_to_search_results_map[result.terms] = []
         terms_to_search_results_map[result.terms].append(result)

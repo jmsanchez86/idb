@@ -261,7 +261,15 @@ def search():
     page = int(req.args.get("page", 0))
     page_size = int(req.args.get("page_size", 10))
     results, search_size = Search.page_search(query, page, page_size)
+
     xformed_results = [r.model.search_result_xform(r) for r in results]
+    data = {"and": [], "or": []}
+    for r in results:
+        if r.is_and:
+            data["and"].append(r.model.search_result_xform(r))
+        else:
+            data["or"].append(r.model.search_result_xform(r))
+
     links = get_continuation_links(req.base_url, page, page_size, req.args,
                                    search_size)
-    return flask.json.jsonify({'data': xformed_results, 'links': links})
+    return flask.json.jsonify({'data': data, 'links': links})

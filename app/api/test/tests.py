@@ -1026,7 +1026,8 @@ class SearchTests(unittest.TestCase):
             resp = SearchTests.client.get(url)
             self.assertEqual(resp.status_code, 200)
             resp_data = resp_to_dict(resp)["data"]
-            data.extend(resp_data)
+            data.extend(resp_data["and"])
+            data.extend(resp_data["or"])
         self.assertEqual(len(data), 27)
         self.assertEqual(data[0]["id"], "573568")
         self.assertEqual(data[0]["name"], "Snickers Rice Krispie Treats with "
@@ -1044,8 +1045,13 @@ class SearchTests(unittest.TestCase):
 
     def test_case_insensitive_query(self):
         client = SearchTests.client
-        caps_q = resp_to_dict(client.get('/search?q=Cream cheese'))["data"]
-        lower_q = resp_to_dict(client.get('/search?q=cream cheese'))["data"]
+
+        caps_resp = client.get('/search?q=Cream cheese&page_size=50&page=1')
+        lower_resp = client.get('/search?q=cream cheese&page_size=50&page=1')
+
+        caps_q = resp_to_dict(caps_resp)["data"]
+        lower_q = resp_to_dict(lower_resp)["data"]
+
         self.assertEqual(caps_q, lower_q)
 
 class SearchResultClassTests(unittest.TestCase):
