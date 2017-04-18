@@ -8,7 +8,7 @@ export default class SearchSystem extends React.Component {
     const searchItems=[];
 
     const and = this.props.data.and;
-    if (and) {
+    if (and && and.length) {
       searchItems.push(
         <h5><center> AND Results </center> </h5>
       )
@@ -20,7 +20,7 @@ export default class SearchSystem extends React.Component {
       }
     }
     const or = this.props.data.or;
-    if (or) {
+    if (or && or.length) {
       searchItems.push(
         <h5><center>OR Results</center></h5>
       )

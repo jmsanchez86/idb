@@ -8,16 +8,24 @@ class SearchStore extends EventEmitter {
     this.err = "";
   }
 
+  getQuery(sanitizedValue) {
+    return "http://api.vennfridge.appspot.com/search?q=" + sanitizedValue;
+  }
   sanitizeString(value) {
     return value.replace(/[^\w\s-']/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
   }
-  handleRequest(value) {
-    this.value = value;
-    const query = this.sanitizeString(value);
+  searchRequest(value) {
+    const query = this.getQuery(this.sanitizeString(value));
+    console.log(query);
+    this.urlRequest(query, value);
+  }
+
+  urlRequest(query, value) {
     var _data = {};
     var _links = {};
+    value = value ? value : this.value;
     // call api with new query params
-    fetch("http://api.vennfridge.appspot.com/search?q="+query)
+    fetch(query)
       .then(function(response) {
         if (response.status !== 200) {
             console.log('Looks like there was a problem loading vennfridge info. Status Code: ' +
@@ -31,7 +39,7 @@ class SearchStore extends EventEmitter {
             _links[elem] = responseData.links[elem];
           }
           const obj = {data: _data, links: _links, value: value};
-          Dispatcher.dispatch({type:"SEARCH_RESPONSE", obj});
+          Dispatcher.dispatch({type:"RESPONSE", obj});
         });
       })
     .catch(function(err) {
@@ -42,7 +50,6 @@ class SearchStore extends EventEmitter {
 
   handleResponse(response) {
     this.response = response;
-
     this.emit("change");
   }
   getData() {
@@ -62,10 +69,15 @@ class SearchStore extends EventEmitter {
     console.log(action);
     switch(action.type) {
       case "SEARCH_REQUEST": {
-        this.handleRequest(action.value);
+        this.searchRequest(action.value);
         break;
       }
-      case "SEARCH_RESPONSE": {
+      case "URL_REQUEST": {
+        console.log(action.query);
+        this.urlRequest(action.query);
+        break;
+      }
+      case "RESPONSE": {
         this.handleResponse(action.obj);
         break;
       }
