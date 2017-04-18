@@ -468,6 +468,5 @@ input[type="radio"] {
 }
 
 span .search-context{
-  font-size: 22px;
-  font-weight: 500;
+  font-style: italic;
 }
