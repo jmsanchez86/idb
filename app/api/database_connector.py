@@ -1,12 +1,13 @@
-
 """
 Describe a simple interface for connecting to the database, abstracting away
-any necessary setup and teardown code. This is intended for code that only 
+any necessary setup and teardown code. This is intended for code that only
 needs database access.
 """
+# pylint: disable=missing-docstring
 
 from app.api.main import API_SERVICE
 from app.api.models import db
+
 
 def database_connect(callback):
     """
@@ -20,6 +21,7 @@ def database_connect(callback):
     callback(db)
 
     ctx.pop()
+
 
 def get_connection_context():
     ctx = API_SERVICE.app_context()

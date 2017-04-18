@@ -13,6 +13,7 @@ from app.search.descriptions import download_model_descriptions
 from app.search.index import build_index
 from app.search.search import page_search, search_model, sorted_results_keys
 
+
 def cmd_text(args):
     """
     Download the model descriptions as text
@@ -21,6 +22,7 @@ def cmd_text(args):
     with API_SERVICE.app_context():
         for model in [Recipe, Ingredient, GroceryItem, Tag]:
             download_model_descriptions(model)
+
 
 def cmd_build(args):
     """
@@ -34,6 +36,7 @@ def cmd_build(args):
             index_path = os.path.join("search_indices", tablename + "_index.p")
             os.makedirs(os.path.dirname(index_path), exist_ok=True)
             build_index(model, index_path)
+
 
 def cmd_search(args):
     """
@@ -54,6 +57,7 @@ def cmd_search(args):
             for context in result.contexts:
                 print("\t" + context)
 
+
 def cmd_searchall(args):
     """
     Perform a searchall
@@ -71,6 +75,7 @@ def cmd_searchall(args):
 
     print("{num_results} results found.\n"
           .format(num_results=num_results))
+
 
 def main():
     """
@@ -101,10 +106,11 @@ def main():
 
         for syntax, desc in descriptions:
             print("{}{} - {}".format(syntax,
-                                     " "*(syntax_max_len - len(syntax)),
+                                     " " * (syntax_max_len - len(syntax)),
                                      desc))
     else:
         commands[sys.argv[1]](sys.argv[2:])
+
 
 if __name__ == "__main__":
     main()

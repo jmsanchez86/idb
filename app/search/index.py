@@ -1,22 +1,32 @@
-
 """
 Build a search index of the database.
 """
 
-import os
 import re
 import pickle
 
+
 def build_index(model, index_filename):
+    """
+    Given a model and an index file it, create the search index for the model
+    model a model
+    index_filename the index's filename
+    """
+
     index = dict()
-    maximum_wordlength = 20
-    def add_to_index(id, text):
+
+    def add_to_index(model_id, text):
+        """
+        Add the terms for a model instance's description to the index
+        model_id the id of the model instance
+        text the description text to index
+        """
         terms = [t.lower() for t in re.compile(r"[\w\'\-]+").findall(text)]
         for term in terms:
             if term in index:
-                index[term].add(id)
+                index[term].add(model_id)
             else:
-                index[term] = {id}
+                index[term] = {model_id}
 
     count = model.query.count()
     status_freq = count // 10
@@ -24,8 +34,8 @@ def build_index(model, index_filename):
 
     for i, row in enumerate(rows):
         index_text = row.describe()
-        id = row.get_id()
-        add_to_index(id, index_text)
+        model_id = row.get_id()
+        add_to_index(model_id, index_text)
 
         if i % status_freq == 0:
             print("Progress: {:.1f}%".format((i / count) * 100))

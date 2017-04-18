@@ -20,12 +20,14 @@ API_BP = flask.Blueprint('api', __name__)
 
 tag_image_prefix = "/static/images/tags/"
 
+
 def get_taglist_from_query(query_args: dict) -> List[str]:
     return query_args.get("tags").split(",") if "tags" in query_args else []
 
 ###################
 # Browse Endpoint #
 ###################
+
 
 def get_continuation_links(base_url: str, page: int, page_size: int,
                            req_args: dict, maxsize: int):
@@ -63,7 +65,8 @@ def get_all_ingredients():
     sort_key = req.args.get("sort", "alpha")
     tags = get_taglist_from_query(req.args)
 
-    query, table_size_query = Ingredient.get_all(tags, sort_key, page, page_size)
+    query, table_size_query = Ingredient.get_all(
+        tags, sort_key, page, page_size)
     links = get_continuation_links(req.base_url, page, page_size, req.args,
                                    table_size_query.fetchone()[0])
 
@@ -262,7 +265,6 @@ def search():
     page_size = int(req.args.get("page_size", 10))
     results, search_size = Search.page_search(query, page, page_size)
 
-    xformed_results = [r.model.search_result_xform(r) for r in results]
     data = {"and": [], "or": []}
     for r in results:
         if r.is_and:

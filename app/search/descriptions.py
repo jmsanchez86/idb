@@ -5,6 +5,7 @@ Generate description strings for items of pillars.
 
 import os
 
+
 def download_model_descriptions(model):
     """
     Download database data, generate descriptions, and save the descriptions

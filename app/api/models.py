@@ -15,7 +15,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 db = SQLAlchemy()  # type: SQLAlchemy
 
 
-def init_db(app): # pragma: no cover
+def init_db(app):  # pragma: no cover
     app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
     db.init_app(app)
 
@@ -37,7 +37,7 @@ class Recipe(db.Model):
     source_url = db.Column(db.Text)
 
     def __init__(self, recipe_id, name, image_url, instructions, description,
-                 ready_time, servings, source_url): # pragma: no cover
+                 ready_time, servings, source_url):  # pragma: no cover
         self.recipe_id = recipe_id
         self.name = name
         self.image_url = image_url
@@ -47,7 +47,7 @@ class Recipe(db.Model):
         self.servings = servings
         self.source_url = source_url
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
     def get_id(self):
@@ -99,7 +99,6 @@ class Recipe(db.Model):
                           ready_time=format_minutes(self.ready_time),
                           description=self.description,
                           instructions=self.instructions)
-
 
     @staticmethod
     def get_all(filters, order, page, page_size):
@@ -153,6 +152,7 @@ class Recipe(db.Model):
             "contexts": search_result.contexts
         }
 
+
 class Ingredient(db.Model):
     """
     Table of ingredients.
@@ -165,13 +165,13 @@ class Ingredient(db.Model):
     image_url = db.Column(db.Text)
     aisle = db.Column(db.Text)
 
-    def __init__(self, ingredient_id, name, image_url, aisle): # pragma: no cover
+    def __init__(self, ingredient_id, name, image_url, aisle):  # pragma: no cover
         self.ingredient_id = ingredient_id
         self.name = name
         self.image_url = image_url
         self.aisle = aisle
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
     def get_id(self):
@@ -255,11 +255,11 @@ class IngredientSubstitute(db.Model):
 
     ingredient = db.relationship("Ingredient", back_populates="substitutes")
 
-    def __init__(self, ingredient_id, substitute): # pragma: no cover
+    def __init__(self, ingredient_id, substitute):  # pragma: no cover
         self.ingredient_id = ingredient_id
         self.substitute = substitute
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<Ingredient Substitute %d %s>" % (self.ingredient_id,
                                                   self.substitute)
 
@@ -283,14 +283,14 @@ class GroceryItem(db.Model):
     image_url = db.Column(db.Text)
     upc = db.Column(db.String(20))
 
-    def __init__(self, grocery_id, ingredient_id, name, image_url, upc): # pragma: no cover
+    def __init__(self, grocery_id, ingredient_id, name, image_url, upc):  # pragma: no cover
         self.grocery_id = grocery_id
         self.ingredient_id = ingredient_id
         self.name = name
         self.image_url = image_url
         self.upc = upc
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
     def get_id(self):
@@ -369,12 +369,12 @@ class Tag(db.Model):
     image_url = db.Column(db.Text)
     description = db.Column(db.Text)
 
-    def __init__(self, tag_name, image_url, description): # pragma: no cover
+    def __init__(self, tag_name, image_url, description):  # pragma: no cover
         self.tag_name = tag_name
         self.image_url = image_url
         self.description = description
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<Tag %s>" % (self.tag_name)
 
     def get_id(self):
@@ -440,12 +440,12 @@ class RecipeIngredient(db.Model):
     recipe = db.relationship("Recipe", back_populates="ingredients")
     ingredient = db.relationship("Ingredient", back_populates="recipes")
 
-    def __init__(self, recipe_id, ingredient_id, verbal_quantity): # pragma: no cover
+    def __init__(self, recipe_id, ingredient_id, verbal_quantity):  # pragma: no cover
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
         self.verbal_quantity = verbal_quantity
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<RecipeIngredient %d %d>" % (
             self.recipe_id,
             self.ingredient_id)
@@ -474,11 +474,11 @@ class TagIngredient(db.Model):
     ingredient = db.relationship("Ingredient",
                                  back_populates="tag_ingredient_assocs")
 
-    def __init__(self, tag_name, ingredient_id): # pragma: no cover
+    def __init__(self, tag_name, ingredient_id):  # pragma: no cover
         self.tag_name = tag_name
         self.ingredient_id = ingredient_id
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<TagIngredient %s %d>" % (self.tag_name, self.ingredient_id)
 
 
@@ -505,11 +505,11 @@ class TagRecipe(db.Model):
     tag = db.relationship("Tag", back_populates="tag_recipe_assocs")
     recipe = db.relationship("Recipe", back_populates="tag_recipe_assocs")
 
-    def __init__(self, tag_name, recipe_id): # pragma: no cover
+    def __init__(self, tag_name, recipe_id):  # pragma: no cover
         self.tag_name = tag_name
         self.recipe_id = recipe_id
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<TagRecipe %s %d>" % (self.tag_name, self.recipe_id)
 
 
@@ -532,7 +532,7 @@ class TagGroceryItem(db.Model):
     ingredient_id = db.Column(db.Integer, primary_key=True)
     grocery_id = db.Column(db.Integer, primary_key=True)
 
-    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], # type: ignore
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id],  # type: ignore
                                               [GroceryItem.ingredient_id,
                                                GroceryItem.grocery_id]), {})
 
@@ -540,12 +540,12 @@ class TagGroceryItem(db.Model):
     grocery_item = db.relationship("GroceryItem",
                                    back_populates="tag_grocery_item_assocs")
 
-    def __init__(self, tag_name, ingredient_id, grocery_id): # pragma: no cover
+    def __init__(self, tag_name, ingredient_id, grocery_id):  # pragma: no cover
         self.tag_name = tag_name
         self.ingredient_id = ingredient_id
         self.grocery_id = grocery_id
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "<TagGroceryItem %s %d>" % (self.tag_name, self.grocery_id)
 
 
@@ -574,7 +574,7 @@ class SimilarRecipe(db.Model):
                              foreign_keys=[recipe_id])
     similar = db.relationship("Recipe", foreign_keys=[similar_id])
 
-    def __init__(self, recipe_id, similar_id): # pragma: no cover
+    def __init__(self, recipe_id, similar_id):  # pragma: no cover
         self.recipe_id = recipe_id
         self.similar_id = similar_id
 
@@ -597,7 +597,7 @@ class SimilarGroceryItem(db.Model):
     grocery_id = db.Column(db.Integer, primary_key=True)
     similar_id = db.Column(db.Integer, primary_key=True)
 
-    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id], # type: ignore
+    __table_args__ = (db.ForeignKeyConstraint([ingredient_id, grocery_id],  # type: ignore
                                               [GroceryItem.ingredient_id,
                                                GroceryItem.grocery_id]),
                       db.ForeignKeyConstraint([ingredient_id, similar_id],
@@ -610,7 +610,7 @@ class SimilarGroceryItem(db.Model):
     similar = db.relationship("GroceryItem",
                               foreign_keys=[ingredient_id, similar_id])
 
-    def __init__(self, ingredient_id, grocery_id, similar_id): # pragma: no cover
+    def __init__(self, ingredient_id, grocery_id, similar_id):  # pragma: no cover
         self.ingredient_id = ingredient_id
         self.grocery_id = grocery_id
         self.similar_id = similar_id

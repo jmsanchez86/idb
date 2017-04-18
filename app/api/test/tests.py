@@ -12,12 +12,13 @@ from app.search import search
 from app.search.search import SearchResult
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
 from app.api.routes import filter_nulls, get_continuation_links,\
-                           get_taglist_from_query
+    get_taglist_from_query
 from app.api.test import test_data
 import flask
 
 SPAN_OPEN = """<span class="search-context">"""
 SPAN_CLOSE = "</span>"
+
 
 class DatabaseIntegrityTests(unittest.TestCase):
     """
@@ -833,10 +834,12 @@ class RouteTests(unittest.TestCase):
     def test_query_params_carry_over(self):
         with self.subTest(msg="test recipe, ingredient, grocery items"):
             endpoints = ['/recipes', '/ingredients', '/grocery_items']
-            query_pieces = ['&page_size=5', '&sort=alpha_reverse', '&tags=Vegan,Vegetarian']
+            query_pieces = ['&page_size=5',
+                            '&sort=alpha_reverse', '&tags=Vegan,Vegetarian']
             query = ''.join(query_pieces)
             for e in endpoints:
-                resp = resp_to_dict(RouteTests.client.get(e + '?page=1' + query))
+                resp = resp_to_dict(
+                    RouteTests.client.get(e + '?page=1' + query))
                 for qp in query_pieces:
                     self.assertIn(qp, resp["links"]["first"])
                     self.assertIn(qp, resp["links"]["prev"])
@@ -856,7 +859,8 @@ class RouteTests(unittest.TestCase):
         with self.subTest(msg="test search"):
             query_pieces = ['q=Test+query', '&page_size=10']
             query = ''.join(query_pieces)
-            resp = resp_to_dict(RouteTests.client.get('/search?page=1&' + query))
+            resp = resp_to_dict(RouteTests.client.get(
+                '/search?page=1&' + query))
             for qp in query_pieces:
                 self.assertIn(qp, resp["links"]["first"])
                 self.assertIn(qp, resp["links"]["prev"])
@@ -873,7 +877,8 @@ class RouteUtilityTests(unittest.TestCase):
         print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_pagination_retain_sort_min_page_size(self):
-        req_args = {"page": "2", "page_size": "1", "sort": "alpha", "min": "10"}
+        req_args = {"page": "2", "page_size": "1",
+                    "sort": "alpha", "min": "10"}
         links = get_continuation_links('', 2, 1, req_args, 100)
         query_params = ["&page_size=1", "&sort=alpha", "&min=10"]
         for link, page in [("first", 0), ("prev", 1), ("next", 3), ("last", 99)]:
@@ -921,14 +926,16 @@ class RouteUtilityTests(unittest.TestCase):
         req_args = {"page": "4", "page_size": "10", "tags": "Vegan,Dairy-free",
                     "sort": "alpha", "min": "10"}
         links = get_continuation_links('', 4, 10, req_args, 100)
-        query_params = ["&page_size=10", "&sort=alpha", "&min=10", "tags=Vegan,Dairy-free"]
+        query_params = ["&page_size=10", "&sort=alpha",
+                        "&min=10", "tags=Vegan,Dairy-free"]
         for link, page in [("first", 0), ("prev", 3), ("next", 5), ("last", 9)]:
             self.assertIn("?page={}".format(page), links[link])
             for query_param in query_params:
                 self.assertIn(query_param, links[link])
         self.assertEqual(links["active"], 4)
 
-        req_args = {"page": "4", "page_size": "10", "sort": "alpha", "min": "10"}
+        req_args = {"page": "4", "page_size": "10",
+                    "sort": "alpha", "min": "10"}
         links = get_continuation_links('', 4, 10, req_args, 100)
         self.assertNotIn("&tags=", links["first"])
         self.assertNotIn("&tags=", links["prev"])
@@ -981,6 +988,7 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertTrue(all(r.name for r in filtered_rows))
         self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
                                              for i in range(1, 11)))
+
     def test_taglist_helper(self):
         self.assertEqual(get_taglist_from_query(dict()), [])
         self.assertEqual(get_taglist_from_query(dict(tags="A,B")), ["A", "B"])
@@ -1071,8 +1079,10 @@ class SearchTests(unittest.TestCase):
         for c in contexts:
             open_spans = re.compile(r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
             self.assertEqual(open_spans, [])
-            close_spans = re.compile(r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
+            close_spans = re.compile(
+                r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
             self.assertEqual(close_spans, [])
+
 
 class SearchResultClassTests(unittest.TestCase):
     def setUp(self):

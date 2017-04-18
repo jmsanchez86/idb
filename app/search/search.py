@@ -15,6 +15,7 @@ from typing import List
 
 SEARCH_INDICES = None
 
+
 def init_search_index():
     global SEARCH_INDICES
     try:
@@ -39,6 +40,7 @@ def init_search_index():
 #   > Weight index items based on word hit counts and other stats.
 #   > Throw away stop words (and, or, with, of)
 #   > Handle unicode characters.
+
 
 class SearchResult:
     # pylint: disable=too-few-public-methods
@@ -90,7 +92,8 @@ class SearchResult:
                                matches[0].end() + num_following_chars)
         for match in matches[1:]:
             if match.start() <= section[1]:
-                section = make_section(section[0], match.end() + num_following_chars)
+                section = make_section(
+                    section[0], match.end() + num_following_chars)
             else:
                 sections.append(section)
                 section = make_section(match.start() - num_leading_chars,
@@ -101,13 +104,14 @@ class SearchResult:
         self.contexts = [desc[section[0]:section[1]]
                          for section in sections]
 
-
     def __repr__(self):  # pragma: no cover
         return "<{} id={} terms={}>".format(self.model.__tablename__,
                                             self.item_id, self.terms)
 
+
 def split_query(query):
     return list(re.compile(r"[^\s]+").findall(query))
+
 
 def search_model(query, model, terms_to_search_results_map):
     """
@@ -141,10 +145,12 @@ def search_model(query, model, terms_to_search_results_map):
 
     return terms_to_search_results_map
 
+
 def sorted_results_keys(search_results_map):
     return [key[1] for key in
             sorted([(len(terms), terms) for terms in search_results_map.keys()],
                    reverse=True)]
+
 
 def page_search(query, page_number, page_size):
     """
