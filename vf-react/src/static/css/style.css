@@ -408,6 +408,7 @@ input[type="radio"] {
   text-transform: capitalize;
 }
 
+<<<<<<< HEAD
 
 #custom-search-input {
   margin:0;
@@ -470,4 +471,25 @@ input[type="radio"] {
 span .search-context{
   font-size: 22px;
   font-weight: 500;
+=======
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  box-shadow: 0px 2px 10px #2a3b59;
+  z-index: 999;
+}
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  z-index: 999;
+}
+
+.search-c {
+  background-color: #f4f8ff;
+}
+
+span .search-context{
+  font-weight: 600;
+  background-color: #ccd5e5;
+>>>>>>> 009b3e07ba9a22b0af086a3308c043fe63d09898
 }

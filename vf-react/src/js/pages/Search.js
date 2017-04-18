@@ -14,10 +14,7 @@ export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: this.initFilters(),
-      sorters: this.initSorters(),
       links:   this.initLinks(),
-      path: "http://" + apiRoot,
       data:    {},
       };
   }
@@ -31,44 +28,6 @@ export default class Search extends React.Component {
     })
   }
 
-  initFilters() {
-    const _filters = {
-      1 : {
-             name : 'Ingredients',
-             checked : false
-          },
-      2 : {
-             name : 'Recipes',
-             checked : false
-          },
-      3 : {
-             name : 'Grocery Items',
-             checked : false
-          },
-      4 : {
-             name : 'Tags',
-             checked : false
-          }
-    };
-    return _filters;
-  }
-
-  initSorters() {
-    return (
-      {
-        alpha:
-          {
-            name: "A - Z",
-            checked: true
-          },
-        alpha_reverse:
-          {
-             name: "Z - A",
-             checked: false
-          }
-      }
-    )
-  }
   initLinks() {
     return (
       {
@@ -84,6 +43,7 @@ export default class Search extends React.Component {
   }
 
   render() {
+
     const path = this.state.path;
     const data = SearchStore.getData();
     const links= SearchStore.getLinks();
@@ -91,10 +51,7 @@ export default class Search extends React.Component {
       <div id="search-page" class="container-fluid">
 
         <SearchSystem
-          width={2}
-          path="recipes"
           data={data} />
-
         <VFPagination
           active={this.state.links.active}
           onSelect={this.handleSelect.bind(this)}
