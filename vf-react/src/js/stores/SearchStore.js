@@ -4,7 +4,7 @@ import Dispatcher from "../Dispatcher";
 class SearchStore extends EventEmitter {
   constructor() {
     super();
-    this.response = {data: [], links:{}};
+    this.state = {data: [], links:{}, value: ""};
     this.err = "";
   }
 
@@ -16,14 +16,16 @@ class SearchStore extends EventEmitter {
   }
   searchRequest(value) {
     const query = this.getQuery(this.sanitizeString(value));
-    console.log(query);
     this.urlRequest(query, value);
   }
 
   urlRequest(query, value) {
     var _data = {};
     var _links = {};
-    value = value ? value : this.value;
+    console.log(value);
+    console.log(this.value);
+    value = value ? value : this.state.value;
+    console.log(value);
     // call api with new query params
     fetch(query)
       .then(function(response) {
@@ -49,17 +51,17 @@ class SearchStore extends EventEmitter {
   }
 
   handleResponse(response) {
-    this.response = response;
+    this.state = response;
     this.emit("change");
   }
   getData() {
-    return this.response.data;
+    return this.state.data;
   }
   getLinks() {
-    return this.response.links;
+    return this.state.links;
   }
   getValue() {
-    return this.response.value;
+    return this.state.value;
   }
   handleError(obj) {
     console.log(obj);
