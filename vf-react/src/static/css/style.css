@@ -408,7 +408,6 @@ input[type="radio"] {
   text-transform: capitalize;
 }
 
-
 #custom-search-input {
   margin:0;
   margin-top: 10px;
@@ -467,6 +466,23 @@ input[type="radio"] {
   /*float:left !important;*/
 }
 
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  box-shadow: 0px 0px 15px #cccccc;
+  z-index: 999;
+}
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  z-index: 999;
+}
+
+.search-c {
+  background-color: #f4f8ff;
+}
+
 span .search-context{
-  font-style: italic;
+  font-weight: 600;
+  background-color: #ccd5e5;
 }
