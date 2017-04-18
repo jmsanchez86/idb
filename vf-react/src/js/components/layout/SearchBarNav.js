@@ -1,8 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router";
 
-import SearchStore from "../../stores/SearchStore";
 import * as SearchActions from "../../actions/SearchActions"
 
 export default class SearchBar extends React.Component {
@@ -18,13 +16,17 @@ export default class SearchBar extends React.Component {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
+  handleSubmit() {
     SearchActions.searchSubmit(this.state.value);
     this.setState({value: ""});
+    
   }
 
   sanitizeString() {
-    return this.state.raw.replace(/[^\w\s]/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
+    return this.state.value.replace(/[^\w\s]/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
+  }
+  getLink() {
+    return "search" +  sanitizeString();
   }
 
   render() {
