@@ -56,7 +56,8 @@ class SearchResult:
         term wrapped in span tags.
         """
         for term in terms_to_tag:
-            desc = re.sub(term, """<span class="search-context">""" + term +
+            desc = re.sub(r"\b{}\b".format(term),
+                          """<span class="search-context">""" + term +
                           "</span>", desc, flags=re.IGNORECASE)
         return desc
 
@@ -74,7 +75,7 @@ class SearchResult:
 
         matches = []
         for term in self.terms:
-            matches.append(re.search(term, desc,
+            matches.append(re.search(r"\b{}\b".format(term), desc,
                                      flags=re.IGNORECASE | re.DOTALL))
 
         matches.sort(key=lambda match: match.start())

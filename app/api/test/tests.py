@@ -3,6 +3,7 @@
 # pylint: disable=invalid-name
 # pylint: disable=too-many-lines
 
+import re
 import time
 import unittest
 from app.scraping.importer import strip_html
@@ -15,6 +16,8 @@ from app.api.routes import filter_nulls, get_continuation_links,\
 from app.api.test import test_data
 import flask
 
+SPAN_OPEN = """<span class="search-context">"""
+SPAN_CLOSE = "</span>"
 
 class DatabaseIntegrityTests(unittest.TestCase):
     """
@@ -1036,12 +1039,10 @@ class SearchTests(unittest.TestCase):
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
 
-        span_open = """<span class="search-context">"""
-        span_close = "</span>"
         for e in data:
             for context in e["contexts"]:
-                self.assertIn(span_open, context)
-                self.assertIn(span_close, context)
+                self.assertIn(SPAN_OPEN, context)
+                self.assertIn(SPAN_CLOSE, context)
 
     def test_case_insensitive_query(self):
         client = SearchTests.client
@@ -1059,6 +1060,20 @@ class SearchTests(unittest.TestCase):
         res = resp["data"]["and"][0]
         self.assertTrue(len(res["contexts"]) > 1)
 
+    def test_query_does_not_match_substrings(self):
+        resp = resp_to_dict(SearchTests.client.get('/search?q=I'))
+        contexts = [context
+                    for res in resp["data"]["and"]
+                    for context in res["contexts"]]
+        contexts.extend([context
+                         for res in resp["data"]["or"]
+                         for context in res["contexts"]])
+        for c in contexts:
+            open_spans = re.compile(r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
+            self.assertEqual(open_spans, [])
+            close_spans = re.compile(r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
+            self.assertEqual(close_spans, [])
+
 class SearchResultClassTests(unittest.TestCase):
     def setUp(self):
         self.start_time = time.time()
@@ -1071,11 +1086,9 @@ class SearchResultClassTests(unittest.TestCase):
         # def tag_description(desc: str, terms_to_tag: List[str]) -> str:
         desc = "apple banana clementine dogfood egg food apple banana"
         terms_to_tag = ["apple", "clementine", "dogfood"]
-        span_open = """<span class="search-context">"""
-        span_close = "</span>"
         tagged_desc = ("{so}apple{sc} banana {so}clementine{sc} {so}dogfood{sc}"
                        " egg food {so}apple{sc} banana"
-                       .format(so=span_open, sc=span_close))
+                       .format(so=SPAN_OPEN, sc=SPAN_CLOSE))
         self.assertEqual(tagged_desc,
                          SearchResult.tag_description(desc, terms_to_tag))
 
