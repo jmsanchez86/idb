@@ -1083,6 +1083,10 @@ class SearchTests(unittest.TestCase):
                 r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
             self.assertEqual(close_spans, [])
 
+    def test_query_returns_search_result_size(self):
+        resp = resp_to_dict(SearchTests.client.get('/search?q=cranberry'))
+        self.assertEqual(resp["data"]["results"], 18)
+
 
 class SearchResultClassTests(unittest.TestCase):
     def setUp(self):
