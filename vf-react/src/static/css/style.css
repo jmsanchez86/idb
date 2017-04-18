@@ -409,6 +409,18 @@ input[type="radio"] {
   text-transform: capitalize;
 }
 
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  box-shadow: 0px 2px 10px #2a3b59;
+  z-index: 999;
+}
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  z-index: 999;
+}
+
 .search-c {
   background-color: #f4f8ff;
 }

@@ -20,9 +20,10 @@ export default class SearchItem extends React.Component {
 
     return (
       <div>
-      <ListGroupItem class="row">
-        <Link to={path}>
-        <div class="thumbnail col-md-3 col-sm-6 col-xs-12">
+      <Link to={path}>
+      <ListGroupItem class="row search-result">
+        
+        <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="image">
               <img class="img img-rounded img-responsive thumb" src={image} />
           </div>
@@ -37,8 +38,8 @@ export default class SearchItem extends React.Component {
 
         </div>
         
-        </Link>
       </ListGroupItem>
+      </Link>
       </div>
     );
   }
