@@ -5,15 +5,31 @@ import { ListGroup } from "react-bootstrap";
 export default class SearchSystem extends React.Component {
 
   getSearchItems() {
-    const data = this.props.data.and;
-
     const searchItems=[];
 
-    for (var id in data) {
-      const item = data[id];
-      searchItems.push(<SearchItem key={id}
-        path={"/" + item.pillar_name + "/" + item.id}
-        item={item} />);
+    const and = this.props.data.and;
+    if (and) {
+      searchItems.push(
+        <h5><center> AND Results </center> </h5>
+      )
+      for (var id in and) {
+        const item = and[id];
+        searchItems.push(<SearchItem key={id}
+          path={"/" + item.pillar_name + "/" + item.id}
+          item={item} />);
+      }
+    }
+    const or = this.props.data.or;
+    if (or) {
+      searchItems.push(
+        <h5><center>OR Results</center></h5>
+      )
+      for (var id in or) {
+        const item = or[id];
+        searchItems.push(<SearchItem key={id}
+          path={"/" + item.pillar_name + "/" + item.id}
+          item={item} />);
+      }
     }
     return searchItems;
   }
