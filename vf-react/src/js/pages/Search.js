@@ -49,6 +49,7 @@ export default class Search extends React.Component {
     const data = SearchStore.getData();
     const links= SearchStore.getLinks();
     const value= SearchStore.getValue();
+
     return (
       <div id="search-page" class="container-fluid">
         <VFPagination

@@ -22,10 +22,7 @@ class SearchStore extends EventEmitter {
   urlRequest(query, value) {
     var _data = {};
     var _links = {};
-    console.log(value);
-    console.log(this.value);
     value = value ? value : this.state.value;
-    console.log(value);
     // call api with new query params
     fetch(query)
       .then(function(response) {
@@ -64,18 +61,15 @@ class SearchStore extends EventEmitter {
     return this.state.value;
   }
   handleError(obj) {
-    console.log(obj);
   }
 
   handleAction(action) {
-    console.log(action);
     switch(action.type) {
       case "SEARCH_REQUEST": {
         this.searchRequest(action.value);
         break;
       }
       case "URL_REQUEST": {
-        console.log(action.query);
         this.urlRequest(action.query);
         break;
       }
