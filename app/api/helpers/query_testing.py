@@ -14,6 +14,7 @@ def queryfm(sql, count):
     res.close()
     return rows
 
+
 def main():
     ctx = API_SERVICE.app_context()
     ctx.push()
@@ -22,6 +23,7 @@ def main():
         db.engine.execute(_file.read())
 
     ctx.pop()
+
 
 if __name__ == "__main__":
     main()

@@ -13,11 +13,13 @@ import flask
 from flask import request as req
 
 from app.api.models import Ingredient, Recipe, Tag, GroceryItem
+from app.search import search as Search
 from typing import Callable, List, Set
 
 API_BP = flask.Blueprint('api', __name__)
 
 tag_image_prefix = "/static/images/tags/"
+
 
 def get_taglist_from_query(query_args: dict) -> List[str]:
     return query_args.get("tags").split(",") if "tags" in query_args else []
@@ -25,6 +27,7 @@ def get_taglist_from_query(query_args: dict) -> List[str]:
 ###################
 # Browse Endpoint #
 ###################
+
 
 def get_continuation_links(base_url: str, page: int, page_size: int,
                            req_args: dict, maxsize: int):
@@ -62,7 +65,8 @@ def get_all_ingredients():
     sort_key = req.args.get("sort", "alpha")
     tags = get_taglist_from_query(req.args)
 
-    query, table_size_query = Ingredient.get_all(tags, sort_key, page, page_size)
+    query, table_size_query = Ingredient.get_all(
+        tags, sort_key, page, page_size)
     links = get_continuation_links(req.base_url, page, page_size, req.args,
                                    table_size_query.fetchone()[0])
 
@@ -250,16 +254,24 @@ def get_tag(tag_name: str):
 
 @API_BP.route('/search')
 def search():
-    from app.api.helpers.test_cream_cheese_search_query import\
-            get_test_search_query
-
     if "q" not in req.args:
         return flask.abort(400)
 
-    MOCK_SEARCH_LOOP_SIZE = 30
+    query = req.args.get("q").strip()
+    if query == "":
+        return flask.abort(400)
+
     page = int(req.args.get("page", 0))
     page_size = int(req.args.get("page_size", 10))
-    data = get_test_search_query(page, page_size, MOCK_SEARCH_LOOP_SIZE)
+    results, search_size = Search.page_search(query, page, page_size)
+
+    data = {"and": [], "or": []}
+    for r in results:
+        if r.is_and:
+            data["and"].append(r.model.search_result_xform(r))
+        else:
+            data["or"].append(r.model.search_result_xform(r))
+
     links = get_continuation_links(req.base_url, page, page_size, req.args,
-                                   MOCK_SEARCH_LOOP_SIZE)
+                                   search_size)
     return flask.json.jsonify({'data': data, 'links': links})

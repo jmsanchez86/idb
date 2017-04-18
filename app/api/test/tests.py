@@ -3,15 +3,21 @@
 # pylint: disable=invalid-name
 # pylint: disable=too-many-lines
 
+import re
 import time
 import unittest
 from app.scraping.importer import strip_html
 from app.api import models
+from app.search import search
+from app.search.search import SearchResult
 from app.api.models import Recipe, Ingredient, GroceryItem, Tag
 from app.api.routes import filter_nulls, get_continuation_links,\
-                           get_taglist_from_query
+    get_taglist_from_query
 from app.api.test import test_data
 import flask
+
+SPAN_OPEN = """<span class="search-context">"""
+SPAN_CLOSE = "</span>"
 
 
 class DatabaseIntegrityTests(unittest.TestCase):
@@ -245,6 +251,23 @@ class ModelTests(unittest.TestCase):
         time_elapsed = time.time() - self.start_time
         print("%s: %.3f" % (self.id(), time_elapsed))
 
+    def test_get_id_on_main_pillars(self):
+        r = Recipe(1, "", "", "", "", 0, 0, "")
+        self.assertEqual(r.get_id(), r.recipe_id)
+        self.assertEqual(1, r.get_id())
+
+        i = Ingredient(2, "", "", "")
+        self.assertEqual(i.get_id(), i.ingredient_id)
+        self.assertEqual(2, i.get_id())
+
+        g = GroceryItem(3, 0, "", "", "")
+        self.assertEqual(g.get_id(), g.grocery_id)
+        self.assertEqual(3, g.get_id())
+
+        t = Tag("4", "", "")
+        self.assertEqual(t.get_id(), t.tag_name)
+        self.assertEqual("4", t.get_id())
+
     def test_get_all_recipe(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
             query, table_size_query = Recipe.get_all([], "alpha", 0, 1)
@@ -311,6 +334,13 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(set(t.tag_name for t in query.tags),
                          set(("Beverage", "Vegan", "Gluten-free", "Whole30",
                               "Dairy-free", "Vegetarian")))
+
+    def test_recipe_describe(self):
+        r_1 = Recipe(0, "", "", "", "", 1501, 0, "")
+        self.assertIn("1 day, 1 hour, 1 minute", r_1.describe())
+
+        r_multiple = Recipe(0, "", "", "", "", 3002, 0, "")
+        self.assertIn("2 days, 2 hours, 2 minutes", r_multiple.describe())
 
     def test_get_all_ingredient(self):
         with self.subTest(msg="No tags; Alpha; Page=0; Pagesize=1"):
@@ -520,6 +550,7 @@ class RouteTests(unittest.TestCase):
         cls.app.config["SQLALCHEMY_ECHO"] = False
         cls.database = models.db
         cls.database.init_app(cls.app)
+        search.init_search_index()
         cls.ctx = cls.app.app_context()
         cls.ctx.push()
         cls.client = cls.app.test_client()
@@ -803,10 +834,12 @@ class RouteTests(unittest.TestCase):
     def test_query_params_carry_over(self):
         with self.subTest(msg="test recipe, ingredient, grocery items"):
             endpoints = ['/recipes', '/ingredients', '/grocery_items']
-            query_pieces = ['&page_size=5', '&sort=alpha_reverse', '&tags=Vegan,Vegetarian']
+            query_pieces = ['&page_size=5',
+                            '&sort=alpha_reverse', '&tags=Vegan,Vegetarian']
             query = ''.join(query_pieces)
             for e in endpoints:
-                resp = resp_to_dict(RouteTests.client.get(e + '?page=1' + query))
+                resp = resp_to_dict(
+                    RouteTests.client.get(e + '?page=1' + query))
                 for qp in query_pieces:
                     self.assertIn(qp, resp["links"]["first"])
                     self.assertIn(qp, resp["links"]["prev"])
@@ -826,7 +859,8 @@ class RouteTests(unittest.TestCase):
         with self.subTest(msg="test search"):
             query_pieces = ['q=Test+query', '&page_size=10']
             query = ''.join(query_pieces)
-            resp = resp_to_dict(RouteTests.client.get('/search?page=1&' + query))
+            resp = resp_to_dict(RouteTests.client.get(
+                '/search?page=1&' + query))
             for qp in query_pieces:
                 self.assertIn(qp, resp["links"]["first"])
                 self.assertIn(qp, resp["links"]["prev"])
@@ -843,7 +877,8 @@ class RouteUtilityTests(unittest.TestCase):
         print("%s: %.3f" % (self.id(), time_elapsed))
 
     def test_pagination_retain_sort_min_page_size(self):
-        req_args = {"page": "2", "page_size": "1", "sort": "alpha", "min": "10"}
+        req_args = {"page": "2", "page_size": "1",
+                    "sort": "alpha", "min": "10"}
         links = get_continuation_links('', 2, 1, req_args, 100)
         query_params = ["&page_size=1", "&sort=alpha", "&min=10"]
         for link, page in [("first", 0), ("prev", 1), ("next", 3), ("last", 99)]:
@@ -891,14 +926,16 @@ class RouteUtilityTests(unittest.TestCase):
         req_args = {"page": "4", "page_size": "10", "tags": "Vegan,Dairy-free",
                     "sort": "alpha", "min": "10"}
         links = get_continuation_links('', 4, 10, req_args, 100)
-        query_params = ["&page_size=10", "&sort=alpha", "&min=10", "tags=Vegan,Dairy-free"]
+        query_params = ["&page_size=10", "&sort=alpha",
+                        "&min=10", "tags=Vegan,Dairy-free"]
         for link, page in [("first", 0), ("prev", 3), ("next", 5), ("last", 9)]:
             self.assertIn("?page={}".format(page), links[link])
             for query_param in query_params:
                 self.assertIn(query_param, links[link])
         self.assertEqual(links["active"], 4)
 
-        req_args = {"page": "4", "page_size": "10", "sort": "alpha", "min": "10"}
+        req_args = {"page": "4", "page_size": "10",
+                    "sort": "alpha", "min": "10"}
         links = get_continuation_links('', 4, 10, req_args, 100)
         self.assertNotIn("&tags=", links["first"])
         self.assertNotIn("&tags=", links["prev"])
@@ -951,6 +988,7 @@ class RouteUtilityTests(unittest.TestCase):
         self.assertTrue(all(r.name for r in filtered_rows))
         self.assertEqual(filtered_rows, list(RouteUtilityTests.NameObj(str(i))
                                              for i in range(1, 11)))
+
     def test_taglist_helper(self):
         self.assertEqual(get_taglist_from_query(dict()), [])
         self.assertEqual(get_taglist_from_query(dict(tags="A,B")), ["A", "B"])
@@ -968,6 +1006,7 @@ class SearchTests(unittest.TestCase):
         cls.app.config["SQLALCHEMY_ECHO"] = False
         cls.database = models.db
         cls.database.init_app(cls.app)
+        search.init_search_index()
         cls.ctx = cls.app.app_context()
         cls.ctx.push()
         cls.client = cls.app.test_client()
@@ -987,19 +1026,81 @@ class SearchTests(unittest.TestCase):
         resp = SearchTests.client.get('/search')
         self.assertEqual(resp.status_code, 400)
 
+    def test_empty_query(self):
+        resp = SearchTests.client.get('/search?q=    ')
+        self.assertTrue(resp.status_code, 400)
+
     def test_valid_query(self):
-        resp = SearchTests.client.get('/search?q=With+query')
-        resp_json = resp_to_dict(resp)
-        data = resp_json["data"]
-        self.assertEqual(resp.status_code, 200)
-        self.assertEqual(len(data), 10)
-        self.assertEqual(data[0]["id"], "509488")
-        self.assertEqual(data[0]["name"], "Almond Joy Cheesecake")
+        data = []
+        for i in ((0, 10), (17, 5), (10, 10), (39, 5)):
+            url = "/search?q=Sauce&page={}&page_size={}".format(i[0], i[1])
+            resp = SearchTests.client.get(url)
+            self.assertEqual(resp.status_code, 200)
+            resp_data = resp_to_dict(resp)["data"]
+            data.extend(resp_data["and"])
+            data.extend(resp_data["or"])
+        self.assertEqual(len(data), 27)
+        self.assertEqual(data[0]["id"], "573568")
+        self.assertEqual(data[0]["name"], "Snickers Rice Krispie Treats with "
+                                          "Salted Caramel")
         self.assertEqual(set(e["pillar_name"] for e in data),
                          {'recipes', 'ingredients', 'grocery_items', 'tags'})
         self.assertTrue(all(len(e["contexts"]) != 0 for e in data))
-        self.assertIn("next", resp_json["links"])
-        self.assertIn("last", resp_json["links"])
+
+        for e in data:
+            for context in e["contexts"]:
+                self.assertIn(SPAN_OPEN, context)
+                self.assertIn(SPAN_CLOSE, context)
+
+    def test_case_insensitive_query(self):
+        client = SearchTests.client
+
+        caps_resp = client.get('/search?q=Cream cheese&page_size=50&page=1')
+        lower_resp = client.get('/search?q=cream cheese&page_size=50&page=1')
+
+        caps_q = resp_to_dict(caps_resp)["data"]
+        lower_q = resp_to_dict(lower_resp)["data"]
+
+        self.assertEqual(caps_q, lower_q)
+
+    def test_mutliple_context_strings(self):
+        resp = resp_to_dict(SearchTests.client.get('/search?q=Cream cheese'))
+        res = resp["data"]["and"][0]
+        self.assertTrue(len(res["contexts"]) > 1)
+
+    def test_query_does_not_match_substrings(self):
+        resp = resp_to_dict(SearchTests.client.get('/search?q=I'))
+        contexts = [context
+                    for res in resp["data"]["and"]
+                    for context in res["contexts"]]
+        contexts.extend([context
+                         for res in resp["data"]["or"]
+                         for context in res["contexts"]])
+        for c in contexts:
+            open_spans = re.compile(r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
+            self.assertEqual(open_spans, [])
+            close_spans = re.compile(
+                r"[\w\`\-]{}".format(SPAN_OPEN)).findall(c)
+            self.assertEqual(close_spans, [])
+
+
+class SearchResultClassTests(unittest.TestCase):
+    def setUp(self):
+        self.start_time = time.time()
+
+    def tearDown(self):
+        time_elapsed = time.time() - self.start_time
+        print("%s: %.3f" % (self.id(), time_elapsed))
+
+    def test_tag_description(self):
+        # def tag_description(desc: str, terms_to_tag: List[str]) -> str:
+        desc = "apple banana clementine dogfood egg food apple banana"
+        terms_to_tag = ["apple", "clementine", "dogfood"]
+        tagged_desc = ("{so}apple{sc} banana {so}clementine{sc} {so}dogfood{sc}"
+                       " egg food {so}apple{sc} banana"
+                       .format(so=SPAN_OPEN, sc=SPAN_CLOSE))
+        self.assertEqual(tagged_desc,
+                         SearchResult.tag_description(desc, terms_to_tag))
 
 # Report
 # ======
