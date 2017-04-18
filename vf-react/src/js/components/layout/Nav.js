@@ -45,9 +45,6 @@ export default class Nav extends React.Component {
               <li activeClassName="active">
                 <Link to="tags" onClick={this.toggleCollapse.bind(this)}>Tags</Link>
               </li>
-              <li activeClassName="active">
-                <Link to="search" onClick={this.toggleCollapse.bind(this)}>Search</Link>
-              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
             <li activeClassName="active">
