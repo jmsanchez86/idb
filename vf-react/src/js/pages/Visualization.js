@@ -13,12 +13,13 @@ export default class Visual extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-		    width : 1920,
-			height : 1080,
+		    width : 1536,
+			height : 759,
 
 			film_nodes : [],
 			char_nodes : [],
 			plan_nodes : [],
+			nodes : [],
 
 			film_links : [],
 			char_links : [],
@@ -36,8 +37,8 @@ export default class Visual extends React.Component {
 
 		var simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-		    .force("charge", d3.forceManyBody())
-		    .force("center", d3.forceCenter(this.state.width / 3, this.state.height / 3));
+		    .force("charge", d3.forceManyBody().strength(-15))
+		    .force("center", d3.forceCenter(this.state.width / 2, this.state.height / 3));
 		
 
 		var link = svg.append("g")
@@ -114,11 +115,17 @@ export default class Visual extends React.Component {
 		     	//console.log(responseData);
 		    	links_.push({source: responseData[0].name, target: target, value: 5});	
 		    	link_total++;
-		    	global_total++;
-		 		console.log(global_total);
+		    	//global_total++;
+		 		//console.log(global_total);
 		    	 
 		    	if (link_total === 121) {
 		    		console.log(links_);
+		    		console.log(_this.state.nodes);
+		    		var graph = {
+		    							nodes : _this.state.nodes,
+		    							links : links_,
+		    						};
+		    		_this.visualize(graph);
 		    	}
 		    	});
 		     })
@@ -160,16 +167,17 @@ export default class Visual extends React.Component {
 		    		_this.setState({ film_nodes : nodes });
 		    		film_total++;
 		    		global_total++;
-		    		console.log(global_total);
+		    	
 		    		if (global_total === 28){
 		    			console.log("Done.");
 		    			var final = nodes.concat(_this.state.char_nodes);
 		    			final = final.concat(_this.state.plan_nodes);
+		    			_this.setState({nodes : final});
 		    			var graph = {
 		    							nodes : final,
 		    							links : [],
 		    						};
-		    			_this.visualize(graph);
+		    			//_this.visualize(graph);
 		    		}
 
 		        });
@@ -207,16 +215,17 @@ export default class Visual extends React.Component {
 		    		_this.setState({ plan_nodes : nodes });
 		    		planet_total++;
 		    		global_total++;
-		    		console.log(global_total);
+		    	
 		    		if (global_total === 28){
 		    			console.log("Done.");
 		    			var final = nodes.concat(_this.state.char_nodes);
 		    			final = final.concat(_this.state.film_nodes);
+		    			_this.setState({nodes : final});
 		    			var graph = {
 		    							nodes : final,
 		    							links : [],
 		    						};
-		    			_this.visualize(graph);
+		    			//_this.visualize(graph);
 		    		}
 
 		        });
@@ -250,16 +259,17 @@ export default class Visual extends React.Component {
 		    		_this.setState({ char_nodes : nodes });
 		    		char_total++;
 		    		global_total++;
-		    		console.log(global_total);
+		    		
 		    		if (global_total === 28){
 		    			console.log("Done.");
 		    			var final = nodes.concat(_this.state.plan_nodes);
 		    			final = final.concat(_this.state.film_nodes);
+		    			_this.setState({nodes : final});
 		    			var graph = {
 		    							nodes : final,
 		    							links : [],
 		    						};
-		    			_this.visualize(graph);
+		    			//_this.visualize(graph);
 		    		}
 
 		        });
