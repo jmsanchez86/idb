@@ -1,43 +1,43 @@
-................................................
+.................................................
 ----------------------------------------------------------------------
-Ran 48 tests in 5.303s
+Ran 49 tests in 5.246s
 
 OK
-__main__.DatabaseIntegrityTests.test_grocery_item: 0.066
+__main__.DatabaseIntegrityTests.test_grocery_item: 0.064
 __main__.DatabaseIntegrityTests.test_ingredient: 0.002
 __main__.DatabaseIntegrityTests.test_ingredient_substitutes: 0.003
 __main__.DatabaseIntegrityTests.test_recipe: 0.003
-__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.005
-__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.013
-__main__.DatabaseIntegrityTests.test_similar_recipes: 0.013
+__main__.DatabaseIntegrityTests.test_recipe_ingredients: 0.004
+__main__.DatabaseIntegrityTests.test_similar_grocery_items: 0.011
+__main__.DatabaseIntegrityTests.test_similar_recipes: 0.012
 __main__.DatabaseIntegrityTests.test_strip_html: 0.000
-__main__.DatabaseIntegrityTests.test_tag_badge: 2.601
-__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.044
-__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.112
-__main__.DatabaseIntegrityTests.test_tag_flag: 0.006
-__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.150
-__main__.ModelTests.test_get_all_groceryitem: 0.191
-__main__.ModelTests.test_get_all_ingredient: 0.030
+__main__.DatabaseIntegrityTests.test_tag_badge: 2.550
+__main__.DatabaseIntegrityTests.test_tag_cuisine: 0.045
+__main__.DatabaseIntegrityTests.test_tag_dishtype: 0.119
+__main__.DatabaseIntegrityTests.test_tag_flag: 0.005
+__main__.DatabaseIntegrityTests.test_tag_ingredient: 0.138
+__main__.ModelTests.test_get_all_groceryitem: 0.193
+__main__.ModelTests.test_get_all_ingredient: 0.033
 __main__.ModelTests.test_get_all_recipe: 0.102
 __main__.ModelTests.test_get_all_tag: 0.016
-__main__.ModelTests.test_get_groceryitem: 0.036
+__main__.ModelTests.test_get_groceryitem: 0.041
 __main__.ModelTests.test_get_id_on_main_pillars: 0.000
-__main__.ModelTests.test_get_ingredient: 0.014
+__main__.ModelTests.test_get_ingredient: 0.016
 __main__.ModelTests.test_get_recipe: 0.020
-__main__.ModelTests.test_get_tag: 0.120
+__main__.ModelTests.test_get_tag: 0.115
 __main__.ModelTests.test_ingredient_grocery_items: 0.003
 __main__.ModelTests.test_recipe_describe: 0.000
-__main__.RouteTests.test_get_all_groceryitem: 0.218
-__main__.RouteTests.test_get_all_ingredient: 0.048
-__main__.RouteTests.test_get_all_recipe: 0.124
-__main__.RouteTests.test_get_all_tag: 0.027
-__main__.RouteTests.test_get_groceryitem: 0.043
-__main__.RouteTests.test_get_ingredient: 0.024
+__main__.RouteTests.test_get_all_groceryitem: 0.216
+__main__.RouteTests.test_get_all_ingredient: 0.046
+__main__.RouteTests.test_get_all_recipe: 0.123
+__main__.RouteTests.test_get_all_tag: 0.025
+__main__.RouteTests.test_get_groceryitem: 0.036
+__main__.RouteTests.test_get_ingredient: 0.022
 __main__.RouteTests.test_get_recipe: 0.022
-__main__.RouteTests.test_get_tag: 0.137
-__main__.RouteTests.test_groceryitem_ingredient_id: 0.166
+__main__.RouteTests.test_get_tag: 0.129
+__main__.RouteTests.test_groceryitem_ingredient_id: 0.169
 __main__.RouteTests.test_model_404s: 0.010
-__main__.RouteTests.test_query_params_carry_over: 0.071
+__main__.RouteTests.test_query_params_carry_over: 0.069
 __main__.RouteUtilityTests.test_filter_nulls_no_nulls_hit_limit: 0.000
 __main__.RouteUtilityTests.test_filter_nulls_no_nulls_small: 0.000
 __main__.RouteUtilityTests.test_filter_nulls_nulls_dont_hit_limit: 0.000
@@ -47,10 +47,11 @@ __main__.RouteUtilityTests.test_pagination_retain_sort_min_page_size: 0.000
 __main__.RouteUtilityTests.test_pagingation_correct_filters: 0.000
 __main__.RouteUtilityTests.test_taglist_helper: 0.000
 __main__.SearchResultClassTests.test_tag_description: 0.000
-__main__.SearchTests.test_case_insensitive_query: 0.575
+__main__.SearchTests.test_case_insensitive_query: 0.536
 __main__.SearchTests.test_empty_query: 0.001
+__main__.SearchTests.test_mutliple_context_strings: 0.059
 __main__.SearchTests.test_no_query: 0.001
-__main__.SearchTests.test_valid_query: 0.148
+__main__.SearchTests.test_valid_query: 0.140
 Name                               Stmts   Miss  Cover   Missing
 ----------------------------------------------------------------
 app/__init__.py                        0      0   100%
@@ -59,12 +60,12 @@ app/api/models.py                    208      0   100%
 app/api/routes.py                    129      0   100%
 app/api/test/__init__.py               0      0   100%
 app/api/test/test_data.py              2      0   100%
-app/api/test/tests.py                722      0   100%
+app/api/test/tests.py                726      0   100%
 app/project_root.py                    4      0   100%
 app/scraping/__init__.py               0      0   100%
 app/scraping/importer.py              12      0   100%
 app/scraping/tag_translations.py      80      0   100%
 app/search/__init__.py                 0      0   100%
-app/search/search.py                  84      2    98%   94-95
+app/search/search.py                  84      0   100%
 ----------------------------------------------------------------
-TOTAL                               1241      2    99%
+TOTAL                               1245      0   100%

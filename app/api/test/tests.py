@@ -1054,6 +1054,11 @@ class SearchTests(unittest.TestCase):
 
         self.assertEqual(caps_q, lower_q)
 
+    def test_mutliple_context_strings(self):
+        resp = resp_to_dict(SearchTests.client.get('/search?q=Cream cheese'))
+        res = resp["data"]["and"][0]
+        self.assertTrue(len(res["contexts"]) > 1)
+
 class SearchResultClassTests(unittest.TestCase):
     def setUp(self):
         self.start_time = time.time()
