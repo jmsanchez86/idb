@@ -13,8 +13,8 @@ export default class Visual extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-		    width : 1536,
-			height : 759,
+		    width : 1375,
+			height : 675,
 
 			film_nodes : [],
 			char_nodes : [],
@@ -34,7 +34,7 @@ export default class Visual extends React.Component {
 
 		//Toggle stores whether the highlighting is on
 		var toggle = 0;
-		var svg = d3.select("svg");
+		var svg = d3.select("#mysvg");
 		
 
 		var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -61,6 +61,7 @@ export default class Visual extends React.Component {
 					  		  .on("end", dragended)
 					  		  .on("start.highlight", connectedNodes));
 		node.append("circle")
+			.attr("id", "mynode")
 			.attr("r", function(d) {return d.size;})
 			.attr("fill", function(d) { return color(d.group); })
 		    .append("title")
@@ -99,7 +100,7 @@ export default class Visual extends React.Component {
 		      .attr("x2", function(d) { return d.target.x; })
 		      .attr("y2", function(d) { return d.target.y; });
 
-		  d3.selectAll("circle")
+		  d3.selectAll("#mynode")
 		  	.attr("cx", function(d) { return d.x = Math.max(d.size, Math.min(width - d.size, d.x)); })
 		  	.attr("cy", function(d) { return d.y = Math.max(d.size, Math.min(height - d.size, d.y)); });
 
@@ -324,7 +325,41 @@ export default class Visual extends React.Component {
 
 	render() {
 		return (
-			<svg width={this.state.width} height={this.state.height}></svg>
+			<div class="row">
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+				  <table class="table table-bordered table-striped">
+				    <thead>
+				      <tr>
+				        <th>Nodes</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td><h5>Movie</h5>
+				        <svg height="50" width="60">
+						<circle r="20" fill="#ff7f0e" cx="37" cy="25"><title>Movie</title></circle>
+						</svg>
+						</td>
+				      </tr>
+				      <tr>
+				       	<td><h5>Planet</h5>
+				        <svg height="50" width="60">
+						<circle r="20" fill="#aec7e8" cx="37" cy="25"><title>Planet</title></circle>
+						</svg>
+						</td>
+				      </tr>
+				      <tr>
+				        <td><h5>Character</h5>
+				        <svg height="50" width="60">
+						<circle r="20" fill="#1f77b4" cx="37" cy="25"><title>Character</title></circle>
+						</svg>
+						</td>
+				      </tr>
+				    </tbody>
+				  </table>
+				</div>
+				<svg id="mysvg" class="col-lg-11 col-md-11 col-sm-11 col-xs-12" width={this.state.width} height={this.state.height}></svg>
+			</div>
 		);
 	}
 }
