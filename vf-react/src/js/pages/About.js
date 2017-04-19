@@ -157,6 +157,7 @@ export default class About extends React.Component {
           </p>
           <UnitTestButton api_endpoint={this.state.api_endpoint}/>
           <h6><a href="http://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
+          <h6><a href="https://docs.google.com/presentation/d/1DQXJSRjFFCMgchXMlX66tsmkM96MKenavrGUOq44Eyw/edit?usp=sharing">Presentation</a></h6>
         </div>
         <div class="container" dangerouslySetInnerHTML={{__html: html}} />
       </div>
