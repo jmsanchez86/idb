@@ -6,6 +6,7 @@ var global_total = 0;
 var link_total = 0;
 var links_ = [];
 
+var progress = 0;
 export default class Visual extends React.Component {
 
     constructor() {
@@ -22,6 +23,8 @@ export default class Visual extends React.Component {
             film_links : [],
             char_links : [],
             plan_links : [],
+
+            collecting : true,
         }
     }
 
@@ -164,13 +167,15 @@ export default class Visual extends React.Component {
 
                 links_.push({source: responseData[0].name, target: target, value: 5});
                 link_total++;
-
+                progress += 10;
+                _this.setState({p : 5});
                 if (link_total === 121) {
                     var graph = {
                                     nodes : _this.state.nodes,
                                     links : links_,
                                 };
                     _this.visualize(graph);
+                    _this.setState({collecting : false});
                 }
                 });
              })
@@ -209,7 +214,9 @@ export default class Visual extends React.Component {
                         }
                     }
 
+                    progress += 15;
                     _this.setState({ film_nodes : nodes });
+
                     global_total++;
 
                     if (global_total === 28){
@@ -251,6 +258,7 @@ export default class Visual extends React.Component {
                         }
                     }
 
+                    progress += 15;
                     _this.setState({ plan_nodes : nodes });
                     global_total++;
 
@@ -289,6 +297,7 @@ export default class Visual extends React.Component {
                         nodes.push({id : char.name, group : 15, size : 10});
                     }
 
+                    progress += 15;
                     _this.setState({ char_nodes : nodes });
                     global_total++;
 
@@ -326,8 +335,8 @@ export default class Visual extends React.Component {
                     <tbody>
                       <tr>
                         <td><h5>Movie</h5>
-                        <svg height="50" width="60">
-                        <circle r="20" fill="#ff7f0e" cx="37" cy="25"><title>Movie</title></circle>
+                        <svg height="70" width="70">
+                        <circle r="30" fill="#ff7f0e" cx="37" cy="30"><title>Movie</title></circle>
                         </svg>
                         </td>
                       </tr>
@@ -341,14 +350,22 @@ export default class Visual extends React.Component {
                       <tr>
                         <td><h5>Character</h5>
                         <svg height="50" width="60">
-                        <circle r="20" fill="#1f77b4" cx="37" cy="25"><title>Character</title></circle>
+                        <circle r="10" fill="#1f77b4" cx="37" cy="25"><title>Character</title></circle>
                         </svg>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <svg id="mysvg" class="col-lg-11 col-md-11 col-sm-11 col-xs-12" width={this.state.width} height={this.state.height}></svg>
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                 	{this.state.collecting && 
+                 		(<div class="progress">
+				  			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
+				  				aria-valuemin="0" aria-valuemax="100" style={{width : progress}}>
+				  			</div>
+				  		</div>)}
+                	<svg id="mysvg" width={this.state.width} height={this.state.height}></svg>
+                </div>
             </div>
         );
     }
