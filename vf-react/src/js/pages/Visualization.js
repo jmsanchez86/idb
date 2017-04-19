@@ -36,32 +36,40 @@ export default class Visual extends React.Component {
 		var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 		var simulation = d3.forceSimulation()
-		    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+		    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(150))
 		    .force("charge", d3.forceManyBody().strength(-15))
-		    .force("center", d3.forceCenter(this.state.width / 2, this.state.height / 3));
+		    .force("center", d3.forceCenter(this.state.width / 2, this.state.height / 3))
+		    .force("collide", d3.forceCollide().radius(1).iterations(2));
 		
 
-		var link = svg.append("g")
-		    .attr("class", "links")
-		  .selectAll("line")
-		  .data(graph.links)
-		  .enter().append("line")
-		    .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+		var link = svg.selectAll(".link")
+					  .data(graph.links)
+					  .enter().append("line")
+					  .attr("class", "links")
+					  .style("stroke-width", function(d){return Math.sqrt(d.value);});
 
-		var node = svg.append("g")
-		    .attr("class", "nodes")
-		  .selectAll("circle")
-		  .data(graph.nodes)
-		  .enter().append("circle")
-		    .attr("r", function(d) { d.film ? radius=20 : radius=10; return radius;})
-		    .attr("fill", function(d) { return color(d.group); })
-		    .call(d3.drag()
-		        .on("start", dragstarted)
-		        .on("drag", dragged)
-		        .on("end", dragended));
+		var node = svg.selectAll(".node")
+					  .data(graph.nodes)
+					  .enter().append("g")
+					  .attr("class", "nodes")
+					  .call(d3.drag()
+					  		  .on("start", dragstarted)
+					  		  .on("drag", dragged)
+					  		  .on("end", dragended));
 
-		node.append("title")
-		    .text(function(d) { return d.id; });
+		node.append("circle")
+			.attr("r", function(d) { d.film ? radius=50 : radius=20; return radius;})
+			.attr("fill", function(d) { return color(d.group); })
+		    .append("title")
+		    .text(function(d) { return d.id; });;
+
+		
+		node.append("text")
+		   	.attr("dx", 10)
+      		.attr("dy", ".35em")
+		    .text(function(d) { return d.id; })
+		    .style("stroke", "black");
+
 
 		simulation
 		    .nodes(graph.nodes)
@@ -70,6 +78,7 @@ export default class Visual extends React.Component {
 		simulation.force("link")
 		    .links(graph.links);
 
+	
 		function ticked() {
 		  link
 		      .attr("x1", function(d) { return d.source.x; })
@@ -77,10 +86,14 @@ export default class Visual extends React.Component {
 		      .attr("x2", function(d) { return d.target.x; })
 		      .attr("y2", function(d) { return d.target.y; });
 
-		  node
-		      .attr("cx", function(d) { return d.x; })
-		      .attr("cy", function(d) { return d.y; });
-		  }
+		  d3.selectAll("circle")
+		  	.attr("cx", function(d) { return d.x; })
+		  	.attr("cy", function(d) { return d.y; });
+
+		  d3.selectAll("text")
+		  	.attr("x", function(d) { return d.x; })
+		  	.attr("y", function(d) { return d.y; });
+		 }
 
 		function dragstarted(d) {
 		  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -112,19 +125,14 @@ export default class Visual extends React.Component {
 		     }
 		     response.json().then(function(responseData) {
 
-		     	//console.log(responseData);
 		    	links_.push({source: responseData[0].name, target: target, value: 5});	
-		    	link_total++;
-		    	//global_total++;
-		 		//console.log(global_total);
+		    	link_total++;		   
 		    	 
 		    	if (link_total === 121) {
-		    		console.log(links_);
-		    		console.log(_this.state.nodes);
 		    		var graph = {
-		    							nodes : _this.state.nodes,
-		    							links : links_,
-		    						};
+		    						nodes : _this.state.nodes,
+		    						links : links_,
+		    					};
 		    		_this.visualize(graph);
 		    	}
 		    	});
@@ -173,11 +181,6 @@ export default class Visual extends React.Component {
 		    			var final = nodes.concat(_this.state.char_nodes);
 		    			final = final.concat(_this.state.plan_nodes);
 		    			_this.setState({nodes : final});
-		    			var graph = {
-		    							nodes : final,
-		    							links : [],
-		    						};
-		    			//_this.visualize(graph);
 		    		}
 
 		        });
@@ -221,11 +224,6 @@ export default class Visual extends React.Component {
 		    			var final = nodes.concat(_this.state.char_nodes);
 		    			final = final.concat(_this.state.film_nodes);
 		    			_this.setState({nodes : final});
-		    			var graph = {
-		    							nodes : final,
-		    							links : [],
-		    						};
-		    			//_this.visualize(graph);
 		    		}
 
 		        });
@@ -265,11 +263,6 @@ export default class Visual extends React.Component {
 		    			var final = nodes.concat(_this.state.plan_nodes);
 		    			final = final.concat(_this.state.film_nodes);
 		    			_this.setState({nodes : final});
-		    			var graph = {
-		    							nodes : final,
-		    							links : [],
-		    						};
-		    			//_this.visualize(graph);
 		    		}
 
 		        });
@@ -288,10 +281,7 @@ export default class Visual extends React.Component {
 
 	render() {
 		return (
-			<div>
-			<svg width={this.state.width} height={this.state.height}>
-			</svg>
-			</div>
+			<svg width={this.state.width} height={this.state.height}></svg>
 		);
 	}
 }

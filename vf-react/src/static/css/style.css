@@ -409,7 +409,7 @@ input[type="radio"] {
   text-transform: capitalize;
 }
 
-.links line {
+.links {
   stroke: #999;
   stroke-opacity: 0.6;
 }
@@ -417,4 +417,8 @@ input[type="radio"] {
 .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+.node text {
+  font: 15px helvetica;
 }
