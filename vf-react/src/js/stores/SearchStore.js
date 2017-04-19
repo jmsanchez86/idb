@@ -1,10 +1,12 @@
 import { EventEmitter } from "events";
 import Dispatcher from "../Dispatcher";
 
+var apiRoot = '' + require('../scripts/Config.js');
+
 class SearchStore extends EventEmitter {
   constructor() {
     super();
-    this.state = {data: [], links:{}, value: ""};
+    this.state = {data: [], links:{}, value: "", results: 0};
     this.err = "";
   }
 
@@ -22,6 +24,7 @@ class SearchStore extends EventEmitter {
   urlRequest(query, value) {
     var _data = {};
     var _links = {};
+
     value = value ? value : this.state.value;
     // call api with new query params
     fetch(query)
@@ -44,10 +47,11 @@ class SearchStore extends EventEmitter {
     .catch(function(err) {
         console.log('Fetch Error: -S', err);
         Dispatcher.dispatch({type:"SEARCH_ERROR", err});
-      });
+    });
   }
 
   handleResponse(response) {
+    console.log(response);
     this.state = response;
     this.emit("change");
   }
@@ -60,7 +64,11 @@ class SearchStore extends EventEmitter {
   getValue() {
     return this.state.value;
   }
+  getNumResults() {
+    return this.state.data.results;
+  }
   handleError(obj) {
+
   }
 
   handleAction(action) {
