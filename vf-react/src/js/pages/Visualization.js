@@ -31,6 +31,9 @@ export default class Visual extends React.Component {
 
 		const width = this.state.width;
 		const height = this.state.height;
+
+		//Toggle stores whether the highlighting is on
+		var toggle = 0;
 		var svg = d3.select("svg");
 		
 
@@ -55,8 +58,8 @@ export default class Visual extends React.Component {
 					  .call(d3.drag()
 					  		  .on("start", dragstarted)
 					  		  .on("drag", dragged)
-					  		  .on("end", dragended));
-
+					  		  .on("end", dragended)
+					  		  .on("start.highlight", connectedNodes));
 		node.append("circle")
 			.attr("r", function(d) {return d.size;})
 			.attr("fill", function(d) { return color(d.group); })
@@ -78,6 +81,16 @@ export default class Visual extends React.Component {
 		simulation.force("link")
 		    .links(graph.links);
 
+		
+		//Create an array logging what is connected to what
+		var linkedByIndex = {};
+		for (var i = 0; i < graph.nodes.length; i++) {
+		    linkedByIndex[i + "," + i] = 1;
+		};
+		graph.links.forEach(function (d) {
+		    linkedByIndex[d.source.index + "," + d.target.index] = 1;
+		});
+		
 	
 		function ticked() {
 		  link
@@ -110,6 +123,36 @@ export default class Visual extends React.Component {
 		  if (!d3.event.active) simulation.alphaTarget(0);
 		  d.fx = null;
 		  d.fy = null;
+		}
+
+		//This function looks up whether a pair are neighbours
+		function neighboring(a, b) {
+		    return linkedByIndex[a.index + "," + b.index];
+		}
+		function connectedNodes() {
+		    if (toggle == 0) {
+		        reduceNodes(this);
+		        toggle = 1;
+
+		    } else {
+		        restoreNodes();
+		        toggle = 0;
+		    }
+		}
+
+		function reduceNodes(item) {
+			var d = d3.select(item).node().__data__;
+		    node.style("opacity", function (o) {
+		        return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+		    });
+		    link.style("opacity", function (o) {
+		        return d.index==o.source.index | d.index==o.target.index ? 1 : 0.1;
+		    });
+		}
+
+		function restoreNodes() {
+			node.style("opacity", 1);
+		    link.style("opacity", 1);
 		}
 	}
 
