@@ -38,9 +38,8 @@ export default class Visual extends React.Component {
 
 		var simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(150))
-		    .force("charge", d3.forceManyBody().strength(-15))
-		    .force("center", d3.forceCenter(this.state.width / 2, this.state.height / 3))
-		    .force("collide", d3.forceCollide().radius(1).iterations(2));
+		    .force("charge", d3.forceManyBody().strength(-30))
+		    .force("center", d3.forceCenter(width / 2, height / 3));
 		
 
 		var link = svg.selectAll(".link")
