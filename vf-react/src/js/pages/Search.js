@@ -1,14 +1,13 @@
 import React from "react";
+import Link from "react-router";
 
 import Controller from "../components/layout/Controller";
+import Landing from "./Landing";
 import Greeting from "../components/layout/Greeting";
 import * as SearchActions from "../actions/SearchActions"
 import SearchStore from "../stores/SearchStore";
 import SearchSystem from "../components/layout/SearchSystem";
 import VFPagination from "../components/layout/VFPagination";
-
-var apiRoot = '' + require('../scripts/Config.js');
-
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -16,16 +15,18 @@ export default class Search extends React.Component {
     this.state = {
       links:   this.initLinks(),
       data:    {},
-      value:   ""
+      value:   "",
+      valid: false,
       };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     SearchStore.on("change", () => {
       this.setState({
         value:SearchStore.getValue(),
         data: SearchStore.getData(),
         links:SearchStore.getLinks(),
+        valid: true,
       })
     })
   }
@@ -39,9 +40,11 @@ export default class Search extends React.Component {
   }
 
   handleSelect(type) {
-    //TODO move this actions
-    //this.requestQuery(this.state.links[type]);
     SearchActions.urlRequest(this.state.links[type]);
+  }
+
+  baconEgg() {
+    SearchActions.urlRequest("http://api.vennfridge.appspot.com/search?q=bacon");
   }
 
   render() {
@@ -49,25 +52,48 @@ export default class Search extends React.Component {
     const data = SearchStore.getData();
     const links= SearchStore.getLinks();
     const value= SearchStore.getValue();
+    const results = SearchStore.getNumResults();
 
-    return (
-      <div id="search-page" class="container-fluid">
-        <VFPagination
-          active={links.active}
-          onSelect={this.handleSelect.bind(this)}
-          links={links} />
 
-        <div id="SearchHeader">
-          Search results for "{value}"
+    window.scrollTo(0, 0);
+
+    if (this.state.valid) {
+      return (
+          <div id="search-page" class="container-fluid">
+          {results ?
+          <VFPagination
+            active={links.active}
+            onSelect={this.handleSelect.bind(this)}
+            links={links} />
+            :
+            <div>
+            </div>}
+
+          <div id="SearchHeader">
+            {results} search results for "{value}"
+          </div>
+
+          <SearchSystem
+            data={data} />
+
+          {results ?
+          <VFPagination
+            active={links.active}
+            onSelect={this.handleSelect.bind(this)}
+            links={links} />
+          :
+          <div id="SearchHeader">
+            <center>
+              Did you mean "<a href="#/search" onClick={this.baconEgg.bind(this)}>bacon</a>"?
+            </center>
+          </div>}
         </div>
-
-        <SearchSystem
-          data={data} />
-        <VFPagination
-          active={links.active}
-          onSelect={this.handleSelect.bind(this)}
-          links={links} />
-      </div>
-    );
+        );
+      }
+      else {
+        return (
+          <Landing />
+        );
+      }
   }
 }
