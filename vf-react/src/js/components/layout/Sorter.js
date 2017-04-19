@@ -3,21 +3,20 @@ import { IndexLink, Link } from "react-router";
 
 export default class Sorter extends React.Component {
   getSortButtons() {
-    const bar = [];
+    const buttons = [];
     const sort_params = this.props.sort_params;
     var i = 0;
     for (var p of sort_params) {
       if (i++ == 0) {
-        bar.push(
+        buttons.push(
           <label key={p.query} class="btn btn-sm btn-default active">
             <input type="radio"  name={p.query} autocomplete="off"  />
               <h5>{p.name}</h5>
           </label>
         );
-        console.log(bar);
       }
       else {
-        bar.push(
+        buttons.push(
           <label key={p.query} class="btn btn-sm btn-default">
             <input type="radio" name={p.query} autocomplete="off"  />
               <h5>{p.name}</h5>
@@ -25,8 +24,9 @@ export default class Sorter extends React.Component {
         );
       }
     }
-    return bar;
+    return buttons;
   }
+  
   render() {
     return (
       <div>

@@ -18,7 +18,6 @@ export default class GroceryItemSingle extends React.Component {
       id : this.props.params.id,
 
     };
-    console.log(this.props.route);
     this.requestData();
   }
 
@@ -27,7 +26,6 @@ export default class GroceryItemSingle extends React.Component {
     var _this = this;
 
     const requestString = 'http://' + apiRoot + '/grocery_items/' + _this.state.id;
-    console.log(requestString);
 
     // Fetch singleton's required data.
     fetch(requestString)
@@ -55,19 +53,15 @@ export default class GroceryItemSingle extends React.Component {
 
     var object = this.refs.main;
     object.key=1;
-    console.log(object.key);
   }
   componentWillReceiveProps(nextProps) {
     var newId = parseInt(nextProps.location.pathname.split("/")[2]);
-    console.log(newId);
     this.state.id = newId;
-    console.log(this.state.id);
     this.requestData();
   }
 
 
   render() {
-    console.log(this.state);
     const name = this.state.name;
     const image = this.state.image;
     const upc = this.state.upc;

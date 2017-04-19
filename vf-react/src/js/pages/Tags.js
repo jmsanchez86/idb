@@ -32,26 +32,18 @@ export default class Ingredients extends React.Component {
     var min = 0;
     for (var id in filters ) {
       if (filters[id].checked && id > min) {
-        console.log("id: " +id);
-        console.log("min: " +min);
         min = id;
       }
     }
     if (min > 0) {
-      console.log(min);
       params += ("&min="+min);
     }
 
     params += "&page=" + 0;
-
-    console.log(params);
     return params;
-
-
   }
 
   requestQuery(requestString) {
-    console.log(requestString);
     var _this = this;
     var _data = {};
     var _links = {};
