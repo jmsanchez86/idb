@@ -10,6 +10,7 @@ var global_total = 0;
 var link_total = 0;
 var links_ = [];
 export default class Visual extends React.Component {
+
 	constructor() {
 		super();
 		this.state = {
