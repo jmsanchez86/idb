@@ -28,6 +28,53 @@ Cooking meals at home is a useful skill that leads to eating healthier, saving m
 
 7. Discover food that adheres to a dietary restriction - Users with dietary restrictions can find ingredients, recipes, and grocery products that adhere to their restrictions.
 
+#### User Stories
+Developing user stories is an agile technique that involves thinking about use cases in terms of the various sorts of users that will use the product and the ways they will want to use it. We used planning poker to discuss user stories, estimate their difficulty, and come to a consensus about the challenges and priorities of the project. The user stories for the project’s final stage are listed below.
+
+A user should be able to search our website for grocery items, recipes, tags, ingredients, and all of their attributes.
+Estimate: 40
+Actual: 15 hours
+
+Developer Janet should see a technical report of at least 5000 words.
+Estimate: 8
+Actual: 5 hours
+
+Designer Jeane should be able to see a visualization of the Star Wars API.
+Estimate: 20
+Actual: 30 hours
+
+Glenn wants to see a presentation about our website.
+Estimate: 13
+Actual: 3 hours
+
+User Janet will be able to find the search bar on every single page.
+Estimate: 3
+Actual: 3 hours
+
+Christie, a developer, will want to get appropriate data when they use our API.
+Estimate: 3
+Actual: 5 hours
+
+User Bobby wants to have a good user experience on a mobile device.
+Estimate: 5
+Actual: 2 hours
+
+Bill wants to be directed to a dense search results page when searching our site.
+Estimate: 13
+Actual: 25 hours
+
+Quentin wants to see his search query contextualized.
+Estimate: 20
+Actual: 5 hours
+
+Greg would like to see a link to our presentation on the about page.
+Estimate: ½
+Actual: Less than an hour
+
+Bryan wants to see a good looking search results page.
+Estimate: 5
+Actual: 2 hours
+
 ## Design
 
 #### Single Page Application
@@ -36,7 +83,7 @@ We opted for a Single Page Application model for our website instead of the more
 
 #### Data Models
 
-<img class="img img-responsive full-width thumb" src="static/images/uml.png"/>
+<div class="container">![image alt text](/static/images/image_0.png)</div>
 
 The four pillars of our model are ingredients, recipes, grocery items, and tags. Ingredients are the individual items that go into making a recipe. Recipes are the completed dishes that users can cook. Grocery items are cooking items purchasable in grocery stores. And tags are descriptive categories containing subsets of ingredients, recipes, and grocery items. In addition to viewing all the elements of one of our pillars and viewing details about an individual element, we provide a few more useful relationships such as finding which ingredients can be substituted for other ingredients and searching for recipes that are similar to each other.
 
@@ -44,25 +91,35 @@ The four pillars of our model are ingredients, recipes, grocery items, and tags.
 
 **List** all members of a group:
 
-* **[GET] /ingredients{?page_size}{?page}{?tags}{?sort}** all the Ingredients, sorted and filtered
-
-* **[GET] /recipes{?page_size}{?page}{?tags}{?sort}** all the Recipes, sorted and filtered
-
-* **[GET] /grocery_items{?page_size}{?page}{?tags}{?sort}** all the Grocery Items, sorted and filtered
-
-* **[GET] /tags{?page_size}{?page}{?min}{?sort}** all the Tags, sorted and filtered
-
-
+\`\`\`
+[GET] /ingredients{?page_size}{?page}{?tags}{?sort} all the Ingredients, sorted and filtered
+[GET] /recipes{?page_size}{?page}{?tags}{?sort} all the Recipes, sorted and filtered
+[GET] /grocery_items{?page_size}{?page}{?tags}{?sort} all the Grocery Items, sorted and filtered
+[GET] /tags{?page_size}{?page}{?min}{?sort} all the Tags, sorted and filtered
+\`\`\`
 
 **Details** of a member of a group:
 
-* **[GET] /recipes/{id}** info for a specific recipe
+\`\`\`
+[GET] /recipes/{id} info for a specific recipe
+[GET] /ingredients/{id} info for a specific ingredient
+[GET] /grocery_items/{id} info for a specific grocery item
+[GET] /tags/{id} info for a specific tag
+\`\`\`
 
-* **[GET] /ingredients/{id}** info for a specific ingredient
+#### Search Capability
 
-* **[GET] /grocery_items/{id}** info for a specific grocery item
+To enhance the browsability of our site, we added search functionality through a text field on our navigation bar. By typing search terms into the field, users can quickly get a list of matches to our data over any attribute. Names, servings on recipes, tag descriptions, and UPC codes are all a simple search away. We included pagination to enable users to browse through large sets of results and find what they are looking for. We also added contextualization to the results so users can see where their search terms are matched for each result.
 
-* **[GET] /tags/{id}** info for a specific tag
+In the API contract between frontend and backend, frontend sends a full search query string, page number, and page size. Then back-end responds with a list of matches each containing the pillar the result is from, the id, name, and image of the item, a list of context strings containing search terms, and pagination links.
+
+To get a better feel for how we can implement searching in the backend, we decided to do spikes. There were three search architectures that we considered: Whoosh, PostgreSQL, and writing one from scratch. We spent a few days trying to construct a mock search using each tool to see which one would best suit our needs and discover potential pitfalls before we got too invested. We opted not to use Whoosh (or any of its many variants; see Whooshee, WhooshAlchemy, etc) because we ran into issues during our spike where we couldn't find a simple way to merge search results from multiple models. The PostgreSQL option looked similarly promising, but it would have meant restructuring our tests to run using a local PostgreSQL database instead of a SQLite database which was a hefty task. In the end, we settled on writing a search engine from scratch because it was the easiest to implement given the requirements of our search capabilities and a great learning experience as developers.
+
+The first step to constructing our search engine is to create a search index out of our models. We have one index for each pillar saved to disk as a pickle file where each index is a mapping of lower case words to lists of items in the database. For each item, we generate a lowercased description string containing all the attributes of the item. Then we add a mapping in our index from each word in the description to the item. Having done this, a single access to our search index gives us a list of all the items in our database containing a word. And because the indexes are python dictionaries, indexing is very fast.
+
+The second step in building our search engine is breaking down queries and building up search results using the indexes. First, words are extracted from the query using a regex that matches alphanumerical characters in addition to apostrophes and hyphens. Then we instantiate a dictionary that will map items to a set of terms the item contains. For each term in the query and each pillar’s index, we get a list of items from the index that contain the term and add the term to the item’s list in the map. At this point we’ve constructed a dictionary that tells us what set of search terms an item contains.
+
+To finish up, we reverse the dictionary, giving us a mapping of search term sets to disjoint sets of items, and then turn the dictionary into a list by traversing its keys in descending order of set lengths. This gives us a list of items where items matching more terms come first. The final piece of the puzzle is selecting a portion of the search results using the page parameters, querying the database to get the items’ attributes, and for each result generating a context by rebuilding the description string and isolating portions where search terms show up.
 
 ## Data
 
@@ -83,7 +140,7 @@ Finally, our data scraping is separated into two parts. The first part is the ac
 
 The second part is to process the JSON data and insert relevant information into the database. Unfortunately, due to unforeseen inconsistencies in Spoonacular’s data, this is an unexpectedly difficult task. We discovered while parsing the data that many of the basic expectations we had about Spoonacular’s data were wrong. Important fields are sometimes null, various ingredients have missing IDs and their images are too small, many recipe and ingredient names are garbage, field names are inconsistent, and more. We found ourselves running into issues one after another, forcing us to make lots of unattractive choices in order to sanitize the data. As a result, our data fell short of what we had set out to accomplish.
 
-While our scraping strategy was able to work around many of Spoonacular’s limitations, we still needed to find suitable replacements for some of the tiny images they provided. We utilized the image API Pixabay to fill this gap, which was able to to provide us with images of appropriate sizes. However, since Pixabay’s images are tagged by their users, we still needed to manually verify the results and make replacements where the images were unsuitable for our purposes.
+While our scraping strategy was able to work around many of Spoonacular’s limitations, we still needed to find suitable replacements for some of the tiny images they provided. We utilized the image API Pixabay to fill this gap, which was able to provide us with images of appropriate sizes. However, since Pixabay’s images are tagged by their users, we still needed to manually verify the results and make replacements where the images were unsuitable for our purposes.
 
 ## Tools
 
@@ -151,6 +208,12 @@ Slack is a team communication tool that provides a number of services useful to 
 
 ZenHub is a project management app that adds significant features to GitHub’s issue tracker. These features include the ability to assign tasks to specific group members, classify issues as sub-problems of larger ‘epic’ tasks, and track their progress. Group members can move issues between several columns in a board, designated by their completion level. For example, a contributor may move an issue from the project backlog into the current sprint or close an issue by moving it into the closed column. We used ZenHub to organize the needs of our project, internally communicate our progress on issues, and request reviews of our changes.
 
+###### [PlanITpoker](http://www.planitpoker.com/)
+
+Planning Poker is an agile development activity used to estimate the relative difficulties of tasks in a project. Members of the development team each vote anonymously on how hard they believe a task will be, and then all votes are revealed simultaneously. If there is disagreement then the task is discussed, with people defending their estimates and refining their opinions. After the discussion there is another round of voting, and if there is still disagreement another round of discussion. The process repeats until a consensus is achieved, and then the next task is voted on. Anonymous voting forces everyone to think about the tasks without just deferring to one group member, and the discussion phase helps each team member gain a fuller understanding of the task. In the end, all teammates should have a better understanding of the project goals and a set of well-reasoned estimates for their difficulty.
+
+PlanITpoker is an online tool that allows teams to play planning poker digitally and save the results. We used PlanITpoker to analyze our user stories for the final phase of the project and develop informed estimates about the tasks ahead of us.
+
 ## Hosting
 
 #### Using Google Cloud Platform
@@ -172,6 +235,3 @@ Once our web app was deployed to Google’s App Engine servers, it was initially
             
     return tech_doc;
 });
-
-
-
