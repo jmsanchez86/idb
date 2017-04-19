@@ -44,7 +44,7 @@ export default class Search extends React.Component {
   }
 
   baconEgg() {
-    SearchActions.urlRequest("http://api.vennfridge.appspot.com/search?q=bacon");
+    SearchActions.searchSubmit("bacon");
   }
 
   render() {
