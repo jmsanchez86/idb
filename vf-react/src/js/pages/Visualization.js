@@ -58,7 +58,7 @@ export default class Visual extends React.Component {
 					  		  .on("end", dragended));
 
 		node.append("circle")
-			.attr("r", function(d) { d.film ? radius=50 : radius=20; return radius;})
+			.attr("r", function(d) {return d.size;})
 			.attr("fill", function(d) { return color(d.group); })
 		    .append("title")
 		    .text(function(d) { return d.id; });;
@@ -165,7 +165,7 @@ export default class Visual extends React.Component {
 		        response.json().then(function(responseData) {
 		    		for (var id in responseData) {
 		    			const film = responseData[id];
-		    			nodes.push({id : film.title, group : film.episode_no, film : true});
+		    			nodes.push({id : film.title, group : film.episode_no, size: 45});
 		    			for (var pid in film.planet_list){
 		    				const planet = film.planet_list[pid];
 		    				_this.requestData(planet, film.title, "film");
@@ -208,7 +208,7 @@ export default class Visual extends React.Component {
 		        response.json().then(function(responseData) {
 		    		for (var id in responseData) {
 		    			const planet = responseData[id];
-		    			nodes.push({id : planet.name, group : 10, film : false});
+		    			nodes.push({id : planet.name, group : 10, size : 20});
 		    			for (var cid in planet.character_list) {
 		    				const charr = planet.character_list[cid];
 		    				_this.requestData(charr, planet.name, "planet");
@@ -251,7 +251,7 @@ export default class Visual extends React.Component {
 		        response.json().then(function(responseData) {
 		    		for (var id in responseData) {
 		    			const char = responseData[id];
-		    			nodes.push({id : char.name, group : 15, film : false});
+		    			nodes.push({id : char.name, group : 15, size : 10});
 		    		}	
 
 		    		_this.setState({ char_nodes : nodes });
