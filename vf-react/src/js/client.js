@@ -15,7 +15,6 @@ import IngredientSingle from "./pages/IngredientSingle";
 import GroceryItemSingle from "./pages/GroceryItemSingle";
 import TagSingle from "./pages/TagSingle";
 
-
 import Layout from "./pages/Layout";
 
 const app = document.getElementById('app');

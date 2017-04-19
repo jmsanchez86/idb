@@ -16,7 +16,7 @@ export default class Search extends React.Component {
       links:   this.initLinks(),
       data:    {},
       value:   "",
-      valid: false,
+
       };
   }
 
@@ -26,7 +26,6 @@ export default class Search extends React.Component {
         value:SearchStore.getValue(),
         data: SearchStore.getData(),
         links:SearchStore.getLinks(),
-        valid: true,
       })
     })
   }
@@ -57,7 +56,7 @@ export default class Search extends React.Component {
 
     window.scrollTo(0, 0);
 
-    if (this.state.valid) {
+    if (value.length) {
       return (
           <div id="search-page" class="container-fluid">
           {results ?

@@ -29,6 +29,9 @@ export default class SearchBar extends React.Component {
   getLink() {
     return "search" +  sanitizeString();
   }
+  onClick() {
+    this.props.onClick();
+  }
 
   render() {
     return (
@@ -49,7 +52,8 @@ export default class SearchBar extends React.Component {
                 class="btn btn-md btn-default"
                 id="SearchButton"
                 type="submit button"
-                value="Submit">
+                value="Submit"
+                onClick={this.onClick.bind(this)}>
                 <span class="glyphicon glyphicon-search">
                 </span>
               </button>
