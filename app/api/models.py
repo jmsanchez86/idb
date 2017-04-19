@@ -38,12 +38,12 @@ class Recipe(db.Model):
 
     def __init__(self, recipe_id, name, image_url, instructions, description,
                  ready_time, servings, source_url):  # pragma: no cover
-        assert(recipe_id >= 0)
-        assert(type(name) == str)
-        assert(type(image_url) == str)
-        assert(ready_time >= 0)
-        assert(servings >= 0)
-        assert(type(source_url) == str)
+        assert recipe_id >= 0
+        assert isinstance(name, str)
+        assert isinstance(image_url, str)
+        assert ready_time >= 0
+        assert servings >= 0
+        assert isinstance(source_url, str)
         self.recipe_id = recipe_id
         self.name = name
         self.image_url = image_url
@@ -57,7 +57,7 @@ class Recipe(db.Model):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
     def get_id(self):
-        assert(self.recipe_id >= 0)
+        assert self.recipe_id >= 0
         return self.recipe_id
 
     def describe(self):
@@ -112,9 +112,9 @@ class Recipe(db.Model):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False),
                   "ready_time_asc": ("ready_time", True),
                   "ready_time_desc": ("ready_time", False)}
-        assert(order in orders)
-        assert(page >= 0)
-        assert(page_size >= 0)
+        assert order in orders
+        assert page >= 0
+        assert page_size >= 0
         order_param, asc = orders[order]
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
@@ -148,8 +148,8 @@ class Recipe(db.Model):
 
     @staticmethod
     def get(recipe_id):
-        assert(type(recipe_id) == int)
-        assert(recipe_id >= 0)
+        assert isinstance(recipe_id, int)
+        assert recipe_id >= 0
         return db.session.query(Recipe).get(recipe_id)
 
     @staticmethod
@@ -178,11 +178,11 @@ class Ingredient(db.Model):
     aisle = db.Column(db.Text)
 
     def __init__(self, ingredient_id, name, image_url, aisle):  # pragma: no cover
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
-        assert(type(name) == str)
-        assert(type(image_url) == str)
-        assert(type(aisle) == str)
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
+        assert isinstance(name, str)
+        assert isinstance(image_url, str)
+        assert isinstance(aisle, str)
         self.ingredient_id = ingredient_id
         self.name = name
         self.image_url = image_url
@@ -192,7 +192,7 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
     def get_id(self):
-        assert(self.ingredient_id >= 0)
+        assert self.ingredient_id >= 0
         return self.ingredient_id
 
     def describe(self):
@@ -212,8 +212,8 @@ class Ingredient(db.Model):
 
     @staticmethod
     def get(ing_id):
-        assert(type(ing_id) == int)
-        assert(ing_id >= 0)
+        assert isinstance(ing_id, int)
+        assert ing_id >= 0
         return db.session.query(Ingredient).get(ing_id)
 
     @staticmethod
@@ -231,9 +231,9 @@ class Ingredient(db.Model):
     @staticmethod
     def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
-        assert(order in orders)
-        assert(page >= 0)
-        assert(page_size >= 0)
+        assert order in orders
+        assert page >= 0
+        assert page_size >= 0
         order_param, asc = orders[order]
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
@@ -279,9 +279,9 @@ class IngredientSubstitute(db.Model):
     ingredient = db.relationship("Ingredient", back_populates="substitutes")
 
     def __init__(self, ingredient_id, substitute):  # pragma: no cover
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
-        assert(type(substitute) == str)
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
+        assert isinstance(substitute, str)
         self.ingredient_id = ingredient_id
         self.substitute = substitute
 
@@ -310,13 +310,13 @@ class GroceryItem(db.Model):
     upc = db.Column(db.String(20))
 
     def __init__(self, grocery_id, ingredient_id, name, image_url, upc):  # pragma: no cover
-        assert(type(grocery_id) == int)
-        assert(grocery_id >= 0)
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
-        assert(type(name) == str)
-        assert(type(image_url) == str)
-        assert(type(upc) == str)
+        assert isinstance(grocery_id, int)
+        assert grocery_id >= 0
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
+        assert isinstance(name, str)
+        assert isinstance(image_url, str)
+        assert isinstance(upc, str)
         self.grocery_id = grocery_id
         self.ingredient_id = ingredient_id
         self.name = name
@@ -327,7 +327,7 @@ class GroceryItem(db.Model):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
     def get_id(self):
-        assert(self.grocery_id >= 0)
+        assert self.grocery_id >= 0
         return self.grocery_id
 
     def describe(self):
@@ -338,8 +338,8 @@ class GroceryItem(db.Model):
 
     @staticmethod
     def get(grocery_id):
-        assert(type(grocery_id) == int)
-        assert(grocery_id >= 0)
+        assert isinstance(grocery_id, int)
+        assert grocery_id >= 0
         query = db.session.query(GroceryItem).filter_by(grocery_id=grocery_id)
         return query.first()
 
@@ -358,9 +358,9 @@ class GroceryItem(db.Model):
     @staticmethod
     def get_all(filters, order, page, page_size):
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
-        assert(order in orders)
-        assert(page >= 0)
-        assert(page_size >= 0)
+        assert order in orders
+        assert page >= 0
+        assert page_size >= 0
         order_param, asc = orders[order]
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
@@ -409,9 +409,9 @@ class Tag(db.Model):
     description = db.Column(db.Text)
 
     def __init__(self, tag_name, image_url, description):  # pragma: no cover
-        assert(type(tag_name) == str)
-        assert(type(image_url) == str)
-        assert(type(description) == str)
+        assert isinstance(tag_name, str)
+        assert isinstance(image_url, str)
+        assert isinstance(description, str)
         self.tag_name = tag_name
         self.image_url = image_url
         self.description = description
@@ -431,7 +431,7 @@ class Tag(db.Model):
 
     @staticmethod
     def get(tag_name):
-        assert(type(tag_name) == str)
+        assert isinstance(tag_name, str)
         query = db.session.query(Tag).filter_by(tag_name=tag_name)
         return query.first()
 
@@ -456,10 +456,10 @@ class Tag(db.Model):
                                                "tag.tag_name;")
         orders = {"alpha": False,
                   "alpha_reverse": True}
-        assert(min_occurences >= 0)
-        assert(order in orders)
-        assert(page >= 0)
-        assert(page_size >= 0)
+        assert min_occurences >= 0
+        assert order in orders
+        assert page >= 0
+        assert page_size >= 0
         filtered_tags = [pair for pair in count_recipe_query
                          if pair.cnt >= min_occurences]
         sorted_tags = sorted(filtered_tags,
@@ -488,10 +488,10 @@ class RecipeIngredient(db.Model):
     ingredient = db.relationship("Ingredient", back_populates="recipes")
 
     def __init__(self, recipe_id, ingredient_id, verbal_quantity):  # pragma: no cover
-        assert(type(recipe_id) == int)
-        assert(recipe_id >= 0)
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
+        assert isinstance(recipe_id, int)
+        assert recipe_id >= 0
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
         self.verbal_quantity = verbal_quantity
@@ -526,9 +526,9 @@ class TagIngredient(db.Model):
                                  back_populates="tag_ingredient_assocs")
 
     def __init__(self, tag_name, ingredient_id):  # pragma: no cover
-        assert(type(tag_name) == str)
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
+        assert isinstance(tag_name, str)
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
         self.tag_name = tag_name
         self.ingredient_id = ingredient_id
 
@@ -560,9 +560,9 @@ class TagRecipe(db.Model):
     recipe = db.relationship("Recipe", back_populates="tag_recipe_assocs")
 
     def __init__(self, tag_name, recipe_id):  # pragma: no cover
-        assert(type(tag_name) == str)
-        assert(type(recipe_id) == int)
-        assert(recipe_id >= 0)
+        assert isinstance(tag_name, str)
+        assert isinstance(recipe_id, int)
+        assert recipe_id >= 0
         self.tag_name = tag_name
         self.recipe_id = recipe_id
 
@@ -598,11 +598,11 @@ class TagGroceryItem(db.Model):
                                    back_populates="tag_grocery_item_assocs")
 
     def __init__(self, tag_name, ingredient_id, grocery_id):  # pragma: no cover
-        assert(type(tag_name) == str)
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
-        assert(type(grocery_id) == int)
-        assert(grocery_id >= 0)
+        assert isinstance(tag_name, str)
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
+        assert isinstance(grocery_id, int)
+        assert grocery_id >= 0
         self.tag_name = tag_name
         self.ingredient_id = ingredient_id
         self.grocery_id = grocery_id
@@ -637,10 +637,10 @@ class SimilarRecipe(db.Model):
     similar = db.relationship("Recipe", foreign_keys=[similar_id])
 
     def __init__(self, recipe_id, similar_id):  # pragma: no cover
-        assert(type(recipe_id) == int)
-        assert(recipe_id >= 0)
-        assert(type(similar_id) == int)
-        assert(similar_id >= 0)
+        assert isinstance(recipe_id, int)
+        assert recipe_id >= 0
+        assert isinstance(similar_id, int)
+        assert similar_id >= 0
         self.recipe_id = recipe_id
         self.similar_id = similar_id
 
@@ -677,12 +677,12 @@ class SimilarGroceryItem(db.Model):
                               foreign_keys=[ingredient_id, similar_id])
 
     def __init__(self, ingredient_id, grocery_id, similar_id):  # pragma: no cover
-        assert(type(ingredient_id) == int)
-        assert(ingredient_id >= 0)
-        assert(type(grocery_id) == int)
-        assert(grocery_id >= 0)
-        assert(type(similar_id) == int)
-        assert(similar_id >= 0)
+        assert isinstance(ingredient_id, int)
+        assert ingredient_id >= 0
+        assert isinstance(grocery_id, int)
+        assert grocery_id >= 0
+        assert isinstance(similar_id, int)
+        assert similar_id >= 0
         self.ingredient_id = ingredient_id
         self.grocery_id = grocery_id
         self.similar_id = similar_id
