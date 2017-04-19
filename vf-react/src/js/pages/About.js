@@ -81,6 +81,10 @@ export default class About extends React.Component {
             cont.get('ndbenzinger').totalIssues = 8;
             cont.get('scott-hornberger').totalIssues = 15;
             cont.get('thomascardwell7').totalIssues = 31;
+
+            // cory gets 14 more commits for endless stomach
+            cont.get('CoryDunn').totalCommits += 14
+
             _this.getTotals("totalIssues");
             _this.getTotals("totalCommits");
             _this.getTotals("totalUnitTests");
