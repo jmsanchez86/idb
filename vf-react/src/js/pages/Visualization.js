@@ -5,8 +5,9 @@ import * as d3 from "d3";
 var global_total = 0;
 var link_total = 0;
 var links_ = [];
-
+var nodes_ = [];
 var progress = 0;
+var collecting = true;
 export default class Visual extends React.Component {
 
     constructor() {
@@ -23,8 +24,6 @@ export default class Visual extends React.Component {
             film_links : [],
             char_links : [],
             plan_links : [],
-
-            collecting : true,
         }
     }
 
@@ -42,7 +41,8 @@ export default class Visual extends React.Component {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(150))
             .force("charge", d3.forceManyBody().strength(-30))
-            .force("center", d3.forceCenter(width / 2, height / 3));
+            .force("center", d3.forceCenter(width / 2, height / 3))
+            .force("collide", d3.forceCollide().radius(function(d) { return d.size * 1.5;}).iterations(2).strength(0.95));
 
         var link = svg.selectAll(".link")
                       .data(graph.links)
@@ -174,6 +174,8 @@ export default class Visual extends React.Component {
                                     nodes : _this.state.nodes,
                                     links : links_,
                                 };
+
+                    collecting = false;
                     _this.visualize(graph);
                     _this.setState({collecting : false});
                 }
@@ -185,7 +187,17 @@ export default class Visual extends React.Component {
     }
 
     componentDidMount() {
-        this.buildGraph();
+    	if (progress === 0){
+    		this.buildGraph();
+    	}
+    	else
+    	{
+    		var graph = {
+    						nodes : nodes_,
+    						links : links_,
+    					};
+    		this.visualize(graph);
+    	}
     }
 
 
@@ -207,7 +219,7 @@ export default class Visual extends React.Component {
                 response.json().then(function(responseData) {
                     for (var id in responseData) {
                         const film = responseData[id];
-                        nodes.push({id : film.title, group : film.episode_no, size: 45});
+                        nodes.push({id : film.title, group : 7, size: 45});
                         for (var pid in film.planet_list){
                             const planet = film.planet_list[pid];
                             _this.requestData(planet, film.title, "film");
@@ -223,6 +235,7 @@ export default class Visual extends React.Component {
                         console.log("Done.");
                         var final = nodes.concat(_this.state.char_nodes);
                         final = final.concat(_this.state.plan_nodes);
+                        nodes_ = final;
                         _this.setState({nodes : final});
                     }
 
@@ -266,6 +279,7 @@ export default class Visual extends React.Component {
                         console.log("Done.");
                         var final = nodes.concat(_this.state.char_nodes);
                         final = final.concat(_this.state.film_nodes);
+                        nodes_ = final;
                         _this.setState({nodes : final});
                     }
 
@@ -305,6 +319,7 @@ export default class Visual extends React.Component {
                         console.log("Done.");
                         var final = nodes.concat(_this.state.plan_nodes);
                         final = final.concat(_this.state.film_nodes);
+                        nodes_ = final;
                         _this.setState({nodes : final});
                     }
 
@@ -358,7 +373,7 @@ export default class Visual extends React.Component {
                   </table>
                 </div>
                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                 	{this.state.collecting && 
+                 	{collecting && 
                  		(<div class="progress">
 				  			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
 				  				aria-valuemin="0" aria-valuemax="100" style={{width : progress}}>
