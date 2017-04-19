@@ -29,7 +29,8 @@ export default class Visual extends React.Component {
 
 	visualize(graph) {
 
-		var radius;
+		const width = this.state.width;
+		const height = this.state.height;
 		var svg = d3.select("svg");
 		
 
@@ -87,8 +88,8 @@ export default class Visual extends React.Component {
 		      .attr("y2", function(d) { return d.target.y; });
 
 		  d3.selectAll("circle")
-		  	.attr("cx", function(d) { return d.x; })
-		  	.attr("cy", function(d) { return d.y; });
+		  	.attr("cx", function(d) { return d.x = Math.max(d.size, Math.min(width - d.size, d.x)); })
+		  	.attr("cy", function(d) { return d.y = Math.max(d.size, Math.min(height - d.size, d.y)); });
 
 		  d3.selectAll("text")
 		  	.attr("x", function(d) { return d.x; })
