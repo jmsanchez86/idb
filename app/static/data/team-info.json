@@ -21,7 +21,7 @@
         "bio": "Cory is a senior at the University of Texas at Austin pursuing a Bachelor of Science in Computer Science and a Business Foundations Certificate.  He will be interning with Citrix in the summer of 2017, and in his free time he enjoys playing board games, walking, and dabbling in game development.",
         "responsibilities": "Back-End, API design and documentation",
         "imgUrl": "https://avatars3.githubusercontent.com/u/21698102",
-        "numberOfUnitTests": 0
+        "numberOfUnitTests": 1
     },
     {
         "name": "Scott Hornberger",
@@ -35,9 +35,9 @@
         "name": "Scott Munro",
         "username": "scottnm",
         "bio": "Scott is a senior at the University of Texas at Austin studying Computer Science. In the past he's interned with Google and Microsoft, and will be returning fulltime to Microsoft in the Fall of 2017. In his free time Scott enjoys playing videogames, listening to crazy music, and poorly quoting old episodes of the Simpsons.",
-        "responsibilities": "Setup Google Cloud Platform, helped design database models, scraped data for the database, led Agile Development.",
+        "responsibilities": "Setup Google Cloud Platform, helped design database models and query strategy, scraped data for the database, helped build search functionality, implemented the flask routes, led Agile Development.",
         "imgUrl": "https://scottnm.github.io/images/profile_pic.jpg",
-        "numberOfUnitTests": 60
+        "numberOfUnitTests": 74
     },
     {
         "name": "Jose Sanchez",

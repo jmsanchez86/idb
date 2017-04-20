@@ -52,7 +52,7 @@ Known tags
 """
 
 
-class Importer:
+class Importer: # pragma: no cover
     """
     Imports json data from a directory into a databse.
     """

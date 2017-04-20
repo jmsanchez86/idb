@@ -8,9 +8,11 @@ Thumbs.db
 node_modules/
 npm-debug.log
 app/scraping/data
+app/search/data
 cloud_sql_proxy
 saved_ingredient_images/
 scrape_config.py
 dump.sql
 keyfile.py
 miserables.json
+test_description_download.py
