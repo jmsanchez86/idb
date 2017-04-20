@@ -43,7 +43,9 @@
 <font color="#000000" face="helvetica, arial"><a name="GroceryItem">class <strong>GroceryItem</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Table&nbsp;of&nbsp;Grocery&nbsp;Items.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Table&nbsp;of&nbsp;Grocery&nbsp;Items.<br>
+A&nbsp;grocery&nbsp;item&nbsp;contains&nbsp;a&nbsp;name,&nbsp;a&nbsp;link&nbsp;to&nbsp;an&nbsp;image,&nbsp;a&nbsp;upc&nbsp;code,&nbsp;as&nbsp;well&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;id&nbsp;of&nbsp;it's&nbsp;parent&nbsp;ingredient<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="models.html#GroceryItem">GroceryItem</a></dd>
@@ -59,15 +61,18 @@ Methods defined here:<br>
 
 <dl><dt><a name="GroceryItem-describe"><strong>describe</strong></a>(self)</dt><dd><tt>Generate&nbsp;a&nbsp;text&nbsp;description&nbsp;of&nbsp;a&nbsp;grocery&nbsp;item&nbsp;attributes.</tt></dd></dl>
 
-<dl><dt><a name="GroceryItem-get_id"><strong>get_id</strong></a>(self)</dt></dl>
+<dl><dt><a name="GroceryItem-get_id"><strong>get_id</strong></a>(self)</dt><dd><tt>Get&nbsp;the&nbsp;id&nbsp;of&nbsp;this&nbsp;grocery&nbsp;item</tt></dd></dl>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="GroceryItem-get"><strong>get</strong></a>(grocery_id)</dt></dl>
+<dl><dt><a name="GroceryItem-get"><strong>get</strong></a>(grocery_id)</dt><dd><tt>Get&nbsp;the&nbsp;grocery&nbsp;item&nbsp;specified&nbsp;by&nbsp;the&nbsp;id</tt></dd></dl>
 
-<dl><dt><a name="GroceryItem-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt></dl>
+<dl><dt><a name="GroceryItem-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt><dd><tt>Get&nbsp;&lt;page_size&gt;&nbsp;grocery&nbsp;items&nbsp;that&nbsp;adhere&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;filter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;predicates,&nbsp;in&nbsp;the&nbsp;order&nbsp;specified,&nbsp;from&nbsp;the&nbsp;requested&nbsp;page<br>
+Also&nbsp;returns&nbsp;the&nbsp;total&nbsp;number&nbsp;of&nbsp;grocery&nbsp;items&nbsp;that&nbsp;adheres&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;filters</tt></dd></dl>
 
-<dl><dt><a name="GroceryItem-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt></dl>
+<dl><dt><a name="GroceryItem-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt><dd><tt>Transform&nbsp;this&nbsp;Grocery&nbsp;Item&nbsp;into&nbsp;a&nbsp;standard&nbsp;search&nbsp;result&nbsp;dictionary</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -93,7 +98,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f6258837850; GroceryItem&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027f7050; GroceryItem&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('grocery_item', MetaData(bind=None), Colum...g(length=20), table=&lt;grocery_item&gt;), schema=None)</dl>
 
@@ -128,7 +133,9 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <font color="#000000" face="helvetica, arial"><a name="Ingredient">class <strong>Ingredient</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Table&nbsp;of&nbsp;ingredients.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Table&nbsp;of&nbsp;ingredients.<br>
+An&nbsp;ingredient&nbsp;includes&nbsp;a&nbsp;name,&nbsp;a&nbsp;link&nbsp;to&nbsp;an&nbsp;image,&nbsp;an&nbsp;aisle&nbsp;name&nbsp;where&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ingredient&nbsp;can&nbsp;be&nbsp;found,&nbsp;and&nbsp;relationship&nbsp;to&nbsp;substitute&nbsp;ingredients<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="models.html#Ingredient">Ingredient</a></dd>
@@ -144,17 +151,19 @@ Methods defined here:<br>
 
 <dl><dt><a name="Ingredient-describe"><strong>describe</strong></a>(self)</dt><dd><tt>Generate&nbsp;a&nbsp;text&nbsp;description&nbsp;of&nbsp;a&nbsp;ingredient&nbsp;attributes.</tt></dd></dl>
 
-<dl><dt><a name="Ingredient-get_grocery_items"><strong>get_grocery_items</strong></a>(self)</dt></dl>
+<dl><dt><a name="Ingredient-get_grocery_items"><strong>get_grocery_items</strong></a>(self)</dt><dd><tt>Get&nbsp;the&nbsp;grocery&nbsp;item's&nbsp;that&nbsp;map&nbsp;to&nbsp;this&nbsp;ingredient</tt></dd></dl>
 
-<dl><dt><a name="Ingredient-get_id"><strong>get_id</strong></a>(self)</dt></dl>
+<dl><dt><a name="Ingredient-get_id"><strong>get_id</strong></a>(self)</dt><dd><tt>Get&nbsp;this&nbsp;ingredient's&nbsp;id</tt></dd></dl>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="Ingredient-get"><strong>get</strong></a>(ing_id)</dt></dl>
+<dl><dt><a name="Ingredient-get"><strong>get</strong></a>(ing_id)</dt><dd><tt>Get&nbsp;the&nbsp;ingredient&nbsp;object&nbsp;specified&nbsp;by&nbsp;the&nbsp;ingredient&nbsp;id</tt></dd></dl>
 
-<dl><dt><a name="Ingredient-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt></dl>
+<dl><dt><a name="Ingredient-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt><dd><tt>Get&nbsp;&lt;page_size&gt;&nbsp;ingredients&nbsp;that&nbsp;adhere&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;filter&nbsp;predicates,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;order&nbsp;specified,&nbsp;from&nbsp;the&nbsp;requested&nbsp;page<br>
+Also&nbsp;returns&nbsp;the&nbsp;total&nbsp;number&nbsp;of&nbsp;ingredients&nbsp;that&nbsp;adheres&nbsp;to&nbsp;the&nbsp;filters</tt></dd></dl>
 
-<dl><dt><a name="Ingredient-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt></dl>
+<dl><dt><a name="Ingredient-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt><dd><tt>Transform&nbsp;this&nbsp;ingredient&nbsp;into&nbsp;a&nbsp;standard&nbsp;search&nbsp;result&nbsp;dictionary</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -177,7 +186,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f6258883d90; Ingredient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff90283e590; Ingredient&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('ingredient', MetaData(bind=None), Column(...aisle', Text(), table=&lt;ingredient&gt;), schema=None)</dl>
 
@@ -212,7 +221,8 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <font color="#000000" face="helvetica, arial"><a name="IngredientSubstitute">class <strong>IngredientSubstitute</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Table&nbsp;of&nbsp;ingredient&nbsp;substitutes.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Table&nbsp;of&nbsp;ingredient&nbsp;substitutes.<br>
+A&nbsp;string&nbsp;representation&nbsp;of&nbsp;a&nbsp;potential&nbsp;substitute&nbsp;for&nbsp;an&nbsp;ingredient<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="models.html#IngredientSubstitute">IngredientSubstitute</a></dd>
@@ -236,7 +246,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f6258837250; IngredientSubstitute&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff90283ea10; IngredientSubstitute&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('ingredient_substitute', MetaData(bind=Non..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -271,7 +281,10 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <font color="#000000" face="helvetica, arial"><a name="Recipe">class <strong>Recipe</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Table&nbsp;of&nbsp;recipes.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Table&nbsp;of&nbsp;recipes.<br>
+Each&nbsp;recipe&nbsp;contains&nbsp;a&nbsp;name,&nbsp;a&nbsp;link&nbsp;to&nbsp;an&nbsp;image,&nbsp;an&nbsp;optional&nbsp;set&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;instructions,&nbsp;a&nbsp;description,&nbsp;a&nbsp;time&nbsp;in&nbsp;minutes&nbsp;to&nbsp;prepare,&nbsp;a&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;servings,&nbsp;and&nbsp;an&nbsp;optional&nbsp;source&nbsp;url&nbsp;for&nbsp;this&nbsp;recipe<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="models.html#Recipe">Recipe</a></dd>
@@ -287,15 +300,17 @@ Methods defined here:<br>
 
 <dl><dt><a name="Recipe-describe"><strong>describe</strong></a>(self)</dt><dd><tt>Generate&nbsp;a&nbsp;text&nbsp;description&nbsp;of&nbsp;a&nbsp;recipes&nbsp;attributes.</tt></dd></dl>
 
-<dl><dt><a name="Recipe-get_id"><strong>get_id</strong></a>(self)</dt></dl>
+<dl><dt><a name="Recipe-get_id"><strong>get_id</strong></a>(self)</dt><dd><tt>Get&nbsp;the&nbsp;id&nbsp;of&nbsp;this&nbsp;recipe</tt></dd></dl>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="Recipe-get"><strong>get</strong></a>(recipe_id)</dt></dl>
+<dl><dt><a name="Recipe-get"><strong>get</strong></a>(recipe_id)</dt><dd><tt>Get&nbsp;the&nbsp;recipe&nbsp;object&nbsp;specified&nbsp;by&nbsp;the&nbsp;id</tt></dd></dl>
 
-<dl><dt><a name="Recipe-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt></dl>
+<dl><dt><a name="Recipe-get_all"><strong>get_all</strong></a>(filters, order, page, page_size)</dt><dd><tt>Get&nbsp;&lt;page_size&gt;&nbsp;recipes&nbsp;that&nbsp;adhere&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;filter&nbsp;predicates,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;order&nbsp;specified,&nbsp;from&nbsp;the&nbsp;requested&nbsp;page<br>
+Also&nbsp;returns&nbsp;the&nbsp;total&nbsp;number&nbsp;of&nbsp;recipes&nbsp;that&nbsp;adheres&nbsp;to&nbsp;the&nbsp;filters</tt></dd></dl>
 
-<dl><dt><a name="Recipe-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt></dl>
+<dl><dt><a name="Recipe-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt><dd><tt>Transform&nbsp;this&nbsp;recipe&nbsp;object&nbsp;into&nbsp;a&nbsp;standard&nbsp;search&nbsp;result&nbsp;dictionary</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -329,7 +344,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f62588839d0; Recipe&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff90283e1d0; Recipe&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('recipe', MetaData(bind=None), Column('rec...ource_url', Text(), table=&lt;recipe&gt;), schema=None)</dl>
 
@@ -364,7 +379,8 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <font color="#000000" face="helvetica, arial"><a name="RecipeIngredient">class <strong>RecipeIngredient</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Ingredients&nbsp;and&nbsp;quantities&nbsp;contained&nbsp;in&nbsp;a&nbsp;recipe.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Ingredients&nbsp;and&nbsp;quantities&nbsp;contained&nbsp;in&nbsp;a&nbsp;recipe.<br>
+Association&nbsp;between&nbsp;recipes&nbsp;and&nbsp;ingredients<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="models.html#RecipeIngredient">RecipeIngredient</a></dd>
@@ -392,7 +408,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f62587d22d0; RecipeIngredient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027f7a50; RecipeIngredient&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('recipe_ingredient', MetaData(bind=None), ..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -453,7 +469,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f6258801d10; SimilarGroceryItem&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027be4d0; SimilarGroceryItem&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('similar_grocery_item', MetaData(bind=None..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -514,7 +530,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f6258801350; SimilarRecipe&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027a5ad0; SimilarRecipe&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('similar_recipe', MetaData(bind=None), Col..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -549,7 +565,9 @@ Data descriptors inherited from <a href="flask_sqlalchemy.html#Model">flask_sqla
 <font color="#000000" face="helvetica, arial"><a name="Tag">class <strong>Tag</strong></a>(flask_sqlalchemy.Model)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Table&nbsp;of&nbsp;tags.<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Table&nbsp;of&nbsp;tags.<br>
+Includes&nbsp;a&nbsp;tag&nbsp;name,&nbsp;a&nbsp;link&nbsp;to&nbsp;an&nbsp;image&nbsp;for&nbsp;this&nbsp;tag,&nbsp;and&nbsp;a&nbsp;human&nbsp;readable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;of&nbsp;this&nbsp;tag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="models.html#Tag">Tag</a></dd>
@@ -565,15 +583,18 @@ Methods defined here:<br>
 
 <dl><dt><a name="Tag-describe"><strong>describe</strong></a>(self)</dt><dd><tt>Generate&nbsp;a&nbsp;text&nbsp;description&nbsp;of&nbsp;a&nbsp;grocery&nbsp;item&nbsp;attributes.</tt></dd></dl>
 
-<dl><dt><a name="Tag-get_id"><strong>get_id</strong></a>(self)</dt></dl>
+<dl><dt><a name="Tag-get_id"><strong>get_id</strong></a>(self)</dt><dd><tt>Get&nbsp;the&nbsp;id&nbsp;of&nbsp;this&nbsp;tag</tt></dd></dl>
 
 <hr>
 Static methods defined here:<br>
-<dl><dt><a name="Tag-get"><strong>get</strong></a>(tag_name)</dt></dl>
+<dl><dt><a name="Tag-get"><strong>get</strong></a>(tag_name)</dt><dd><tt>Get&nbsp;the&nbsp;tag&nbsp;specified&nbsp;by&nbsp;this&nbsp;name</tt></dd></dl>
 
-<dl><dt><a name="Tag-get_all"><strong>get_all</strong></a>(min_occurences, order, page, page_size)</dt></dl>
+<dl><dt><a name="Tag-get_all"><strong>get_all</strong></a>(min_occurences, order, page, page_size)</dt><dd><tt>Get&nbsp;&lt;page_size&gt;&nbsp;tags&nbsp;that&nbsp;is&nbsp;used&nbsp;on&nbsp;at&nbsp;least&nbsp;&lt;min_occurences&gt;&nbsp;models<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;order&nbsp;specified,&nbsp;from&nbsp;the&nbsp;requested&nbsp;page<br>
+Also&nbsp;returns&nbsp;the&nbsp;total&nbsp;number&nbsp;of&nbsp;tags&nbsp;that&nbsp;adheres&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;filters</tt></dd></dl>
 
-<dl><dt><a name="Tag-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt></dl>
+<dl><dt><a name="Tag-search_result_xform"><strong>search_result_xform</strong></a>(search_result)</dt><dd><tt>Transform&nbsp;this&nbsp;<a href="#Tag">Tag</a>&nbsp;into&nbsp;a&nbsp;standard&nbsp;search&nbsp;result&nbsp;dictionary</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -600,7 +621,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f6258837c90; Tag&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027f7490; Tag&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag', MetaData(bind=None), Column('tag_na...'description', Text(), table=&lt;tag&gt;), schema=None)</dl>
 
@@ -663,7 +684,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f62587e9bd0; TagGroceryItem&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027a5390; TagGroceryItem&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag_grocery_item', MetaData(bind=None), C..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -726,7 +747,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f62587d29d0; TagIngredient&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff902791190; TagIngredient&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag_ingredient', MetaData(bind=None), Col..., primary_key=True, nullable=False), schema=None)</dl>
 
@@ -787,7 +808,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f62587e9150; TagRecipe&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7ff9027918d0; TagRecipe&gt;</dl>
 
 <dl><dt><strong>__table__</strong> = Table('tag_recipe', MetaData(bind=None), Column(..., primary_key=True, nullable=False), schema=None)</dl>
 
