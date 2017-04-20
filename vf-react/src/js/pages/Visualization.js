@@ -345,36 +345,71 @@ export default class Visual extends React.Component {
                   <table id="mytable" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Nodes</th>
+                        <th><h4><center>Legend</center></h4></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td><h5>Movie</h5>
+
+                        <td>
+                        <center>
+                        <h5>Movie</h5>
                         <svg height="70" width="70">
                         <circle r="30" fill="#ff7f0e" cx="37" cy="30"><title>Movie</title></circle>
                         </svg>
+                        </center>
                         </td>
                       </tr>
                       <tr>
-                        <td><h5>Planet</h5>
+                        <td>
+                        <center>
+                        <h5>Planet</h5>
                         <svg height="50" width="60">
-                        <circle r="20" fill="#aec7e8" cx="37" cy="25"><title>Planet</title></circle>
+                        <circle r="20" fill="#aec7e8" cx="30" cy="25"><title>Planet</title></circle>
                         </svg>
+                        </center>
                         </td>
                       </tr>
                       <tr>
-                        <td><h5>Character</h5>
+                        <td>
+                        <center>
+                        <h5>Character</h5>
                         <svg height="50" width="60">
-                        <circle r="10" fill="#1f77b4" cx="37" cy="25"><title>Character</title></circle>
+                        <circle r="10" fill="#1f77b4" cx="30" cy="25"><title>Character</title></circle>
                         </svg>
+                        </center>
                         </td>
+                      </tr>
+                      <tr>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-group-justified btn-primary"
+                          data-toggle="modal"
+                          data-target="#myModal">
+                          <p>About</p><div class="glyphicon glyphicon-question-sign"></div>
+                        </button>
+
+                        <div id="myModal" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">About this visualization</h4>
+                              </div>
+                              <div class="modal-body">
+                                <p>This visualization shows the relationships between the movies, planets, and characters of the Star Wars universe.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                 	{collecting && 
+                 	{collecting &&
                  		(<div class="progress">
 				  			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
 				  				aria-valuemin="0" aria-valuemax="100" style={{width : progress}}>
