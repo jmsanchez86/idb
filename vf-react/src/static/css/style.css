@@ -508,6 +508,16 @@ span .search-context{
 
 #stars {
   background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  padding: 40px;
+  padding-top:100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+
+
 }
 
 #mytable {
@@ -515,5 +525,11 @@ span .search-context{
 }
 
 #mynode {
-  stroke: blackk;
+  stroke: black;
+  stroke: 0px;
+}
+
+#mysbg {
+  width: 100% !important;
+  height: 100% !important;
 }

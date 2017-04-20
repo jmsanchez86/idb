@@ -13,9 +13,8 @@ export default class Visual extends React.Component {
     constructor() {
         super();
         this.state = {
-            width : 1375,
-            height : 675,
-
+            width : window.innerWidth-100,
+            height : window.innerHeight- 100,
             film_nodes : [],
             char_nodes : [],
             plan_nodes : [],
