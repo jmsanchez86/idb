@@ -23,6 +23,9 @@ def init_db(app):  # pragma: no cover
 class Recipe(db.Model):
     """
     Table of recipes.
+    Each recipe contains a name, a link to an image, an optional set of
+        instructions, a description, a time in minutes to prepare, a number
+        of servings, and an optional source url for this recipe
     """
 
     __tablename__ = "recipe"
@@ -57,6 +60,9 @@ class Recipe(db.Model):
         return "<Recipe %d %s>" % (self.recipe_id, self.name)
 
     def get_id(self):
+        """
+        Get the id of this recipe
+        """
         assert self.recipe_id >= 0
         return self.recipe_id
 
@@ -109,6 +115,11 @@ class Recipe(db.Model):
 
     @staticmethod
     def get_all(filters, order, page, page_size):
+        """
+        Get <page_size> recipes that adhere to all of the filter predicates,
+            in the order specified, from the requested page
+        Also returns the total number of recipes that adheres to the filters
+        """
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False),
                   "ready_time_asc": ("ready_time", True),
                   "ready_time_desc": ("ready_time", False)}
@@ -116,11 +127,15 @@ class Recipe(db.Model):
         assert page >= 0
         assert page_size >= 0
         order_param, asc = orders[order]
+
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
             order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
             start=page_size * page, size=page_size)
+
+        # if we have tags we need a more complicated grouping query to ensure
+        # that all returned recipes adhere to the tags
         if len(filters) > 0:
             tagclause = ' OR '.join(
                 ["tag_name='{}'".format(t) for t in filters])
@@ -148,12 +163,18 @@ class Recipe(db.Model):
 
     @staticmethod
     def get(recipe_id):
+        """
+        Get the recipe object specified by the id
+        """
         assert isinstance(recipe_id, int)
         assert recipe_id >= 0
         return db.session.query(Recipe).get(recipe_id)
 
     @staticmethod
     def search_result_xform(search_result):
+        """
+        Transform this recipe object into a standard search result dictionary
+        """
         search_result.contextualize()
         inst = Recipe.get(search_result.item_id)
         return {
@@ -168,6 +189,8 @@ class Recipe(db.Model):
 class Ingredient(db.Model):
     """
     Table of ingredients.
+    An ingredient includes a name, a link to an image, an aisle name where the
+        ingredient can be found, and relationship to substitute ingredients
     """
 
     __tablename__ = "ingredient"
@@ -192,6 +215,9 @@ class Ingredient(db.Model):
         return "<Ingredient %d %s>" % (self.ingredient_id, self.name)
 
     def get_id(self):
+        """
+        Get this ingredient's id
+        """
         assert self.ingredient_id >= 0
         return self.ingredient_id
 
@@ -208,16 +234,25 @@ class Ingredient(db.Model):
                           aisle=self.aisle)
 
     def get_grocery_items(self):
+        """
+        Get the grocery item's that map to this ingredient
+        """
         return db.session.query(GroceryItem).filter_by(ingredient_id=self.ingredient_id)
 
     @staticmethod
     def get(ing_id):
+        """
+        Get the ingredient object specified by the ingredient id
+        """
         assert isinstance(ing_id, int)
         assert ing_id >= 0
         return db.session.query(Ingredient).get(ing_id)
 
     @staticmethod
     def search_result_xform(search_result):
+        """
+        Transform this ingredient into a standard search result dictionary
+        """
         search_result.contextualize()
         inst = Ingredient.get(search_result.item_id)
         return {
@@ -230,16 +265,25 @@ class Ingredient(db.Model):
 
     @staticmethod
     def get_all(filters, order, page, page_size):
+        """
+        Get <page_size> ingredients that adhere to all of the filter predicates,
+            in the order specified, from the requested page
+        Also returns the total number of ingredients that adheres to the filters
+        """
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
         assert order in orders
         assert page >= 0
         assert page_size >= 0
         order_param, asc = orders[order]
+
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
             order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
             start=page_size * page, size=page_size)
+
+        # If we need to filter, a more complicated query is required to
+        # ensure that each item adheres to each filter
         if len(filters) > 0:
             tagclause = ' OR '.join(
                 ["tag_name='{}'".format(t) for t in filters])
@@ -267,6 +311,7 @@ class Ingredient(db.Model):
 class IngredientSubstitute(db.Model):
     """
     Table of ingredient substitutes.
+    A string representation of a potential substitute for an ingredient
     """
 
     __tablename__ = "ingredient_substitute"
@@ -297,6 +342,8 @@ Ingredient.substitutes = db.relationship("IngredientSubstitute",
 class GroceryItem(db.Model):
     """
     Table of Grocery Items.
+    A grocery item contains a name, a link to an image, a upc code, as well as
+        the id of it's parent ingredient
     """
 
     __tablename__ = "grocery_item"
@@ -327,6 +374,9 @@ class GroceryItem(db.Model):
         return "<Grocery item %d %s>" % (self.grocery_id, self.name)
 
     def get_id(self):
+        """
+        Get the id of this grocery item
+        """
         assert self.grocery_id >= 0
         return self.grocery_id
 
@@ -338,6 +388,9 @@ class GroceryItem(db.Model):
 
     @staticmethod
     def get(grocery_id):
+        """
+        Get the grocery item specified by the id
+        """
         assert isinstance(grocery_id, int)
         assert grocery_id >= 0
         query = db.session.query(GroceryItem).filter_by(grocery_id=grocery_id)
@@ -345,6 +398,9 @@ class GroceryItem(db.Model):
 
     @staticmethod
     def search_result_xform(search_result):
+        """
+        Transform this Grocery Item into a standard search result dictionary
+        """
         search_result.contextualize()
         inst = GroceryItem.get(search_result.item_id)
         return {
@@ -357,16 +413,27 @@ class GroceryItem(db.Model):
 
     @staticmethod
     def get_all(filters, order, page, page_size):
+        """
+        Get <page_size> grocery items that adhere to all of the filter
+            predicates, in the order specified, from the requested page
+        Also returns the total number of grocery items that adheres to
+            the filters
+        """
         orders = {"alpha": ("name", True), "alpha_reverse": ("name", False)}
         assert order in orders
         assert page >= 0
         assert page_size >= 0
+
         order_param, asc = orders[order]
         counter = " SELECT COUNT (*) FROM ({subquery}) AS cnt;"
         sort_clause = (" ORDER BY {order_param} {asc} ").format(
             order_param=order_param, asc="ASC" if asc else "DESC")
         page_clause = (" LIMIT {size} OFFSET {start}").format(
             start=page_size * page, size=page_size)
+
+
+        # If we need to filter, a more complicated query is required to
+        # ensure that each item adheres to each filter
         if len(filters) > 0:
             tagclause = ' OR '.join(
                 ["tag_name='{}'".format(t) for t in filters])
@@ -400,6 +467,8 @@ class GroceryItem(db.Model):
 class Tag(db.Model):
     """
     Table of tags.
+    Includes a tag name, a link to an image for this tag, and a human readable
+        description of this tag
     """
 
     __tablename__ = "tag"
@@ -420,6 +489,9 @@ class Tag(db.Model):
         return "<Tag %s>" % (self.tag_name)
 
     def get_id(self):
+        """
+        Get the id of this tag
+        """
         return self.tag_name
 
     def describe(self):
@@ -431,12 +503,18 @@ class Tag(db.Model):
 
     @staticmethod
     def get(tag_name):
+        """
+        Get the tag specified by this name
+        """
         assert isinstance(tag_name, str)
         query = db.session.query(Tag).filter_by(tag_name=tag_name)
         return query.first()
 
     @staticmethod
     def search_result_xform(search_result):
+        """
+        Transform this Tag into a standard search result dictionary
+        """
         search_result.contextualize()
         inst = Tag.get(search_result.item_id)
         return {
@@ -449,6 +527,12 @@ class Tag(db.Model):
 
     @staticmethod
     def get_all(min_occurences, order, page, page_size):
+        """
+        Get <page_size> tags that is used on at least <min_occurences> models
+            in the order specified, from the requested page
+        Also returns the total number of tags that adheres to
+            the filters
+        """
         count_recipe_query = db.engine.execute("SELECT tag.tag_name, tag.description, "
                                                "tag.image_url, COUNT(tag_recipe.recipe_id) "
                                                "AS cnt FROM tag LEFT JOIN tag_recipe ON "
@@ -473,6 +557,7 @@ class Tag(db.Model):
 class RecipeIngredient(db.Model):
     """
     Ingredients and quantities contained in a recipe.
+    Association between recipes and ingredients
     """
 
     __tablename__ = "recipe_ingredient"
@@ -694,9 +779,10 @@ GroceryItem.similar_grocery_item_assocs =\
 GroceryItem.similar_grocery_items =\
     association_proxy("similar_grocery_item_assocs", "similar")
 
+
 # Report
 # ======
-# 222 statements analysed.
+# 349 statements analysed.
 #
 # Statistics by type
 # ------------------
@@ -708,9 +794,9 @@ GroceryItem.similar_grocery_items =\
 # +---------+-------+-----------+-----------+------------+---------+
 # |class    |11     |11         |=          |100.00      |0.00     |
 # +---------+-------+-----------+-----------+------------+---------+
-# |method   |29     |29         |=          |68.97       |0.00     |
+# |method   |41     |41         |=          |100.00      |0.00     |
 # +---------+-------+-----------+-----------+------------+---------+
-# |function |0      |0          |=          |0           |0        |
+# |function |2      |2          |=          |50.00       |0.00     |
 # +---------+-------+-----------+-----------+------------+---------+
 #
 #
@@ -732,13 +818,13 @@ GroceryItem.similar_grocery_items =\
 # +----------+-------+------+---------+-----------+
 # |type      |number |%     |previous |difference |
 # +==========+=======+======+=========+===========+
-# |code      |302    |50.59 |302      |=          |
+# |code      |447    |57.16 |447      |=          |
 # +----------+-------+------+---------+-----------+
-# |docstring |77     |12.90 |77       |=          |
+# |docstring |192    |24.55 |192      |=          |
 # +----------+-------+------+---------+-----------+
-# |comment   |124    |20.77 |124      |=          |
+# |comment   |12     |1.53  |12       |=          |
 # +----------+-------+------+---------+-----------+
-# |empty     |94     |15.75 |94       |=          |
+# |empty     |131    |16.75 |131      |=          |
 # +----------+-------+------+---------+-----------+
 #
 #
@@ -776,3 +862,4 @@ GroceryItem.similar_grocery_items =\
 # Global evaluation
 # -----------------
 # Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+#
