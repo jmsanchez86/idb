@@ -443,7 +443,7 @@ class Tag(db.Model):
             "id": inst.tag_name,
             "pillar_name": "tags",
             "name": inst.tag_name,
-            "image": inst.image_url,
+            "image": "/static/images/" + inst.image_url,
             "contexts": search_result.contexts
         }
 
