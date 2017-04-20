@@ -18,7 +18,6 @@ export default class GroceryItemSingle extends React.Component {
       id : this.props.params.id,
 
     };
-    console.log(this.props.route);
     this.requestData();
   }
 
@@ -27,7 +26,6 @@ export default class GroceryItemSingle extends React.Component {
     var _this = this;
 
     const requestString = 'http://' + apiRoot + '/grocery_items/' + _this.state.id;
-    console.log(requestString);
 
     // Fetch singleton's required data.
     fetch(requestString)
@@ -50,29 +48,20 @@ export default class GroceryItemSingle extends React.Component {
     .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
-<<<<<<< HEAD
-      console.log(this.state);
-=======
-    this.forceUpdate();
->>>>>>> 97010f73cc3eb1e048b5eb5a5ba453301cdde298
   }
   onClick(event){
 
     var object = this.refs.main;
     object.key=1;
-    console.log(object.key);
   }
   componentWillReceiveProps(nextProps) {
     var newId = parseInt(nextProps.location.pathname.split("/")[2]);
-    console.log(newId);
     this.state.id = newId;
-    console.log(this.state.id);
     this.requestData();
   }
 
 
   render() {
-    console.log(this.state);
     const name = this.state.name;
     const image = this.state.image;
     const upc = this.state.upc;
@@ -85,13 +74,8 @@ export default class GroceryItemSingle extends React.Component {
       });
     const grocery_items = this.state.related_grocery_items.map(function(item){
       return (
-<<<<<<< HEAD
           <div key={item.id+"_"+item.name} class="list-group-item">
               <p><Link to={"grocery_items/" + item.id}>{item.name}</Link></p>
-=======
-        <div key={item.id+"_"+item.name} class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <a href={"http://www.vennfridge.me/#/grocery_items/" + item.id}><p> {item.name} </p></a>
->>>>>>> 97010f73cc3eb1e048b5eb5a5ba453301cdde298
         </div>);
       });
     return (
@@ -137,10 +121,7 @@ export default class GroceryItemSingle extends React.Component {
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <OptionalList
-              title="Grocery Items"
-              list={grocery_items}
-              />
+
                   <div class="row">
                     <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
                       <h3 disabled={!grocery_items.length}>Related Grocery Items</h3>

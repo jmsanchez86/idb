@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := test
 
-PY_SOURCE := $(shell find ./app -name '*.py')
+PY_SOURCE := $(shell find ./app -name '*.py' -not -path './app/scraping/*')
 FILES :=                 \
 	app/api/models.py    \
 	app/api/test/tests.py\
@@ -19,7 +19,7 @@ ifeq ($(shell uname), Darwin)
 	PIP      := pip3.5
 	PYLINT   := pylint
 	COVERAGE := coverage-3.5
-	PYDOC    := pydoc3.5
+	PYDOC    := pydoc
 	AUTOPEP8 := autopep8
 # Travis CI
 else ifeq ($(CI), true)
@@ -27,7 +27,7 @@ else ifeq ($(CI), true)
 	PIP      := pip3.5
 	PYLINT   := pylint
 	COVERAGE := coverage-3.5
-	PYDOC    := pydoc3.5
+	PYDOC    := pydoc
 	AUTOPEP8 := autopep8
 # Docker
 else ifeq ($(shell uname -p), unknown)
@@ -35,7 +35,7 @@ else ifeq ($(shell uname -p), unknown)
 	PIP      := pip3.5
 	PYLINT   := pylint
 	COVERAGE := coverage-3.5
-	PYDOC    := pydoc3.5
+	PYDOC    := pydoc
 	AUTOPEP8 := autopep8
 # UTCS
 else
@@ -43,7 +43,7 @@ else
 	PIP      := pip3
 	PYLINT   := pylint
 	COVERAGE := coverage-3.5
-	PYDOC    := pydoc3.5
+	PYDOC    := pydoc
 	AUTOPEP8 := autopep8
 endif
 
@@ -126,12 +126,12 @@ pylint-check: $(PY_SOURCE)
 
 static-check: mypy-check pylint-check
 
-IDB1.html:
-	$(PYDOC) -w app.models
-	mv app.models.html IDB1.html
+IDB3.html:
+	$(PYDOC) -w app/api/models.py
+	mv models.html IDB3.html
 
-IDB1.log:
-	git log > IDB1.log
+IDB3.log:
+	git log > IDB3.log
 
 .PHONY: all
 all: IDB1.html IDB1.log

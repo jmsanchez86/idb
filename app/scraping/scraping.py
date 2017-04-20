@@ -19,6 +19,8 @@ spoonacular_headers = {
 
 hit_requests_soft_limit = False
 requests_left = -1
+
+
 def check_limit(resp):
     global hit_requests_soft_limit
     global requests_left
@@ -27,6 +29,7 @@ def check_limit(resp):
     if requests_left < 50:
         raise Exception("Hard request limit reached :: requests left ({left})"
                         .format(left=requests_left))
+
 
 def get_request_json(path):
     """
@@ -40,7 +43,8 @@ def get_request_json(path):
     res.raise_for_status()
     return res.json()
 
-def post_request_json(path, *, post_data=None, json_data=None):
+
+def post_request_json(path: str, *, post_data: dict=None, json_data: dict=None):
     """
     Make a post request for a resource described by path and returns the
     response object.
@@ -56,15 +60,18 @@ def post_request_json(path, *, post_data=None, json_data=None):
     res.raise_for_status()
     return res.json()
 
+
 def data_exists(filename: str):
     return os.path.isfile("data/" + filename)
+
 
 def write_json(filename: str, data: dict):
     with open("data/" + filename, 'w') as f:
         print("writing " + filename + "... {}".format(requests_left))
         f.write(json.dumps(data))
 
-def product(grocery_data):
+
+def product(grocery_data: dict):
     grocery_id = grocery_data["id"]
     filename = "get_product_information/" + str(grocery_id) + ".json"
     if data_exists(filename):
@@ -73,13 +80,15 @@ def product(grocery_data):
     write_json(filename, product_data)
 
 
-def ingredient(ingredient_data):
+def ingredient(ingredient_data: dict):
     # sloppy jo mix showed that not every ingredient has an id field
     if "id" not in ingredient_data:
         if "name" not in ingredient_data:
-            print("\n\n????  Ingredient <{}> ?????\n\n".format(str(ingredient_data)))
+            print("\n\n????  Ingredient <{}> ?????\n\n".format(
+                str(ingredient_data)))
         else:
-            print("\n\nIngredient <{}> didn't have ID\n\n".format(ingredient_data["name"]))
+            print("\n\nIngredient <{}> didn't have ID\n\n".format(
+                ingredient_data["name"]))
         return
 
     ingredient_id = ingredient_data["id"]
@@ -93,7 +102,8 @@ def ingredient(ingredient_data):
         "ingredients": [ingredient_data["name"]],
         "servings": 1})
 
-    write_json("get_product_map/" + str(ingredient_id) + ".json", grocery_list_data)
+    write_json("get_product_map/" + str(ingredient_id) +
+               ".json", grocery_list_data)
     if len(grocery_list_data) > 0:
         for grocery_data in grocery_list_data[0]["products"][:5]:
             product(grocery_data)
@@ -101,7 +111,8 @@ def ingredient(ingredient_data):
         print("Ingredient <{}> returned empty from grocery products"
               .format(ingredient_data["name"]))
 
-def recipe(recipe_id):
+
+def recipe(recipe_id: int):
     filename = "recipes/" + str(recipe_id) + ".json"
     if data_exists(filename):
         return
@@ -120,9 +131,13 @@ def recipe(recipe_id):
     for ingredient_data in recipe_data["extendedIngredients"]:
         ingredient(ingredient_data)
 
-recipe_queue = deque()
+
+recipe_queue = deque()  # type: deque[int]
+
+
 def start():
-    recipe_list = get_request_json("recipes/random?limitLicense=false&number=10")
+    recipe_list = get_request_json(
+        "recipes/random?limitLicense=false&number=10")
     recipe_queue.extend([recipe["id"] for recipe in recipe_list["recipes"]])
     print("Requests start: {}".format(requests_left + 10))
 

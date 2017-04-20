@@ -1,0 +1,535 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #FFFEFE;
+  position: relative;
+  margin: 0;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+
+  min-height: calc(100%);
+}
+
+/* Navbar */
+ul.nav a{
+   transition: .2s;
+}
+
+ul.nav a:hover {
+  color: rgba(255,254,254,0.7) !important;
+}
+
+.image{
+    position:relative;
+    overflow:hidden;
+    padding-bottom:100%;
+}
+.image img{
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+}
+
+.top-buffer { margin-top:20px; }
+
+
+#logohome {
+  font-family: Dosis, sans-serif;
+  font-size: 50px;
+  font-weight: 800;
+  text-transform: lowercase;
+  color:#FFFEFE;
+  padding-top: 10px;
+
+  transition: .2s;
+}
+#logohome:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+.navbar {
+  border-style: none;
+  border-radius: 0%;
+  z-index: 1000;
+  padding: 5px 0px 5px 0px;
+  background-color:#FC5D30;
+
+  box-shadow: 0  1px 15px 0px #292929;
+}
+.navbar-default .navbar-nav > li > a {
+   color: #FFFEFE; /*Change active text color here*/
+   font-size: 24px;
+   font-family: Raleway, sans-serif;
+   text-transform: capitalize;
+}
+
+/* This changes when navbar collapses */
+ @media (max-width: 1400px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+}
+
+.glyphicon-cutlery {
+  color: #FFFEFE;
+}
+
+/* navbar button */
+.navbar-default .navbar-toggle {
+  transition: .2s;
+  border: transparent;
+  box-shadow: 0px 2px 7px #292929;
+}
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+  box-shadow: 0px 2px 15px #292929;
+}
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle:active {
+  background-color: transparent;
+  box-shadow: 0px 2px 7px #292929;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: transparent;
+}
+
+/* Carousel */
+#myCarousel {
+  z-index:0;
+  width:auto;
+  margin-top: -40px;
+  margin-left: -15px;
+  margin-right: -15px;
+  box-shadow: 0 1px 15px 0px #292929;
+}
+.slide1{
+  background-image: url('../images/greens.jpg');
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.slide2{
+  background-image: url('../images/eggs.jpg');
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.slide3{
+  background-image: url('../images/strawberries.jpg');
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Main Text */
+#main-text {
+  margin-top: 80px;
+  margin-bottom:80px;
+}
+
+h1 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 110px;
+}
+
+h2 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 80px;
+  font-size: calc(20px + 5vw);
+
+}
+
+h3.grid {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.container h4 {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+
+h5 {
+  font-family: Raleway, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.container h6 {
+  font-family: Raleway, sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+h3 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+}
+
+h4 {
+  font-family: Dosis, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+
+p {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  white-space: pre-wrap;
+}
+
+.single p {
+  font-size: 24px;
+}
+
+.single [disabled] {
+  color: #e6e6e6;
+}
+
+img.venn {
+  height: 30px;
+  width:auto; /* you can use % */
+}
+
+#landing-h4 {
+  font-size: 40px;
+  font-family: Dosis, sans-serif;
+}
+
+#landing-p {
+  font-size: 16px;
+  font-family: Raleway, sans-serif;
+}
+
+#grid-results {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  margin: 40px;
+  padding-top: 70px;
+}
+
+/* Footer */
+.footer-distributed{
+	background-color: #454851;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: normal 16px;
+  font-family: Raleway;
+
+	padding: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  box-shadow: 0 2px 15px 0px #1F2421;
+}
+.footer-distributed .footer-left p{
+	color:  #FFFEF9;
+	font-size: 14px;
+	margin: 0;
+}
+
+.image1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#upc {
+  color: #cccccc;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+}
+
+.thumbnail {
+  transition: .2s;
+}
+
+.thumbnail:hover {
+  border-color: #949494;
+}
+.nav-pills li a{
+  border: red;
+
+}
+
+label.btn.btn-default{
+  color: #428AB0 !important;
+  border-color:#428AB0 !important;
+  background-color: rgba(0,0,0,0) !important;
+}
+
+label.btn.btn-default.active {
+  background-color:#428AB0 !important;
+  color: #fffefe !important;
+}
+
+.btn.btn-default {
+  transition: .2s;
+  color: #fffefe !important;
+  background-color:#428AB0 !important;
+  outline: #fffefe !important;
+  border-color:#428AB0 !important;
+}
+
+.btn.btn-default:active:focus:hover  {
+  color: #fff !important;
+  background-color: #6AA8C9 !important;
+  outline: #fffefe !important;
+}
+
+.btn.btn-success {
+  transition: .2s;
+  color: #fffefe !important;
+  background-color: #6DCA07 !important;
+  outline: #fffefe !important;
+  border-color: #fff !important;
+}
+
+.btn.btn-success:active:focus:hover  {
+  color: #fff !important;
+  background-color: #B7F178 !important;
+  outline: #fffefe !important;
+}
+
+
+/* Hiding the radiobuttons & checkboxes */
+input[type="radio"] {
+    display: none;
+}
+
+#BigButton {
+  display: block;
+  width: 100%;
+  padding: 0px;
+}
+
+#BigSearch {
+  display: block;
+  width: 100%;
+  padding: 0px;
+}
+
+#Controller {
+  margin-bottom: 10px;
+}
+
+#pagination {
+  margin:0px 40px 50px 40px;
+}
+
+.gutter-20.row {
+  margin-right: -20px;
+  margin-left: -20px;
+}
+.gutter-20 > [class^="col-lg"] {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#blurb {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#Controller > div > div {
+  padding-right: 0px;
+
+}
+
+.grocery-item-single {
+  margin-top:40px;
+}
+
+
+#grid-page {
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+#grid_item_name {
+  text-transform: capitalize;
+}
+
+#custom-search-input {
+  margin:0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+#custom-search-input .search-query {
+  padding-right: 3px;
+  padding-right: 4px \9;
+  padding-left: 3px;
+  padding-left: 4px \9;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#custom-search-input button {
+  border: 0;
+  background: none;
+  /** belows styles are working good */
+  padding: 2px 5px;
+  margin-top: 2px;
+  position: relative;
+  left: -28px;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color:#D9230F;
+}
+
+.search-query:focus + button {
+  z-index: 3;
+}
+
+#Controller {
+  margin-top:20px;
+}
+
+#NavSearch {
+  margin-top: 10px;
+}
+
+#TextBox {
+  font-family: Raleway, sans-serif;
+  /*float:left !important;*/
+  display: block !important;
+}
+
+#SearchButton {
+  display: inline-block !important;
+  /*float:left !important;*/
+}
+
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  box-shadow: 0px 0px 15px #cccccc;
+  z-index: 999;
+}
+.search-result:hover {
+  transition: .2s;
+  background-color: transparent !important;
+  z-index: 999;
+}
+
+.search-c {
+  background-color: #f4f8ff;
+}
+
+span .search-context{
+  font-weight: 600;
+  background-color: #ccd5e5;
+}
+
+#SearchHeader {
+  font-family: Dosis;
+  font-size: 30px;
+  text-align: center;
+}
+.links {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 15px helvetica;
+}
+
+#stars {
+  background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  padding: 40px;
+  padding-top:100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+
+
+}
+
+#mytable {
+  background-color: white;
+}
+
+#mynode {
+  stroke: black;
+  stroke: 0px;
+}
+
+#mysbg {
+  width: 100% !important;
+  height: 100% !important;
+}

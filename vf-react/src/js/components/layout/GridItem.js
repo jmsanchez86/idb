@@ -1,7 +1,7 @@
   import React from "react";
 import { IndexLink, Link } from "react-router";
 
-export default class RecipeItem extends React.Component {
+export default class GridItem extends React.Component {
   getLink(id) {
     return this.props.path + "/" + id;
   }

@@ -81,6 +81,10 @@ export default class About extends React.Component {
             cont.get('ndbenzinger').totalIssues = 8;
             cont.get('scott-hornberger').totalIssues = 15;
             cont.get('thomascardwell7').totalIssues = 31;
+
+            // cory gets 14 more commits for endless stomach
+            cont.get('CoryDunn').totalCommits += 14;
+
             _this.getTotals("totalIssues");
             _this.getTotals("totalCommits");
             _this.getTotals("totalUnitTests");
@@ -157,6 +161,7 @@ export default class About extends React.Component {
           </p>
           <UnitTestButton api_endpoint={this.state.api_endpoint}/>
           <h6><a href="http://docs.vennfridge.apiary.io/#">Apiary API</a></h6>
+          <h6><a href="https://docs.google.com/presentation/d/1DQXJSRjFFCMgchXMlX66tsmkM96MKenavrGUOq44Eyw/edit?usp=sharing">Presentation</a></h6>
         </div>
         <div class="container" dangerouslySetInnerHTML={{__html: html}} />
       </div>

@@ -110,7 +110,6 @@ export default class IngredientSingle extends React.Component {
               title="Tags"
               list={tags}
               />
-              <Link to="ingredients/18375" >CLICK ME</Link>
           </div>
         </div>
 

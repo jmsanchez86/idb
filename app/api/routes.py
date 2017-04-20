@@ -1,161 +1,140 @@
 # pylint: disable=missing-docstring
 # pylint: disable=invalid-sequence-index
 # pylint: disable=invalid-name
+# pylint: disable=too-many-arguments
+# pylint: disable=unused-import
 
 
 from functools import wraps
 import math
+import re
 
 import flask
+from flask import request as req
 
 from app.api.models import Ingredient, Recipe, Tag, GroceryItem
-from typing import Callable, List
+from app.search import search as Search
+from typing import Callable, List, Set
 
 API_BP = flask.Blueprint('api', __name__)
 
 tag_image_prefix = "/static/images/tags/"
 
-################
-# Browse Views #
-################
 
-class QueryParams:
-    # pylint: disable=too-few-public-methods
-    def __init__(self, page: int, page_size: int, tag_filters: List[str],
-                 sort_key: str) -> None:
-        self.page = page
-        self.page_size = page_size
-        self.tag_filters = tag_filters
-        self.sort_key = sort_key
+def get_taglist_from_query(query_args: dict) -> List[str]:
+    return query_args.get("tags").split(",") if "tags" in query_args else []
+
+###################
+# Browse Endpoint #
+###################
 
 
-def get_continuation_links(base_url: str, maxsize: int,
-                           query_params: QueryParams):
-    page = query_params.page
-    psize = query_params.page_size
-    tag_filters = query_params.tag_filters
-    sort_param = query_params.sort_key
-
-    total_pages = int(math.ceil(maxsize / psize))
+def get_continuation_links(base_url: str, page: int, page_size: int,
+                           req_args: dict, maxsize: int):
+    # pylint: disable=too-many-locals
+    total_pages = int(math.ceil(maxsize / page_size))
     last_page = max(0, total_pages - 1)
-    url_template = base_url + "?page={p}&page_size={ps}&sort={s}"
-    first_link = url_template.format(p=0, ps=psize, s=sort_param)
-    prev_link = url_template.format(p=min(last_page, max(0, page - 1)),
-                                    ps=psize, s=sort_param)
-    next_link = url_template.format(p=min(last_page, max(0, page + 1)),
-                                    ps=psize, s=sort_param)
-    last_link = url_template.format(p=last_page, ps=psize, s=sort_param)
+    url_template = base_url + "?page={p}"
 
-    if len(tag_filters) > 0:
-        tag_query = "&tags={ts}".format(ts=",".join(tag_filters))
-        first_link += tag_query
-        prev_link += tag_query
-        next_link += tag_query
-        last_link += tag_query
+    for key in (k for k in req_args if k != "page"):
+        v = re.sub(' ', '+', req_args.get(key))
+        url_template += "&{k}={v}".format(k=key, v=v)
+
+    first_link = url_template.format(p=0)
+    last_link = url_template.format(p=last_page, ps=page_size)
+    prev_link = url_template.format(p=min(last_page, max(0, page - 1)))
+    next_link = url_template.format(p=min(last_page, max(0, page + 1)))
 
     # first page
-    if page == 0:
-        return {
-            "next": next_link,
-            "last": last_link,
-            "active": page}
-    # last page
-    elif page == last_page:
-        return {
-            "first": first_link,
-            "prev": prev_link,
-            "active": page}
-    else:
-        return {
-            "first": first_link,
-            "prev": prev_link,
-            "next": next_link,
-            "last": last_link,
-            "active": page}
+    link_dict = dict(active=page)
+    if page != 0:
+        link_dict["first"] = first_link  # type: ignore
+        link_dict["prev"] = prev_link  # type: ignore
 
+    if page != last_page:
+        link_dict["next"] = next_link  # type: ignore
+        link_dict["last"] = last_link  # type: ignore
 
-def continuation_route(route_fn: Callable[[QueryParams], flask.Response]):
-    from flask import request as req
-
-    @wraps(route_fn)
-    def wrapped_route_function():
-        page = int(req.args.get("page", 0))
-        psize = int(req.args.get("page_size", 16))
-        sort_param = req.args.get("sort", "alpha")
-        tags = req.args.get("tags").split(
-            ",") if "tags" in req.args else []
-        query_params = QueryParams(page=page, page_size=psize,
-                                   tag_filters=tags, sort_key=sort_param)
-        resp = flask.json.loads(route_fn(query_params).data)
-        data = resp["data"]
-        table_size = resp["table_size"]
-        links = get_continuation_links(req.base_url, table_size, query_params)
-        return flask.json.jsonify({"data": data, "links": links})
-    return wrapped_route_function
+    return link_dict
 
 
 @API_BP.route('/ingredients')
-@continuation_route
-def get_all_ingredients(query_params: QueryParams):
-    query, table_size_query = Ingredient.get_all(query_params.tag_filters,
-                                                 query_params.sort_key,
-                                                 query_params.page,
-                                                 query_params.page_size)
+def get_all_ingredients():
+    page = int(req.args.get("page", 0))
+    page_size = int(req.args.get("page_size", 16))
+    sort_key = req.args.get("sort", "alpha")
+    tags = get_taglist_from_query(req.args)
+
+    query, table_size_query = Ingredient.get_all(
+        tags, sort_key, page, page_size)
+    links = get_continuation_links(req.base_url, page, page_size, req.args,
+                                   table_size_query.fetchone()[0])
+
     return flask.json.jsonify({"data": [{"id": iq.ingredient_id,
                                          "name": iq.name,
                                          "image": iq.image_url}
                                         for iq in query],
-                               "table_size": table_size_query.fetchone()[0]})
+                               "links": links})
 
 
 @API_BP.route('/recipes')
-@continuation_route
-def get_all_recipes(query_params: QueryParams):
-    query, table_size_query = Recipe.get_all(query_params.tag_filters,
-                                             query_params.sort_key,
-                                             query_params.page,
-                                             query_params.page_size)
+def get_all_recipes():
+    page = int(req.args.get("page", 0))
+    page_size = int(req.args.get("page_size", 16))
+    sort_key = req.args.get("sort", "alpha")
+    tags = get_taglist_from_query(req.args)
+
+    query, table_size_query = Recipe.get_all(tags, sort_key, page, page_size)
+    links = get_continuation_links(req.base_url, page, page_size, req.args,
+                                   table_size_query.fetchone()[0])
     return flask.json.jsonify({"data": [{"id": rq.recipe_id,
                                          "name": rq.name,
                                          "image": rq.image_url,
                                          "blurb": rq.description,
                                          "ready_time": rq.ready_time}
                                         for rq in query],
-                               "table_size": table_size_query.fetchone()[0]})
-
+                               "links": links})
 
 
 @API_BP.route('/grocery_items')
-@continuation_route
-def get_all_grocery_items(query_params: QueryParams):
-    query, table_size_query = GroceryItem.get_all(query_params.tag_filters,
-                                                  query_params.sort_key,
-                                                  query_params.page,
-                                                  query_params.page_size)
+def get_all_grocery_items():
+    page = int(req.args.get("page", 0))
+    page_size = int(req.args.get("page_size", 16))
+    sort_key = req.args.get("sort", "alpha")
+    tags = get_taglist_from_query(req.args)
+
+    query, table_size_query = GroceryItem.get_all(tags, sort_key, page,
+                                                  page_size)
+    links = get_continuation_links(req.base_url, page, page_size, req.args,
+                                   table_size_query.fetchone()[0])
     return flask.json.jsonify({"data": [{"id": gq.grocery_id,
                                          "name": gq.name,
                                          "image": gq.image_url}
                                         for gq in query],
-                               "table_size": table_size_query.fetchone()[0]})
+                               "links": links})
 
 
 @API_BP.route('/tags')
-@continuation_route
-def get_all_tags(query_params: QueryParams):
-    min_occurences = int(flask.request.args.get("min", 0))
-    resp = Tag.get_all(min_occurences, query_params.sort_key, query_params.page,
-                       query_params.page_size)
-    return flask.json.jsonify({"data": [{"name": tq.tag_name,
-                                         "blurb": tq.description,
-                                         "image": tag_image_prefix +
-                                                  tq.image_url,}
-                                        for tq in resp[0]],
-                               "table_size": resp[1]})
+def get_all_tags():
+    page = int(req.args.get("page", 0))
+    page_size = int(req.args.get("page_size", 16))
+    sort_key = req.args.get("sort", "alpha")
+    min_occurences = int(req.args.get("min", 0))
+
+    data, table_size = Tag.get_all(min_occurences, sort_key, page, page_size)
+    links = get_continuation_links(req.base_url, page, page_size, req.args,
+                                   table_size)
+    return flask.json.jsonify({"data":
+                               [{"name": t.tag_name,
+                                 "blurb": t.description,
+                                 "image": tag_image_prefix + t.image_url}
+                                for t in data],
+                               "links": links})
 
 
-################
-# Detail Views #
-################
+###################
+# Detail Endpoint #
+###################
 
 def filter_nulls(field, limit):
     for row in field:
@@ -188,8 +167,9 @@ def get_ingredient(ingredient_id: int):
         "related_grocery_items": [{"id": g.grocery_id, "name": g.name}
                                   for g in items],
         "tags": [{"name": t.tag_name,
-                 "image": tag_image_prefix + t.image_url,} for t in tags]
-        })
+                  "image": tag_image_prefix + t.image_url, } for t in tags]
+    })
+
 
 @API_BP.route('/recipes/<int:recipe_id>')
 def get_recipe(recipe_id: int):
@@ -207,14 +187,16 @@ def get_recipe(recipe_id: int):
                 "instructions": recipe.instructions,
                 "source_url": recipe.source_url,
                 "ready_time": recipe.ready_time,
-                "related recipes": [{"id": r.recipe_id, "name": r.name}
+                "related_recipes": [{"id": r.recipe_id, "name": r.name}
                                     for r in recipe.similar_recipes],
-                "tags": [{"name": t.tag_name, "img": tag_image_prefix + t.image_url}
+                "tags": [{"name": t.tag_name,
+                          "image": tag_image_prefix + t.image_url}
                          for t in recipe.tags],
                 "ingredient_list": [{"id": i.ingredient_id,
                                      "original_string": i.verbal_quantity}
                                     for i in recipe.ingredients]
             })
+
 
 @API_BP.route('/grocery_items/<int:grocery_item_id>')
 def get_grocery_items(grocery_item_id: int):
@@ -222,22 +204,23 @@ def get_grocery_items(grocery_item_id: int):
     if not product:
         return flask.abort(404)
     data = dict(id=product.grocery_id, name=product.name,
-                image=product.image_url, upc=product.upc)
+                image=product.image_url, upc=product.upc,
+                ingredient_id=product.ingredient_id)
     data["tags"] = [{"name": t.tag_name,
                      "image": tag_image_prefix + t.image_url}
                     for t in product.tags]
 
     similar_items = []
-    added = set()
+    added = set()  # type: Set[int]
     for item in product.similar_grocery_items:
-        if item.grocery_id in added:
-            continue
-        added.add(item.grocery_id)
-        similar_items.append(item)
+        if item.grocery_id not in added:
+            added.add(item.grocery_id)
+            similar_items.append(item)
 
     data["related_grocery_items"] = [{"id": p.grocery_id, "name": p.name}
                                      for p in similar_items]
     return flask.json.jsonify(data)
+
 
 @API_BP.route('/tags/<string:tag_name>')
 def get_tag(tag_name: str):
@@ -263,3 +246,32 @@ def get_tag(tag_name: str):
          "image": r.image_url}
         for r in filter_nulls(tag.grocery_items, limit)]
     return flask.json.jsonify(data)
+
+
+###################
+# Search Endpoint #
+###################
+
+@API_BP.route('/search')
+def search():
+    if "q" not in req.args:
+        return flask.abort(400)
+
+    query = req.args.get("q").strip()
+    if query == "":
+        return flask.abort(400)
+
+    page = int(req.args.get("page", 0))
+    page_size = int(req.args.get("page_size", 10))
+    results, search_size = Search.page_search(query, page, page_size)
+
+    data = {"and": [], "or": [], "results": search_size}
+    for r in results:
+        if r.is_and:
+            data["and"].append(r.model.search_result_xform(r))
+        else:
+            data["or"].append(r.model.search_result_xform(r))
+
+    links = get_continuation_links(req.base_url, page, page_size, req.args,
+                                   search_size)
+    return flask.json.jsonify({"data": data, "links": links})
