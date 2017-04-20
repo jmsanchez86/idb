@@ -70,8 +70,9 @@ export default class Visual extends React.Component {
             .attr("dx", 10)
             .attr("dy", ".35em")
             .text(function(d) { return d.id; })
-            .style("stroke", "black");
-
+            .style("stroke", "white")
+            .style("text-shadow", "black 1px 2px")
+            .style("font-family", "Raleway, sans-serif");
 
         simulation
             .nodes(graph.nodes)
@@ -339,9 +340,9 @@ export default class Visual extends React.Component {
 
     render() {
         return (
-            <div class="row">
+            <div id="stars" class="row">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
-                  <table class="table table-bordered table-striped">
+                  <table id="mytable" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Nodes</th>

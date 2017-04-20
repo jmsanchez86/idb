@@ -71,7 +71,7 @@ ul.nav a:hover {
 .navbar-default .navbar-nav > li > a {
    color: #FFFEFE; /*Change active text color here*/
    font-size: 24px;
-   font-family: Raleway, san-serif;
+   font-family: Raleway, sans-serif;
    text-transform: capitalize;
 }
 
@@ -423,5 +423,18 @@ input[type="radio"] {
   font: 15px helvetica;
 }
 
-.progress-bar {
+#stars {
+  background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+}
+
+#mytable {
+  background-color: white;
+}
+
+#mynode {
+  stroke: black;
+}
+
+.text {
+  text-shadow: black 0 -2px;
 }
