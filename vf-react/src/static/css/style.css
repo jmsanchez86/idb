@@ -432,9 +432,6 @@ input[type="radio"] {
 }
 
 #mynode {
-  stroke: black;
+  stroke: blackk;
 }
 
-.text {
-  text-shadow: black 0 -2px;
-}
