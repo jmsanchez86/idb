@@ -14,7 +14,7 @@ export default class SearchSystem extends React.Component {
       )
       for (var id in and) {
         const item = and[id];
-        searchItems.push(<SearchItem key={id}
+        searchItems.push(<SearchItem key={item.id}
           path={"/" + item.pillar_name + "/" + item.id}
           item={item} />);
       }
@@ -26,7 +26,7 @@ export default class SearchSystem extends React.Component {
       )
       for (var id in or) {
         const item = or[id];
-        searchItems.push(<SearchItem key={id}
+        searchItems.push(<SearchItem key={item.id}
           path={"/" + item.pillar_name + "/" + item.id}
           item={item} />);
       }

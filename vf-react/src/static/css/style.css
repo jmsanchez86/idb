@@ -76,7 +76,7 @@ ul.nav a:hover {
 }
 
 /* This changes when navbar collapses */
- @media (max-width: 1300px) {
+ @media (max-width: 1400px) {
   .navbar-header {
       float: none;
   }
