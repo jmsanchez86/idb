@@ -32,8 +32,12 @@ export default class SearchBar extends React.Component {
   onClick() {
     this.props.onClick();
   }
+  isValidString() {
+    return this.state.value.replace(/[^\w\s-']/gi, '').replace(/_/gi, '').trim().replace(/ +/gi, '+').toLowerCase().length > 0;
+  }
 
   render() {
+    var isValid = this.isValidString();
     return (
       <span id="NavSearch" class="form-group form-group-md col-lg-3 col-md-3 col-sm-6 pull-right">
         <form>
@@ -48,7 +52,7 @@ export default class SearchBar extends React.Component {
             <span class="input-group-btn">
             <Link onClick={this.handleSubmit.bind(this)} to="search">
               <button
-                disabled={!this.state.value.length}
+                disabled={!isValid}
                 class="btn btn-md btn-default"
                 id="SearchButton"
                 type="submit button"

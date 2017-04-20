@@ -14,7 +14,7 @@ class SearchStore extends EventEmitter {
     return "http://api.vennfridge.appspot.com/search?q=" + sanitizedValue;
   }
   sanitizeString(value) {
-    return value.replace(/[^\w\s-']/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
+    return value.replace(/[^\w\s-']/gi, '').replace(/_/gi, '').trim().replace(/ +/gi, '+').toLowerCase();
   }
   searchRequest(value) {
     const query = this.getQuery(this.sanitizeString(value));
