@@ -71,7 +71,7 @@ ul.nav a:hover {
 .navbar-default .navbar-nav > li > a {
    color: #FFFEFE; /*Change active text color here*/
    font-size: 24px;
-   font-family: Raleway, san-serif;
+   font-family: Raleway, sans-serif;
    text-transform: capitalize;
 }
 
@@ -491,4 +491,45 @@ span .search-context{
   font-family: Dosis;
   font-size: 30px;
   text-align: center;
+}
+.links {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 15px helvetica;
+}
+
+#stars {
+  background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  padding: 40px;
+  padding-top:100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+
+
+}
+
+#mytable {
+  background-color: white;
+}
+
+#mynode {
+  stroke: black;
+  stroke: 0px;
+}
+
+#mysbg {
+  width: 100% !important;
+  height: 100% !important;
 }

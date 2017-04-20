@@ -1,4 +1,5 @@
 import React from "react";
+
 import ReactDOM from "react-dom";
 import { Router, Route, browserHistory, IndexRoute } from "react-router";
 
@@ -9,6 +10,7 @@ import Ingredients from "./pages/Ingredients";
 import Landing from "./pages/Landing";
 import Recipes from "./pages/Recipes";
 import Search from "./pages/Search";
+import Visual from "./pages/Visualization";
 
 import RecipeSingle from "./pages/RecipeSingle";
 import IngredientSingle from "./pages/IngredientSingle";
@@ -29,8 +31,8 @@ ReactDOM.render(
       <Route path="grocery_items" name="grocery_items" component={GroceryItems}></Route>
       <Route path="tags" name="tags" component={Tags}></Route>
       <Route path="search" name="search" component={Search}></Route>
+      <Route path="visual" name="visual" component={Visual}></Route>
 
-      <Route path="search" name="search" component={Search}></Route>
 
       <Route path="about" name="about" component={About}></Route>
 

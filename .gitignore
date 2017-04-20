@@ -14,4 +14,5 @@ saved_ingredient_images/
 scrape_config.py
 dump.sql
 keyfile.py
+miserables.json
 test_description_download.py
