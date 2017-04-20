@@ -510,7 +510,7 @@ span .search-context{
   background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
   padding: 40px;
   padding-top:100px;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
