@@ -167,7 +167,7 @@ export default class Visual extends React.Component {
 
                 links_.push({source: responseData[0].name, target: target, value: 5});
                 link_total++;
-                progress += 10;
+                progress += .75;
                 _this.setState({p : 5});
                 if (link_total === 121) {
                     var graph = {
@@ -226,7 +226,7 @@ export default class Visual extends React.Component {
                         }
                     }
 
-                    progress += 15;
+                    progress += 1;
                     _this.setState({ film_nodes : nodes });
 
                     global_total++;
@@ -271,7 +271,7 @@ export default class Visual extends React.Component {
                         }
                     }
 
-                    progress += 15;
+                    progress += 1;
                     _this.setState({ plan_nodes : nodes });
                     global_total++;
 
@@ -311,7 +311,7 @@ export default class Visual extends React.Component {
                         nodes.push({id : char.name, group : 15, size : 10});
                     }
 
-                    progress += 15;
+                    progress += 1;
                     _this.setState({ char_nodes : nodes });
                     global_total++;
 
@@ -411,7 +411,7 @@ export default class Visual extends React.Component {
                  	{collecting &&
                  		(<div class="progress">
 				  			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
-				  				aria-valuemin="0" aria-valuemax="100" style={{width : progress}}>
+				  				aria-valuemin="0" aria-valuemax="100" style={{width : progress + "%"}}>
 				  			</div>
 				  		</div>)}
                 	<svg id="mysvg" width={this.state.width} height={this.state.height}></svg>
